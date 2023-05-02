@@ -19,7 +19,7 @@ class ProductoController extends Controller
         $productos = Producto::all();
         $marcas = Marca_producto::all();
         $categorias = Categoria::all();
-        return view('producto.index', compact('productos','marcas','categorias'));
+        return view('producto.index', compact('productos', 'marcas', 'categorias'));
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductoController extends Controller
     {
         $marcas = Marca_producto::all();
         $categorias = Categoria::all();
-        return view('producto.create',compact('marcas','categorias'));
+        return view('producto.create', compact('marcas', 'categorias'));
     }
 
     /**
@@ -79,7 +79,6 @@ class ProductoController extends Controller
      */
     public function show(Producto $producto)
     {
-        
     }
 
     /**
@@ -121,12 +120,12 @@ class ProductoController extends Controller
         $product->color = $request->color;
         $product->talla = $request->talla;
         $product->stock = $request->stock;
-        if($image = $request->file('imagen')){
+        if ($image = $request->file('imagen')) {
             $rutaGuardarImg = 'imagen/';
-            $imagenUser = date('YmdHis').".".$image->getClientOriginalExtension();
-            $image->move($rutaGuardarImg,$imagenUser);
+            $imagenUser = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($rutaGuardarImg, $imagenUser);
             $product->imagen = $imagenUser;
-        }else{
+        } else {
             unset($product->imagen);
         }
         $product->save();
@@ -144,5 +143,13 @@ class ProductoController extends Controller
         $product = Producto::find($producto);
         $product->delete();
         return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
+    }
+    public function marca()
+    {
+        return $this->belongsTo(Marca_producto::class);
+    }
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class);
     }
 }
