@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProductoController;
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,6 +36,14 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('page');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/productos',[ProductoController::class,'index'])->name('productos');
+    Route::get('/productos/create',[ProductoController::class,'create'])->name('productos-create');
+    Route::post('/productos/store',[ProductoController::class,'store'])->name('productos-store');
+    Route::get('/productos/{id}/edit',[ProductoController::class,'edit'])->name('productos-edit');
+    Route::patch('/productos/{id}/update',[ProductoController::class,'update'])->name('productos-update');
+    Route::delete('/productos/{id}',[ProductoController::class,'destroy'])->name('productos-destroy');
+
 });
 
 Auth::routes();
