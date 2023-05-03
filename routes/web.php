@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
+
+    Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles.index');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
