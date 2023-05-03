@@ -23,4 +23,7 @@ class Producto extends Model
     public function get_marca(){
         return $this->belongsTo(Marca_producto::class);
     }
+    public function get_categoria(){
+        return $this->belongsTo(Categoria::class);
+    }
 }

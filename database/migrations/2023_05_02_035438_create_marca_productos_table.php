@@ -29,9 +29,5 @@ class CreateMarcaProductosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('marca_productos');
-    }
-    public function before()
-    {
-        $this->before('create_productos_table');
-    }
+    }    
 }

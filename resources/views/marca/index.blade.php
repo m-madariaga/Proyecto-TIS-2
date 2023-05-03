@@ -1,15 +1,15 @@
 @extends('layouts.argon.app')
 
 @section('title')
-{{ 'Productos' }}
+{{ 'Marcas' }}
 @endsection
 
 @section('breadcrumb')
 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
     <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Productos</li>
+    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Marcas</li>
 </ol>
-<h6 class="font-weight-bolder text-white mb-0">Productos</h6>
+<h6 class="font-weight-bolder text-white mb-0">Marcas</h6>
 @endsection
 
 @section('css')
@@ -23,23 +23,17 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Tabla de productos</h6>
+                    <h6>Tabla de Marcas</h6>
                 </div>
                 <div class="card-body px-0 pt-0 pb-2">
-                <a href="{{ route('productos-create') }}" class="btn btn-sm btn-outline-success mb-2"><i class="fa fa-plus"> Agregar producto</i></a>
+                <a href="{{ route('marcas-create') }}" class="btn btn-sm btn-outline-success mb-2"><i class="fa fa-plus"> Agregar marca</i></a>
                     <div class="table-responsive p-0">
                         <table id='tabla' class="table align-items-center mb-0">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Id</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Nombre</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Marca</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Categoria</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Color</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Talla</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Stock</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Imagen</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Descripcion</th>                               
                                     <th class="text-secondary opacity-7"></th>
                                 </tr>
                             </thead>
@@ -47,33 +41,17 @@
 
                             @else
                             <tbody>
-                                @foreach ($productos as $prod)
+                                @foreach ($marcas as $marca)
                                 <tr>
-                                    <td>{{ $prod->id}}</td>
-                                    <td>{{ $prod->nombre}}</td>
+                                    <td>{{ $marca->id}}</td>
+                                    <td>{{ $marca->nombre}}</td>      
+                                    <td>{{ $marca->descripcion}}</td>  
                                     <td>
-                                        $marca = $prod->get_marca;
-                                        {{ $marca->nombre}}
-                                    </td>
-                                    <td>
-                                        $categoria = $prod->get_categoria;
-                                        {{ $categoria->nombre}}
-                                    </td>
-                                    <td>{{ $prod->color}}</td>
-                                    <td>{{ $prod->talla}}</td>
-                                    <td>{{ $prod->stock}}</td>
-                                    <td>{{ $prod->precio}}</td>
-                                    <td>
-                                        <div class="container d-flex justify-content-center">
-                                            <img src="/imagen/{{ $prod->imagen }}" width="10%">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-info" href="{{ route('productos-edit', ['id'=> $prod->id]) }}">Editar producto</a>
-                                        <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}" class="formulario-eliminar" method="POST">
+                                        <a class="btn btn-info" href="{{ route('marcas-edit', ['id' => $marca->id]) }}">Editar marca</a>
+                                        <form action="{{ route('marcas-destroy', ['id' => $marca->id]) }}" class="formulario-eliminar" method="POST">
                                             @method('DELETE')
                                             @csrf
-                                            <button class="btn btn-danger btn-sm delete-producto">Eliminar producto</button>
+                                            <button class="btn btn-danger btn-sm ">Eliminar marca</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -546,7 +524,7 @@
 </script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).on('click', '.delete-producto', function(e) {
+    $(document).on('click', '.delete-marca', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
         console.log(' kdñsñskd');
@@ -563,7 +541,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'DELETE',
-                    url: '/admin/users/' + id,
+                    url: '/marcas' + id,
                     data: {
                         id: id,
                         _token: $('meta[name="csrf-token"]').attr('content')

@@ -17,9 +17,7 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = Producto::all();
-        $marcas = Marca_producto::all();
-        $categorias = Categoria::all();
-        return view('producto.index', compact('productos', 'marcas', 'categorias'));
+        return view('producto.index', compact('productos'));
     }
 
     /**
@@ -87,10 +85,12 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Producto $producto)
+    public function edit(Producto $id)
     {
-        $product = Producto::find($producto);
-        return view('producto.edit', compact('producto'));
+        $producto = Producto::find($id);
+        $marcas = Marca_producto::all();
+        $categorias = Categoria::all();
+        return view('producto.edit', compact('producto','marcas','categorias'));
     }
 
     /**
@@ -100,7 +100,7 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, Producto $id)
     {
         $request->validate([
             'marca_id' => 'required',
@@ -112,7 +112,7 @@ class ProductoController extends Controller
             'stock' => 'required',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
-        $product = Producto::find($producto);
+        $product = Producto::find($id);
         $product->marca_id = $request->marca_id;
         $product->categoria_id = $request->categoria_id;
         $product->nombre = $request->nombre;
@@ -129,7 +129,7 @@ class ProductoController extends Controller
             unset($product->imagen);
         }
         $product->save();
-        return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
+        return redirect()->route('productos')->with('success:', 'Producto actualizado correctamente.');
     }
 
     /**
@@ -138,18 +138,10 @@ class ProductoController extends Controller
      * @param  \App\Models\Producto  $producto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Producto $producto)
+    public function destroy(Producto $id)
     {
-        $product = Producto::find($producto);
+        $product = Producto::find($id);
         $product->delete();
         return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
-    }
-    public function marca()
-    {
-        return $this->belongsTo(Marca_producto::class);
-    }
-    public function categoria()
-    {
-        return $this->belongsTo(Categoria::class);
     }
 }
