@@ -19,8 +19,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
+    //insertar rutas de admin aqui
 
     Route::get('/tables', function () {
         return view('tables');
@@ -34,9 +34,19 @@ Route::group(['middleware' => 'auth'], function () {
         return view('page');
     })->name('page');
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
+
 });
+
+Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
+    //insertar rutas de analista aqui
+
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('analista_home');
+});
+
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 
