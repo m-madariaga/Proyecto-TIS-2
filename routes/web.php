@@ -34,6 +34,9 @@ Route::group(['middleware' => 'auth'], function () {
         return view('page');
     })->name('page');
 
+    Route::get('/calendar', function () {
+        return view('calendar');
+    })->name('calendar');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
 

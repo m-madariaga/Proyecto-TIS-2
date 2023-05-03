@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8" />
@@ -10,6 +10,8 @@
         @yield('title')
     </title>
     <!-- Fonts and icons -->
+    <link href="//db.onlinewebfonts.com/c/16ecd594aa7fbdfdf981c5998a837a50?family=Silent+Night+Sans" rel="stylesheet"
+        type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="{{ asset('argon/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
@@ -19,6 +21,14 @@
     <link href="{{ asset('argon/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
+    
+    {{-- LINK CALENDAR --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/locales-all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
+    
+
+    
     @yield('css')
 </head>
 
