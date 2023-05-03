@@ -87,7 +87,8 @@ class ProductoController extends Controller
      */
     public function edit(Producto $id)
     {
-        $producto = Producto::find($id);
+        $productos = Producto::all();
+        $producto = $productos->find($id);
         $marcas = Marca_producto::all();
         $categorias = Categoria::all();
         return view('producto.edit', compact('producto','marcas','categorias'));
@@ -140,8 +141,9 @@ class ProductoController extends Controller
      */
     public function destroy(Producto $id)
     {
-        $product = Producto::find($id);
-        $product->delete();
+        $productos = Producto::all();
+        $producto = $productos->find($id);
+        $producto->delete();
         return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
     }
 }
