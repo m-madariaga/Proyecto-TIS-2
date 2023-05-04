@@ -37,7 +37,7 @@
                             <a class="dropdown-item border-radius-md" href="{{route('profile')}}">
                                 <p class="text-md mb-0">
                                     <i class="ni ni-single-02 me-1" aria-hidden="true"></i>
-                                    Perfil
+                                    Profile
                                 </p>
                             </a>
                         </li>
@@ -47,7 +47,7 @@
                                     document.getElementById('logout-form').submit();">
                                 <p class="text-md mb-0">
                                     <i class="ni ni-user-run me-1" aria-hidden="true"></i>
-                                    Cerrar sesión
+                                    Sign off
                                 </p>
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
