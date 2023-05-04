@@ -18,7 +18,7 @@ class RolesController extends Controller
             }else if($role->hasPermissionTo('vista analista')){
                 $role->role_type="Analista";
             }else{
-                $role->role_type="Trabajador";
+                $role->role_type="Cliente";
             }
             $user_amount = User::role($role->name)->get();
             $role->role_count= $user_amount->count();
@@ -50,7 +50,7 @@ class RolesController extends Controller
                 $role->givePermissionTo('vista analista');
                 break;
             case 3:
-                $role->givePermissionTo('vista trabajador');
+                $role->givePermissionTo('vista cliente');
                 break;
             default:
         }
@@ -109,6 +109,7 @@ class RolesController extends Controller
     {
         $role = Role::find($id);
         $role->delete();
+        error_log("test");
 
         return response()->json(['success' => true]);
 

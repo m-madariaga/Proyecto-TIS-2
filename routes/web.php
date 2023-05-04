@@ -36,6 +36,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     })->name('page');
 
     Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles.index');
+    Route::get('/roles/create', [App\Http\Controllers\RolesController::class, 'create'])->name('roles.create');
+    Route::post('/roles/store', [App\Http\Controllers\RolesController::class, 'store'])->name('roles.store');
+    Route::delete('/roles/{id}', [App\Http\Controllers\RolesController::class, 'destroy'])->name('roles.destroy');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
