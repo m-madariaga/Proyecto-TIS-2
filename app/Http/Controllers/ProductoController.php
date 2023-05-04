@@ -40,9 +40,10 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        @error_log('asdas');
         $request->validate([
-            'marca_id' => 'required',
-            'categoria_id' => 'required',
+            'marca_id' => 'required|exists:marca_productos,id',
+            'categoria_id' => 'required|exists:categorias,id',
             'nombre' => 'required',
             'precio' => 'required',
             'color' => 'required',
@@ -50,21 +51,22 @@ class ProductoController extends Controller
             'stock' => 'required',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
-        $producto = new Producto([
-            'marca_id' => $request->get('marca_id'),
-            'categoria_id' => $request->get('categoria_id'),
-            'nombre' => $request->get('nombre'),
-            'precio' => $request->get('precio'),
-            'color' => $request->get('color'),
-            'talla' => $request->get('talla'),
-            'stock' => $request->get('stock'),
-        ]);
+        $imagenUser = '';
         if ($image = $request->file('imagen')) {
             $rutaGuardarImg = 'imagen/';
             $imagenUser = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
         }
-        $producto->imagen = $imagenUser;
+        $producto = new Producto([
+            'marca_id' => $request->get('marca'),
+            'categoria_id' => $request->get('categoria'),
+            'nombre' => $request->get('nombre'),
+            'precio' => $request->get('precio'),
+            'color' => $request->get('color'),
+            'talla' => $request->get('talla'),
+            'stock' => $request->get('stock'),
+            'imagen' => $imagenUser,
+        ]);       
         $producto->save();
         return redirect()->route('productos')->with('success:', 'Producto ingresado correctamente.');
     }

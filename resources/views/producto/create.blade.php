@@ -102,16 +102,15 @@
             <div class="form-group">
             <label class="form-control-label" for="imagen">Subir imagen</label>
             <img id="imagenSeleccionada" style="max-height: 300px;"><div class="row mb-3">
-                            <input name="imagen" id="imagen" type="file" required>
-                            @error('imagenSeleccionada')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror           
+            <input name="imagen" id="imagen" type="file" required>
+            @error('imagenSeleccionada')
+                 <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+            @enderror           
             </div>            
             <div class="form-group">
-            <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('productos')}}">
-                                    {{ __('Cancelar') }}</a>
+            <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('productos')}}">{{ __('Cancelar') }}</a>
               <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             </div>
           </form>
