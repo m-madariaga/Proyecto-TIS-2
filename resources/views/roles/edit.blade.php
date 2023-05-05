@@ -14,9 +14,6 @@
 @endsection
 
 @section('css')
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 @endsection
 
 @section('content')
@@ -28,14 +25,15 @@
                         <h6>Ingrese datos del rol a crear</h6>
                     </div>
                     <div class="card-body px-5 pb-2">
-                        <form method="POST" action="{{ route('roles.store') }}">
+                        <form method="POST" action="{{ route('roles.update', $role->id) }}">
                             @csrf
+                            @method('PATCH')
     
                             <div class="form-group row mb-3">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
     
                                 <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
+                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $role->name }}" required autocomplete="name" autofocus>
     
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -50,9 +48,18 @@
     
                                 <div class="col-md-6">
                                     <select class="form-select" id="role_type" @error('role_type') is-invalid @enderror" name="role_type">
-                                        <option value="1">Admin</option>
-                                        <option value="2">Analista</option>
-                                        <option value="3">Cliente</option>
+                                        <option value="1"
+                                        @if($role->role_type==1)
+                                            selected='selected'
+                                        @endif>Admin</option>
+                                        <option value="2"
+                                        @if($role->role_type==2)
+                                            selected='selected'
+                                        @endif>Analista</option>
+                                        <option value="3"
+                                        @if($role->role_type==3)
+                                            selected='selected'
+                                        @endif>Cliente</option>
                                     </select>
                                     @error('role_type')
                                         <span class="invalid-feedback" role="alert">
@@ -64,7 +71,7 @@
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-sm btn-outline-primary">
-                                        Ingresar
+                                        Guardar cambios
                                     </button>
                                 </div>
                             </div>

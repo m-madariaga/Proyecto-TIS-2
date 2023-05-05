@@ -95,7 +95,7 @@ class RolesController extends Controller
                 $role->syncPermissions(['vista analista']);
                 break;
             case 3:
-                $role->syncPermissions(['vista trabajador']);
+                $role->syncPermissions(['vista cliente']);
                 break;
             default:
         }

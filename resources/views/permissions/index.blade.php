@@ -1,15 +1,15 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Roles' }}
+    {{ 'Permissions' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Tables</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Permissions</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Roles</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Permisos</h6>
 @endsection
 
 @section('css')
@@ -24,11 +24,11 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                    <a href="{{ route('roles.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                    <a href="" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                     </div>
                     <div class="card-body pb-2">
                         <div class="table-responsive">
-                            <table id="roles-table" class="table align-items-center mb-0">
+                            <table id="permissions-table" class="table align-items-center mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -36,13 +36,6 @@
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                             Nombre</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Tipo de rol
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Cantidad de usuarios</th>
                                         
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -50,19 +43,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($roles as $role)
+                                @foreach ($permissions as $permission)
                                     <tr>
-                                        <td class="text-center">{{ $role->id }}</td>
-                                        <td class="text-center">{{ $role->name }}</td>
-                                        <td class="text-center">{{ $role->role_type }}</td>
-                                        <td class="text-center">{{ $role->role_count }}</td>
+                                        <td class="text-center">{{ $permission->id }}</td>
+                                        <td class="text-center">{{ $permission->name }}</td>
                                         <td class="text-center">
-                                            <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
-                                            <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display: inline;">
+                                            <a href="#" class="btn btn-sm btn-outline-primary">Editar</a>
+                                            <form action="#" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                                <button type="button" class="btn btn-sm btn-outline-danger delete-role"
-                                                    data-id="{{ $role->id }}">Eliminar</button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger delete-permission"
+                                                    data-id="">Eliminar</button>
                                                 </button>
                                             </form>
                                         </td>
@@ -107,7 +98,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#roles-table').DataTable({
+            $('#permissions-table').DataTable({
                 responsive: true,
                 dom: 'lfrtip',
                 
@@ -120,7 +111,7 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).on('click', '.delete-role', function(e) {
+        $(document).on('click', '.delete-permission', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
             console.log(' kdñsñskd');
@@ -138,7 +129,7 @@
                     console.log(' kdñsñskd');
                     $.ajax({
                         type: 'DELETE',
-                        url: '/admin/roles/' + id,
+                        url: '/admin/permissions/' + id,
                         data: {
                             id: id,
                             _token: $('meta[name="csrf-token"]').attr('content')
@@ -148,7 +139,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Rol eliminado correctamente!',
+                                text: '¡Permiso eliminado correctamente!',
                                 timer: 1000
                             });
                             setTimeout(function() {
