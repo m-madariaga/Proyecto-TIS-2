@@ -210,7 +210,7 @@ h6::selection {}
 }
 
 .form-control {
-	color: #db5246;
+	color: #d936ad;
 }
 
 section {
@@ -413,7 +413,7 @@ section {
 
 .language>a {
 	display: block;
-	color: #b5aec4;
+	color: #F2BBD9;
 	font-weight: 400;
 	height: 50px;
 	line-height: 50px;
@@ -491,7 +491,7 @@ section {
 
 .account>a {
 	display: block;
-	color: #b5aec4;
+	color: #F2BBD9;
 	font-weight: 400;
 	height: 50px;
 	line-height: 50px;
@@ -594,7 +594,7 @@ section {
 }
 
 .navbar_menu li a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .navbar_user {
@@ -627,7 +627,7 @@ section {
 }
 
 .navbar_user li a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .checkout a {
@@ -723,7 +723,7 @@ section {
 
 .hamburger_close i {
 	font-size: 24px;
-	color: #1e1e27;
+	color: #f2f2f2;
 	-webkit-transition: all 300ms ease;
 	-moz-transition: all 300ms ease;
 	-ms-transition: all 300ms ease;
@@ -751,7 +751,7 @@ section {
 
 .menu_item>a {
 	display: block;
-	color: #1e1e27;
+	color: #f2f2f2;
 	font-weight: 500;
 	height: 50px;
 	line-height: 50px;
@@ -794,7 +794,7 @@ section {
 
 .menu_selection li a {
 	display: block;
-	color: #232530;
+	color: #f2f2f2;
 	border-bottom: solid 1px #dddddd;
 	font-size: 13px;
 	text-transform: uppercase;
@@ -1011,7 +1011,7 @@ section {
 
 .grid_sorting_button.active {
 	color: #FFFFFF;
-	background: #fe4c50;
+	background: #d936ad;
 }
 
 /*********************************
@@ -1091,7 +1091,7 @@ section {
 
 .product_price {
 	font-size: 16px;
-	color: #fe4c50;
+	color: #d936ad;
 	font-weight: 600;
 }
 
@@ -1141,7 +1141,7 @@ section {
 }
 
 .product_bubble_red::after {
-	border-color: transparent transparent transparent #fe4c50;
+	border-color: transparent transparent transparent #F2BBD9;
 }
 
 .product_bubble_left::after {
@@ -1149,7 +1149,7 @@ section {
 }
 
 .product_bubble_red {
-	background: #fe4c50;
+	background: #d936ad;
 }
 
 .product_bubble_green {
@@ -1268,7 +1268,7 @@ section {
 	transform: translateX(-50%);
 	width: 60px;
 	height: 5px;
-	background: #fe4c50;
+	background: #d936ad;
 	content: '';
 }
 
@@ -1305,7 +1305,7 @@ section {
 
 .deal_ofthe_week_button {
 	width: 140px;
-	background: #1e1e27;
+	background: #8c034e;
 	margin-top: 52px;
 }
 
@@ -1637,6 +1637,9 @@ section {
 /*********************************
 11. Footer
 *********************************/
+footer{
+	background-color: #8c034e;
+}
 
 .footer_nav_container {
 	height: 130px;
@@ -1658,7 +1661,7 @@ section {
 .footer_nav li a,
 .cr {
 	font-size: 14px;
-	color: #51545f;
+	color: #F2BBD9;
 	line-height: 30px;
 	-webkit-transition: all 300ms ease;
 	-moz-transition: all 300ms ease;
@@ -1670,7 +1673,7 @@ section {
 .footer_nav li a:hover,
 .cr a,
 .cr i {
-	color: #fe4c50;
+	color: #f2f2f2;
 }
 
 .footer_social {
@@ -1687,8 +1690,8 @@ section {
 }
 
 .footer_social ul li a {
-	color: #51545f;
-	-webkit-transition: all 300ms ease;
+	color: #F2BBD9;
+	-webkit-transition: all 600ms ease;
 	-moz-transition: all 300ms ease;
 	-ms-transition: all 300ms ease;
 	-o-transition: all 300ms ease;
@@ -1701,5 +1704,5 @@ section {
 }
 
 .footer_social ul li a:hover {
-	color: #fe4c50;
+	color: #f2f2f2;
 }

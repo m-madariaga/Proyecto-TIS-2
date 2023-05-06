@@ -180,21 +180,21 @@
                     <div class="col-md-4">
                         <div class="banner_item align-items-center" style="background-image:url(assets/images/chaleco_banner.jpeg)">
                             <div class="banner_category">
-                                <a href="#">vent's</a>
+                                <a href="#">vent</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="banner_item align-items-center" style="background-image:url(assets/images/cartera_banner.jpeg)">
                             <div class="banner_category">
-                                <a href="#">accessories's</a>
+                                <a href="#">accessories</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="banner_item align-items-center" style="background-image:url(assets/images/pantalon_banner.jpeg)">
                             <div class="banner_category">
-                                <a href="#">Pants</a>
+                                <a href="#">Pant</a>
                             </div>
                         </div>
                     </div>
@@ -426,7 +426,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="deal_ofthe_week_img">
-                            <img src="assets/images/deal_ofthe_week.png" alt="">
+                            <img src="assets/images/deal_week.png" alt="">
                         </div>
                     </div>
                     <div class="col-lg-6 text-right deal_ofthe_week_col">
@@ -715,49 +715,7 @@
 
         <!-- Blogs -->
 
-        <div class="blogs">
-            <div class="container">
-                <div class="row">
-                    <div class="col text-center">
-                        <div class="section_title">
-                            <h2>Latest Blogs</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row blogs_container">
-                    <div class="col-lg-4 blog_item_col">
-                        <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(assets/images/blog_1.jpg)"></div>
-                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2021</span>
-                                <a class="blog_more" href="#">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 blog_item_col">
-                        <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(assets/images/blog_2.jpg)"></div>
-                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2021</span>
-                                <a class="blog_more" href="#">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 blog_item_col">
-                        <div class="blog_item">
-                            <div class="blog_background" style="background-image:url(assets/images/blog_3.jpg)"></div>
-                            <div class="blog_content d-flex flex-column align-items-center justify-content-center text-center">
-                                <h4 class="blog_title">Here are the trends I see coming this fall</h4>
-                                <span class="blog_meta">by admin | dec 01, 2021</span>
-                                <a class="blog_more" href="#">Read more</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
 
         <!-- Newsletter -->
 
@@ -799,19 +757,16 @@
                     <div class="col-lg-6">
                         <div class="footer_social d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                             <ul>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.instagram.com/que.guay_/"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="footer_nav_container">
-                            <div class="cr">©2021 All Rights Reserverd. Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="#">Jassa</a> &amp; Loved by <a href="https://therichpost.com">Jassa</a></div>
+                            <div class="cr"><img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 2rem;" alt="main_logo"></div>
                         </div>
                     </div>
                 </div>
