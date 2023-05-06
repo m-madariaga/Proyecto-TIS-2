@@ -1,16 +1,16 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ ' Crear Rol' }}
+    {{ ' Editar Rol' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Roles</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Create</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Edit</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0"> Crear Rol</h6>
+    <h6 class="font-weight-bolder text-white mb-0"> Editar Rol</h6>
 @endsection
 
 @section('css')
@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h6>Ingrese datos del rol a crear</h6>
+                        <h6>Modifique los datos del rol a editar</h6>
                     </div>
                     <div class="card-body px-5 pb-2">
                         <form method="POST" action="{{ route('roles.update', $role->id) }}">

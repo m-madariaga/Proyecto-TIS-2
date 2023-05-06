@@ -24,7 +24,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                    <a href="" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                    <a href="{{ route('permissions.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                     </div>
                     <div class="card-body pb-2">
                         <div class="table-responsive">
@@ -48,12 +48,12 @@
                                         <td class="text-center">{{ $permission->id }}</td>
                                         <td class="text-center">{{ $permission->name }}</td>
                                         <td class="text-center">
-                                            <a href="#" class="btn btn-sm btn-outline-primary">Editar</a>
-                                            <form action="#" method="POST" style="display: inline;">
+                                            <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                            <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
                                                 <button type="button" class="btn btn-sm btn-outline-danger delete-permission"
-                                                    data-id="">Eliminar</button>
+                                                    data-id="{{ $permission->id }}">Eliminar</button>
                                                 </button>
                                             </form>
                                         </td>
