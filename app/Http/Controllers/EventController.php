@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Evento;
+use App\Models\Event;
 use Illuminate\Http\Request;
 
-class EventoController extends Controller
+class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class EventoController extends Controller
      */
     public function index()
     {
-        return view('calendar');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class EventoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Evento  $evento
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function show(Evento $evento)
+    public function show(Event $event)
     {
         //
     }
@@ -52,10 +52,10 @@ class EventoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Evento  $evento
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function edit(Evento $evento)
+    public function edit(Event $event)
     {
         //
     }
@@ -64,10 +64,10 @@ class EventoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Evento  $evento
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Evento $evento)
+    public function update(Request $request, Event $event)
     {
         //
     }
@@ -75,10 +75,10 @@ class EventoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Evento  $evento
+     * @param  \App\Models\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Evento $evento)
+    public function destroy(Event $event)
     {
         //
     }

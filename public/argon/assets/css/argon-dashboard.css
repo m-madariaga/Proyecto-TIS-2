@@ -805,6 +805,31 @@ progress {
 .col-1 {
   flex: 0 0 auto;
   width: 8.333333%;
+
+}
+#setting_header{
+  display: contents;
+}
+
+#header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+#profile_image{
+  max-width: 25%; 
+  height: auto;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+
+#navbarBlur{
+  margin-top: 1%;
+}
+
+#fa{
+  font-size: 2.5rem;
 }
 
 .col-2 {
@@ -3782,19 +3807,19 @@ fieldset:disabled .btn {
 
 .btn-dark {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #344767;
-  --bs-btn-border-color: #344767;
+  --bs-btn-bg: #F2BBD9;
+  --bs-btn-border-color: #F2BBD9;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #2c3c58;
-  --bs-btn-hover-border-color: #2a3952;
+  --bs-btn-hover-bg: #d936ad ;
+  --bs-btn-hover-border-color: #d936ad ;
   --bs-btn-focus-shadow-rgb: 82, 99, 126;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #2a3952;
-  --bs-btn-active-border-color: #27354d;
+  --bs-btn-active-bg: #d936ad ;
+  --bs-btn-active-border-color: #F2BBD9;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #344767;
-  --bs-btn-disabled-border-color: #344767;
+  --bs-btn-disabled-bg: #F2BBD9;
+  --bs-btn-disabled-border-color: #F2BBD9;
 }
 
 .btn-white {
@@ -8294,6 +8319,8 @@ fieldset:disabled .btn {
 
 .float-end {
   float: right !important;
+  
+
 }
 
 .float-none {
@@ -9368,12 +9395,13 @@ fieldset:disabled .btn {
   margin-top: 0.25rem !important;
 }
 
+
 .mt-2 {
   margin-top: 0.5rem !important;
 }
 
 .mt-3 {
-  margin-top: 1rem !important;
+  margin-top: 1.1rem !important;
 }
 
 .mt-4 {
@@ -10582,15 +10610,15 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #A61B75 !important;
+  background-color: #8c034e !important;
 }
 
 .bg-secondary {
-  background-color: #8392ab !important;
+  background-color: #8c034e !important;
 }
 
 .bg-success {
-  background-color: #2dce89 !important;
+  background-color: #8c034e !important;
 }
 
 .bg-info {
@@ -20654,8 +20682,8 @@ fieldset:disabled .btn {
 
 .btn-dark:hover,
 .btn.bg-gradient-dark:hover {
-  background-color: #344767;
-  border-color: #344767;
+  background-color: #d936ad;
+  border-color: #d936ad;
 }
 
 .btn-dark .btn.bg-outline-dark,
@@ -20790,7 +20818,7 @@ fieldset:disabled .btn {
 
 .btn-dark,
 .btn.bg-gradient-dark {
-  color: #fff;
+  color: #171a1d;
 }
 
 .btn-dark:hover,
@@ -22300,7 +22328,7 @@ hr.horizontal.gray-light {
   color: #344767;
   padding: 0.5rem 1rem;
   font-weight: 400;
-  font-size: 0.875rem;
+  font-size: 1.2rem;
 }
 
 .navbar.navbar-absolute {
@@ -24894,7 +24922,7 @@ h4,
 
 a {
   letter-spacing: -0.025rem;
-  color: #344767;
+  color: #d936ad ;
 }
 
 .text-sm {

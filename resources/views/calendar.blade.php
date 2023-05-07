@@ -43,11 +43,12 @@
 @endsection
 
 @section('js')
-<script>
-    <script src="
-https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js
-"></script>
-</script>
+    <script>
+        <script script src = "
+        https: //cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js
+            ">
+    </script>
+    </script>
     <script>
         src = "{{ asset('argon/assets/js/calendar.js') }}"
     </script>
@@ -59,7 +60,7 @@ https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js
                 headerToolbar: {
                     left: 'dayGridMonth,timeGridWeek',
                     center: 'title',
-                  
+
                     right: 'prev,next today'
                 },
 
