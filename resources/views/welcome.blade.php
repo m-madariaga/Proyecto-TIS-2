@@ -158,7 +158,7 @@
 
         <!-- Slider -->
 
-        <div class="main_slider" style="background-image:url(assets/images/slider_1.jpg)">
+        <div class="main_slider" style="background-image:url(assets/images/s_foto1.jpg)">
             <div class="container fill_height">
                 <div class="row align-items-center fill_height">
                     <div class="col">
@@ -426,7 +426,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6">
                         <div class="deal_ofthe_week_img">
-                            <img src="assets/images/deal_week.png" alt="">
+                            <img src="assets/images/baner_1.png" alt="">
                         </div>
                     </div>
                     <div class="col-lg-6 text-right deal_ofthe_week_col">

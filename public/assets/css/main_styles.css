@@ -78,7 +78,7 @@ p {
 	font-size: 14px;
 	line-height: 1.7;
 	font-weight: 500;
-	color: #989898;
+	color: #F2BBD9;
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
 	text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
@@ -418,7 +418,7 @@ section {
 
 .language>a {
 	display: block;
-	color: #F2BBD9;
+	color: #f2f2f2;
 	font-weight: 400;
 	height: 50px;
 	line-height: 50px;
@@ -473,7 +473,7 @@ section {
 }
 
 .language_selection li a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .language_selection li:last-child a {
@@ -496,7 +496,7 @@ section {
 
 .account>a {
 	display: block;
-	color: #F2BBD9;
+	color: #f2f2f2;
 	font-weight: 400;
 	height: 50px;
 	line-height: 50px;
@@ -551,7 +551,7 @@ section {
 }
 
 .account_selection li a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .account_selection li:last-child a {
@@ -961,7 +961,7 @@ section {
 }
 
 .banner_category a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 /*********************************
@@ -1237,7 +1237,7 @@ section {
 .deal_ofthe_week {
 	width: 100%;
 	margin-top: 41px;
-	background: #f2f2f2;
+	background: #F2E8F1;
 }
 
 .deal_ofthe_week_img {
