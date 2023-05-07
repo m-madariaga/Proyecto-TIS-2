@@ -27,7 +27,7 @@
         <div class="card-body">
           <form action="{{ route('productos-store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            
+            @method('POST')
             <div class="form-group">
               <label class="form-control-label" for="nombre">Nombre</label>
               <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" required autocomplete='nombre' autofocus>
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group">
               <label class="form-control-label" for="marca">Marca</label>
-              <select class="form-control @error('marca') is-invalid @enderror" id="marca" name="marca">
+              <select class="form-control @error('marca') is-invalid @enderror" id="marca_id" name="marca_id">
                 @foreach ( $marcas as $marca)
                     <option value='{{$marca->id}}'>{{$marca->nombre}}</option>
                 @endforeach
@@ -52,7 +52,7 @@
             </div>
             <div class="form-group">
               <label class="form-control-label" for="categoria">Categoria</label>
-              <select class="form-control @error('categoria') is-invalid @enderror" id="categoria" name="categoria">
+              <select class="form-control @error('categoria') is-invalid @enderror" id="categoria_id" name="categoria_id">
                 @foreach ( $categorias as $categoria)
                     <option value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
                 @endforeach

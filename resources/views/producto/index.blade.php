@@ -52,17 +52,16 @@
                                     <td>{{ $prod->id}}</td>
                                     <td>{{ $prod->nombre}}</td>
                                     <td>
-                                        $marca = $prod->get_marca;
-                                        {{ $marca->nombre}}
+                                        
+                                        {{ $prod->marca->nombre}}
                                     </td>
-                                    <td>
-                                        $categoria = $prod->get_categoria;
-                                        {{ $categoria->nombre}}
+                                    <td>                              
+                                        {{ $prod->categoria->nombre}}
                                     </td>
                                     <td>{{ $prod->color}}</td>
                                     <td>{{ $prod->talla}}</td>
                                     <td>{{ $prod->stock}}</td>
-                                    <td>{{ $prod->precio}}</td>
+                                    <td>${{ $prod->precio}}</td>
                                     <td>
                                         <div class="container d-flex justify-content-center">
                                             <img src="/imagen/{{ $prod->imagen }}" width="10%">

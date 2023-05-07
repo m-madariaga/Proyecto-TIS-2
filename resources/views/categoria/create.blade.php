@@ -27,7 +27,7 @@
         <div class="card-body">
           <form action="{{ route('categorias-store')}}" method="POST">
             @csrf
-            
+            @method('POST')
             <div class="form-group">
               <label class="form-control-label" for="nombre">Nombre</label>
               <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" required autocomplete='nombre' autofocus>

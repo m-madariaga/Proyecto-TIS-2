@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Producto extends Model
 {
@@ -20,10 +21,10 @@ class Producto extends Model
         'imagen',
     ];
 
-    public function get_marca(){
-        return $this->belongsTo(Marca_producto::class);
+    public function marca(): BelongsTo{
+        return $this->belongsTo(Marca_producto::class,'marca_id');
     }
-    public function get_categoria(){
-        return $this->belongsTo(Categoria::class);
+    public function categoria(): BelongsTo{
+        return $this->belongsTo(Categoria::class,'categoria_id');
     }
 }

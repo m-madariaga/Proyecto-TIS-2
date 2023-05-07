@@ -40,8 +40,8 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        @error_log('asdas');
-        $request->validate([
+        @error_log('entrando a store');
+        $request->validate([            
             'marca_id' => 'required|exists:marca_productos,id',
             'categoria_id' => 'required|exists:categorias,id',
             'nombre' => 'required',
@@ -49,17 +49,32 @@ class ProductoController extends Controller
             'color' => 'required',
             'talla' => 'required',
             'stock' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg',
+        ],[
+            'marca_id.required' => 'El campo marca es requerido.',
+            'marca_id.exists' => 'La marca seleccionada no existe en nuestra base de datos.',
+            'categoria_id.required' => 'El campo categoría es requerido.',
+            'categoria_id.exists' => 'La categoría seleccionada no existe en nuestra base de datos.',
+            'nombre.required' => 'El campo nombre es requerido.',
+            'precio.required' => 'El campo precio es requerido.',
+            'color.required' => 'El campo color es requerido.',
+            'talla.required' => 'El campo talla es requerido.',
+            'stock.required' => 'El campo stock es requerido.',
+            'imagen.required' => 'El campo imagen es requerido.',
+            'imagen.image' => 'El archivo seleccionado debe ser una imagen.',
+            'imagen.mimes' => 'El archivo seleccionado debe tener uno de los siguientes formatos: jpeg, png, jpg o svg.',
         ]);
+        @error_log('despues de validar');
         $imagenUser = '';
         if ($image = $request->file('imagen')) {
             $rutaGuardarImg = 'imagen/';
             $imagenUser = date('YmdHis') . "." . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
         }
+        @error_log('despues de imagen');
         $producto = new Producto([
-            'marca_id' => $request->get('marca'),
-            'categoria_id' => $request->get('categoria'),
+            'marca_id' => $request->get('marca_id'),
+            'categoria_id' => $request->get('categoria_id'),
             'nombre' => $request->get('nombre'),
             'precio' => $request->get('precio'),
             'color' => $request->get('color'),
