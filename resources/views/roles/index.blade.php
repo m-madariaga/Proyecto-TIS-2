@@ -42,11 +42,16 @@
                                         </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Cantidad de usuarios</th>
-                                        
+                                            Cantidad de usuarios
+                                        </th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Acciones</th>
+                                            Permisos
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            Acciones
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +61,11 @@
                                         <td class="text-center">{{ $role->name }}</td>
                                         <td class="text-center">{{ $role->role_type }}</td>
                                         <td class="text-center">{{ $role->role_count }}</td>
+                                        <td class="text-center">
+                                            @foreach($role->permissions as $permission)
+                                                {{$permission}}<br>
+                                            @endforeach        
+                                        </td>
                                         <td class="text-center">
                                             <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-outline-primary">Editar</a>
                                             <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display: inline;">

@@ -46,7 +46,7 @@
                                 <label for="role_type" class="col-md-4 col-form-label text-md-right">Tipo de rol</label>
     
                                 <div class="col-md-6">
-                                    <select class="form-select" id="role_type" @error('role_type') is-invalid @enderror" name="role_type">
+                                    <select class="form-select" id="role_type" @error('role_type') is-invalid @enderror" name="role_type" onchange="swapPermissionInputs(this)">
                                         <option value="1">Admin</option>
                                         <option value="2">Analista</option>
                                         <option value="3">Cliente</option>
@@ -56,6 +56,39 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="role_type" class="col-md-4 col-form-label text-md-right">Permisos</label>
+    
+                                <div class="col-md-6">
+                                    <div class="form-check" id="check1">
+                                        <input class="form-check-input" type="checkbox" value="1" name="defaultCheck1" id="defaultCheck1" checked>
+                                        <label class="form-check-label" for="defaultCheck1" id="label1">
+                                          Dashboard
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" id="check2">
+                                        <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" checked>
+                                        <label class="form-check-label" for="defaultCheck2" id="label2">
+                                          Mantenedor de usuarios
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" id="check3">
+                                        <input class="form-check-input" type="checkbox" value="3" name="defaultCheck3" id="defaultCheck3" checked>
+                                        <label class="form-check-label" for="defaultCheck3" id="label3">
+                                          Mantenedor de roles
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" id="check4">
+                                        <input class="form-check-input" type="checkbox" value="4" name="defaultCheck4" id="defaultCheck4" checked>
+                                        <label class="form-check-label" for="defaultCheck4" id="label4">
+                                          Mantenedor de permisos
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
@@ -76,5 +109,49 @@
 @endsection
 
 @section('js')
+    <script>
+        function swapPermissionInputs(select){
+            // const fecha = urlParams.get('fecha');
+            // console.log(fecha);
+            if(select.value==1){
+                document.getElementById('label1').innerHTML = 'Dashboard';
+                document.getElementById('label2').innerHTML = 'Mantenedor usuarios';
+                document.getElementById('label3').innerHTML = 'Mantenedor roles';
+                document.getElementById('label4').innerHTML = 'Mantenedor permisos';
 
+                document.getElementById('defaultCheck1').disabled = false;
+                document.getElementById('defaultCheck2').disabled = false;
+                document.getElementById('defaultCheck3').disabled = false;
+                document.getElementById('defaultCheck4').disabled = false;
+
+                document.getElementById('check1').style.display = "block";
+                document.getElementById('check2').style.display = "block";
+                document.getElementById('check3').style.display = "block";
+                document.getElementById('check4').style.display = "block";
+            }else if(select.value==2){
+                document.getElementById('label1').innerHTML = 'Dashboard';
+
+                document.getElementById('defaultCheck1').disabled = false;
+                document.getElementById('defaultCheck2').disabled = true;
+                document.getElementById('defaultCheck3').disabled = true;
+                document.getElementById('defaultCheck4').disabled = true;
+
+                document.getElementById('check1').style.display = "block";
+                document.getElementById('check2').style.display = "none";
+                document.getElementById('check3').style.display = "none";
+                document.getElementById('check4').style.display = "none";
+            }else{
+
+                document.getElementById('defaultCheck1').disabled = true;
+                document.getElementById('defaultCheck2').disabled = true;
+                document.getElementById('defaultCheck3').disabled = true;
+                document.getElementById('defaultCheck4').disabled = true;
+
+                document.getElementById('check1').style.display = "none";
+                document.getElementById('check2').style.display = "none";
+                document.getElementById('check3').style.display = "none";
+                document.getElementById('check4').style.display = "none";
+            }
+        }
+    </script>
 @endsection

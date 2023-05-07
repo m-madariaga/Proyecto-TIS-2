@@ -20,6 +20,8 @@ class RolesController extends Controller
             }else{
                 $role->role_type="Cliente";
             }
+            $role->permissions = $role->getPermissionNames();
+            error_log($role->permissions);
             $user_amount = User::role($role->name)->get();
             $role->role_count= $user_amount->count();
 
@@ -40,14 +42,36 @@ class RolesController extends Controller
             'role_type' => 'nullable',
         ]);
 
+        error_log($request->defaultCheck1);
+
         $role = Role::create(['name' => $request->name]);
 
         switch($request->role_type){
             case 1:
                 $role->givePermissionTo('vista admin');
+                if($request->defaultCheck1==1){
+                    $role->givePermissionTo('dashboard');
+                }
+                
+                if($request->defaultCheck2==2){
+                    $role->givePermissionTo('mantenedor usuarios');
+                }
+                
+                if($request->defaultCheck3==3){
+                    $role->givePermissionTo('mantenedor roles');
+                }
+                
+                if($request->defaultCheck4==4){
+                    $role->givePermissionTo('mantenedor permisos');
+                }
                 break;
             case 2:
                 $role->givePermissionTo('vista analista');
+
+                if($request->defaultCheck1==1){
+                    $role->givePermissionTo('dashboard');
+                }
+                
                 break;
             case 3:
                 $role->givePermissionTo('vista cliente');
