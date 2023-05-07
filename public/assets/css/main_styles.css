@@ -130,6 +130,11 @@ p::selection {
 	background: #fde0db;
 }
 
+hr {
+	height: 1px;
+	background-color: #F2BBD9;
+}
+
 h1 {
 	font-size: 72px;
 }
@@ -1677,7 +1682,7 @@ footer{
 }
 
 .footer_social {
-	height: 130px;
+	height: 35px;
 }
 
 .footer_social ul li {
