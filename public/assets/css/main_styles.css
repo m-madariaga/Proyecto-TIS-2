@@ -680,7 +680,7 @@ section {
 }
 
 .hamburger_container:hover i {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .hamburger_menu {
@@ -737,7 +737,7 @@ section {
 }
 
 .hamburger_close:hover i {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .hamburger_menu_content {
@@ -750,7 +750,7 @@ section {
 .menu_item {
 	display: block;
 	position: relative;
-	border-bottom: solid 1px #b5aec4;
+	border-bottom: solid 1px #F2BBD9;
 	vertical-align: middle;
 }
 
@@ -765,7 +765,7 @@ section {
 }
 
 .menu_item>a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .menu_item>a>i {
@@ -811,7 +811,7 @@ section {
 }
 
 .menu_selection li a:hover {
-	color: #b5aec4;
+	color: #F2BBD9;
 }
 
 .menu_selection li:last-child a {
@@ -1011,7 +1011,7 @@ section {
 .grid_sorting_button:last-child {}
 
 .grid_sorting_button.active:hover {
-	background: #FE7C7F !important;
+	background: #F2BBD9 !important;
 }
 
 .grid_sorting_button.active {
@@ -1218,7 +1218,7 @@ section {
 .favorite.active::after {
 	font-family: 'FontAwesome';
 	content: '\f004';
-	color: #fe4c50;
+	color: #8c034e;
 }
 
 .favorite::after {
@@ -1227,7 +1227,7 @@ section {
 }
 
 .favorite:hover::after {
-	color: #fe4c50;
+	color: #8c034e;
 }
 
 /*********************************
@@ -1421,7 +1421,7 @@ section {
 
 .benefit_item {
 	height: 100px;
-	background: #f3f3f3;
+	background: #F2E8F1;
 	border-right: solid 1px #FFFFFF;
 	padding-left: 25px;
 }
@@ -1432,7 +1432,7 @@ section {
 
 .benefit_icon i {
 	font-size: 30px;
-	color: #fe4c50;
+	color: #d936ad;
 }
 
 .benefit_content {
