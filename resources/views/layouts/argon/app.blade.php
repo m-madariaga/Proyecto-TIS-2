@@ -13,6 +13,8 @@
     <link href="//db.onlinewebfonts.com/c/16ecd594aa7fbdfdf981c5998a837a50?family=Silent+Night+Sans" rel="stylesheet"
         type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Nucleo Icons -->
     <link href="{{ asset('argon/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ asset('argon/assets/css/nucleo-svg.css') }}" rel="stylesheet" />

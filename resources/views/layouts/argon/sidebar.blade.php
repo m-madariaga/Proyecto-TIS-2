@@ -32,6 +32,26 @@
                 </a>
             </li>
 
+            <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                <a class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}" href="{{route('roles.index')}}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Roles</span>
+                </a>
+            </li>
+
+            <li class="nav-item {{request()->is('admin/*') ? '' : 'display:none'}}" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                <a class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}" href="{{route('permissions.index')}}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Permisos</span>
+                </a>
+            </li>
+
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
             </li>
