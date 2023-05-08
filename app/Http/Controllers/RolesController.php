@@ -21,7 +21,6 @@ class RolesController extends Controller
                 $role->role_type="Cliente";
             }
             $role->permissions = $role->getPermissionNames();
-            error_log($role->permissions);
             $user_amount = User::role($role->name)->get();
             $role->role_count= $user_amount->count();
 
@@ -42,7 +41,7 @@ class RolesController extends Controller
             'role_type' => 'nullable',
         ]);
 
-        error_log($request->defaultCheck1);
+        
 
         $role = Role::create(['name' => $request->name]);
 
@@ -93,29 +92,56 @@ class RolesController extends Controller
         }else{
             $role->role_type=3;
         }
+        $role->permissions = $role->getPermissionNames();
+        error_log($role->permissions);
 
         return view('roles.edit', compact('role'));
     }
 
     public function update(Request $request, $id)
     {
-        error_log("test");
         $request->validate([
             'name' => 'required',
             'role_type' => 'nullable',
         ]);
 
-        error_log("test");
-
         $role = Role::find($id);
         $role->name = $request->name;
         $role->save();
+        $permissions =collect();
 
         switch($request->role_type){
             case 1:
-                $role->syncPermissions(['vista admin']);
+                
+                $permissions->push('vista admin');
+                if($request->defaultCheck1==1){
+                    $permissions->push('dashboard');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck2==2){
+                    $permissions->push('mantenedor usuarios');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck3==3){
+                    $permissions->push('mantenedor roles');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck4==4){
+                    $permissions->push('mantenedor permisos');
+                    error_log($permissions);
+                }
+
+                $role->syncPermissions([$permissions]);
                 break;
             case 2:
+                $permissions->push('vista analista');
+                if($request->defaultCheck1==1){
+                    $permissions->push('dashboard');
+                    error_log($permissions);
+                }
                 $role->syncPermissions(['vista analista']);
                 break;
             case 3:
