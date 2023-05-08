@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Spatie\Permission\Traits\HasRoles;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,21 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo ;
+
+    protected function authenticated(Request $request, $user)
+    {
+
+        if($user->hasPermissionTo('vista admin')){
+            return redirect('/admin/home');
+        }elseif($user->hasPermissionTo('vista analista')){
+            return redirect('/analista/home');
+        }else{
+            return redirect('/');
+        }
+        //return property_exists($this, 'redirectTo') ? $this->redirectTo : 'admin/';
+
+    }
 
     /**
      * Create a new controller instance.
