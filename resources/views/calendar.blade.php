@@ -11,8 +11,8 @@
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Calendar</h6>
 @endsection
-
 @section('css')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.css">
 @endsection
 
 @section('content')
@@ -31,27 +31,36 @@
                     </div>
                 </div>
             </div>
+
         </div>
+       <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
     </div>
-
-
-    <!-- Modal -->
-    <!-- Button trigger modal -->
-
-
-    <!-- Modal -->
+  </div>
+    </div>
 @endsection
 
 @section('js')
-    <script>
-        <script script src = "
-        https: //cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js
-            ">
-    </script>
-    </script>
-    <script>
-        src = "{{ asset('argon/assets/js/calendar.js') }}"
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -60,9 +69,12 @@
                 headerToolbar: {
                     left: 'dayGridMonth,timeGridWeek',
                     center: 'title',
-
                     right: 'prev,next today'
                 },
+                dateClick: function(info) {
+                    alert('a day has been clicked!');
+                    $("#staticBackdrop").modal("show");
+                }
 
             });
             calendar.render();

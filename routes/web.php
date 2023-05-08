@@ -35,10 +35,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-    Route::get('/calendar', function () {
-        return view('calendar');
-    })->name('calendar');
-
+  
+    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
+    
     Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles.index');
     Route::get('/roles/create', [App\Http\Controllers\RolesController::class, 'create'])->name('roles.create');
     Route::post('/roles/store', [App\Http\Controllers\RolesController::class, 'store'])->name('roles.store');

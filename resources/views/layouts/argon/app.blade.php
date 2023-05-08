@@ -25,10 +25,6 @@
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
 
     {{-- LINK CALENDAR --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.css">
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/locales-all.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
-
 
 
     @yield('css')
@@ -45,6 +41,7 @@
     </main>
     @include('layouts.argon.setting')
     <!--   Core JS Files   -->
+
     <script src="{{ asset('argon/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
