@@ -7,79 +7,50 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        return view('calendar');
+    	if($request->ajax())
+    	{
+    		$data = Event::whereDate('start', '>=', $request->start)
+                       ->whereDate('end',   '<=', $request->end)
+                       ->get(['id', 'title', 'start', 'end']);
+            return response()->json($data);
+    	}
+    	return view('calendar');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function action(Request $request)
     {
-        //
-    }
+    	if($request->ajax())
+    	{
+    		if($request->type == 'add')
+    		{
+    			$event = Event::create([
+    				'title'		=>	$request->title,
+    				'start'		=>	$request->start,
+    				'end'		=>	$request->end
+    			]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    			return response()->json($event);
+    		}
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event)
-    {
-        //
-    }
+    		if($request->type == 'update')
+    		{
+    			$event = Event::find($request->id)->update([
+    				'title'		=>	$request->title,
+    				'start'		=>	$request->start,
+    				'end'		=>	$request->end
+    			]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Event $event)
-    {
-        //
-    }
+    			return response()->json($event);
+    		}
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Event $event)
-    {
-        //
-    }
+    		if($request->type == 'delete')
+    		{
+    			$event = Event::find($request->id)->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Event $event)
-    {
-        //
+    			return response()->json($event);
+    		}
+    	}
     }
 }

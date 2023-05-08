@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller\RolesController;
 use App\Http\Controllers\Controller\PermissionsController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +38,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     })->name('page');
   
     Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
-    
+    Route::post('full-calendar/action', [EventController::class, 'action']);
+
     Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles.index');
     Route::get('/roles/create', [App\Http\Controllers\RolesController::class, 'create'])->name('roles.create');
     Route::post('/roles/store', [App\Http\Controllers\RolesController::class, 'store'])->name('roles.store');

@@ -24,8 +24,6 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
 
-    {{-- LINK CALENDAR --}}
-
 
     @yield('css')
 </head>
