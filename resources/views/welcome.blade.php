@@ -68,8 +68,7 @@
                                             <i class="fa fa-angle-down"></i>
                                         </a>
                                         <ul class="account_selection">
-                                            <li><a href="{{ route('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign
-                                                    In</a></li>
+                                            <li><a href="{{ route('login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
                                             <li><a href="{{ route('register') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                                         </ul>
                                     </li>
@@ -95,7 +94,7 @@
                                     <li><a href="#">shop</a></li>
                                     <li><a href="#">promotion</a></li>
                                     <li><a href="#">pages</a></li>
-                                    <li><a href="#">blog</a></li>
+                                    <li><a href="#">FAQ's</a></li>
                                     <li><a href="#">contact</a></li>
                                 </ul>
                                 <ul class="navbar_user">
@@ -423,19 +422,23 @@
 
         <div class="deal_ofthe_week">
             <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
+                <div class="row d-flex flex-row align-items-center justify-content-lg-center justify-content-center">
+                    <div class="col-lg-3">
                         <div class="deal_ofthe_week_img">
-                            <img src="assets/images/baner_1.png" alt="">
+                            <img src="assets/images/foto.jpeg" alt="">
                         </div>
                     </div>
                     <div class="col-lg-6 text-right deal_ofthe_week_col">
-                        <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
+                        <div class="deal_ofthe_week_content d-flex flex-column align-items-center ">
                             <div class="section_title">
                                 <h2>Deal Of The Week</h2>
                             </div>
-
                             <div class="red_button deal_ofthe_week_button"><a href="#">shop now</a></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="deal_ofthe_week_img">
+                            <img src="assets/images/foto_2.jpeg" alt="">
                         </div>
                     </div>
                 </div>
@@ -670,7 +673,7 @@
 
         <!-- Benefit -->
 
-        <div class="benefit">
+        <div class="benefit mb-4">
             <div class="container">
                 <div class="row benefit_row">
                     <div class="col-lg-3 benefit_col">
@@ -717,7 +720,7 @@
 
 
 
-        <!-- Newsletter -->
+        <!-- Newsletter
 
         <div class="newsletter">
             <div class="container">
@@ -738,7 +741,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Footer -->
 

@@ -52,6 +52,10 @@
                                 </div>
                                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
+                                        Don't have an account?
+                                        <a href="{{ route('register') }}"
+                                            class="text-primary text-gradient font-weight-bold">Sign
+                                            up</a>
                                         @if (Route::has('password.request'))
                                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                                 {{ __('Forgot Your Password?') }}
@@ -67,9 +71,11 @@
                                 style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
  background-size: cover;">
                                 <span class="mask bg-gradient-primary opacity-6"></span>
-                                <h2 class="mt-5 text-white font-weight-bolder position-relative">"
-                                    The secret of a great style is to feel good in what you wear."</h2>
-                                <h4 class="text-white position-relative"><i>Ines de la Fessange</i></h4>
+                                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new
+                                    currency"</h4>
+                                <p class="text-white position-relative">The more effortless the writing looks, the more
+                                    effort the
+                                    writer actually put into the process.</p>
                             </div>
                         </div>
                     </div>

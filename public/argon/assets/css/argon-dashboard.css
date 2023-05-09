@@ -4,8 +4,6 @@
  * Copyright 2011-2022 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
-
- @import url(//db.onlinewebfonts.com/c/16ecd594aa7fbdfdf981c5998a837a50?family=Silent+Night+Sans);
 :root {
   --bs-blue: #63B3ED;
   --bs-indigo: #596CFF;
@@ -805,31 +803,6 @@ progress {
 .col-1 {
   flex: 0 0 auto;
   width: 8.333333%;
-
-}
-#setting_header{
-  display: contents;
-}
-
-#header{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-#profile_image{
-  max-width: 25%; 
-  height: auto;
-  margin-right: 5%;
-  margin-bottom: 5%;
-}
-
-#navbarBlur{
-  margin-top: 1%;
-}
-
-#fa{
-  font-size: 2.5rem;
 }
 
 .col-2 {
@@ -3688,19 +3661,19 @@ fieldset:disabled .btn {
 
 .btn-primary {
   --bs-btn-color: #000;
-    --bs-btn-bg: #d936ad;
-    --bs-btn-border-color: #d936ad;
-    --bs-btn-hover-color: #000;
-    --bs-btn-hover-bg: #b12b8d;
-    --bs-btn-hover-border-color: #b12b8d;
-    --bs-btn-focus-shadow-rgb: 80, 97, 194;
-    --bs-btn-active-color: #000;
-    --bs-btn-active-bg: #b12b8d;
-    --bs-btn-active-border-color: #b12b8d;
-    --bs-btn-active-shadow: none;
-    --bs-btn-disabled-color: #000;
-    --bs-btn-disabled-bg: #d936ad;
-    --bs-btn-disabled-border-color: #d936ad;
+  --bs-btn-bg: #5e72e4;
+  --bs-btn-border-color: #5e72e4;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #7687e8;
+  --bs-btn-hover-border-color: #6e80e7;
+  --bs-btn-focus-shadow-rgb: 80, 97, 194;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #7e8ee9;
+  --bs-btn-active-border-color: #6e80e7;
+  --bs-btn-active-shadow: none;
+  --bs-btn-disabled-color: #000;
+  --bs-btn-disabled-bg: #5e72e4;
+  --bs-btn-disabled-border-color: #5e72e4;
 }
 
 .btn-secondary {
@@ -3807,19 +3780,19 @@ fieldset:disabled .btn {
 
 .btn-dark {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #F2BBD9;
-  --bs-btn-border-color: #F2BBD9;
+  --bs-btn-bg: #344767;
+  --bs-btn-border-color: #344767;
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #d936ad ;
-  --bs-btn-hover-border-color: #d936ad ;
+  --bs-btn-hover-bg: #2c3c58;
+  --bs-btn-hover-border-color: #2a3952;
   --bs-btn-focus-shadow-rgb: 82, 99, 126;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #d936ad ;
-  --bs-btn-active-border-color: #F2BBD9;
+  --bs-btn-active-bg: #2a3952;
+  --bs-btn-active-border-color: #27354d;
   --bs-btn-active-shadow: none;
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #F2BBD9;
-  --bs-btn-disabled-border-color: #F2BBD9;
+  --bs-btn-disabled-bg: #344767;
+  --bs-btn-disabled-border-color: #344767;
 }
 
 .btn-white {
@@ -8319,8 +8292,6 @@ fieldset:disabled .btn {
 
 .float-end {
   float: right !important;
-  
-
 }
 
 .float-none {
@@ -9395,13 +9366,12 @@ fieldset:disabled .btn {
   margin-top: 0.25rem !important;
 }
 
-
 .mt-2 {
   margin-top: 0.5rem !important;
 }
 
 .mt-3 {
-  margin-top: 1.1rem !important;
+  margin-top: 1rem !important;
 }
 
 .mt-4 {
@@ -10610,15 +10580,15 @@ fieldset:disabled .btn {
 }
 
 .bg-primary {
-  background-color: #8c034e !important;
+  background-color: #5e72e4 !important;
 }
 
 .bg-secondary {
-  background-color: #8c034e !important;
+  background-color: #8392ab !important;
 }
 
 .bg-success {
-  background-color: #8c034e !important;
+  background-color: #2dce89 !important;
 }
 
 .bg-info {
@@ -20682,8 +20652,8 @@ fieldset:disabled .btn {
 
 .btn-dark:hover,
 .btn.bg-gradient-dark:hover {
-  background-color: #d936ad;
-  border-color: #d936ad;
+  background-color: #344767;
+  border-color: #344767;
 }
 
 .btn-dark .btn.bg-outline-dark,
@@ -20818,7 +20788,7 @@ fieldset:disabled .btn {
 
 .btn-dark,
 .btn.bg-gradient-dark {
-  color: #171a1d;
+  color: #fff;
 }
 
 .btn-dark:hover,
@@ -22328,7 +22298,7 @@ hr.horizontal.gray-light {
   color: #344767;
   padding: 0.5rem 1rem;
   font-weight: 400;
-  font-size: 1.2rem;
+  font-size: 0.875rem;
 }
 
 .navbar.navbar-absolute {
@@ -22509,7 +22479,7 @@ hr.horizontal.gray-light {
 .navbar-vertical .navbar-brand>img,
 .navbar-vertical .navbar-brand-img {
   max-width: 100%;
-  max-height: 4rem;
+  max-height: 2rem;
 }
 
 .navbar-vertical .navbar-nav .nav-link {
@@ -24922,7 +24892,7 @@ h4,
 
 a {
   letter-spacing: -0.025rem;
-  color: #d936ad ;
+  color: #344767;
 }
 
 .text-sm {

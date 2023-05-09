@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
@@ -10,8 +10,6 @@
         @yield('title')
     </title>
     <!-- Fonts and icons -->
-    <link href="//db.onlinewebfonts.com/c/16ecd594aa7fbdfdf981c5998a837a50?family=Silent+Night+Sans" rel="stylesheet"
-        type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
