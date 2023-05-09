@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8" />
@@ -10,6 +10,8 @@
         @yield('title')
     </title>
     <!-- Fonts and icons -->
+    <link href="//db.onlinewebfonts.com/c/16ecd594aa7fbdfdf981c5998a837a50?family=Silent+Night+Sans" rel="stylesheet"
+        type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -21,6 +23,8 @@
     <link href="{{ asset('argon/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
+
+
     @yield('css')
 </head>
 
@@ -35,6 +39,7 @@
     </main>
     @include('layouts.argon.setting')
     <!--   Core JS Files   -->
+
     <script src="{{ asset('argon/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>

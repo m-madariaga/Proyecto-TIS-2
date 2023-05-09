@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
 use App\Http\Controllers\Controller\PermissionsController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
+  
+    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
+    Route::post('full-calendar/action', [EventController::class, 'action']);
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

@@ -23,47 +23,13 @@
                 </li>
 
 
-                <li class="nav-item dropdown pe-2 d-flex align-items-center">
-                    <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user me-2"></i>
-                        {{ Auth::user()->name }}
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end  px-2 py-3 me-sm-n4"
-                        aria-labelledby="dropdownMenuButton">
-
-                        <li class="mb-2">
-                            <a class="dropdown-item border-radius-md" href="{{route('profile')}}">
-                                <p class="text-md mb-0">
-                                    <i class="ni ni-single-02 me-1" aria-hidden="true"></i>
-                                    Perfil
-                                </p>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a class="dropdown-item border-radius-md" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                <p class="text-md mb-0">
-                                    <i class="ni ni-user-run me-1" aria-hidden="true"></i>
-                                    Cerrar sesión
-                                </p>
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
-
-                    </ul>
-                </li>
-
 
                 <li class="nav-item px-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0">
-                        <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                        <i class="fa fa-user fixed-plugin-button-nav cursor-pointer"></i>
                     </a>
                 </li>
+
                 <li class="nav-item dropdown pe-2 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">
