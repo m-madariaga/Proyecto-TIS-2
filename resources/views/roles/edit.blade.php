@@ -83,7 +83,10 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check2">
+                                    <div class="form-check" id="check2"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor usuarios'))
@@ -100,7 +103,11 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check3">
+                                    <div class="form-check" id="check3"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif
+                                        >
                                         <input class="form-check-input" type="checkbox" value="3" name="defaultCheck3" id="defaultCheck3" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor roles'))
@@ -117,7 +124,11 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check4">
+                                    <div class="form-check" id="check4"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif
+                                        >
                                         <input class="form-check-input" type="checkbox" value="4" name="defaultCheck4" id="defaultCheck4" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor permisos'))

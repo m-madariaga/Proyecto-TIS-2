@@ -142,7 +142,7 @@ class RolesController extends Controller
                     $permissions->push('dashboard');
                     error_log($permissions);
                 }
-                $role->syncPermissions(['vista analista']);
+                $role->syncPermissions([$permissions]);
                 break;
             case 3:
                 $role->syncPermissions(['vista cliente']);
