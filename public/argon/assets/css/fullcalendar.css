@@ -613,10 +613,10 @@
     color: #666; }
   
   .fc-unthemed td.fc-today {
-    background: #f8b1d8; }
+    background: #f6e8ef; }
   
   .fc-unthemed .fc-disabled-day {
-    background: #f8b1d8;
+    background: #070205;
     opacity: .3; }
   
   /* Icons (inline elements with styled text that mock arrow icons)
