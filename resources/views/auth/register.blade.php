@@ -42,6 +42,19 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
+
+                                    <input id="run" type="text"
+                                        class="form-control @error('run') is-invalid @enderror" name="run"
+                                        value="{{ old('run') }}" required autocomplete="run" aria-label="Run"
+                                        placeholder="Run" autofocus>
+
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
                                     <input id="email" type="email"
                                         class="form-control @error('email') is-invalid @enderror" name="email"
                                         value="{{ old('email') }}" required autocomplete="email" placeholder="Email"

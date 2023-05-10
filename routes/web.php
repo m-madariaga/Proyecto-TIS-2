@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Controller\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,11 +20,17 @@ Route::get('/', function () {
 Auth::routes();
 
 
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
+    Route::get('/users/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
     Route::get('/profile', function () {
         return view('profile');
