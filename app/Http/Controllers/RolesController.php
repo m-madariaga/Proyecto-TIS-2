@@ -75,12 +75,32 @@ class RolesController extends Controller
                 if($request->defaultCheck7==7){
                     $role->givePermissionTo('mantenedor marcas');
                 }
+
+                if($request->defaultCheck8==8){
+                    $role->givePermissionTo('mantenedor ventas');
+                }
+
+                if($request->defaultCheck9==9){
+                    $role->givePermissionTo('mantenedor envio');
+                }
+
+                if($request->defaultCheck10==10){
+                    $role->givePermissionTo('mantenedor tipo envio');
+                }
+
+                if($request->defaultCheck11==11){
+                    $role->givePermissionTo('mantenedor metodo pago');
+                }
                 break;
             case 2:
                 $role->givePermissionTo('vista analista');
 
                 if($request->defaultCheck1==1){
                     $role->givePermissionTo('dashboard');
+                }
+
+                if($request->defaultCheck2==2){
+                    $role->givePermissionTo('reporte ventas');
                 }
                 
                 break;
