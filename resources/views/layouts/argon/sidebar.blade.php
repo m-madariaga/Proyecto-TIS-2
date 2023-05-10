@@ -13,15 +13,19 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link  {{ request()->is('home') ? 'active' : '' }}" href="{{route('home')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Dashboard</span>
-                </a>
-            </li>
+            @can('dashboard')
+                <li class="nav-item">
+                    <a class="nav-link  {{ request()->is('home') ? 'active' : '' }}" href="{{route('home')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+            @endcan
+
+            
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('tables') ? 'active' : '' }}" href="{{route('tables')}}">
                     <div
@@ -32,51 +36,65 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('productos') ? 'active' : '' }}" href="{{route('productos')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-app text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Productos</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('categorias') ? 'active' : '' }}" href="{{route('categorias')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-app text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Categorias</span>
-                </a>
-            </li>
+            @can('mantenedor productos')
+                <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                    <a class="nav-link {{ request()->is('admin/productos') ? 'active' : '' }}" href="{{route('productos')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Productos</span>
+                    </a>
+                </li>
+            @endcan
 
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('marcas') ? 'active' : '' }}" href="{{route('marcas')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-app text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Marcas</span>
-            <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
-                <a class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}" href="{{route('roles.index')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Roles</span>
-                </a>
-            </li>
+            @can('mantenedor categorias')
+                <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                    <a class="nav-link {{ request()->is('admin/categorias') ? 'active' : '' }}" href="{{route('categorias')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Categorias</span>
+                    </a>
+                </li>
+            @endcan
+            
+            @can('mantenedor marcas')
+                <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                    <a class="nav-link {{ request()->is('admin/marcas') ? 'active' : '' }}" href="{{route('marcas')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Marcas</span>
+                    </a>
+                </li>
+            @endcan
 
-            <li class="nav-item {{request()->is('admin/*') ? '' : 'display:none'}}" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
-                <a class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}" href="{{route('permissions.index')}}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Permisos</span>
-                </a>
-            </li>
+            @can('mantenedor roles')
+                <li class="nav-item" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                    <a class="nav-link {{ request()->is('admin/roles') ? 'active' : '' }}" href="{{route('roles.index')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Roles</span>
+                    </a>
+                </li>
+            @endcan
+            
+            @can('mantenedor permisos')
+                <li class="nav-item {{request()->is('admin/*') ? '' : 'display:none'}}" style="{{request()->is('admin/*') ? '' : 'display:none'}}">
+                    <a class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}" href="{{route('permissions.index')}}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Permisos</span>
+                    </a>
+                </li>
+            @endcan
 
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('calendar') }}">
