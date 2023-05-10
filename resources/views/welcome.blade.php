@@ -193,7 +193,7 @@
                     <div class="col-md-4">
                         <div class="banner_item align-items-center" style="background-image:url(assets/images/pantalon_banner.jpeg)">
                             <div class="banner_category">
-                                <a href="#">Pant</a>
+                                <a href="#">Pants</a>
                             </div>
                         </div>
                     </div>
