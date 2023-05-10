@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class EventController extends Controller
 {
     /**
@@ -35,7 +37,16 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate(Event::$rules);
+    
+        Event::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'start' => $validatedData['start'],
+            'end' => $validatedData['end'],
+        ]);
+    
+        return redirect()->route('calendar')->with('success', 'Event created successfully.');
     }
 
     /**

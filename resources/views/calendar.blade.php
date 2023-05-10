@@ -19,13 +19,13 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card p-4">
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
                             <p class="mb-0">Personal Calendar</p>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="col-md-12">
                         <div id="calendar">
                         </div>
                     </div>
@@ -42,58 +42,48 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{route('calendar_action')}}">
-                            <div class="form-group">
-                                <label for="">Tittle</label>
-                                <input type="text" class="form-control" name="title" id="title"
-                                    aria-describedby="helpId" placeholder="Add event title">
-                                <small id="helpId" class="form-text text-muted">Help text</small>
+                        <form action="{{ route('calendar_agregar') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
                             </div>
-                            <div class="form-group">
-                                <label for="">Description</label>
-                                <textarea class="form-control" name="description" id="description" rows="3"></textarea>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="">Start</label>
-                                <input type="text" class="form-control" name="start" id="start"
-                                    aria-describedby="helpId" placeholder="Add event title">
-                                <small id="helpId" class="form-text text-muted">Help text</small>
+                            <div class="mb-3">
+                                <label for="start" class="form-label">Start</label>
+                                <input type="datetime-local" class="form-control" id="start" name="start" required>
                             </div>
-                            <div class="form-group">
-                                <label for="">End</label>
-                                <input type="text" class="form-control" name="end" id="end"
-                                    aria-describedby="helpId" placeholder="Add event title">
-                                <small id="helpId" class="form-text text-muted">Help text</small>
+                            <div class="mb-3">
+                                <label for="end" class="form-label">End</label>
+                                <input type="datetime-local" class="form-control" id="end" name="end" required>
+                            </div>
+                            <div class="mb-3 col-sm-3">
+                                <label for="color" class="form-label">Color</label>
+                                <input type="color" class="form-control" id="color" name="color" value="#ff0000"
+                                    required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="btnDelete">Delete</button>
-                        <button type="button" class="btn btn-primary" id="btnChanges">Changes</button>
-                        <button type="submit" class="btn btn-primary" id="btnSave">Save </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal para confirmar eliminación de eventos -->
-
     </div>
 @endsection
 
 @section('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
-            let formulario = document.querySelector("form");
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -107,10 +97,28 @@
                 }
             });
             calendar.render();
-            document.getElementById("btnSave").addEventListener("click",function(){
-                const datos= new FormData(formulario);
-                console.log(datos);
-            })
+            $("#btnSave").click(function() {
+                // get form data
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var start = $("#start").val();
+                var end = $("#end").val();
+
+                // create a new event object
+                var event = {
+                    title: title,
+                    description: description,
+                    start: start,
+                    end: end
+                };
+
+                // add the event to the calendar
+                calendar.addEvent(event);
+
+                // hide the modal
+                $("#modal-event").modal("hide");
+            });
+
         });
     </script>
 @endsection
