@@ -41,8 +41,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         return view('page');
     })->name('page');
   
-    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
-    Route::post('full-calendar/action', [EventController::class, 'action']);
+    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');
+    Route::post('full-calendar/action', [EventController::class, 'action'])->name('calendar_action');
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
