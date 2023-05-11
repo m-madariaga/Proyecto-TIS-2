@@ -179,9 +179,9 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		position: absolute;
-		top: 0;
-		left: 0;
+		position: relative;
+		top: 2rem;
+		margin-bottom: 5rem;
 		width: 100%;
 		height: 100%;
 	}
@@ -195,6 +195,7 @@
 	.deal_ofthe_week_img
 	{
 		text-align: center;
+		width: 100%;
 	}
 	.timer li
 	{
@@ -258,7 +259,7 @@
 	{
 		height: auto;
 		margin-top: 20px;
-		margin-bottom: 65px;
+		margin-bottom: 10px;
 	}
 }
 
@@ -674,7 +675,7 @@
 	.footer_social
 	{
 		margin-top: 5px;
-		margin-bottom: 30px;
+		margin-bottom: 10px;
 	}
 }
 
