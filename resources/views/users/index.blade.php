@@ -25,6 +25,7 @@
                         <h6>Tabla de Usuarios</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
+                        <a href="{{route('users.generate_pdf')}}">Descargar pdf</a>
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>

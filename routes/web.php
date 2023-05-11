@@ -3,7 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
@@ -37,6 +37,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+
+    Route::get('/users/pdf',[UserController::class, 'generate_pdf'])->name('users.generate_pdf');
 
     Route::get('/profile', function () {
         return view('profile');
