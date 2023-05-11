@@ -17,6 +17,9 @@
     <hr class="horizontal dark mt-0">
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
         <ul class="navbar-nav">
+
+
+
             @can('dashboard')
                 <li class="nav-item">
                     <a class="nav-link  {{ request()->is('home') ? 'active' : '' }}" href="{{ route('home') }}">
@@ -39,13 +42,13 @@
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
                 <ul id="ul-table">
-                    @can('mantenedor usuario')
+                    @can('mantenedor usuarios')
                         <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
-                            <a class="nav-link {{ request()->is('admin/productos') ? 'active' : '' }}"
-                                href="{{ route('productos') }}">
+                            <a class="nav-link {{ request()->is('users') ? 'active' : '' }}"
+                                href="{{ route('users.index') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Usuarios</span>
                             </a>
@@ -57,7 +60,7 @@
                                 href="{{ route('productos') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-tag text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Productos</span>
                             </a>
@@ -70,7 +73,7 @@
                                 href="{{ route('categorias') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-tag text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Categorias</span>
                             </a>
@@ -83,7 +86,7 @@
                                 href="{{ route('marcas') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-tag text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Marcas</span>
                             </a>
@@ -96,7 +99,7 @@
                                 href="{{ route('roles.index') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-single-02 text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Roles</span>
                             </a>
@@ -110,7 +113,7 @@
                                 href="{{ route('permissions.index') }}">
                                 <div
                                     class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-single-02 text-warning text-sm opacity-10"></i>
+                                    <i class="ni ni-app text-warning text-sm opacity-10"></i>
                                 </div>
                                 <span class="nav-link-text ms-1">Permisos</span>
                             </a>
@@ -119,17 +122,15 @@
                 </ul>
             </li>
 
-
-
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('calendar') }}">
-                    <div
-                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                    </div>
-                    <span class="nav-link-text ms-1">Calendar</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('calendar') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Calendar</span>
+                    </a>
+                </li>
         </ul>
     </div>
     <div class="sidenav-footer mx-3 ">
