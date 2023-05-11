@@ -181,14 +181,41 @@ class RolesController extends Controller
                     error_log($permissions);
                 }
 
+                if($request->defaultCheck8==8){
+                    $permissions->push('mantenedor ventas');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck9==9){
+                    $permissions->push('mantenedor envio');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck10==10){
+                    $permissions->push('mantenedor tipo envio');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck11==11){
+                    $permissions->push('mantenedor metodo pago');
+                    error_log($permissions);
+                }
+
                 $role->syncPermissions([$permissions]);
                 break;
             case 2:
                 $permissions->push('vista analista');
+
                 if($request->defaultCheck1==1){
                     $permissions->push('dashboard');
                     error_log($permissions);
                 }
+
+                if($request->defaultCheck2==2){
+                    $permissions->push('reporte ventas');
+                    error_log($permissions);
+                }
+
                 $role->syncPermissions([$permissions]);
                 break;
             case 3:

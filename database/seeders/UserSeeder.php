@@ -53,6 +53,7 @@ class UserSeeder extends Seeder
         $permission21 = Permission::create(['name' => 'reporte ventas']);
         $role2->givePermissionTo($permission2);
         $role2->givePermissionTo($permission11);
+        $role2->givePermissionTo($permission21);
 
         $role3 = Role::create(['name' => 'cliente']);
         $permission3 = Permission::create(['name' => 'vista cliente']);
