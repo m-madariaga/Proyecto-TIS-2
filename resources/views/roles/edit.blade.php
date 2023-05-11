@@ -83,7 +83,10 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check2">
+                                    <div class="form-check" id="check2"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor usuarios'))
@@ -100,7 +103,11 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check3">
+                                    <div class="form-check" id="check3"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif
+                                        >
                                         <input class="form-check-input" type="checkbox" value="3" name="defaultCheck3" id="defaultCheck3" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor roles'))
@@ -117,7 +124,11 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check4">
+                                    <div class="form-check" id="check4"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif
+                                        >
                                         <input class="form-check-input" type="checkbox" value="4" name="defaultCheck4" id="defaultCheck4" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor permisos'))
@@ -133,6 +144,67 @@
                                           Mantenedor de permisos
                                         </label>
                                     </div>
+
+                                    <div class="form-check" id="check5"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif>
+                                        <input class="form-check-input" type="checkbox" value="5" name="defaultCheck5" id="defaultCheck5" 
+                                        @if($role->role_type==1)
+                                            @if($role->permissions->contains('mantenedor productos'))
+                                                checked
+                                            @endif
+                                        @elseif($role->role_type==2)
+                                            @if($role->permissions->contains(''))
+                                                checked
+                                            @endif
+                                        @endif
+                                        >
+                                        <label class="form-check-label" for="defaultCheck5" id="label5">
+                                          Mantenedor de productos
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" id="check6"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif>
+                                        <input class="form-check-input" type="checkbox" value="6" name="defaultCheck6" id="defaultCheck6" 
+                                        @if($role->role_type==1)
+                                            @if($role->permissions->contains('mantenedor categorias'))
+                                                checked
+                                            @endif
+                                        @elseif($role->role_type==2)
+                                            @if($role->permissions->contains(''))
+                                                checked
+                                            @endif
+                                        @endif
+                                        >
+                                        <label class="form-check-label" for="defaultCheck6" id="label6">
+                                          Mantenedor de categorías
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check" id="check7"
+                                        @if($role->role_type!=1)
+                                            style="display:none"
+                                        @endif>
+                                        <input class="form-check-input" type="checkbox" value="7" name="defaultCheck7" id="defaultCheck7" 
+                                        @if($role->role_type==1)
+                                            @if($role->permissions->contains('mantenedor marcas'))
+                                                checked
+                                            @endif
+                                        @elseif($role->role_type==2)
+                                            @if($role->permissions->contains(''))
+                                                checked
+                                            @endif
+                                        @endif
+                                        >
+                                        <label class="form-check-label" for="defaultCheck7" id="label7">
+                                          Mantenedor de marcas
+                                        </label>
+                                    </div>
+
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
@@ -153,49 +225,71 @@
 @endsection
 
 @section('js')
-<script>
-    function swapPermissionInputs(select){
-        // const fecha = urlParams.get('fecha');
-        // console.log(fecha);
-        if(select.value==1){
-            document.getElementById('label1').innerHTML = 'Dashboard';
-            document.getElementById('label2').innerHTML = 'Mantenedor usuarios';
-            document.getElementById('label3').innerHTML = 'Mantenedor roles';
-            document.getElementById('label4').innerHTML = 'Mantenedor permisos';
+    <script>
+        function swapPermissionInputs(select){
+            // const fecha = urlParams.get('fecha');
+            // console.log(fecha);
+            if(select.value==1){
+                document.getElementById('label1').innerHTML = 'Dashboard';
+                document.getElementById('label2').innerHTML = 'Mantenedor usuarios';
+                document.getElementById('label3').innerHTML = 'Mantenedor roles';
+                document.getElementById('label4').innerHTML = 'Mantenedor permisos';
+                document.getElementById('label5').innerHTML = 'Mantenedor productos';
+                document.getElementById('label6').innerHTML = 'Mantenedor categorías';
+                document.getElementById('label7').innerHTML = 'Mantenedor marcas';
 
-            document.getElementById('defaultCheck1').disabled = false;
-            document.getElementById('defaultCheck2').disabled = false;
-            document.getElementById('defaultCheck3').disabled = false;
-            document.getElementById('defaultCheck4').disabled = false;
+                document.getElementById('defaultCheck1').disabled = false;
+                document.getElementById('defaultCheck2').disabled = false;
+                document.getElementById('defaultCheck3').disabled = false;
+                document.getElementById('defaultCheck4').disabled = false;
+                document.getElementById('defaultCheck5').disabled = false;
+                document.getElementById('defaultCheck6').disabled = false;
+                document.getElementById('defaultCheck7').disabled = false;
 
-            document.getElementById('check1').style.display = "block";
-            document.getElementById('check2').style.display = "block";
-            document.getElementById('check3').style.display = "block";
-            document.getElementById('check4').style.display = "block";
-        }else if(select.value==2){
-            document.getElementById('label1').innerHTML = 'Dashboard';
+                document.getElementById('check1').style.display = "block";
+                document.getElementById('check2').style.display = "block";
+                document.getElementById('check3').style.display = "block";
+                document.getElementById('check4').style.display = "block";
+                document.getElementById('check5').style.display = "block";
+                document.getElementById('check6').style.display = "block";
+                document.getElementById('check7').style.display = "block";
+            }else if(select.value==2){
+                document.getElementById('label1').innerHTML = 'Dashboard';
 
-            document.getElementById('defaultCheck1').disabled = false;
-            document.getElementById('defaultCheck2').disabled = true;
-            document.getElementById('defaultCheck3').disabled = true;
-            document.getElementById('defaultCheck4').disabled = true;
+                document.getElementById('defaultCheck1').disabled = false;
+                document.getElementById('defaultCheck2').disabled = true;
+                document.getElementById('defaultCheck3').disabled = true;
+                document.getElementById('defaultCheck4').disabled = true;
+                document.getElementById('defaultCheck5').disabled = true;
+                document.getElementById('defaultCheck6').disabled = true;
+                document.getElementById('defaultCheck7').disabled = true;
 
-            document.getElementById('check1').style.display = "block";
-            document.getElementById('check2').style.display = "none";
-            document.getElementById('check3').style.display = "none";
-            document.getElementById('check4').style.display = "none";
-        }else{
+                document.getElementById('check1').style.display = "block";
+                document.getElementById('check2').style.display = "none";
+                document.getElementById('check3').style.display = "none";
+                document.getElementById('check4').style.display = "none";
+                document.getElementById('check5').style.display = "none";
+                document.getElementById('check6').style.display = "none";
+                document.getElementById('check7').style.display = "none";
+            
+            }else{
 
-            document.getElementById('defaultCheck1').disabled = true;
-            document.getElementById('defaultCheck2').disabled = true;
-            document.getElementById('defaultCheck3').disabled = true;
-            document.getElementById('defaultCheck4').disabled = true;
+                document.getElementById('defaultCheck1').disabled = true;
+                document.getElementById('defaultCheck2').disabled = true;
+                document.getElementById('defaultCheck3').disabled = true;
+                document.getElementById('defaultCheck4').disabled = true;
+                document.getElementById('defaultCheck5').disabled = true;
+                document.getElementById('defaultCheck6').disabled = true;
+                document.getElementById('defaultCheck7').disabled = true;
 
-            document.getElementById('check1').style.display = "none";
-            document.getElementById('check2').style.display = "none";
-            document.getElementById('check3').style.display = "none";
-            document.getElementById('check4').style.display = "none";
+                document.getElementById('check1').style.display = "none";
+                document.getElementById('check2').style.display = "none";
+                document.getElementById('check3').style.display = "none";
+                document.getElementById('check4').style.display = "none";
+                document.getElementById('check5').style.display = "none";
+                document.getElementById('check6').style.display = "none";
+                document.getElementById('check7').style.display = "none";
+            }
         }
-    }
     </script>
 @endsection

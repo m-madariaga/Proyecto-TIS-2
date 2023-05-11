@@ -63,6 +63,18 @@ class RolesController extends Controller
                 if($request->defaultCheck4==4){
                     $role->givePermissionTo('mantenedor permisos');
                 }
+                
+                if($request->defaultCheck5==5){
+                    $role->givePermissionTo('mantenedor productos');
+                }
+
+                if($request->defaultCheck6==6){
+                    $role->givePermissionTo('mantenedor categorias');
+                }
+
+                if($request->defaultCheck7==7){
+                    $role->givePermissionTo('mantenedor marcas');
+                }
                 break;
             case 2:
                 $role->givePermissionTo('vista analista');
@@ -133,6 +145,21 @@ class RolesController extends Controller
                     $permissions->push('mantenedor permisos');
                     error_log($permissions);
                 }
+                
+                if($request->defaultCheck5==5){
+                    $permissions->push('mantenedor productos');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck6==6){
+                    $permissions->push('mantenedor categorias');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck7==7){
+                    $permissions->push('mantenedor marcas');
+                    error_log($permissions);
+                }
 
                 $role->syncPermissions([$permissions]);
                 break;
@@ -142,7 +169,7 @@ class RolesController extends Controller
                     $permissions->push('dashboard');
                     error_log($permissions);
                 }
-                $role->syncPermissions(['vista analista']);
+                $role->syncPermissions([$permissions]);
                 break;
             case 3:
                 $role->syncPermissions(['vista cliente']);

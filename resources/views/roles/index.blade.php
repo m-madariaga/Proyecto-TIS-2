@@ -14,7 +14,7 @@
 
 @section('css')
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
+{{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css"> --}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
@@ -22,13 +22,13 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
-                <div class="card mb-4">
+                <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header pb-0">
                     <a href="{{ route('roles.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                     </div>
-                    <div class="card-body pb-2">
+                    <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive">
-                            <table id="roles-table" class="table align-items-center mb-0">
+                            <table id="roles-table" class="table display table-stripped align-items-center mb-0">
                                 <thead>
                                     <tr>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
