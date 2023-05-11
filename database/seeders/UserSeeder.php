@@ -52,9 +52,9 @@ class UserSeeder extends Seeder
         $user->email = 'admin@test.cl';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 1 Los Lirios';
-        $user->city = 'Concepción';
-        $user->region = 'Bio-bio';
-        $user->country = 'Chile';
+        $user->city_fk = 'Concepción';
+        $user->region_fk = 'Bio-bio';
+        $user->country_fk = 'Chile';
 
         $user->save();
         $user->assignRole($role1);
@@ -65,9 +65,9 @@ class UserSeeder extends Seeder
         $user->email = 'mod@test.cl';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 2 Los Lirios';
-        $user->city = 'Talcahuano';
-        $user->region = 'Bio-bio';
-        $user->country = 'Chile';
+        $user->city_fk = 'Talcahuano';
+        $user->region_fk = 'Bio-bio';
+        $user->country_fk = 'Chile';
 
         $user->save();
         $user->assignRole($role11);
@@ -79,9 +79,9 @@ class UserSeeder extends Seeder
         $user->password = bcrypt('asdf1234');
 
         $user->address = 'Calle 3 Las Violetas';
-        $user->city = 'Santiago';
-        $user->region = 'Metropolitana';
-        $user->country = 'Chile';
+        $user->city_fk = 'Santiago';
+        $user->region_fk = 'Metropolitana';
+        $user->country_fk = 'Chile';
         $user->save();
         $user->assignRole($role2);
 
@@ -91,9 +91,9 @@ class UserSeeder extends Seeder
         $user->email = 'cliente@test.cl';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 4 Las Violetas';
-        $user->city = 'Arica';
-        $user->region = 'Arica y Parinacota';
-        $user->country = 'Chile';
+        $user->city_fk = 'Arica';
+        $user->region_fk = 'Arica y Parinacota';
+        $user->country_fk = 'Chile';
 
         $user->save();
         $user->assignRole($role3);
