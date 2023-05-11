@@ -67,6 +67,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Edit changes</button>
                                 <button type="submit" class="btn btn-primary">Save changes</button>
                             </div>
                         </form>
@@ -97,14 +98,14 @@
                 }
             });
             calendar.render();
-            $("#btnSave").click(function() {
-                // get form data
+            $("#btn-primary").click(function() {
+                // get datos
                 var title = $("#title").val();
                 var description = $("#description").val();
                 var start = $("#start").val();
                 var end = $("#end").val();
 
-                // create a new event object
+                
                 var event = {
                     title: title,
                     description: description,
@@ -115,6 +116,11 @@
                 // add the event to the calendar
                 calendar.addEvent(event);
 
+                // hide the modal
+                $("#modal-event").modal("hide");
+            });
+            $("#btn-info").click(function() {
+            
                 // hide the modal
                 $("#modal-event").modal("hide");
             });

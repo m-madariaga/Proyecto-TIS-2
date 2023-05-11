@@ -13,12 +13,14 @@ class Event extends Model
         'title',
         'description',
         'start',
+        'color',
         'end',
     ];
 
     public static $rules = [
         'title' => 'required',
         'description' => 'required',
+        'color' => 'required',
         'start' => 'required',
         'end' => 'required',
     ];
