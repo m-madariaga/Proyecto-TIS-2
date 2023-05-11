@@ -47,30 +47,54 @@ class UserSeeder extends Seeder
         $role3->givePermissionTo($permission3);
 
         $user = new User();
-            $user->name             = 'admin demo';
-            $user->email            = 'admin@test.cl';
-            $user->password         = bcrypt('asdf1234');
+        $user->run = '12345678-K';
+        $user->name = 'admin demo';
+        $user->email = 'admin@test.cl';
+        $user->password = bcrypt('asdf1234');
+        $user->address = 'Calle 1 Los Lirios';
+        $user->city = 'Concepción';
+        $user->region = 'Bio-bio';
+        $user->country = 'Chile';
+
         $user->save();
         $user->assignRole($role1);
 
         $user = new User();
-            $user->name             = 'moderador demo';
-            $user->email            = 'mod@test.cl';
-            $user->password         = bcrypt('asdf1234');
+        $user->run = '12345678-1';
+        $user->name = 'moderador demo';
+        $user->email = 'mod@test.cl';
+        $user->password = bcrypt('asdf1234');
+        $user->address = 'Calle 2 Los Lirios';
+        $user->city = 'Talcahuano';
+        $user->region = 'Bio-bio';
+        $user->country = 'Chile';
+
         $user->save();
         $user->assignRole($role11);
 
         $user = new User();
-            $user->name             = 'analista demo';
-            $user->email            = 'analista@test.cl';
-            $user->password         = bcrypt('asdf1234');
+        $user->run = '12345678-2';
+        $user->name = 'analista demo';
+        $user->email = 'analista@test.cl';
+        $user->password = bcrypt('asdf1234');
+
+        $user->address = 'Calle 3 Las Violetas';
+        $user->city = 'Santiago';
+        $user->region = 'Metropolitana';
+        $user->country = 'Chile';
         $user->save();
         $user->assignRole($role2);
 
         $user = new User();
-            $user->name             = 'cliente demo';
-            $user->email            = 'cliente@test.cl';
-            $user->password         = bcrypt('asdf1234');
+        $user->run = '12345678-3';
+        $user->name = 'cliente demo';
+        $user->email = 'cliente@test.cl';
+        $user->password = bcrypt('asdf1234');
+        $user->address = 'Calle 4 Las Violetas';
+        $user->city = 'Arica';
+        $user->region = 'Arica y Parinacota';
+        $user->country = 'Chile';
+
         $user->save();
         $user->assignRole($role3);
 

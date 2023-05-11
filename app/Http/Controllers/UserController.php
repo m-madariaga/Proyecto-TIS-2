@@ -81,6 +81,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+       // dejar para futuro sweetalert return response()->json(['success' => true]);
+
+       return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+
     }
 }

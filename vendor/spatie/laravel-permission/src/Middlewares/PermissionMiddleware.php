@@ -12,7 +12,7 @@ class PermissionMiddleware
         $authGuard = app('auth')->guard($guard);
 
         if ($authGuard->guest()) {
-            return redirect('/login');
+            throw UnauthorizedException::notLoggedIn();
         }
 
         $permissions = is_array($permission)
@@ -25,6 +25,6 @@ class PermissionMiddleware
             }
         }
 
-        return back();
+        throw UnauthorizedException::forPermissions($permissions);
     }
 }

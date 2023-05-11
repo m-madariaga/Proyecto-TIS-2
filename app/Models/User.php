@@ -24,8 +24,28 @@ class User extends Authenticatable
         'email',
         'password',
         'run',
+        'address'
     ];
+    public function roleName()
+    {
+        $role = $this->roles->first();
+        return $role ? $role->name : null;
+    }
 
+    public function city()
+    {
+        return $this->belongsTo(City::class,'city_fk');
+    }
+
+    public function region()
+    {
+        return $this->belongsTo(Region::class,'region_fk');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class,'country_fk');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
