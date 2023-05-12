@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Carbon;
 
 class UserController extends Controller
 {
@@ -16,6 +18,12 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('users.index', compact('users'));
+    }
+    public function generate_pdf(){
+        $users = User::all();
+        $fecha_actual = Carbon::now();
+        $pdf = PDF::loadView('receipt.ticket',['users' => $users,'fecha_actual' => $fecha_actual]);
+        return $pdf->stream('ticket.pdf');
     }
 
     /**

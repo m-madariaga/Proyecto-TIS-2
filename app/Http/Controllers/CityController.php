@@ -14,9 +14,14 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        $cities = City::all();
+        return view('cities.index', compact('cities'));
     }
-
+    public function getCities($regionId)
+{
+    $cities = City::where('region_fk', $regionId)->get();
+    return response()->json($cities);
+}
     /**
      * Show the form for creating a new resource.
      *
