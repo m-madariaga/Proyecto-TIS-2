@@ -3,10 +3,14 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller\UserController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
 use App\Http\Controllers\Controller\PermissionsController;
+use App\Http\Controllers\Controller\CityController;
+use App\Http\Controllers\Controller\RegionController;
+use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
 
 /*
@@ -24,6 +28,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
+Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
 Auth::routes();
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
@@ -32,6 +38,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
+    Route::get('/users/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+
+
+
+
 
     Route::get('/profile', function () {
         return view('profile');
@@ -40,7 +54,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-  
+
     Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
     Route::post('full-calendar/action', [EventController::class, 'action']);
 
@@ -75,14 +89,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
 
     Route::group(['middleware' => ['permission:mantenedor roles']], function () {
-        
+
         Route::get('/roles', [App\Http\Controllers\RolesController::class, 'index'])->name('roles.index');
         Route::get('/roles/create', [App\Http\Controllers\RolesController::class, 'create'])->name('roles.create');
         Route::post('/roles/store', [App\Http\Controllers\RolesController::class, 'store'])->name('roles.store');
         Route::get('/roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'edit'])->name('roles.edit');
         Route::patch('/roles/{id}', [App\Http\Controllers\RolesController::class, 'update'])->name('roles.update');
         Route::delete('/roles/{id}', [App\Http\Controllers\RolesController::class, 'destroy'])->name('roles.destroy');
-    
+
     });
 
     Route::group(['middleware' => ['permission:mantenedor permisos']], function () {
@@ -93,9 +107,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::patch('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'update'])->name('permissions.update');
         Route::delete('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'destroy'])->name('permissions.destroy');
     });
-    
 
-    
+
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
@@ -112,4 +126,4 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home'); 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Region;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -51,6 +54,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'run' => ['required', 'unique:users','regex:/^\d{7,8}-[0-9K]$/'],
+            'address' => ['required', 'string'],
+            'city_fk' => ['required', 'string'],
+            'region_fk' => ['required', 'string'],
+            'country_fk' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -64,14 +72,46 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        $user= User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-        $user->assignRole('cliente');
+{
+
+
+    $user= User::create([
+        'run' => $data['run'],
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'address' => $data['address'],
+        'city_fk' => $data['city_fk'],
+        'region_fk' => $data['region_fk'],
+        'country_fk' => $data['country_fk'],
+
+
+    ]);
+    $user->assignRole('cliente');
 
         return $user;
-    }
+
+}
+
+public function showRegistrationForm()
+{
+    $countries = Country::all();
+    $regions= Region::all();
+    $cities = City::all();
+    return view('auth.register', compact('cities','regions','countries'));
+}
+
+public function getRegions($countryId)
+{
+    $regions = Region::where('country_fk', $countryId)->get();
+
+    return response()->json(['regions' => $regions]);
+}
+
+public function getCities($regionId)
+{
+    $cities = City::where('region_fk', $regionId)->get();
+
+    return response()->json(['cities' => $cities]);
+}
 }
