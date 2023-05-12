@@ -8,6 +8,9 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
 use App\Http\Controllers\Controller\PermissionsController;
+use App\Http\Controllers\Controller\CityController;
+use App\Http\Controllers\Controller\RegionController;
+use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
 
 /*
@@ -25,6 +28,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
+Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
 Auth::routes();
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
@@ -37,6 +42,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
+
+
+
+
 
     Route::get('/profile', function () {
         return view('profile');

@@ -14,9 +14,14 @@ class RegionController extends Controller
      */
     public function index()
     {
-        //
+        $regions = Region::all();
+        return view('regions.index', compact('regions'));
     }
-
+    public function getRegions($countryId)
+    {
+        $regions = Region::where('country_fk', $countryId)->get();
+        return response()->json($regions);
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -40,7 +40,7 @@
             </li>
             @can('mantenedor usuarios')
                 <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
-                    <a class="nav-link {{ request()->is('users') ? 'active' : '' }}" href="{{ route('users.index') }}">
+                    <a class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}" href="{{ route('users.index') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
