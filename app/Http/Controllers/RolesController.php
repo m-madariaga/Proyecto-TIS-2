@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\statusChangeEmail;
 
 class RolesController extends Controller
 {
@@ -224,6 +226,8 @@ class RolesController extends Controller
             default:
         }
         error_log("test");
+
+        Mail::to('admin@test.cl')->queue(new statusChangeEmail($role->name, $request->role_type, $role->id));
 
         return redirect('/admin/roles')->with('success', 'Rol actualizado exitosamente!');
     }

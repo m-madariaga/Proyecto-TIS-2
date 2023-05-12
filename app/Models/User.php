@@ -24,7 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'run',
-        'address'
+        'address',
+        'city_fk',
+        'country_fk',
+        'region_fk',
     ];
     public function roleName()
     {
