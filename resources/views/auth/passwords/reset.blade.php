@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.argon.auth')
 
 @section('content')
 <div class="container">
