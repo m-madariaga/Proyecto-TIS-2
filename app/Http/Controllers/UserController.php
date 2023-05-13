@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProofPayment;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -22,6 +24,7 @@ class UserController extends Controller
     public function generate_pdf(){
         $users = User::all();
         $fecha_actual = Carbon::now();
+        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users,$fecha_actual));
         $pdf = PDF::loadView('receipt.ticket',['users' => $users,'fecha_actual' => $fecha_actual]);
         return $pdf->stream('ticket.pdf');
     }

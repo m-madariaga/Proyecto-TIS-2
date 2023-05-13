@@ -10,17 +10,20 @@
     <style>
 		body {
 			font-family: Arial, sans-serif;
+            background-color: #e354a3;
 		}
 		.container {
 			width: 80%;
 			margin: auto;
+            background-color: white;
+            padding: 10px;
 		}
 		.logo {
-			float: left;
+			float: center;
 		}
 		.invoice-header {
 			margin-bottom: 20px;
-			padding-bottom: 20px;
+			padding: 20px;
 			border-bottom: 1px solid #ccc;
 		}
 		.invoice-header h1 {
@@ -49,10 +52,7 @@
 			border: 1px solid #ccc;
 			padding: 8px;
 			text-align: center;
-		}
-		.invoice-total {
-			float: right;
-		}
+		}		
 		.invoice-total td:first-child {
 			font-weight: bold;
 			text-align: right;
@@ -72,7 +72,7 @@
 <body>
 <div class="container">
 		<header class="invoice-header">
-			<img class="logo img-fluid" src="..\public\assets\images\logo_2.png" alt="Logo de la empresa">
+			<img class="logo img-fluid" src="{{ $message->embed(public_path('\assets\images\logo_2.png')) }}" alt="Logo de la empresa">
 			<h1>Comprobante de Compra</h1>
 			
             <text>Cliente: {{$users[0]->name}}</text>
@@ -106,7 +106,7 @@
 						<td>$20.00</td>
 					</tr>
 				</tbody>
-				<tfoot>
+				<tfoot>                    
 					<tr class="invoice-total">
 						<td colspan="3">Total:</td>
 						<td>$40.00</td>
