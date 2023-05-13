@@ -2,7 +2,10 @@
 <html lang="en">
 
 <head>
-    <title>Que guay! </title>
+    <title>
+        Que guay! 
+    @yield('title')
+    </title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,6 +28,9 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
+    
+    @yield('css')
+
 </head>
 
 <body>
@@ -48,7 +54,7 @@
                                 <ul class="top_nav_menu">
 
                                     <!-- Language / My Account -->
-
+        
 
                                     <li class="language">
                                         <a href="#">
@@ -81,40 +87,7 @@
 
             <!-- Main Navigation -->
 
-            <div class="main_nav_container">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 text-right">
-                            <div class="logo_container">
-                                <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 3rem;" alt="main_logo">
-                            </div>
-                            <nav class="navbar">
-                                <ul class="navbar_menu">
-                                    <li><a href="#">home</a></li>
-                                    <li><a href="#">shop</a></li>
-                                    <li><a href="#">promotion</a></li>
-                                    <li><a href="#">pages</a></li>
-                                    <li><a href="#">FAQ's</a></li>
-                                    <li><a href="#">contact</a></li>
-                                </ul>
-                                <ul class="navbar_user">
-                                    <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-
-                                    <li class="checkout">
-                                        <a href="#">
-                                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                            <span id="checkout_items" class="checkout_items">2</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <div class="hamburger_container">
-                                    <i class="fa fa-bars" aria-hidden="true"></i>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           @include('navbar_landing')
 
         </header>
 
@@ -145,7 +118,14 @@
                             <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
                         </ul>
                     </li>
-                    <li class="menu_item"><a href="#">home</a></li>
+                    <li class="menu_item"><a href="#">Mujer</a>
+                        <ul class="mujer_selection">
+                            <li><a href="#">Chalecos</a></li>
+                            <li><a href="#">Blusas</a></li>
+                            <li><a href="#">Poleras</a></li>
+                            <li><a href="#">Pantalones</a></li>
+                        </ul>
+                    </li>
                     <li class="menu_item"><a href="#">shop</a></li>
                     <li class="menu_item"><a href="#">promotion</a></li>
                     <li class="menu_item"><a href="#">pages</a></li>
@@ -419,7 +399,7 @@
         </div>
 
         <!-- Deal of the week -->
-        
+
         <div class="sale" style="background-image:url(assets/images/s_foto1.jpg)">
             <div class="container fill_height">
                 <div class="row align-items-center fill_height ">
@@ -487,7 +467,7 @@
 
     <!-- Blogs -->
 
-    
+
 
 
     <!-- Newsletter
