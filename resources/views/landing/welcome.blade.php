@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,7 +32,9 @@
         <!-- Navbar -->
         @include('landing.main-navigation')
         <!-- End Navbar -->
+
         @yield('content')
+
 
         @include('landing.footer-landing')
     </main>
