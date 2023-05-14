@@ -102,12 +102,62 @@
 }
 
 /************
-5. 1024px
+Barra navegacion
 ************/
+ /* Estilos para dispositivos pequeños */
+ @media screen and (max-width: 800px) {
+	.hamburger_container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 50px;
+		height: 50px;
+		cursor: pointer;
+	}
+	.hamburger_container i {
+		font-size: 24px;
+		color: #000;
+	}
+	.hamburger_container.open i {
+		transform: rotate(90deg);
+	}
+	.navbar_menu {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		background-color: #fff;
+		padding: 20px;
+		box-shadow: 0 0 10px rgba(0,0,0,0.2);
+	}
+	.navbar_menu.show {
+		display: block;
+	}
+	.navbar_menu li {
+		display: block;
+		margin: 10px 0;
+		font-size: 18px;
+		font-weight: 600;
+	}
+}
 
-@media only screen and (max-width: 1024px)
-{
-	
+/* Estilos para dispositivos grandes */
+@media screen and (min-width: 1245px) {
+	.hamburger_container {
+		display: none;
+	}
+	.navbar_menu {
+		display: flex !important;
+		position: static !important;
+		width: auto !important;
+		background-color: transparent !important;
+		box-shadow: none !important;
+	}
+	.navbar_menu li {
+		display: inline-block;
+		margin: 0 10px;
+	}
 }
 
 /************
@@ -285,7 +335,7 @@
 9. 768px
 ************/
 
-@media only screen and (max-width: 768px)
+@media only screen and (max-width: 780px)
 {
 	
 }
@@ -294,7 +344,7 @@
 10. 767px
 ************/
 
-@media only screen and (max-width: 767px)
+@media only screen and (max-width: 780px)
 {
 	h1{font-size: 36px;}
 	h2{font-size: 24px;}
