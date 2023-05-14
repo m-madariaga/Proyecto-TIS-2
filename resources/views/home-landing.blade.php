@@ -1,26 +1,5 @@
 @extends('layouts-landing.welcome')
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-@endsection
-
-@section('js')
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/owl.carousel.js"></script>
-    <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
-@endsection
-
-
 @section('content')
     <div class="main_slider" style="background-image:url(assets/images/s_foto1.jpg)">
         <div class="container fill_height">
@@ -368,24 +347,24 @@
 
     <!-- Newsletter
 
-                <div class="newsletter">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
-                                    <h4>Newsletter</h4>
-                                    <p>Subscribe to our newsletter and get 20% off your first purchase</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <form action="post">
-                                    <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
-                                        <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
-                                        <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
-                                    </div>
-                                </form>
+            <div class="newsletter">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+                                <h4>Newsletter</h4>
+                                <p>Subscribe to our newsletter and get 20% off your first purchase</p>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <form action="post">
+                                <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                    <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
+                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div> -->
+                </div>
+            </div> -->
 @endsection
