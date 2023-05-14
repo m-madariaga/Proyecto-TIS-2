@@ -27,16 +27,16 @@
 
 <body class="g-sidenav-show   bg-gray-100">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    @include('layouts-landing.navbar-landing')
+    @include('landing.navbar-landing')
     <main class="main-content position-relative border-radius-lg ">
         <!-- Navbar -->
-        @include('layouts-landing.main-navigation')
+        @include('landing.main-navigation')
         <!-- End Navbar -->
 
         @yield('content')
 
 
-        @include('layouts-landing.footer-landing')
+        @include('landing.footer-landing')
     </main>
     <!--   Core JS Files   -->
 
