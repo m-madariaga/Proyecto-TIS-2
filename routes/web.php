@@ -22,7 +22,7 @@ use App\Http\Controllers\EventController;
 */
 
 Route::get('/', function () {
-    return view('landing.home-landing');
+    return view('home-landing');
 });
 
 Auth::routes();
