@@ -25,7 +25,7 @@ use App\Http\Controllers\EventController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing.home-landing');
 });
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
