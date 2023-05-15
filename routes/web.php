@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller\CityController;
 use App\Http\Controllers\Controller\RegionController;
 use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ShipmentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
 
-
+    Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
+    Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
+    Route::post('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'store'])->name('shipment_types.store');
+    Route::get('/shipment_types/{id}/edit', [App\Http\Controllers\ShipmentTypeController::class, 'edit'])->name('shipment_types.edit');
+    Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
+    Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
     Route::get('/profile', function () {
