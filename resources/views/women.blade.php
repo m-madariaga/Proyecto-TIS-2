@@ -1,30 +1,58 @@
 @extends('layouts-landing.welcome')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+
 @endsection
 
 @section('js')
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/owl.carousel.js"></script>
-    <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
+
 @endsection
 
 
 @section('content')
-<h1>LISTA DE PRODUCTOS</h1>
-@foreach($product as $productos)
-    <h3>{{$productos->nombre}}</h3>
-@endforeach
+<div class="container-fluid py-4 mb-4">
+
+    <div class="new_arrivals">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <div class="section_title new_arrivals_title">
+                        <h2>Products</h2>
+                    </div>
+                </div>
+            </div>
+      
+
+            <div class="row">
+                <div class="col">
+                    <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+                        @foreach($productos as $producto)
+                        <!-- Product 1 -->
+
+                        <div class="product-item">
+                            <div class="product discount product_filter">
+                                <div class="product-image" style=" width: 100%; height: 300px; ">
+                                    <img style="width: 100%; height: 100%;object-fit: cover;" src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
+                                </div>
+                                <div class="product_info">
+                                    <h5 class="product_name"><a href="#">{{$producto->nombre}}</a></h6>
+                                    <div class="product_price">${{$producto->precio}}</div>
+                                </div>
+                            </div>
+                            <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
+
+                        </div>
+
+
+                        @endforeach
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @endsection

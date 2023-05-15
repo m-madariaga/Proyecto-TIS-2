@@ -19,7 +19,7 @@ class CategorySeeder extends Seeder
         $category->save();
         
         $category = new Category();
-        $category->nombre = 'Pantalon';
+        $category->nombre = 'Pantalón';
         $category->descripcion = 'vestimenta de tipo pantalon para mujer';
         $category->save();
 

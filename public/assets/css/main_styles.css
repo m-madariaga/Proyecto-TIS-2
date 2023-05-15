@@ -890,6 +890,8 @@ section {
 	-ms-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	
+	margin-top: 2.45rem;
 }
 
 .red_button:hover {
@@ -1024,6 +1026,8 @@ section {
 *********************************/
 
 .product-grid {
+	display: flex;
+	justify-content: center;
 	width: 100%;
 	margin-top: 57px;
 }
@@ -1032,6 +1036,10 @@ section {
 	width: 20%;
 	height: 380px;
 	cursor: pointer;
+	margin: 1rem;
+	margin-top: 2rem;
+
+	
 }
 
 .product-item::after {
@@ -1078,7 +1086,7 @@ section {
 }
 
 .product_name {
-	margin-top: 27px;
+	margin-top: 1rem;
 }
 
 .product_name a {

@@ -40,7 +40,9 @@
             @include('layouts-landing.main-navigation')
         </header>
 
-        @yield('content')
+       <div style="margin-top: 8rem;">
+       @yield('content')
+       </div>
 
         <!-- Footer -->
         @include('layouts-landing.footer-landing')

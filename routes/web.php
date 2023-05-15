@@ -35,9 +35,10 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-Route::get('/women', function () {
-    return view('/women');
-})->name('women');
+
+
+Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+
 
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);

@@ -16,10 +16,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product = Product::all();
-        return view('product.index', ['products' => $product]);
+        $productos = Product::all();
+        return view('product.index', compact('productos'));
     }
 
+
+    public function women_product(){
+
+        $productos = Product::all();
+        return view('women', compact('productos'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *
