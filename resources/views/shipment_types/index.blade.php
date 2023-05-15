@@ -33,7 +33,7 @@
                         <!-- Modal -->
                         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel"
                             aria-hidden="true" data-bs-backdrop="static">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="addModalLabel">Añadir tipo de envío</h5>
@@ -46,7 +46,7 @@
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="name">Nombre del tipo de envío:</label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre">
+                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -102,7 +102,7 @@
                             </table>
                             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
                                 aria-hidden="true" data-bs-backdrop="static">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="editModalLabel">Editar tipo de envío</h5>
