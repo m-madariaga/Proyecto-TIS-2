@@ -82,7 +82,7 @@
                                 <!-- Include other input fields for name, email, password -->
                                 <div class="mb-3">
                                     <label for="country">País:</label>
-                                    <select id="country" class="form-control @error('country') is-invalid @enderror"
+                                    <select id="country" class="form-select @error('country') is-invalid @enderror"
                                         name="country_fk" required>
                                         <option value="">Seleccionar País</option>
                                         @foreach ($countries as $country)
@@ -98,7 +98,7 @@
 
                                 <div class="mb-3">
                                     <label for="region">Región:</label>
-                                    <select id="region" class="form-control @error('region') is-invalid @enderror"
+                                    <select id="region" class="form-select @error('region') is-invalid @enderror"
                                         name="region_fk" required>
                                         <option value="">Seleccionar Región</option>
                                         @foreach ($regions as $region)
@@ -114,7 +114,7 @@
 
                                 <div class="mb-3">
                                     <label for="city">Ciudad:</label>
-                                    <select id="city" class="form-control @error('city') is-invalid @enderror"
+                                    <select id="city" class="form-select @error('city') is-invalid @enderror"
                                         name="city_fk" required>
                                         <option value="">Seleccionar Ciudad</option>
                                         @foreach ($cities as $city)
