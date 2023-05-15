@@ -18,5 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call(CountrySeeder::class);
         $this->call(RegionSeeder::class);
         $this->call(CitySeeder::class);
+
+        $this->call(CategorySeeder::class);
+        $this->call(BrandSeeder::class);
+        $this->call(ProductSeeder::class);
     }
 }

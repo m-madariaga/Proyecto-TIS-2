@@ -24,13 +24,25 @@ use App\Http\Controllers\EventController;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
-    return view('landing.home-landing');
+    return view('home-landing');
 });
+
+
+
+Route::get('/home-landing', function () {
+    return view('/home-landing');
+})->name('home-landing');
+
+Route::get('/women', function () {
+    return view('/women');
+})->name('women');
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-Auth::routes();
+
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui

@@ -11,14 +11,15 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'marca_id',
-        'categoria_id',
         'nombre',
         'precio',
         'color',
         'talla',
         'stock',
-        'imagen',
+        'imagen', 
+        'visible',
+        'marca_id',
+        'categoria_id',
     ];
 
     public function marca(): BelongsTo{
