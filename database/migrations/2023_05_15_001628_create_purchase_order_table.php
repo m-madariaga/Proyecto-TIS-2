@@ -13,7 +13,7 @@ class CreatePurchaseOrderTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchase_order', function (Blueprint $table) {
+        Schema::create('purchase_orders', function (Blueprint $table) {
             $table->id();
             $table->integer('total');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreatePurchaseOrderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchase_order');
+        Schema::dropIfExists('purchase_orders');
     }
 }

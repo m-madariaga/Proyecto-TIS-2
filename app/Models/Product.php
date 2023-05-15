@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -26,5 +27,8 @@ class Product extends Model
     }
     public function categoria(): BelongsTo{
         return $this->belongsTo(Category::class,'categoria_id');
+    }
+    public function purchase_order(): BelongsToMany {
+        return $this->belongsToMany(Purchase_order::class,'purchase_order_products');
     }
 }
