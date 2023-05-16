@@ -3,7 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
@@ -25,13 +25,26 @@ use App\Http\Controllers\ShipmentTypeController;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
-    return view('welcome');
+    return view('home-landing');
 });
+
+
+
+Route::get('/home-landing', function () {
+    return view('/home-landing');
+})->name('home-landing');
+
+
+
+Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-Auth::routes();
+
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
@@ -44,6 +57,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
+    Route::get('/users/pdf',[UserController::class, 'generate_pdf'])->name('users.generate_pdf');
 
     Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
     Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
@@ -60,9 +74,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-
-    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
-    Route::post('full-calendar/action', [EventController::class, 'action']);
+  
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
+    Route::post('/calendar/agregar', [EventController::class, 'store'])->name('calendar_agregar');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

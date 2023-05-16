@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\statusChangeEmail;
 
 class RolesController extends Controller
 {
@@ -75,12 +77,32 @@ class RolesController extends Controller
                 if($request->defaultCheck7==7){
                     $role->givePermissionTo('mantenedor marcas');
                 }
+
+                if($request->defaultCheck8==8){
+                    $role->givePermissionTo('mantenedor ventas');
+                }
+
+                if($request->defaultCheck9==9){
+                    $role->givePermissionTo('mantenedor envio');
+                }
+
+                if($request->defaultCheck10==10){
+                    $role->givePermissionTo('mantenedor tipo envio');
+                }
+
+                if($request->defaultCheck11==11){
+                    $role->givePermissionTo('mantenedor metodo pago');
+                }
                 break;
             case 2:
                 $role->givePermissionTo('vista analista');
 
                 if($request->defaultCheck1==1){
                     $role->givePermissionTo('dashboard');
+                }
+
+                if($request->defaultCheck2==2){
+                    $role->givePermissionTo('reporte ventas');
                 }
                 
                 break;
@@ -161,14 +183,41 @@ class RolesController extends Controller
                     error_log($permissions);
                 }
 
+                if($request->defaultCheck8==8){
+                    $permissions->push('mantenedor ventas');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck9==9){
+                    $permissions->push('mantenedor envio');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck10==10){
+                    $permissions->push('mantenedor tipo envio');
+                    error_log($permissions);
+                }
+
+                if($request->defaultCheck11==11){
+                    $permissions->push('mantenedor metodo pago');
+                    error_log($permissions);
+                }
+
                 $role->syncPermissions([$permissions]);
                 break;
             case 2:
                 $permissions->push('vista analista');
+
                 if($request->defaultCheck1==1){
                     $permissions->push('dashboard');
                     error_log($permissions);
                 }
+
+                if($request->defaultCheck2==2){
+                    $permissions->push('reporte ventas');
+                    error_log($permissions);
+                }
+
                 $role->syncPermissions([$permissions]);
                 break;
             case 3:
@@ -177,6 +226,8 @@ class RolesController extends Controller
             default:
         }
         error_log("test");
+
+        Mail::to('admin@test.cl')->queue(new statusChangeEmail($role->name, $request->role_type, $role->id));
 
         return redirect('/admin/roles')->with('success', 'Rol actualizado exitosamente!');
     }
