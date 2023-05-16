@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller\CityController;
 use App\Http\Controllers\Controller\RegionController;
 use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,8 +39,6 @@ Route::get('/home-landing', function () {
 
 
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
-
-
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
@@ -70,7 +69,11 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     })->name('page');
   
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
-    Route::post('/calendar/agregar', [EventController::class, 'store'])->name('calendar_agregar');
+    Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
+
+    Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+    Route::post('/orders/store',[OrderController::class,'store'])->name('orders-store');
+    Route::get('/orders/{id}/edit',[OrderController::class,'edit'])->name('orders-edit');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -123,7 +126,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
 
 
-
+  
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
