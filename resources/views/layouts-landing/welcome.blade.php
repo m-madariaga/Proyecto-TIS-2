@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="assets/css/main_styles.css">
     <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-
+    @yield('css')
     <!-- Template Main JS File -->
     <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/popper.js"></script>
@@ -23,23 +23,32 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
+    @yield('js')
 </head>
 
-<body class="g-sidenav-show   bg-gray-100">
-    <div class="min-height-300 bg-primary position-absolute w-100"></div>
-    @include('landing.navbar-landing')
-    <main class="main-content position-relative border-radius-lg ">
-        <!-- Navbar -->
-        @include('landing.main-navigation')
-        <!-- End Navbar -->
 
-        @yield('content')
+<body>
+    <div class="super_container">
+        <!-- Header -->
+
+        <header class="header trans_300">
+
+            <!-- Top Navigation -->
+            @include('layouts-landing.navbar-landing')
+            <!-- Main Navigation -->
+
+            @include('layouts-landing.main-navigation')
+        </header>
+
+       <div style="margin-top: 8rem;">
+       @yield('content')
+       </div>
+
+        <!-- Footer -->
+        @include('layouts-landing.footer-landing')
 
 
-        @include('landing.footer-landing')
-    </main>
-    <!--   Core JS Files   -->
-
+    </div>
 
     @yield('js')
 </body>

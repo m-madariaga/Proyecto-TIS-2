@@ -7,6 +7,19 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
+        <!-- Toggle Hamburger -->
+        <script>
+        $(document).ready(function(){
+            $('.hamburger_container').click(function(){
+                $(this).toggleClass('open');
+                $('.navbar_menu').toggleClass('show');
+            });
+        });
+    </script>
+
+    <!-- CSS Styles -->
+ 
+
 </head>
 
 
@@ -19,12 +32,12 @@
                 </div>
                 <nav class="navbar">
                     <ul class="navbar_menu">
-                        <li><a href="#">home</a></li>
-                        <li><a href="#">shop</a></li>
-                        <li><a href="#">promotion</a></li>
-                        <li><a href="#">pages</a></li>
-                        <li><a href="#">FAQ's</a></li>
-                        <li><a href="#">contact</a></li>
+                        <li><a href="{{route('home-landing')}}">home</a></li>
+                        <li><a href="#">men</a></li>
+                        <li><a href="{{route('women')}}">women</a></li>
+                        <li><a href="#">kids</a></li>
+                        <li><a href="#">accesories</a></li>
+                        <li><a href="#">sale</a></li>
                     </ul>
                     <ul class="navbar_user">
                         <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>

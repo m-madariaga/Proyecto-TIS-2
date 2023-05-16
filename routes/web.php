@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller\RegionController;
 use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PurcharseOrderController;
+use App\Http\Controllers\ShipmentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +26,26 @@ use App\Http\Controllers\PurcharseOrderController;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
-    return view('landing.home-landing');
+    return view('home-landing');
 });
+
+
+
+Route::get('/home-landing', function () {
+    return view('/home-landing');
+})->name('home-landing');
+
+
+
+Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-Auth::routes();
+
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
@@ -46,7 +60,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::get('/users/pdf',[UserController::class, 'generate_pdf'])->name('users.generate_pdf');
 
-
+    Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
+    Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
+    Route::post('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'store'])->name('shipment_types.store');
+    Route::get('/shipment_types/{id}/edit', [App\Http\Controllers\ShipmentTypeController::class, 'edit'])->name('shipment_types.edit');
+    Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
+    Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
     Route::get('/profile', function () {
@@ -56,9 +75,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-
-    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
-    Route::post('full-calendar/action', [EventController::class, 'action']);
+  
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
+    Route::post('/calendar/agregar', [EventController::class, 'store'])->name('calendar_agregar');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
