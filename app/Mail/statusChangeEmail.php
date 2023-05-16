@@ -34,7 +34,7 @@ class statusChangeEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.status_changed')->with([
+        return $this->markdown('emails.status_changed')->with([
             "name" => $this->name,
             "status" => $this->status,
             "id" => $this->id

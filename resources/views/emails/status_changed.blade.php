@@ -1,12 +1,14 @@
-Hola <i>{{ $name }}</i>,
+@component('mail::message')
+# Introduction
 
-<p>El estado de su orden {{$id}} ha cambiado.</p>
+Hola {{ $name }},
 
- 
+El estado de su orden {{$id}} ha cambiado.
 
-<p><u>Ahora se encuentra en estado {{$status}}.</u></p>
-
- 
-
+ Ahora se encuentra en estado {{$status}}.
 
 
+
+Thanks,<br>
+{{ config('app.name') }}
+@endcomponent
