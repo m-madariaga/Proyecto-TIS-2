@@ -21,7 +21,7 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 md-6">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header pb-0">
                     <a href="{{ route('roles.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
