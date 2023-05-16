@@ -5,52 +5,92 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class EventController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-    	if($request->ajax())
-    	{
-    		$data = Event::whereDate('start', '>=', $request->start)
-                       ->whereDate('end',   '<=', $request->end)
-                       ->get(['id', 'title', 'start', 'end']);
-            return response()->json($data);
-    	}
-    	return view('calendar');
+        return view('calendar');
     }
 
-    public function action(Request $request)
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-    	if($request->ajax())
-    	{
-    		if($request->type == 'add')
-    		{
-    			$event = Event::create([
-    				'title'		=>	$request->title,
-    				'start'		=>	$request->start,
-    				'end'		=>	$request->end
-    			]);
+        //
+    }
 
-    			return response()->json($event);
-    		}
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate(Event::$rules);
+    
+        Event::create([
+            'title' => $validatedData['title'],
+            'description' => $validatedData['description'],
+            'start' => $validatedData['start'],
+            'end' => $validatedData['end'],
+        ]);
+    
+        return redirect()->route('calendar')->with('success', 'Event created successfully.');
+    }
 
-    		if($request->type == 'update')
-    		{
-    			$event = Event::find($request->id)->update([
-    				'title'		=>	$request->title,
-    				'start'		=>	$request->start,
-    				'end'		=>	$request->end
-    			]);
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Event $event)
+    {
+        //
+    }
 
-    			return response()->json($event);
-    		}
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Event $event)
+    {
+        //
+    }
 
-    		if($request->type == 'delete')
-    		{
-    			$event = Event::find($request->id)->delete();
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Event $event)
+    {
+        //
+    }
 
-    			return response()->json($event);
-    		}
-    	}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Event  $event
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Event $event)
+    {
+        //
     }
 }

@@ -211,6 +211,11 @@ ul {
   padding-left: 2rem;
 }
 
+#ul-table{
+  padding-left: 1rem;
+  list-style: none;
+}
+
 ol,
 ul,
 dl {

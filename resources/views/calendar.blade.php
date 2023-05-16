@@ -19,13 +19,13 @@
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card p-4">
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
                             <p class="mb-0">Personal Calendar</p>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div class="col-md-12">
                         <div id="calendar">
                         </div>
                     </div>
@@ -34,174 +34,97 @@
 
         </div>
         <!-- Modal para agregar eventos -->
-        <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form-label">
-            <div class="modal-dialog" role="document">
+        <div class="modal fade" id="modal-event" tabindex="-1" aria-labelledby="modal-event-label" aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modal-form-label">Agregar Evento</h4>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Event</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="modal-body">
-                            <form id="add-event-form">
-                                <div class="form-group">
-                                    <label>Titulo</label>
-                                    <input type="text" class="form-control" name="title" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Fecha y Hora de inicio</label>
-                                    <input type="datetime-local" class="form-control" name="start" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Fecha y Hora de fin</label>
-                                    <input type="datetime-local" class="form-control" name="end" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Descripcion</label>
-                                    <textarea class="form-control" name="description"></textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                            <button type="button" class="btn btn-primary">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal para confirmar eliminación de eventos -->
-            <div class="modal fade" id="modal-confirm" tabindex="-1" role="dialog" aria-labelledby="modal-confirm-label">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="modal-confirm-label">Confirmar Eliminación</h4>
-                        </div>
-                        <div class="modal-body">
-                            ¿Estás seguro de que quieres eliminar este evento?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-danger">Eliminar</button>
-                        </div>
+                        <form action="{{ route('calendar_agregar') }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="start" class="form-label">Start</label>
+                                <input type="datetime-local" class="form-control" id="start" name="start" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="end" class="form-label">End</label>
+                                <input type="datetime-local" class="form-control" id="end" name="end" required>
+                            </div>
+                            <div class="mb-3 col-sm-3">
+                                <label for="color" class="form-label">Color</label>
+                                <input type="color" class="form-control" id="color" name="color" value="#ff0000"
+                                    required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-info">Edit changes</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
 
-    @section('js')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
+@section('js')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/locales-all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
 
-        <script>
-            $(document).ready(function() {
-
-                var title;
-
-                var calendar = $('#calendar').fullCalendar({
-                    editable: true,
-                    header: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'month,agendaWeek,agendaDay'
-                    },
-                    events: '/full-calendar',
-                    selectable: true,
-                    select: function(start, end, allDay) {
-
-                        $('#modal-form').modal('show'); // muestra el modal
-
-                        $('#title').val('');
-                        $('#start').val('');
-                        $('#end').val('');
-
-                        $('#save-event').unbind().on('click', function() {
-                            title = $('#title').val();
-                            if (title) {
-                                var start = $.fullCalendar.formatDate($('#start').val(),
-                                    'Y-MM-DD HH:mm:ss');
-                                var end = $.fullCalendar.formatDate($('#end').val(),
-                                    'Y-MM-DD HH:mm:ss');
-
-                                $.ajax({
-                                    url: "/full-calendar/action",
-                                    type: "POST",
-                                    data: {
-                                        title: title,
-                                        start: start,
-                                        end: end,
-                                        type: 'add'
-                                    },
-                                    success: function(data) {
-                                        calendar.fullCalendar('refetchEvents');
-                                    }
-                                });
-                            }
-                            $('#modal-form').modal('hide');
-                        });
-                    },
-                    editable: true,
-                    eventResize: function(event, delta) {
-                        var start = $.fullCalendar.formatDate(event.start, 'Y-MM-DD HH:mm:ss');
-                        var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD HH:mm:ss');
-                        var title = event.title;
-                        var id = event.id;
-                        $.ajax({
-                            url: "/full-calendar/action",
-                            type: "POST",
-                            data: {
-                                title: title,
-                                start: start,
-                                end: end,
-                                id: id,
-                                type: 'update'
-                            },
-                            success: function(response) {
-                                calendar.fullCalendar('refetchEvents');
-                            }
-                        })
-                    },
-                    eventDrop: function(event, delta) {
-                        var start = $.fullCalendar.formatDate(event.start, 'Y-MM-DD HH:mm:ss');
-                        var end = $.fullCalendar.formatDate(event.end, 'Y-MM-DD HH:mm:ss');
-                        var title = event.title;
-                        var id = event.id;
-                        $.ajax({
-                            url: "/full-calendar/action",
-                            type: "POST",
-                            data: {
-                                title: title,
-                                start: start,
-                                end: end,
-                                id: id,
-                                type: 'update'
-                            },
-                            success: function(response) {
-                                calendar.fullCalendar('refetchEvents');
-                            }
-                        })
-                    },
-
-                    eventClick: function(event) {
-                        if (confirm("Are you sure you want to remove it?")) {
-                            var id = event.id;
-                            $.ajax({
-                                url: "/full-calendar/action",
-                                type: "POST",
-                                data: {
-                                    id: id,
-                                    type: "delete"
-                                },
-                                success: function(response) {
-                                    calendar.fullCalendar('refetchEvents');
-                                }
-                            })
-                        }
-                        $('#modal-confirm').modal('show'); // muestra el modal
-                    }
-                });
-
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    center: 'title',
+                    end: 'prevYear,prev,next,nextYear'
+                },
+                dateClick: function(info) {
+                    $("#modal-event").modal("show"); // muestra el modal
+                }
             });
-        </script>
-    @endsection
+            calendar.render();
+            $("#btn-primary").click(function() {
+                // get datos
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var start = $("#start").val();
+                var end = $("#end").val();
+
+                
+                var event = {
+                    title: title,
+                    description: description,
+                    start: start,
+                    end: end
+                };
+
+                // add the event to the calendar
+                calendar.addEvent(event);
+
+                // hide the modal
+                $("#modal-event").modal("hide");
+            });
+            $("#btn-info").click(function() {
+            
+                // hide the modal
+                $("#modal-event").modal("hide");
+            });
+
+        });
+    </script>
+@endsection

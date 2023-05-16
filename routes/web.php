@@ -3,7 +3,7 @@
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Controller\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
@@ -12,6 +12,8 @@ use App\Http\Controllers\Controller\CityController;
 use App\Http\Controllers\Controller\RegionController;
 use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PurcharseOrderController;
+use App\Http\Controllers\ShipmentTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,13 +26,26 @@ use App\Http\Controllers\EventController;
 |
 */
 
+Auth::routes();
 Route::get('/', function () {
-    return view('welcome');
+    return view('home-landing');
 });
+
+
+
+Route::get('/home-landing', function () {
+    return view('/home-landing');
+})->name('home-landing');
+
+
+
+Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-Auth::routes();
+
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
@@ -43,8 +58,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
+    Route::get('/users/pdf',[UserController::class, 'generate_pdf'])->name('users.generate_pdf');
 
-
+    Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
+    Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
+    Route::post('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'store'])->name('shipment_types.store');
+    Route::get('/shipment_types/{id}/edit', [App\Http\Controllers\ShipmentTypeController::class, 'edit'])->name('shipment_types.edit');
+    Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
+    Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
     Route::get('/profile', function () {
@@ -54,9 +75,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-
-    Route::get('/calendar', [App\Http\Controllers\EventController::class, 'index'])->name('calendar');;
-    Route::post('full-calendar/action', [EventController::class, 'action']);
+  
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
+    Route::post('/calendar/agregar', [EventController::class, 'store'])->name('calendar_agregar');
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -67,6 +88,15 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/productos/{id}/edit',[ProductController::class,'edit'])->name('productos-edit');
         Route::patch('/productos/{id}/update',[ProductController::class,'update'])->name('productos-update');
         Route::delete('/productos/{id}',[ProductController::class,'destroy'])->name('productos-destroy');
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor ordenes']], function () {
+        Route::get('/orden-compra',[PurcharseOrderController::class,'index'])->name('orden-compra');
+        Route::get('/orden-compra/create',[PurcharseOrderController::class,'create'])->name('orden-compra-create');
+        Route::post('/orden-compra/store',[PurcharseOrderController::class,'store'])->name('orden-compra-store');
+        Route::get('/orden-compra/{id}/edit',[PurcharseOrderController::class,'edit'])->name('orden-compra-edit');
+        Route::patch('/orden-compra/{id}/update',[PurcharseOrderController::class,'update'])->name('orden-compra-update');
+        Route::delete('/orden-compra/{id}',[PurcharseOrderController::class,'destroy'])->name('orden-compra-destroy');
     });
 
     Route::group(['middleware' => ['permission:mantenedor categorias']], function () {
