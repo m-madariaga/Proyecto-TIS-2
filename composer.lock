@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "53e380977a50effee98141b455089a2f",
+    "content-hash": "d75c26b4626796f3516af99d18e02f96",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -195,44 +195,47 @@
             "time": "2023-01-15T23:15:59+00:00"
         },
         {
-            "name": "darryldecode/cart",
-            "version": "4.2.3",
+            "name": "bumbummen99/shoppingcart",
+            "version": "4.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/darryldecode/laravelshoppingcart.git",
-                "reference": "35825fa7d52141d34c024bbd5f0b47a36ccd1793"
+                "url": "https://github.com/bumbummen99/LaravelShoppingcart.git",
+                "reference": "1c50fb564826b6ee748d2d9afad7447b6884166e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/darryldecode/laravelshoppingcart/zipball/35825fa7d52141d34c024bbd5f0b47a36ccd1793",
-                "reference": "35825fa7d52141d34c024bbd5f0b47a36ccd1793",
+                "url": "https://api.github.com/repos/bumbummen99/LaravelShoppingcart/zipball/1c50fb564826b6ee748d2d9afad7447b6884166e",
+                "reference": "1c50fb564826b6ee748d2d9afad7447b6884166e",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/translation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/validation": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*|5.8.*|^6.0|^7.0|^8.0|^9.0|^10.0",
-                "php": ">=7.3"
+                "illuminate/events": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0||^7.0||^8.0||^9.0",
+                "illuminate/session": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0||^7.0||^8.0||^9.0",
+                "illuminate/support": "5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0||^7.0||^8.0||^9.0",
+                "nesbot/carbon": "~1.20||^1.26.3||^2.0"
             },
             "require-dev": {
-                "mockery/mockery": "^1.4.2",
-                "phpunit/phpunit": "^9.0",
-                "symfony/var-dumper": "5.1.5.*@dev"
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^3.4|^4.0|^5.0|^6.0",
+                "phpunit/phpunit": "~5.0||~6.0||~7.0||~8.0||~9.0"
+            },
+            "suggest": {
+                "gloudemans/notify": "Simple flash notifications for Laravel"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Darryldecode\\Cart\\CartServiceProvider"
+                        "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
                     ],
                     "aliases": {
-                        "Cart": "Darryldecode\\Cart\\Facades\\CartFacade"
+                        "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
                     }
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Darryldecode\\": "src/Darryldecode"
+                    "Gloudemans\\Shoppingcart\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -241,21 +244,26 @@
             ],
             "authors": [
                 {
-                    "name": "Darryl Fernandez",
-                    "email": "engrdarrylfernandez@gmail.com"
+                    "name": "Rob Gloudemans",
+                    "email": "info@robgloudemans.nl",
+                    "homepage": "http://robgloudemans.nl/"
+                },
+                {
+                    "name": "Patrick Henninger",
+                    "email": "privat@skyraptor.eu",
+                    "homepage": "https://skyraptor.eu/"
                 }
             ],
-            "description": "Laravel 5 Shopping cart",
+            "description": "Laravel Shoppingcart",
             "keywords": [
-                "cart",
                 "laravel",
-                "shopping cart"
+                "shoppingcart"
             ],
             "support": {
-                "issues": "https://github.com/darryldecode/laravelshoppingcart/issues",
-                "source": "https://github.com/darryldecode/laravelshoppingcart/tree/4.2.3"
+                "issues": "https://github.com/bumbummen99/LaravelShoppingcart/issues",
+                "source": "https://github.com/bumbummen99/LaravelShoppingcart/tree/4.2.0"
             },
-            "time": "2023-04-11T00:54:32+00:00"
+            "time": "2022-05-15T15:32:38+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -6164,16 +6172,16 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.21.0",
+            "version": "v1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "92efad6a967f0b79c499705c69b662f738cc9e4d"
+                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/92efad6a967f0b79c499705c69b662f738cc9e4d",
-                "reference": "92efad6a967f0b79c499705c69b662f738cc9e4d",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/f85772abd508bd04e20bb4b1bbe260a68d0066d2",
+                "reference": "f85772abd508bd04e20bb4b1bbe260a68d0066d2",
                 "shasum": ""
             },
             "require": {
@@ -6226,9 +6234,9 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.21.0"
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.22.0"
             },
-            "time": "2022-12-13T13:54:32+00:00"
+            "time": "2023-05-14T12:31:37+00:00"
         },
         {
             "name": "filp/whoops",

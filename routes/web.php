@@ -15,6 +15,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PurcharseOrderController;
 use App\Http\Controllers\ShipmentTypeController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -78,10 +79,11 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
-    Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+    Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::post('/orders/store',[OrderController::class,'store'])->name('orders-store');
-    Route::get('/orders/{id}/edit',[OrderController::class,'edit'])->name('orders-edit');
+    Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
+    
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
@@ -158,5 +160,11 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
+
+
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
+Route::post('/removeitem', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');

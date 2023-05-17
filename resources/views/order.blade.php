@@ -41,20 +41,68 @@
                                             <td class="text-center">{{ $order->codigo }}</td>
                                             <td class="text-center">{{ $order->created_at }}</td>
                                             <td class="text-center">
-                                                @if ($order->estado==0)
+                                                @if ($order->estado == 0)
                                                     No entregado
                                                 @else
                                                     Entregado
                                                 @endif
                                             </td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('orders-store', $order->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Ver Pedido</a>
-                                                @if(!$order->estado)
-                                                <a href="{{ route('orders-edit', $order->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Entregar</a>
-                                                @endif
+                                                <a href="{{ route('orders-store', $order->id) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> Ver
+                                                    Pedido</a>
+                                                <button class="btn btn-sm btn-outline-primary btnEntregar"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#editDeliver-{{ $order->id }}"><i
+                                                        class="fa fa-edit"></i> Entregar</button>
 
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="editDeliver-{{ $order->id }}" tabindex="-1"
+                                                    aria-labelledby="editModalLabel" aria-hidden="true"
+                                                    data-bs-backdrop="static">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="editModalLabel">Pedido a
+                                                                    Entregar</h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form
+                                                                    action="{{ route('orders.edit', ['id' => $order->id]) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    <h5>Cliente</h5>
+                                                                    <div>
+                                                                        <span>Nombre: {{ $order->users->name }}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span>Run: {{ $order->users->run }}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span>Dirección: {{ $order->users->address }}</span>
+                                                                    </div>
+                                                                    <div class="btn-group-toggle" data-toggle="buttons">
+                                                                        <label class="btn btn-outline ">
+                                                                            <input type="checkbox" name="estado" {{ $order->estado ? 'checked' : '' }}>
+
+                                                                            Entregado
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-outline-danger"
+                                                                            data-bs-dismiss="modal">Cerrar</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary guardar-entrega-btn">Guardar</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -65,8 +113,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 @endsection
 
@@ -78,12 +124,14 @@
         $(document).ready(function() {
             $('#users-table').DataTable({
                 dom: 'lfrtip',
-
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+            });
 
-
+            $('.btnEntregar').click(function() {
+                var orderId = $(this).data('order-id');
+                $('#editDeliver-' + orderId).modal('show');
             });
         });
     </script>
