@@ -21,6 +21,15 @@ class UserController extends Controller
         $users = User::all();
         return view('users.index', compact('users'));
     }
+
+    public function profile_argon()
+    {
+        $users = User::all();
+        return view('profile', compact('users'));
+    }
+
+   
+
     public function generate_pdf(){
         $users = User::all();
         $fecha_actual = Carbon::now();

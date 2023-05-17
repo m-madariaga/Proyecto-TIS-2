@@ -41,6 +41,7 @@ Route::get('/home-landing', function () {
 
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 
+Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile_argon'])->name('profile');
 
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
