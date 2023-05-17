@@ -127,6 +127,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $id)
     {
+        error_log('test');
         $request->validate([
             'marca_id' => 'required',
             'categoria_id' => 'required',
@@ -137,6 +138,7 @@ class ProductController extends Controller
             'stock' => 'required',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
+        error_log('test');
         $productos = Product::all();
         $product = $productos->find($id);
         $product->marca_id = $request->marca_id;
@@ -155,6 +157,7 @@ class ProductController extends Controller
             unset($product->imagen);
         }
         $product->save();
+        error_log('test');
         return redirect()->route('productos')->with('success:', 'Producto actualizado correctamente.');
     }
 

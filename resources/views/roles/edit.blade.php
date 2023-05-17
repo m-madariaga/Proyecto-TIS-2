@@ -72,7 +72,10 @@
                                 <label for="role_type" class="col-md-4 col-form-label text-md-right">Permisos</label>
     
                                 <div class="col-md-6">
-                                    <div class="form-check" id="check1">
+                                    <div class="form-check" id="check1"
+                                    @if($role->role_type==3)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="1" name="defaultCheck1" id="defaultCheck1" 
                                         @if($role->permissions->contains('dashboard'))
                                             checked
@@ -83,7 +86,10 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check2">
+                                    <div class="form-check" id="check2"
+                                    @if($role->role_type==3)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor usuarios'))
