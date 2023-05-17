@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <a href="{{ route('marcas-create') }}" class="btn btn-sm btn-outline-success mb-2"><i
-                                class="fa fa-plus"> Agregar marca</i></a>
+                                class="fa fa-plus"> Agregar</i></a>
                         <div class="table-responsive p-0">
                             <table id='tabla' class="table align-items-center mb-0">
                                 <thead>
@@ -56,13 +56,13 @@
                                                 <td>
                                                     <a class="btn btn-info"
                                                         href="{{ route('marcas-edit', ['id' => $marca->id]) }}">Editar
-                                                        marca</a>
+                                                        </a>
                                                     <form action="{{ route('marcas-destroy', ['id' => $marca->id]) }}"
                                                         class="formulario-eliminar" method="POST">
                                                         @method('DELETE')
                                                         @csrf
                                                         @if (empty($marca->products[0]))
-                                                            <button class="btn btn-danger btn-sm">Eliminar marca</button>
+                                                            <button class="btn btn-danger btn-sm">Eliminar </button>
                                                         @else
                                                         @endif
 

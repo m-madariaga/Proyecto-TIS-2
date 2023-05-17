@@ -25,7 +25,7 @@
                         <h6>Tabla de ordenes de compra</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <a href="{{route('users.generate_pdf')}}" hidden>Descargar pdf</a>
+                        <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('orden-compra-create')}}">Agregar orden</a>
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>
@@ -40,10 +40,14 @@
                                     @foreach ($ordenes as $orden)
                                         <tr>
                                             <td class="text-center">{{ $orden->id }}</td>
+                                            
+                                            <td class="text-center">
                                             @foreach ($orden->product as $prod)
-                                            <td class="text-center">{{ $prod->nombre }}<br></td>
-                                            @endforeach               
-                                            <td class="text-center">{{ $orden->product }}</td>                        <td class="text-center pt-3">
+                                            {{ $prod->nombre }}<br>
+                                            @endforeach 
+                                            </td>                                                          
+                                            <td class="text-center">{{ $orden->total }}</td>                        
+                                            <td class="text-center pt-3">
                                                 <a href="{{ route('orden-compra-edit', $orden->id) }}" class="btn btn-sm btn-outline-primary"><i
                                                         class="fa fa-edit"></i></a>
                                                 <form action="{{ route('orden-compra-destroy', $orden->id) }}" method="POST" style="display: inline;">
@@ -71,18 +75,18 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
 
     <script>
         $(document).ready(function() {
             $('#users-table').DataTable({
                 dom: 'lfrtip',
-
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
-
-
-            });
+            });            
         });
     </script>
 @endsection

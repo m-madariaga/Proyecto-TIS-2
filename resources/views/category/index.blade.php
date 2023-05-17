@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <a href="{{ route('categorias-create') }}" class="btn btn-sm btn-outline-success mb-2"><i
-                                class="fa fa-plus"> Agregar categoria</i></a>
+                                class="fa fa-plus"> Agregar </i></a>
                         <div class="table-responsive p-0">
                             <table id='tabla' class="table align-items-center mb-0">
                                 <thead>
@@ -52,7 +52,7 @@
                                                 <td>
                                                     <a class="btn btn-info"
                                                         href="{{ route('categorias-edit', ['id' => $categoria->id]) }}">Editar
-                                                        Categoria</a>
+                                                        </a>
                                                     <form
                                                         action="{{ route('categorias-destroy', ['id' => $categoria->id]) }}"
                                                         class="formulario-eliminar" method="POST">
@@ -60,7 +60,7 @@
                                                         @csrf
                                                         @if (empty($categoria->products[0]))
                                                             <button class="btn btn-danger btn-sm ">Eliminar
-                                                                Categoria</button>
+                                                                </button>
                                                         @endif
                                                     </form>
                                                 </td>

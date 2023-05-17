@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <a href="{{ route('productos-create') }}" class="btn btn-sm btn-outline-success mb-2"><i
-                                class="fa fa-plus"> Agregar producto</i></a>
+                                class="fa fa-plus"> Agregar </i></a>
                         <div class="table-responsive p-0">
                             <table id='tabla' class="table align-items-center mb-0">
                                 <thead>
@@ -84,13 +84,12 @@
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-info"
-                                                        href="{{ route('productos-edit', ['id' => $prod->id]) }}">Editar
-                                                        producto</a>
+                                                        href="{{ route('productos-edit', ['id' => $prod->id]) }}">Editar</a>
                                                     <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
                                                         class="formulario-eliminar" method="POST">
                                                         @method('DELETE')
                                                         @csrf
-                                                        <button class="btn btn-danger btn-sm">Eliminar producto</button>
+                                                        <button class="btn btn-danger btn-sm">Eliminar</button>
                                                     </form>
                                                 </td>
                                             </tr>

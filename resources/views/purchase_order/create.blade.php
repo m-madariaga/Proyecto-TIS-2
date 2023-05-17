@@ -25,7 +25,40 @@
           <h3 class="mb-0">Agregar Orden</h3>
         </div>
         <div class="card-body">
-          <form action="{{ route('productos-store')}}" method="POST" enctype="multipart/form-data">
+        <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
+                            data-bs-target="#addModal">
+                            Añadir orden
+                        </button>
+
+                     <!-- Modal -->
+                     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel"
+                            aria-hidden="true" data-bs-backdrop="static">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addModalLabel">Añadir un producto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="{{ route('shipment_types.store') }}">
+                                        @csrf
+
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label for="name">Nombre del tipo de envío:</label>
+                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-success">Añadir</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+          <form action="{{ route('orden-compra-store')}}" method="POST">
             @csrf
             @method('POST')
             <div class="form-group">
@@ -124,5 +157,48 @@
 @endsection
 
 @section('js')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+</script>
+<script>
+  $(document).ready(function(){
+    $('#users-table').DataTable({
+      dom: 'lfrtip',
+      language: {
+        url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+      },
+    });
+    $('#addModal').modal({
+                show: false
+            });
 
+            $('#editModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget); // Button que triggerea el modal
+                const shipmentTypeId = button.data('shipment-type-id');
+                const shipmentTypeName = button.data('shipment-type-name');
+
+                const editForm = $('#editForm');
+                const nombreInput = editForm.find('#nombre');
+
+                // Actualizar ID de la ruta
+                const actionUrl = editForm.attr('action').replace('__ID__', shipmentTypeId);
+                editForm.attr('action', actionUrl);
+
+                // Reemplazar el valor del nombre en el input el modal
+                nombreInput.val(shipmentTypeName);
+            });
+
+            $('#addForm').submit(function(event) {
+                var nombre = $('#nombre').val();
+
+                if (nombre.trim() === '') {
+                    event.preventDefault();
+                    alert('El campo "Nombre del tipo de envío" es obligatorio.');
+                }
+            });
+
+  });
+</script>
 @endsection
