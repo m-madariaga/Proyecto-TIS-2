@@ -15,7 +15,7 @@ class CreatePurchaseOrderProductTable extends Migration
     {
         Schema::create('purchase_order_products', function (Blueprint $table) {            
             $table->unsignedBigInteger('purchase_order_id');
-            $table->foreign('purchase_order_id')->references('id')->on('purchase_order');
+            $table->foreign('purchase_order_id')->references('id')->on('purchase_orders');
             $table->unsignedBigInteger('products_id');
             $table->foreign('products_id')->references('id')->on('products');
             $table->integer('cantidad');

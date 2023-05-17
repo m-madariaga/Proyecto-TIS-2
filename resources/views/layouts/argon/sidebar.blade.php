@@ -125,9 +125,28 @@
 
 
                 </ul>
+            </li>            
+            @can('mantenedor ordenes')
+                <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                    <a class="nav-link {{ request()->is('admin/orden-compra') ? 'active' : '' }}"
+                        href="{{ route('orden-compra') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Ordenes de compra</span>
+                    </a>
+                </li>
+            @endcan
+            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                <a class="nav-link {{ request()->is('admin/shipment_types') ? 'active' : '' }}" href="{{ route('shipment_types.index') }}">
+                    <div
+                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Tipos de envío</span>
+                </a>
             </li>
-
-
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('calendar') }}">
                     <div
