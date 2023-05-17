@@ -17,20 +17,16 @@
 @endsection
 
 @section('content')
-<div class="container-fluid mt--6 w-50">
+<div class="container-fluid mt-4 w-80">
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h3 class="mb-0">Agregar Orden</h3>
+          <h3 class="mb-0">Nueva orden de compra</h3>
         </div>
         <div class="card-body">
-        <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
-                            data-bs-target="#addModal">
-                            Añadir orden
-                        </button>
-
-                     <!-- Modal -->
+          <button class="btn btn-sm btn-outline-success ms-2" data-bs-toggle="modal" data-bs-target="#addModal">Añadir nuevo producto</button>
+                  <!-- Modal -->
                      <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel"
                             aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog modal-dialog-centered">
@@ -39,109 +35,114 @@
                                         <h5 class="modal-title" id="addModalLabel">Añadir un producto</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
-                                    </div>
-                                    <form method="POST" action="{{ route('shipment_types.store') }}">
+                                    </div> 
+                                  <div class="modal-body">
+                                    <form action="{{ route('productos-store')}}" method="POST" enctype="multipart/form-data">
                                         @csrf
-
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="name">Nombre del tipo de envío:</label>
-                                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-outline-danger"
-                                                data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" class="btn btn-sm btn-outline-success">Añadir</button>
-                                        </div>
-                                    </form>
+                                        @method('POST')
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="nombre">Nombre</label>
+                                      <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" required autocomplete='nombre' autofocus>
+                                      @error('nombre')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="marca">Marca</label>
+                                      <select class="form-control @error('marca') is-invalid @enderror" id="marca_id" name="marca_id">
+                                      @foreach ( $marcas as $marca)
+                                        <option value='{{$marca->id}}'>{{$marca->nombre}}</option>
+                                      @endforeach
+                                      </select>
+                                      @error('marca')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="categoria">Categoria</label>
+                                      <select class="form-control @error('categoria') is-invalid @enderror" id="categoria_id" name="categoria_id">
+                                      @foreach ( $categorias as $categoria)
+                                        <option value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
+                                      @endforeach
+                                      </select>
+                                      @error('categoria')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="color">Color</label>
+                                      <input type="text" class="form-control @error('color') is-invalid @enderror" id="color" name="color" value="{{ old('color') }}" required autocomplete="color">
+                                      @error('color')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="talla">Talla</label>
+                                      <input type="text" class="form-control @error('talla') is-invalid @enderror" id="talla" name="talla" value="{{ old('talla') }}" >
+                                      @error('talla')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="stock">Stock</label>
+                                      <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock') }}" >
+                                      @error('stock')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="precio">Precio</label>
+                                      <input type="number" class="form-control @error('precio') is-invalid @enderror" id="precio" name="precio" value="{{ old('precio') }}" >
+                                      @error('precio')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="imagen">Subir imagen</label>
+                                      <img id="imagenSeleccionada" style="max-height: 300px;"><div class="row mb-3">
+                                      <input name="imagen" id="imagen" type="file" required>
+                                      @error('imagenSeleccionada')
+                                        <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                        </span>
+                                      @enderror           
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                      data-bs-dismiss="modal">Cerrar</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Añadir</button>
+                                  </div>
+                                  </form>                                    
                                 </div>
-                            </div>
-                        </div>
+                             </div>
+                         </div>
           <form action="{{ route('orden-compra-store')}}" method="POST">
             @csrf
             @method('POST')
             <div class="form-group">
-              <label class="form-control-label" for="nombre">Nombre</label>
-              <input type="text" class="form-control @error('nombre') is-invalid @enderror" id="nombre" name="nombre" value="{{ old('nombre') }}" required autocomplete='nombre' autofocus>
-            @error('nombre')
+              <label class="form-control-label" for="nombre">Total dssadasdsadasdasda</label>
+              <input type="integer" class="form-control @error('total') is-invalid @enderror" id="total" name="total" value="{{ old('total') }}" required autofocus>
+            @error('total')
              <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
              </span>
             @enderror
-            </div>
-            <div class="form-group">
-              <label class="form-control-label" for="marca">Marca</label>
-              <select class="form-control @error('marca') is-invalid @enderror" id="marca_id" name="marca_id">
-                @foreach ( $marcas as $marca)
-                    <option value='{{$marca->id}}'>{{$marca->nombre}}</option>
-                @endforeach
-              </select>
-              @error('marca')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-              <label class="form-control-label" for="categoria">Categoria</label>
-              <select class="form-control @error('categoria') is-invalid @enderror" id="categoria_id" name="categoria_id">
-                @foreach ( $categorias as $categoria)
-                    <option value='{{$categoria->id}}'>{{$categoria->nombre}}</option>
-                @endforeach
-              </select>
-              @error('categoria')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-            <label class="form-control-label" for="color">Color</label>
-              <input type="text" class="form-control @error('color') is-invalid @enderror" id="color" name="color" value="{{ old('color') }}" required autocomplete="color">
-            @error('color')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-            <label class="form-control-label" for="talla">Talla</label>
-              <input type="text" class="form-control @error('talla') is-invalid @enderror" id="talla" name="talla" value="{{ old('talla') }}" >
-            @error('talla')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-            <label class="form-control-label" for="stock">Stock</label>
-              <input type="number" class="form-control @error('stock') is-invalid @enderror" id="stock" name="stock" value="{{ old('stock') }}" >
-            @error('stock')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-            <label class="form-control-label" for="precio">Precio</label>
-              <input type="number" class="form-control @error('precio') is-invalid @enderror" id="precio" name="precio" value="{{ old('precio') }}" >
-            @error('precio')
-             <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-             </span>
-            @enderror
-            </div>
-            <div class="form-group">
-            <label class="form-control-label" for="imagen">Subir imagen</label>
-            <img id="imagenSeleccionada" style="max-height: 300px;"><div class="row mb-3">
-            <input name="imagen" id="imagen" type="file" required>
-            @error('imagenSeleccionada')
-                 <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-            @enderror           
-            </div>            
+            </div>                    
             <div class="form-group">
             <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('productos')}}">{{ __('Cancelar') }}</a>
               <button type="submit" class="btn btn-primary">Guardar Cambios</button>

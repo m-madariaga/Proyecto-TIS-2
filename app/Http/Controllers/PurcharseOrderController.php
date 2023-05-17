@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Purchase_order;
 use Illuminate\Http\Request;
 
@@ -25,7 +28,10 @@ class PurcharseOrderController extends Controller
      */
     public function create()
     {        
-        return view('purchase_order.create');
+        $productos = Product::all();
+        $marcas = Brand::all();
+        $categorias = Category::all();
+        return view('purchase_order.create',compact('productos','marcas','categorias'));
     }
 
     /**
