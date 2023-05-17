@@ -27,6 +27,7 @@ use App\Http\Controllers\ShipmentTypeController;
 */
 
 Auth::routes();
+
 Route::get('/', function () {
     return view('home-landing');
 });
@@ -37,20 +38,22 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-
+Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
 
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 
-Route::get('/profile', [App\Http\Controllers\UserController::class, 'profile_argon'])->name('profile');
+
 
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-
+Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
 
+    Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
+    
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
@@ -69,9 +72,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
+    
 
     Route::get('/page', function () {
         return view('page');
@@ -148,7 +149,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
     //insertar rutas de analista aqui
-
+    
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('analista_home');
 });

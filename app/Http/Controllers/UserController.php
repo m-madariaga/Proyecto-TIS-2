@@ -24,17 +24,19 @@ class UserController extends Controller
 
     public function profile_argon()
     {
+        error_log('intro profile_argon');
         $users = User::all();
         return view('profile', compact('users'));
     }
 
-   
 
-    public function generate_pdf(){
+
+    public function generate_pdf()
+    {
         $users = User::all();
         $fecha_actual = Carbon::now();
-        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users,$fecha_actual));
-        $pdf = PDF::loadView('receipt.ticket',['users' => $users,'fecha_actual' => $fecha_actual]);
+        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
+        $pdf = PDF::loadView('receipt.ticket', ['users' => $users, 'fecha_actual' => $fecha_actual]);
         return $pdf->stream('ticket.pdf');
     }
 
@@ -104,9 +106,8 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-       // dejar para futuro sweetalert return response()->json(['success' => true]);
+        // dejar para futuro sweetalert return response()->json(['success' => true]);
 
-       return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
-
+        return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
     }
 }
