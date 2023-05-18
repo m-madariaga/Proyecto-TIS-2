@@ -22,10 +22,10 @@
             <div class="col-12">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header pb-0">
-                        <h6>Tabla de ordenes de compra</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('orden-compra-create')}}">Agregar orden</a>
+                        <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('orden-compra-create') }}">Agregar
+                            orden</a>
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>
@@ -40,21 +40,23 @@
                                     @foreach ($ordenes as $orden)
                                         <tr>
                                             <td class="text-center">{{ $orden->id }}</td>
-                                            
+
                                             <td class="text-center">
-                                            @foreach ($orden->product as $prod)
-                                            {{ $prod->nombre }}<br>
-                                            @endforeach 
-                                            </td>                                                          
-                                            <td class="text-center">{{ $orden->total }}</td>                        
+                                                @foreach ($orden->product as $prod)
+                                                    {{ $prod->nombre }}<br>
+                                                @endforeach
+                                            </td>
+                                            <td class="text-center">{{ $orden->total }}</td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('orden-compra-edit', $orden->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i></a>
-                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}" method="POST" style="display: inline;">
+                                                <a href="{{ route('orden-compra-edit', $orden->id) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
+                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}"
+                                                    method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
-                                                        data-id="{{ $orden->id }}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                        data-id="{{ $orden->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -86,7 +88,7 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
-            });            
+            });
         });
     </script>
 @endsection
