@@ -12,12 +12,12 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'codigo',
         'subtotal',
         'impuesto',
         'total',
+        // 'fecha_pedido',
         'estado',
-        'user_id',
+        // 'user_id',
     ];
 
     public function users():BelongsTo 

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Detail;
+use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Http\Request;
+
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
@@ -22,9 +25,10 @@ class CartController extends Controller
                 'qty' => 1,
                 'weight' => 1,
                 'options' => [
-                    'urlfoto' => $product->imagen,
+                    'urlfoto' => asset("assets/images/images-products/$product->imagen"),
                     'nombre' => null,
                 ]
+
             ]);
         }
 
@@ -33,14 +37,63 @@ class CartController extends Controller
 
     public function showCart()
     {
-        $cartItems = Cart::content();
-        return view('cart', compact('cartItems'));
+        $item = Cart::content();
+        return view('cart', compact('item'));
     }
 
     public function removeitem(Request $request)
     {
-        $rowId = $request->input('rowId');
-        Cart::remove($rowId);
+        $item = $request->input('rowId');
+        Cart::remove($item);
         return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
+    }
+
+    public function incrementitem(Request $request)
+    {
+        $item = Cart::content()->where("rowId",$request->id)->first();
+        Cart::Update($request->id,["qty"=>$item->qty+1]);
+        return back();
+    
+    }
+
+    public function decrementitem(Request $request)
+    {
+        $item = Cart::content()->where("rowId",$request->id)->first();
+        Cart::Update($request->id,["qty"=>$item->qty-1]);
+        return back();
+    
+    }
+
+    public function destroycart()
+    {
+        Cart::destroy();
+        return back();
+    
+    }
+
+    public function confirmcart()
+    {
+        $order = new Order();
+        $order -> subtotal = Cart::subtotal();
+        $order -> impuesto= Cart::tax();
+        $order -> total = Cart::subtotal();
+        // $order -> fecha_pedido = $order->created_at;
+        $order -> estado= 1;
+
+        // $order -> user_id= auth()->user()->id;
+        $order->save();
+
+        foreach(Cart::content() as $item){
+            $detail = new Detail();
+            $detail->precio = $item->price;
+            $detail->cantidad = $item->qty;
+            $detail->monto = $item->precio *$item->qty; 
+            $detail->producto_id = $item->id;
+            $detail->pedido_id = $order->id;
+            $detail->save();
+        }
+
+        Cart::destroy();
+        return back();
     }
 }
