@@ -92,9 +92,10 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <form action="{{ route('paymentmethods') }}" method="post">
+                    <form action="{{ route('confirmcart') }}" method="post">
                         @csrf
-                        <button type="submit" class="btn btn-danger"><i class="far fa-times-circle"></i> Finalizar Pedido</button>
+                        <button type="submit" class="btn btn-danger"><i class="far fa-times-circle"></i> Finalizar
+                            Pedido</button>
                     </form>
                 </div>
             </div>

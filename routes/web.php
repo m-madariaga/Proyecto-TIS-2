@@ -16,6 +16,7 @@ use App\Http\Controllers\PurcharseOrderController;
 use App\Http\Controllers\ShipmentTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentMethodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -174,3 +175,4 @@ Route::get('/destroycart', [App\Http\Controllers\CartController::class, 'destroy
 
 Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
 
+Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');
