@@ -1,41 +1,23 @@
-.cart-items {
+.product-list {
     margin-bottom: 20px;
 }
 
-.cart-items h2 {
-    font-size: 24px;
+.product-item {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th,
-.table td {
+    border: 1px solid #ccc;
     padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
-.table th {
-    font-weight: bold;
+.product-info {
+    flex-grow: 1;
 }
 
-.table tfoot td {
-    font-weight: bold;
-}
-
-.btn-danger {
-    background-color: #dc3545;
-    border-color: #dc3545;
-    color: #fff;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-    border-color: #bd2130;
+.product-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
 }
 
 .product-count {
@@ -43,30 +25,19 @@
     align-items: center;
 }
 
-.product-count button {
-    background-color: #bd2130;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    font-size: 16px;
-    cursor: pointer;
+.product-image {
+    margin-left: 10px;
 }
 
-.product-count input {
-    width: 40px;
-    text-align: center;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    padding: 5px;
+.order-summary {
+    text-align: right;
 }
 
+.total-price {
+    display: flex;
+    align-items: center;
+}
 
-.btn-custom {
-    background-color: #bd2130;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-size: 16px;
+.total-price p {
+    margin-right: 10px;
 }

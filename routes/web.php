@@ -171,4 +171,6 @@ Route::post('/removeitem', [App\Http\Controllers\CartController::class, 'removei
 Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::get('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
+
 Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
+
