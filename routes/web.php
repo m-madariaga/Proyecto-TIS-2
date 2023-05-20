@@ -15,6 +15,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PurcharseOrderController;
 use App\Http\Controllers\ShipmentTypeController;
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileLandingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,7 +55,8 @@ Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile'
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
 
-    Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
     
     Route::get('/tables', function () {
         return view('tables');
@@ -159,3 +163,6 @@ Auth::routes();
 
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'showProfile'])->name('profile_landing');
+
+        

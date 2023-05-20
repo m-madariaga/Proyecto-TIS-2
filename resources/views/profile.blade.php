@@ -140,9 +140,8 @@
                         <h5 class="modal-title" id="editModalLabel">Edit profile</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" action="">
+                    <form method="POST" action="{{route('profile_edit', ['id' => Auth::user()->id])}}">
                         @csrf
-
                         <div class="modal-body">
 
                             <p class="text-uppercase text-sm">User Information</p>
@@ -192,9 +191,9 @@
                                             <label for="city">Ciudad:</label>
                                             <select id="city" class="form-select @error('city') is-invalid @enderror" name="city_fk" required>
                                                 <option value="">Seleccionar Ciudad</option>
-
-                                                <option value="{{ Auth::user()->city_fk}}"></option>
-
+                                                @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                @endforeach
                                             </select>
 
                                             @error('city')
@@ -209,9 +208,9 @@
                                             <label for="country">País:</label>
                                             <select id="country" class="form-select @error('country') is-invalid @enderror" name="country_fk" required>
                                                 <option value="">Seleccionar País</option>
-
-                                                <option value="{{Auth::user()->country_fk }}"></option>
-
+                                                @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                                @endforeach
                                             </select>
 
                                             @error('country')
@@ -226,9 +225,9 @@
                                             <label for="region">Región:</label>
                                             <select id="region" class="form-select @error('region') is-invalid @enderror" name="region_fk" required>
                                                 <option value="">Seleccionar Región</option>
-
-
-                                                <option value="{{ Auth::user()->region_fk}}"></option>
+                                                @foreach ($regions as $region)
+                                                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                                @endforeach
 
                                             </select>
 
@@ -306,16 +305,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#shipment_types-table').DataTable({
-            dom: 'lfrtip',
-            language: {
-                url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-            },
-        });
-
-        $('#addModal').modal({
-            show: false
-        });
+        
 
         $('#editModal').on('show.bs.modal', function() {
             // Do something when the modal is shown
@@ -323,5 +313,52 @@
 
     });
 </script>
+
+<script>
+        $(document).ready(function() {
+
+            $('#country').on('change', function() {
+                var countryId = $(this).val();
+
+
+                $('#region').empty().append('<option value="">Seleccionar Región</option>');
+                $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/regions/' + countryId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#region').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+
+
+            $('#region').on('change', function() {
+                var regionId = $(this).val();
+
+
+                $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/cities/' + regionId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#city').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 
 @endsection

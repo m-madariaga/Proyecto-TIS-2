@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Mail\ProofPayment;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Region;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -109,5 +112,19 @@ class UserController extends Controller
         // dejar para futuro sweetalert return response()->json(['success' => true]);
 
         return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+    }
+
+    public function getRegions($countryId)
+    {
+        $regions = Region::where('country_fk', $countryId)->get();
+
+        return response()->json(['regions' => $regions]);
+    }
+
+    public function getCities($regionId)
+    {
+        $cities = City::where('region_fk', $regionId)->get();
+
+        return response()->json(['cities' => $cities]);
     }
 }
