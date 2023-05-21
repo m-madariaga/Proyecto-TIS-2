@@ -50,8 +50,13 @@
                                             </td>
 
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Edit</a>
+                                                <button id="editButton"
+                                                class="btn btn-sm btn-outline-primary edit-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#editModal"
+                                                data-user-id="{{ $user->id }}"
+                                                >
+                                                <i class="fa fa-edit"></i>
+                                            </button>
                                                 <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -64,6 +69,37 @@
                                 </tbody>
 
                             </table>
+                            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Editar rol de usuario</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST" id="editForm" action="{{ route('users.update', ['id' => '__ID__']) }}">
+                                            @csrf
+                                            @method('PUT')
+
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="role">Rol:</label>
+                                                    <select class="form-control form-select" id="role" name="role">
+                                                        @foreach($roles as $role)
+                                                            <option value="{{ $role->id }}">
+                                                                {{ $role->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success">Editar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,5 +126,21 @@
 
             });
         });
+
+        $('#editModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget); // Button que triggerea el modal
+                const userId = button.data('user-id');
+
+
+                const editForm = $('#editForm');
+
+
+                // Actualizar ID de la ruta
+                const actionUrl = editForm.attr('action').replace('__ID__', userId);
+                editForm.attr('action', actionUrl);
+
+                // Reemplazar el valor del nombre en el input el modal
+
+            });
     </script>
 @endsection
