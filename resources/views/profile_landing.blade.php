@@ -108,42 +108,56 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editProfileLandingModalLabel">Edit Profile</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form action="">
+
+
+
+            </form>
             <div class="modal-body">
                 <p class="text-uppercase text-sm">User Information</p>
-                <form>
+                
                     <div class="row">
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" value="{{ Auth::user()->name }}" required>
+                            </div>
+
                         </div>
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">run</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">run</label>
+                                <input type="text" class="form-control" id="name" value="{{ Auth::user()->run }}" required>
+                            </div>
                         </div>
                     </div>
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Contact informacion</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" value="{{ Auth::user()->address }}" required>
+                            </div>
                         </div>
-
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">Country</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="country" value="{{ Auth::user()->country }}" required>
+                            </div>
                         </div>
-
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">Region</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">Region</label>
+                                <input type="text" class="form-control" id="region" value="{{ Auth::user()->region }}" required>
+                            </div>
                         </div>
-
                         <div class="col-md-6 col-12">
-                            <label for="name" class="form-label">City</label>
-                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <div class="form-group">
+                                <label for="name" class="form-label">City</label>
+                                <input type="text" class="form-control" id="city" value="{{ Auth::user()->city }}" required>
+                            </div>
                         </div>
                         <!-- <div class="mb-3">
                         <label for="name" class="form-label">Name</label>
@@ -156,24 +170,27 @@
 
                     <div class="row">
                         <div class="col-md-7 col-12">
-                            <label for="name" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="Enter your name">
-
+                            <div class="form-group">
+                                <label for="name" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" value="{{ Auth::user()->email }}" required>
+                            </div>
                         </div>
                         <div class="col-md-5 col-12">
-
-                            <label for="name" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Enter your name">
-
+                            <div class="form-group">
+                                <label for="name" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" value="{{ Auth::user()->password }}" required>
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
+
+                    </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-sm btn-outline-success">Save changes</button>
         </div>
+                
+            </div>
+       
     </div>
 </div>
 </div>
