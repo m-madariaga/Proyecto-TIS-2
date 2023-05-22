@@ -41,16 +41,11 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
-
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
-
-
 
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
-Route::get('/profile', [UserController::class, 'profile_argon'])->name('profile');
 
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
@@ -151,6 +146,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 });
 
+
+
+
 Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
     //insertar rutas de analista aqui
     
@@ -163,6 +161,6 @@ Auth::routes();
 
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'showProfile'])->name('profile_landing');
+Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 
-        
+Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');    

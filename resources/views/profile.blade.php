@@ -90,12 +90,6 @@
                         </div>
                         <div class="col-md-5">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">City</label>
-                                <span class="form-control">{{ Auth::user()->city_fk }}</span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
                                 <label for="example-text" class="form-control-label">Country</label>
                                 <span class="form-control">{{ Auth::user()->country_fk }}</span>
                             </div>
@@ -104,6 +98,12 @@
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Region</label>
                                 <span class="form-control">{{ Auth::user()->region_fk }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">City</label>
+                                <span class="form-control">{{ Auth::user()->city_fk }}</span>
                             </div>
                         </div>
                     </div>
@@ -186,94 +186,75 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="region">Región:</label>
+                                            <select id="region" class="form-select @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                                <option value="">{{ Auth::user()->region_fk }}</option>
+                                                @foreach ($regions as $region)
+                                                <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('region_fk')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="city">Ciudad:</label>
-                                            <select id="city" class="form-select @error('city') is-invalid @enderror" name="city_fk" required>
-                                                <option value="">Seleccionar Ciudad</option>
+                                            <select id="city" class="form-select @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                                <option value="">{{ Auth::user()->city_fk }}</option>
                                                 @foreach ($cities as $city)
                                                 <option value="{{ $city->id }}">{{ $city->name }}</option>
                                                 @endforeach
                                             </select>
-
-                                            @error('city')
+                                            @error('city_fk')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="country">País:</label>
-                                            <select id="country" class="form-select @error('country') is-invalid @enderror" name="country_fk" required>
-                                                <option value="">Seleccionar País</option>
-                                                @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
 
-                                            @error('country')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                    <hr class="horizontal dark">
+                                    <p class="text-uppercase text-sm">Account information</p>
+                                    <div class="row">
+                                        <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label for="example-text-input" class="form-control-label">Email</label>
+                                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
+
+                                                @error('email')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="region">Región:</label>
-                                            <select id="region" class="form-select @error('region') is-invalid @enderror" name="region_fk" required>
-                                                <option value="">Seleccionar Región</option>
-                                                @foreach ($regions as $region)
-                                                <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                                @endforeach
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <label for="example-text-input" class="form-control-label">Password</label>
+                                                <input type="password" class="form-control  @error('password') is-invalid @enderror" id="password" name="password" value="{{ Auth::user()->password }}" required>
 
-                                            </select>
-
-                                            @error('region')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
+                                                @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Account information</p>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="form-control-label">Email</label>
-                                            <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
-
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label for="example-text-input" class="form-control-label">Password</label>
-                                            <input type="password" class="form-control  @error('password') is-invalid @enderror" id="password" name="password" value="{{ Auth::user()->password }}" required>
-
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
                                     </div>
 
                                 </div>
 
-                            </div>
-
-                            <!-- <div class="form-group">
+                                <!-- <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
                             </div>
@@ -281,11 +262,11 @@
                                 <label for="name">Run</label>
                                 <input type="text" class="form-control" id="nombre" name="nombre" required>
                             </div> -->
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
-                        </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
+                            </div>
                     </form>
                 </div>
             </div>
@@ -305,7 +286,7 @@
 
 <script>
     $(document).ready(function() {
-        
+
 
         $('#editModal').on('show.bs.modal', function() {
             // Do something when the modal is shown
@@ -315,50 +296,50 @@
 </script>
 
 <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
 
-            $('#country').on('change', function() {
-                var countryId = $(this).val();
-
-
-                $('#region').empty().append('<option value="">Seleccionar Región</option>');
-                $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
+        $('#country').on('change', function() {
+            var countryId = $(this).val();
 
 
-                $.ajax({
-                    url: '/regions/' + countryId,
-                    type: 'GET',
-                    success: function(response) {
-
-                        $.each(response, function(key, value) {
-                            $('#region').append('<option value="' + value.id + '">' +
-                                value.name + '</option>');
-                        });
-                    }
-                });
-            });
+            $('#region').empty().append('<option value="">Seleccionar Región</option>');
+            $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
 
 
-            $('#region').on('change', function() {
-                var regionId = $(this).val();
+            $.ajax({
+                url: '/regions/' + countryId,
+                type: 'GET',
+                success: function(response) {
 
-
-                $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
-
-
-                $.ajax({
-                    url: '/cities/' + regionId,
-                    type: 'GET',
-                    success: function(response) {
-
-                        $.each(response, function(key, value) {
-                            $('#city').append('<option value="' + value.id + '">' +
-                                value.name + '</option>');
-                        });
-                    }
-                });
+                    $.each(response, function(key, value) {
+                        $('#region').append('<option value="' + value.id + '">' +
+                            value.name + '</option>');
+                    });
+                }
             });
         });
-    </script>
+
+
+        $('#region').on('change', function() {
+            var regionId = $(this).val();
+
+
+            $('#city').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+            $.ajax({
+                url: '/cities/' + regionId,
+                type: 'GET',
+                success: function(response) {
+
+                    $.each(response, function(key, value) {
+                        $('#city').append('<option value="' + value.id + '">' +
+                            value.name + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

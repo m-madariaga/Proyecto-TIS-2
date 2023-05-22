@@ -21,7 +21,6 @@
 
                         <!-- Language / My Account -->
 
-
                         <li class="language">
                             <a href="#">
                                 English
@@ -36,7 +35,11 @@
                         </li>
                         <li class="account">
                             <a href="#">
+                                @if (Auth::check())
+                                {{ Auth::user()->name }}
+                                @else
                                 My Account
+                                @endif
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             @if (Auth::check())
