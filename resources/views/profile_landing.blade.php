@@ -21,67 +21,83 @@
                         <button class="button_edit_profile btn btn-primary btn-sm btn-rounded" data-bs-toggle="modal" data-bs-target="#editProfileLandingModal">Edit Profile</button>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="profile_card_body">
                     <!-- Primer formulario -->
-                    <p class="text-uppercase text-sm">User Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">User Information</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Name</label>
-                                <span class="form-control">{{ Auth::user()->name }}</span>
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="profile_card_body" value="{{ Auth::user()->name }}" required>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Run</label>
-                                <span class="form-control">{{ Auth::user()->run }}</span>
+                                <label for="run" class="form-label">Run</label>
+                                <input type="text" class="form-control  @error('run') is-invalid @enderror" id="profile_card_body" value="{{ Auth::user()->run }}" required>
+                                @error('run')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
 
                     <hr class="horizontal dark">
 
-                    <p class="text-uppercase text-sm">Contact Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Contact Information</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Address</label>
-                                <span class="form-control">{{ Auth::user()->address }}</span>
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="profile_card_body" value="{{ Auth::user()->address }}" required>
+                                @error('address')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text" class="form-control-label">Country</label>
-                                <span class="form-control">{{ Auth::user()->country_fk }}</span>
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="profile_card_body" value="{{ Auth::user()->country_fk }}" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Region</label>
-                                <span class="form-control">{{ Auth::user()->region_fk }}</span>
+                                <label for="region" class="form-label">Region</label>
+                                <input type="text" class="form-control" id="profile_card_body" value="{{ Auth::user()->region_fk }}" required>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">City</label>
-                                <span class="form-control">{{ Auth::user()->city_fk }}</span>
+                                <label for="city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="profile_card_body" value="{{ Auth::user()->city_fk }}" required>
                             </div>
                         </div>
                     </div>
 
                     <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Account information</p>
+
+                    <p class="text-uppercase text-sm" id="profile_title">Account information</p>
                     <div class="row">
                         <div class="col-md-7 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Email</label>
-                                <span class="form-control">{{ Auth::user()->email }}</span>
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="profile_card_body" value="{{ Auth::user()->email }}" required>
                             </div>
                         </div>
                         <div class="col-md-5 col-12">
                             <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Password</label>
-                                <span class="form-control">**************</span>
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="profile_card_body" required>
                             </div>
                         </div>
                     </div>
@@ -109,97 +125,119 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="editProfileLandingModalLabel">Edit Profile</h5>
             </div>
+
             <form action="">
+                <div class="modal-body">
+                    <p class="text-uppercase text-sm" id="profile_title">User Information</p>
 
-
-
-            </form>
-            <div class="modal-body">
-                <p class="text-uppercase text-sm">User Information</p>
-                
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" value="{{ Auth::user()->name }}" required>
+                                <input type="text" class="form-control input-field @error('name') is-invalid @enderror" value="{{ Auth::user()->name }}" required>
+                                @error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
 
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">run</label>
-                                <input type="text" class="form-control" id="name" value="{{ Auth::user()->run }}" required>
+                                <label for="run" class="form-label">Run</label>
+                                <input type="text" class="form-control input-field @error('run') is-invalid @enderror" value="{{ Auth::user()->run }}" required>
+                                @error('run')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
                     <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm">Contact informacion</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Contact informacion</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="address" value="{{ Auth::user()->address }}" required>
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control input-field" value="{{ Auth::user()->address }}" required>
+                                @error('address')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                     
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="region" class="form-label">Region</label>
+                                <select id="text" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                    <option value="">{{ Auth::user()->region_fk }}</option>
+                                    @foreach ($regions as $region)
+                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('region_fk')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Country</label>
-                                <input type="text" class="form-control" id="country" value="{{ Auth::user()->country }}" required>
+                                <label for="city" class="form-label">City</label>
+                                <select id="text" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                    <option value="">{{ Auth::user()->city_fk }}</option>
+                                    @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('city_fk')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="name" class="form-label">Region</label>
-                                <input type="text" class="form-control" id="region" value="{{ Auth::user()->region }}" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="name" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" value="{{ Auth::user()->city }}" required>
-                            </div>
-                        </div>
-                        <!-- <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter your name">-->
                     </div>
 
                     <hr class="horizontal dark">
 
-                    <p class="text-uppercase text-sm">Account information</p>
-
+                    <p class="text-uppercase text-sm" id="profile_title">Account information</p>
                     <div class="row">
                         <div class="col-md-7 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="{{ Auth::user()->email }}" required>
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="profile_card_body" value="{{ Auth::user()->email }}" required>
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                         <div class="col-md-5 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" value="{{ Auth::user()->password }}" required>
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" id="profile_card_body" required>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
-
-                    </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-sm btn-outline-success">Save changes</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
         </div>
-                
-            </div>
-       
     </div>
 </div>
-</div>
-@endsection
-
-@section('js')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-
-
 @endsection

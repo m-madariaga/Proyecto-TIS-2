@@ -18,6 +18,16 @@
                     </div>
                 </div>
                 <div class="row">
+                    <div class="col-6">
+                        <div class="input-group mb-3">
+                            <input type="text" id="productSearch" class="form-control" placeholder="Search for products" aria-label="Search for products">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col">
                         <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                             @foreach ($productos as $index => $producto)
@@ -47,4 +57,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById("searchButton").addEventListener("click", searchProducts);
+        document.getElementById("productSearch").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                searchProducts();
+            }
+        });
+
+        function searchProducts() {
+            var searchValue = document.getElementById("productSearch").value.toLowerCase();
+            var productItems = document.getElementsByClassName("product-item");
+
+            for (var i = 0; i < productItems.length; i++) {
+                var productName = productItems[i].getElementsByClassName("product_name")[0].innerText.toLowerCase();
+                if (productName.includes(searchValue)) {
+                    productItems[i].style.display = "block";
+                } else {
+                    productItems[i].style.display = "none";
+                }
+            }
+        }
+    </script>
 @endsection
