@@ -9,6 +9,7 @@
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Toggle Hamburger -->
     <script>
         $(document).ready(function() {
@@ -56,7 +57,6 @@
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </div>
 
-                
                 </nav>
             </div>
         </div>

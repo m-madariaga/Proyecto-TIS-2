@@ -11,6 +11,11 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function additem(Request $request)
     {
         $productIds = $request->input('id');
@@ -50,44 +55,44 @@ class CartController extends Controller
 
     public function incrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId",$request->id)->first();
-        Cart::Update($request->id,["qty"=>$item->qty+1]);
+        $item = Cart::content()->where("rowId", $request->id)->first();
+        Cart::Update($request->id, ["qty" => $item->qty + 1]);
         return back();
-    
+
     }
 
     public function decrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId",$request->id)->first();
-        Cart::Update($request->id,["qty"=>$item->qty-1]);
+        $item = Cart::content()->where("rowId", $request->id)->first();
+        Cart::Update($request->id, ["qty" => $item->qty - 1]);
         return back();
-    
+
     }
 
     public function destroycart()
     {
         Cart::destroy();
         return back();
-    
+
     }
 
     public function confirmcart()
     {
         $order = new Order();
-        $order -> subtotal = Cart::subtotal();
-        $order -> impuesto= Cart::tax();
-        $order -> total = Cart::subtotal();
+        $order->subtotal = Cart::subtotal();
+        $order->impuesto = Cart::tax();
+        $order->total = Cart::subtotal();
         // $order -> fecha_pedido = $order->created_at;
-        $order -> estado= 1;
+        $order->estado = 1;
 
         // $order -> user_id= auth()->user()->id;
         $order->save();
 
-        foreach(Cart::content() as $item){
+        foreach (Cart::content() as $item) {
             $detail = new Detail();
             $detail->precio = $item->price;
             $detail->cantidad = $item->qty;
-            $detail->monto = $item->precio *$item->qty; 
+            $detail->monto = $item->precio * $item->qty;
             $detail->producto_id = $item->id;
             $detail->pedido_id = $order->id;
             $detail->save();
