@@ -85,7 +85,7 @@ class CartController extends Controller
         // $order -> fecha_pedido = $order->created_at;
         $order->estado = 1;
 
-        // $order -> user_id= auth()->user()->id;
+        $order -> user_id= auth()->user()->id;
         $order->save();
 
         foreach (Cart::content() as $item) {
