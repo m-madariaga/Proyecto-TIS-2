@@ -13,7 +13,7 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 @endsection
 
 @section('content')
@@ -29,17 +29,18 @@
                             data-bs-target="#addModal">
                             Agregar nuevo producto
                         </button>
-                        <div class="table-responsive p-0">
+                        <div class="table-responsive p-0 ">
                             <table id="table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
+                                        <th class="text-center">#</th>
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Marca</th>
                                         <th class="text-center">Color</th>
                                         <th class="text-center">Talla</th>
                                         <th class="text-center">Cantidad</th>
                                         <th class="text-center">Valor</th>
-                                        <th class="text-center">Acciones</th>
+
                                     </tr>
                                 </thead>
                                 @if (isset($empty))
@@ -47,21 +48,40 @@
                                     <tbody>
                                         @foreach ($productos as $prod)
                                             <tr>
-                                                <td class="text-center">{{ $prod->nombre }}</td>
-                                                <td class="text-center pt-3">{{ $prod->marca->nombre }}
+                                                <td class="text-center pt-3 w-2">
+                                                    <input type="checkbox" id="prod_id" name="prod_id"
+                                                        value="{{ $prod->id }}">
                                                 </td>
-                                                <td class="text-center pt-3">{{ $prod->color }}
+                                                <td class="text-center w-6">{{ $prod->nombre }}</td>
+                                                <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
                                                 </td>
-                                                <td class="text-center pt-3">{{ $prod->talla }}
+                                                <td class="text-center pt-3 w-6">{{ $prod->color }}
                                                 </td>
-                                                <td class="text-center pt-3">
-                                                    input
+                                                <td class="text-center pt-3 w-6">{{ $prod->talla }}
                                                 </td>
-                                                <td class="text-center pt-3">
-                                                    input
+                                                <td class="text-center pt-3 w-1">
+                                                    <div class="form-group">
+                                                        <input type="number"
+                                                            class="form-control @error('cantidad') is-invalid @enderror"
+                                                            id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
+                                                        @error('cantidad')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
                                                 </td>
-                                                <td class="text-center pt-3">
-                                                    acciones
+                                                <td class="text-center pt-3 w-3">
+                                                    <div class="form-group">
+                                                        <input type="number"
+                                                            class="form-control @error('valor') is-invalid @enderror"
+                                                            id="valor" name="valor" value="{{ old('valor') }}">
+                                                        @error('valor')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -129,8 +149,9 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="color">Color</label>
-                            <input type="text" class="form-control @error('color') is-invalid @enderror" id="color"
-                                name="color" value="{{ old('color') }}" required autocomplete="color">
+                            <input type="text" class="form-control @error('color') is-invalid @enderror"
+                                id="color" name="color" value="{{ old('color') }}" required
+                                autocomplete="color">
                             @error('color')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -139,8 +160,8 @@
                         </div>
                         <div class="form-group">
                             <label class="form-control-label" for="talla">Talla</label>
-                            <input type="text" class="form-control @error('talla') is-invalid @enderror" id="talla"
-                                name="talla" value="{{ old('talla') }}">
+                            <input type="text" class="form-control @error('talla') is-invalid @enderror"
+                                id="talla" name="talla" value="{{ old('talla') }}">
                             @error('talla')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
