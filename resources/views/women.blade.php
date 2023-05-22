@@ -21,14 +21,11 @@
                     </div>
                 </div>
             </div>
-      
-
             <div class="row">
                 <div class="col">
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach($productos as $producto)
                         <!-- Product 1 -->
-
                         <div class="product-item">
                             <div class="product discount product_filter">
                                 <div class="product-image" style=" width: 100%; height: 300px; ">
@@ -36,21 +33,15 @@
                                 </div>
                                 <div class="product_info">
                                     <h5 class="product_name"><a href="#">{{$producto->nombre}}</a></h6>
-                                    <div class="product_price">${{$producto->precio}}</div>
+                                        <div class="product_price">${{$producto->precio}}</div>
                                 </div>
                             </div>
                             <div class="red_button add_to_cart_button"><a href="#">add to cart</a></div>
-
                         </div>
-
-
                         @endforeach
-
                     </div>
                 </div>
-
             </div>
-
         </div>
     </div>
 </div>

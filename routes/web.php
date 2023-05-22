@@ -15,6 +15,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\PurcharseOrderController;
 use App\Http\Controllers\ShipmentTypeController;
 
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileLandingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,6 +30,7 @@ use App\Http\Controllers\ShipmentTypeController;
 */
 
 Auth::routes();
+
 Route::get('/', function () {
     return view('home-landing');
 });
@@ -37,19 +41,18 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-
-
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
-
 
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
 
-
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
 
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
+    
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
@@ -68,9 +71,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
+    
 
     Route::get('/page', function () {
         return view('page');
@@ -145,9 +146,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 });
 
+
+
+
 Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
     //insertar rutas de analista aqui
-
+    
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('analista_home');
 });
@@ -157,3 +161,6 @@ Auth::routes();
 
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
+
+Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');    
