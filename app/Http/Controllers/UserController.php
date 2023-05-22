@@ -11,6 +11,7 @@ use App\Models\Region;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -22,7 +23,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', compact('users'));
+        $roles = Role::all();
+        return view('users.index', compact('users','roles'));
     }
 
     public function profile_argon()
@@ -83,7 +85,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $users = User::find($id);
+
+
+
+
+        return response(view('users.edit', compact('users')));
     }
 
     /**
@@ -94,8 +101,15 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   $user = User::find($id);
+        $roles = $user->getRoleNames();
+        error_log($roles);
+
+        $user->syncRoles($request->get('role'));
+        error_log($roles);
+        $user->save();
+
+        return redirect('admin/users')->with('success', 'Tipo de envío actualizado exitosamente!');
     }
 
     /**
