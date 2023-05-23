@@ -1,3 +1,4 @@
+
 .card {
     transition: transform 0.3s;
 }
@@ -5,3 +6,37 @@
 .card:hover {
     transform: scale(1.1);
 }
+
+.payment-method-image {
+    height: 100%;
+  }
+  
+  .payment-method-image img {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+
+  #container-payment {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.card-deck .card {
+    transition: all 0.4s;
+}
+.card-deck .card:hover {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.card-deck:hover .card:not(:hover) {
+    opacity: 0.5;
+    transform: scale(0.9);
+}
+
+.card-deck .card.selected {
+    opacity: 1;
+    transform: scale(1.02);
+}
+  

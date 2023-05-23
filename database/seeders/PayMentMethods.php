@@ -15,17 +15,22 @@ class PayMentMethods extends Seeder
     {
         $method = new PaymentMethod();
         $method -> name = 'Transferencia Bancaria';
-        $method -> imagen = '';
+        $method -> imagen = 'transferencia_bancaria.png';
         $method -> save();
 
         $method = new PaymentMethod();
         $method -> name = 'Efectivo';
-        $method -> imagen = '';
+        $method -> imagen = 'dinero.png';
         $method -> save();
 
         $method = new PaymentMethod();
         $method -> name = 'WebPay';
-        $method -> imagen = '';
+        $method -> imagen = 'webpay.png';
+        $method -> save();
+
+        $method = new PaymentMethod();
+        $method -> name = 'Mercado Pago';
+        $method -> imagen = 'mercado_pago.png';
         $method -> save();
     }
 }
