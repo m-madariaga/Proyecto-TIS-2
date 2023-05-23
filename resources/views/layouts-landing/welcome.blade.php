@@ -22,6 +22,17 @@
     <script src="assets/js/custom.js"></script>
     @yield('js')
 
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .super_container {
+            flex-grow: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -34,10 +45,11 @@
         <div style="margin-top: 8rem; margin-bottom: 5rem">
             @yield('content')
         </div>
-
-        <!-- Footer -->
-        @include('layouts-landing.footer-landing')
     </div>
+
+    <!-- Footer -->
+    @include('layouts-landing.footer-landing')
+
     @yield('js')
 </body>
 
