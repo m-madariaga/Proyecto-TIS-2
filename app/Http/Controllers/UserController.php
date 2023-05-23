@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Mail\ProofPayment;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Region;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +26,22 @@ class UserController extends Controller
         $roles = Role::all();
         return view('users.index', compact('users','roles'));
     }
-    public function generate_pdf(){
+
+    public function profile_argon()
+    {
+        error_log('intro profile_argon');
+        $users = User::all();
+        return view('profile', compact('users'));
+    }
+
+
+
+    public function generate_pdf()
+    {
         $users = User::all();
         $fecha_actual = Carbon::now();
-        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users,$fecha_actual));
-        $pdf = PDF::loadView('receipt.ticket',['users' => $users,'fecha_actual' => $fecha_actual]);
+        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
+        $pdf = PDF::loadView('receipt.ticket', ['users' => $users, 'fecha_actual' => $fecha_actual]);
         return $pdf->stream('ticket.pdf');
     }
 
@@ -109,9 +123,22 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-       // dejar para futuro sweetalert return response()->json(['success' => true]);
+        // dejar para futuro sweetalert return response()->json(['success' => true]);
 
-       return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+        return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+    }
 
+    public function getRegions($countryId)
+    {
+        $regions = Region::where('country_fk', $countryId)->get();
+
+        return response()->json(['regions' => $regions]);
+    }
+
+    public function getCities($regionId)
+    {
+        $cities = City::where('region_fk', $regionId)->get();
+
+        return response()->json(['cities' => $cities]);
     }
 }
