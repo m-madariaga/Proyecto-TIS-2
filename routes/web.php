@@ -72,8 +72,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
-
-    
+    Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index');   
+    Route::get('/paymethods/create', [App\Http\Controllers\PaymentMethodController::class, 'create'])->name('paymethods.create');
+    Route::post('/paymethods/store', [App\Http\Controllers\PaymentMethodController::class, 'store'])->name('paymethods.store');
+    Route::delete('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
 
     Route::get('/page', function () {
         return view('page');
@@ -83,7 +85,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
-    Route::post('/orders/store',[OrderController::class,'store'])->name('orders-store');
+    Route::post('/orders/store/{id}',[OrderController::class,'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
     
@@ -172,9 +174,10 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit'); 
+
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
-Route::post('/removeitem/{id}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
+Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
 Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
