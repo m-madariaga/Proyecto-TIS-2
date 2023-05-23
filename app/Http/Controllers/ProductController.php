@@ -90,7 +90,7 @@ class ProductController extends Controller
             'imagen' => $imagenUser,
         ]);       
         $producto->save();
-        return redirect()->route('productos')->with('success:', 'Producto ingresado correctamente.');
+        return redirect()->route('productos')->with('success', 'Producto ingresado correctamente.');
     }
 
     /**
@@ -136,7 +136,7 @@ class ProductController extends Controller
             'color' => 'required',
             'talla' => 'required',
             'stock' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'imagen' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
         error_log('test');
         $productos = Product::all();
@@ -158,7 +158,7 @@ class ProductController extends Controller
         }
         $product->save();
         error_log('test');
-        return redirect()->route('productos')->with('success:', 'Producto actualizado correctamente.');
+        return redirect()->route('productos')->with('success', 'Producto actualizado correctamente.');
     }
 
     /**
@@ -172,6 +172,6 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
-        return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
+        return response()->json(['success' => true]);
     }
 }
