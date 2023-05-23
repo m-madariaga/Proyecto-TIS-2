@@ -22,7 +22,7 @@
         <div class="row gx-4">
             <div class="col-auto">
                 <div class="avatar avatar-xl position-relative">
-                    <img src="/argon/assets/img/team-1.jpg" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
                 </div>
             </div>
             <div class="col-auto my-auto">
@@ -70,15 +70,22 @@
                                 <label for="example-text-input" class="form-control-label">Name</label>
                                 <span class="form-control">{{ Auth::user()->name }}</span>
                             </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Run</label>
-                                <span class="form-control">{{ Auth::user()->run }}</span>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Run</label>
+                                    <span class="form-control">{{ Auth::user()->run }}</span>
+                                </div>
                             </div>
                         </div>
 
+                        <div class="col-md-5 d-flex justify-content-center">
+                            <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
+                        </div>
+
                     </div>
+
+
+
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
@@ -140,7 +147,7 @@
                         <h5 class="modal-title" id="editModalLabel">Edit profile</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form method="POST" action="{{route('profile_edit', ['id' => Auth::user()->id])}}">
+                    <form method="POST" action="{{ route('profile_edit', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
 
@@ -174,7 +181,7 @@
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Contact Information</p>
                                 <div class="row">
-                                    <div class="col-md-7">
+                                    <div class="col-md-12">
                                         <div class="text-center">
                                             <label for="example-text-input" class="form-control-label">Address</label>
                                             <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ Auth::user()->address }}" required>
@@ -253,20 +260,28 @@
                                     </div>
 
                                 </div>
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">Profile Image</p>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="profile_image" class="form-control-label">Profile Image</label>
+                                            <input type="file" class="form-control-file @error('profile_image') is-invalid @enderror" id="profile_image" name="profile_image">
 
-                                <!-- <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
+                                            @error('profile_image')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label for="name">Run</label>
-                                <input type="text" class="form-control" id="nombre" name="nombre" required>
-                            </div> -->
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                                <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
+                        </div>
                     </form>
                 </div>
             </div>
