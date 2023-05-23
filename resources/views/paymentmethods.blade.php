@@ -1,16 +1,17 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'PayMent Methods' }}
+    {{ 'Payment Methods' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">PayMentMethods</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Payment Methods</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">PayMentMethods</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Payment Methods</h6>
 @endsection
+
 @section('css')
 @endsection
 
@@ -22,7 +23,7 @@
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-6">
-                                <h6 class="float-start">Tabla de Métodos Pago</h6>
+                                <h6 class="float-start">Tabla de Métodos de Pago</h6>
                             </div>
                             <div class="col-6">
                                 <div class="card-header pb-0 text-end">
@@ -48,7 +49,9 @@
                                         <tr>
                                             <td class="text-center">{{ $paymentMethod->id }}</td>
                                             <td class="text-center">{{ $paymentMethod->name }}</td>
-                                            <td class="text-center">{{ $paymentMethod->imagen }}</td>
+                                            <td class="text-center">
+                                                <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}" alt="Imagen del método de pago" class="img-fluid" style="width: 20%">
+                                            </td>
                                             <td class="text-center pt-3">
                                                 <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"

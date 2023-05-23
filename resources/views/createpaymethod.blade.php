@@ -25,7 +25,7 @@
                         <h6>Ingrese datos Método Pago</h6>
                     </div>
                     <div class="card-body px-5 pb-2">
-                        <form method="POST" action="{{ route('paymethods.store') }}">
+                        <form method="POST" action="{{ route('paymethods.store') }}" enctype="multipart/form-data">
                             @csrf
     
                             <div class="form-group row mb-3">
@@ -35,6 +35,20 @@
                                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" required autocomplete="name" autofocus>
     
                                     @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-3">
+                                <label for="image" class="col-md-4 col-form-label text-md-right">Imagen</label>
+    
+                                <div class="col-md-6">
+                                    <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required>
+    
+                                    @error('image')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -54,10 +68,9 @@
                 </div>
             </div>
         </div>
-        
-
     </div>
 @endsection
+
 
 @section('js')
 

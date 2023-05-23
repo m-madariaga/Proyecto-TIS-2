@@ -62,13 +62,26 @@ class PaymentMethodController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Establece las reglas de validación para la imagen
         ]);
 
-        $paymentMethod = new PaymentMethod;
-        $paymentMethod->name = $request->name;
-        $paymentMethod->save();
+        // Procesa la imagen
+        if ($request->hasFile('image')) {
+            $imagen = $request->file('image');
+            $imageName = $imagen->getClientOriginalName(); 
+        
+            $imagen->move(public_path('argon/assets/img/images-paymethods'), $imageName);
+        
+            // Guard the image path in the database
+            $paymentMethod = new PaymentMethod;
+            $paymentMethod->name = $request->name;
+            $paymentMethod->imagen = $imageName;
+            $paymentMethod->save();
+        } else {
+            // Maneja el caso en que no se cargó una imagen
+        }
 
         return redirect('/admin/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
     }
