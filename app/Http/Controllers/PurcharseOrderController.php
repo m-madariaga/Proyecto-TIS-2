@@ -27,7 +27,7 @@ class PurcharseOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         $productos = Product::all();
         $marcas = Brand::all();
         $categorias = Category::all();
@@ -41,15 +41,14 @@ class PurcharseOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $request->validate([            
-            'total' => 'required',            
-        ]);       
+    {
+        $datos = $request->all();
         $orden = new Purchase_order([
-            'total' => $request->get('total'),
-        ]);       
+            'total' => 0,
+        ]);
         $orden->save();
-        return redirect()->route('orden_compra')->with('success:', 'Orden de compra ingresada correctamente.');
+        $orden_id = $orden->id;
+        return redirect()->route('orden-compra-product-store',compact('datos','orden_id'));
     }
 
     /**
@@ -85,7 +84,7 @@ class PurcharseOrderController extends Controller
     public function update(Request $request, Purchase_order $id)
     {
         $request->validate([
-            'total' => 'required',        
+            'total' => 'required',
         ]);
         $ordenes = Purchase_order::all();
         $orden = $ordenes->find($id);

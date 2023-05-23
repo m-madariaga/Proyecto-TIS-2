@@ -46,49 +46,52 @@
                                 @if (isset($empty))
                                 @else
                                     <tbody>
-                                        @foreach ($productos as $prod)
-                                            <tr>
-                                                <td class="text-center pt-3 w-2">
-                                                    <input type="checkbox" id="prod_id" name="prod_id"
-                                                        value="{{ $prod->id }}">
-                                                </td>
-                                                <td class="text-center w-6">{{ $prod->nombre }}</td>
-                                                <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
-                                                </td>
-                                                <td class="text-center pt-3 w-6">{{ $prod->color }}
-                                                </td>
-                                                <td class="text-center pt-3 w-6">{{ $prod->talla }}
-                                                </td>
-                                                <td class="text-center pt-3 w-1">
-                                                    <div class="form-group">
-                                                        <input type="number"
-                                                            class="form-control @error('cantidad') is-invalid @enderror"
-                                                            id="cantidad" name="cantidad" value="{{ old('cantidad') }}">
-                                                        @error('cantidad')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </td>
-                                                <td class="text-center pt-3 w-3">
-                                                    <div class="form-group">
-                                                        <input type="number"
-                                                            class="form-control @error('valor') is-invalid @enderror"
-                                                            id="valor" name="valor" value="{{ old('valor') }}">
-                                                        @error('valor')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                        <form action="{{route('orden-compra-store')}}" method="POST">
+                                            @csrf
+                                            @foreach ($productos as $prod)
+                                                <tr>
+                                                    <td class="text-center pt-3 w-2">
+                                                        <input type="checkbox" id="prod_id" name="prod_id[]"
+                                                            value="{{ $prod->id }}">
+                                                    </td>
+                                                    <td class="text-center w-6">{{ $prod->nombre }}</td>
+                                                    <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
+                                                    </td>
+                                                    <td class="text-center pt-3 w-6">{{ $prod->color }}
+                                                    </td>
+                                                    <td class="text-center pt-3 w-6">{{ $prod->talla }}
+                                                    </td>
+                                                    <td class="text-center pt-3 w-1">
+                                                        <div class="form-group">
+                                                            <input type="number"
+                                                                class="form-control @error('cantidad') is-invalid @enderror"
+                                                                id="cantidad" name="cantidad"
+                                                                value="{{ old('cantidad') }}">
+                                                            @error('cantidad')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center pt-3 w-3">
+                                                        <div class="form-group">
+                                                            <input type="number"
+                                                                class="form-control @error('valor') is-invalid @enderror"
+                                                                id="valor" name="valor" value="{{ old('valor') }}">
+                                                            @error('valor')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </form>
                                     </tbody>
                                 @endif
                             </table>
-
                         </div>
                     </div>
                 </div>
