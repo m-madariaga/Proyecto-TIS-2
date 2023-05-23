@@ -14,6 +14,12 @@ use App\Http\Controllers\Controller\CountryController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PurcharseOrderController;
 use App\Http\Controllers\ShipmentTypeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentMethodController;
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileLandingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +33,7 @@ use App\Http\Controllers\ShipmentTypeController;
 */
 
 Auth::routes();
+
 Route::get('/', function () {
     return view('home-landing');
 });
@@ -37,19 +44,17 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-
-
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
-
-
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
 
-
 Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], function () {
     //insertar rutas de admin aqui
 
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
+    
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
@@ -68,17 +73,20 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
 
-    Route::get('/profile', function () {
-        return view('profile');
-    })->name('profile');
+    
 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
   
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
-    Route::post('/calendar/agregar', [EventController::class, 'store'])->name('calendar_agregar');
+    Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
+    Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
+    Route::post('/orders/store',[OrderController::class,'store'])->name('orders-store');
+    Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
+
+    
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
@@ -139,15 +147,18 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
 
 
-
+  
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
 });
 
+
+
+
 Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
     //insertar rutas de analista aqui
-
+    
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('analista_home');
 });
@@ -155,5 +166,19 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
+
+
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
+Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit'); 
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
+Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
+Route::post('/removeitem/{id}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
+Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
+Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
+Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
+
+Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
+
+Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');   

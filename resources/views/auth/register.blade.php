@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password" " placeholder="Confirm password">
+                                        name="password_confirmation" required autocomplete="new-password"  placeholder="Confirm password">
                                                     </div>
 
                                                     <div class="form-check form-check-info text-start">

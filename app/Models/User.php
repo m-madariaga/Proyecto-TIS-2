@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
 
 class User extends Authenticatable
 {
@@ -34,7 +36,11 @@ class User extends Authenticatable
         $role = $this->roles->first();
         return $role ? $role->name : null;
     }
-
+    public function orders()
+    {
+        return $this->belongsTo(Order::class, 'id');
+    }
+    
     public function city()
     {
         return $this->belongsTo(City::class,'city_fk');
