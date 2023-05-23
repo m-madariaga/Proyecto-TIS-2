@@ -70,6 +70,8 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Concepción';
         $user->region_fk = 'Bio-bio';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
+                
 
         $user->save();
         $user->assignRole($role1);
@@ -83,6 +85,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Talcahuano';
         $user->region_fk = 'Bio-bio';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
         $user->assignRole($role11);
@@ -97,6 +100,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Santiago';
         $user->region_fk = 'Metropolitana';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
         $user->save();
         $user->assignRole($role2);
 
@@ -109,6 +113,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Arica';
         $user->region_fk = 'Arica y Parinacota';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
         $user->assignRole($role3);

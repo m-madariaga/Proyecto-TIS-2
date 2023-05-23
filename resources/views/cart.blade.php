@@ -69,14 +69,10 @@
                                         </td>
                                         <td>{{ $item->subtotal }}</td>
                                         <td>
-                                            <form action="{{ route('removeitem', ['id' => $item->rowId]) }}"
-                                                method="POST">
+                                            <form action="{{ route('removeitem', ['rowId' => $item->rowId]) }}" method="POST">
                                                 @csrf
                                                 @method('POST')
-
-                                                <button type="submit" class="btn btn-link"><i
-                                                        class="far fa-times-circle"></i></button>
-
+                                                <button type="submit" class="btn btn-link"><i class="far fa-times-circle"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -93,7 +89,7 @@
                         </tfoot>
                     </table>
                     @if (Auth::check())
-                        <form action="{{ route('confirmcart') }}" method="post">
+                        <form action="{{ route('paymentmethod') }}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-danger">Checkout</button>
                         </form>
@@ -105,7 +101,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal  Imagen-->
     <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -120,18 +116,19 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Modal Debe iniciar sesion -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalLabel">Inicia sesión para continuar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Debes iniciar sesión para continuar con la compra.</p>
-                    <p>Haz clic en el siguiente enlace para iniciar sesión:</p>
-                    <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
+                    <p class="text-center">Debes iniciar sesión para continuar con la compra.</p>
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
+                    </div>
                 </div>
             </div>
         </div>
