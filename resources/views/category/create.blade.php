@@ -48,7 +48,7 @@
             </div>                       
             <div class="form-group">
             <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('categorias')}}">{{ __('Cancelar') }}</a>
-              <button type="submit" class="btn btn-primary">Agregar Marca</button>
+              <button type="submit" class="btn btn-primary">Agregar</button>
             </div>
           </form>
         </div>

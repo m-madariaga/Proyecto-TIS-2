@@ -90,7 +90,7 @@ class ProductController extends Controller
             'imagen' => $imagenUser,
         ]);       
         $producto->save();
-        return redirect()->route('productos')->with('success:', 'Producto ingresado correctamente.');
+        return redirect()->route('productos')->with('success', 'Producto ingresado correctamente.');
     }
 
     /**
@@ -127,6 +127,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $id)
     {
+        error_log('test');
         $request->validate([
             'marca_id' => 'required',
             'categoria_id' => 'required',
@@ -135,8 +136,9 @@ class ProductController extends Controller
             'color' => 'required',
             'talla' => 'required',
             'stock' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'imagen' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
+        error_log('test');
         $productos = Product::all();
         $product = $productos->find($id);
         $product->marca_id = $request->marca_id;
@@ -155,7 +157,8 @@ class ProductController extends Controller
             unset($product->imagen);
         }
         $product->save();
-        return redirect()->route('productos')->with('success:', 'Producto actualizado correctamente.');
+        error_log('test');
+        return redirect()->route('productos')->with('success', 'Producto actualizado correctamente.');
     }
 
     /**
@@ -169,6 +172,6 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
-        return redirect()->route('productos')->with('success:', 'Producto eliminado correctamente.');
+        return response()->json(['success' => true]);
     }
 }
