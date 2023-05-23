@@ -72,7 +72,10 @@
                                 <label for="role_type" class="col-md-4 col-form-label text-md-right">Permisos</label>
     
                                 <div class="col-md-6">
-                                    <div class="form-check" id="check1">
+                                    <div class="form-check" id="check1"
+                                    @if($role->role_type==3)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="1" name="defaultCheck1" id="defaultCheck1" 
                                         @if($role->permissions->contains('dashboard'))
                                             checked
@@ -83,7 +86,10 @@
                                         </label>
                                     </div>
 
-                                    <div class="form-check" id="check2">
+                                    <div class="form-check" id="check2"
+                                    @if($role->role_type==3)
+                                            style="display:none"
+                                        @endif>
                                         <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" 
                                         @if($role->role_type==1)
                                             @if($role->permissions->contains('mantenedor usuarios'))
@@ -97,9 +103,9 @@
                                         >
                                         <label class="form-check-label" for="defaultCheck2" id="label2">
                                             @if($role->role_type==1)
-                                                Mantenedor de usuarios
+                                                Mantenedor usuarios
                                             @elseif($role->role_type==2)
-                                                Reporte de ventas
+                                                Reporte ventas
                                             @endif
                                         </label>
                                     </div>
@@ -121,7 +127,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck3" id="label3">
-                                          Mantenedor de roles
+                                          Mantenedor roles
                                         </label>
                                     </div>
 
@@ -142,7 +148,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck4" id="label4">
-                                          Mantenedor de permisos
+                                          Mantenedor permisos
                                         </label>
                                     </div>
 
@@ -162,7 +168,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck5" id="label5">
-                                          Mantenedor de productos
+                                          Mantenedor productos
                                         </label>
                                     </div>
 
@@ -182,7 +188,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck6" id="label6">
-                                          Mantenedor de categorías
+                                          Mantenedor categorías
                                         </label>
                                     </div>
 
@@ -202,7 +208,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck7" id="label7">
-                                          Mantenedor de marcas
+                                          Mantenedor marcas
                                         </label>
                                     </div>
 
@@ -222,7 +228,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck8" id="label8">
-                                          Mantenedor de ventas
+                                          Mantenedor ventas
                                         </label>
                                     </div>
 
@@ -242,7 +248,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck9" id="label9">
-                                          Mantenedor de envíos
+                                          Mantenedor envíos
                                         </label>
                                     </div>
 
@@ -262,7 +268,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck10" id="label10">
-                                          Mantenedor de tipo de envío
+                                          Mantenedor tipo de envío
                                         </label>
                                     </div>
 
@@ -282,7 +288,7 @@
                                         @endif
                                         >
                                         <label class="form-check-label" for="defaultCheck11" id="label11">
-                                          Mantenedor de método de pago
+                                          Mantenedor método de pago
                                         </label>
                                     </div>
 

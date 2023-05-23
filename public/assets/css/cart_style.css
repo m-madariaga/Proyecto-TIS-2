@@ -1,0 +1,144 @@
+.cart-items h2 {
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.table {
+    padding: 5rem;
+}
+
+.table th {
+    color: #fff;
+    background-color: #8c034e;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+
+.table td {
+    color: #000;
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.btn-danger {
+    background-color: #8c034e;
+    border-color: #8c034e;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #6b0236;
+    border-color: #6b0236;
+}
+
+.modal-header {
+    color: #fff;
+    text-align: center;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.product-info {
+    text-align: center;
+}
+
+.container-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-count .btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+#qty {
+    padding: 0.5rem;
+}
+
+.quantity {
+    margin: 0 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.product-image {
+    margin-left: 10px;
+}
+
+.order-summary {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.total-price p {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.fa-times-circle {
+    cursor: pointer;
+    color: #8c034e;
+}
+
+@media (max-width: 767px) {
+    .table {
+        padding: 2rem;
+    }
+    
+    .table th,
+    .table td {
+        padding: 5px;
+        font-size: 12px;
+    }
+    
+    .table th:nth-child(2),
+    .table td:nth-child(2) {
+        display: none;
+    }
+    
+    .table th:first-child,
+    .table td:first-child {
+        padding-top: 20px;
+    }
+    
+    .table td:last-child {
+        padding-bottom: 20px;
+    }
+    
+    .product-item {
+        flex-direction: column;
+    }
+    
+    .product-info {
+        margin-top: 10px;
+    }
+    
+    .container-quantity {
+        margin-top: 10px;
+    }
+    
+    .product-count .btn {
+        padding: 3px 6px;
+        font-size: 10px;
+    }
+    
+    .fa-times-circle {
+        font-size: 14px;
+    }
+    
+    .total-price p {
+        font-size: 12px;
+    }
+}

@@ -59,7 +59,7 @@
                                     <input id="run" type="text"
                                         class="form-control @error('run') is-invalid @enderror" name="run"
                                         value="{{ old('run') }}" required autocomplete="run" aria-label="Run"
-                                        placeholder="Run" autofocus>
+                                        placeholder="Run" autofocus maxlength="10">
                                     @error('run')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <input id="password-confirm" type="password" class="form-control"
-                                        name="password_confirmation" required autocomplete="new-password" " placeholder="Confirm password">
+                                        name="password_confirmation" required autocomplete="new-password"  placeholder="Confirm password">
                                                     </div>
 
                                                     <div class="form-check form-check-info text-start">

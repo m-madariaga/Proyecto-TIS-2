@@ -55,7 +55,7 @@ class BrandController extends Controller
             'logo' => $imagenUser,
         ]);
         $marca->save();
-        return redirect()->route('marcas')->with('success:', 'Marca ingresada correctamente.');
+        return redirect()->route('marcas')->with('success', 'Marca ingresada correctamente.');
     }
 
     /**
@@ -93,7 +93,7 @@ class BrandController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'logo' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
         $marcas = Brand::all();
         $marca = $marcas->find($id);
@@ -107,7 +107,7 @@ class BrandController extends Controller
             unset($marca->logo);
         }
         $marca->save();
-        return redirect()->route('marcas')->with('success:', 'Marca actualizada correctamente.');
+        return redirect()->route('marcas')->with('success', 'Marca actualizada correctamente.');
     }
 
     /**
@@ -121,6 +121,6 @@ class BrandController extends Controller
         $marcas = Brand::all();
         $marca = $marcas->find($id);
         $marca->delete();
-        return redirect()->route('marcas')->with('success:', 'Marca eliminada correctamente.');
+        return response()->json(['success' => true]);
     }
 }
