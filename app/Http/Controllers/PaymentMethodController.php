@@ -19,7 +19,16 @@ class PaymentMethodController extends Controller
      */
     public function index()
     {
-        return view('paymentmethod');
+        $paymentMethods = PaymentMethod::all(); // Obtener todos los métodos de pago desde la base de datos
+
+        return view('paymentmethod_landing', compact('paymentMethods')); // Pasar la variable $paymentMethods a la vista
+    }
+
+    public function index_admin()
+    {
+        $paymentMethods = PaymentMethod::all(); // Obtener todos los métodos de pago desde la base de datos
+
+        return view('paymentmethods', compact('paymentMethods')); // Pasar la variable $paymentMethods a la vista
     }
 
     /**
@@ -29,7 +38,7 @@ class PaymentMethodController extends Controller
      */
     public function create()
     {
-        //
+        return view('createpaymethod');
     }
 
     /**
@@ -38,11 +47,31 @@ class PaymentMethodController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_landing(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $paymentMethod = new PaymentMethod;
+        $paymentMethod->name = $request->name;
+        $paymentMethod->save();
+
+        return redirect('/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $paymentMethod = new PaymentMethod;
+        $paymentMethod->name = $request->name;
+        $paymentMethod->save();
+
+        return redirect('/admin/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
+    }
     /**
      * Display the specified resource.
      *
@@ -83,8 +112,13 @@ class PaymentMethodController extends Controller
      * @param  \App\Models\PaymentMethod  $paymentMethod
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PaymentMethod $paymentMethod)
+    public function destroy($id)
     {
-        //
+        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod->delete();
+
+        return redirect('/admin/paymentmethod')->with('success', 'Método de pago eliminado exitosamente!');
+
     }
+
 }
