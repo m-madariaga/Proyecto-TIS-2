@@ -72,70 +72,70 @@
                                     <div class="form-check" id="check2">
                                         <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" checked>
                                         <label class="form-check-label" for="defaultCheck2" id="label2">
-                                          Mantenedor de usuarios
+                                          Mantenedor usuarios
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check3">
                                         <input class="form-check-input" type="checkbox" value="3" name="defaultCheck3" id="defaultCheck3" checked>
                                         <label class="form-check-label" for="defaultCheck3" id="label3">
-                                          Mantenedor de roles
+                                          Mantenedor roles
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check4">
                                         <input class="form-check-input" type="checkbox" value="4" name="defaultCheck4" id="defaultCheck4" checked>
                                         <label class="form-check-label" for="defaultCheck4" id="label4">
-                                          Mantenedor de permisos
+                                          Mantenedor permisos
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check5">
                                         <input class="form-check-input" type="checkbox" value="5" name="defaultCheck5" id="defaultCheck5" checked>
                                         <label class="form-check-label" for="defaultCheck5" id="label5">
-                                          Mantenedor de productos
+                                          Mantenedor productos
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check6">
                                         <input class="form-check-input" type="checkbox" value="6" name="defaultCheck6" id="defaultCheck6" checked>
                                         <label class="form-check-label" for="defaultCheck6" id="label6">
-                                          Mantenedor de categorías
+                                          Mantenedor categorías
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check7">
                                         <input class="form-check-input" type="checkbox" value="7" name="defaultCheck7" id="defaultCheck7" checked>
                                         <label class="form-check-label" for="defaultCheck7" id="label7">
-                                          Mantenedor de marcas
+                                          Mantenedor marcas
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check8">
                                         <input class="form-check-input" type="checkbox" value="8" name="defaultCheck8" id="defaultCheck8" checked>
                                         <label class="form-check-label" for="defaultCheck8" id="label8">
-                                          Mantenedor de ventas
+                                          Mantenedor ventas
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check9">
                                         <input class="form-check-input" type="checkbox" value="9" name="defaultCheck9" id="defaultCheck9" checked>
                                         <label class="form-check-label" for="defaultCheck9" id="label9">
-                                          Mantenedor de envío
+                                          Mantenedor envío
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check10">
                                         <input class="form-check-input" type="checkbox" value="10" name="defaultCheck10" id="defaultCheck10" checked>
                                         <label class="form-check-label" for="defaultCheck10" id="label10">
-                                          Mantenedor de tipo de envío
+                                          Mantenedor tipo de envío
                                         </label>
                                     </div>
 
                                     <div class="form-check" id="check11">
                                         <input class="form-check-input" type="checkbox" value="11" name="defaultCheck11" id="defaultCheck11" checked>
                                         <label class="form-check-label" for="defaultCheck11" id="label11">
-                                          Mantenedor de método de pago
+                                          Mantenedor método de pago
                                         </label>
                                     </div>
                                 </div>

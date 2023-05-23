@@ -123,7 +123,6 @@
                         </li>
                     @endcan
 
-
                 </ul>
             </li>            
             @can('mantenedor ordenes')
@@ -147,6 +146,7 @@
                     <span class="nav-link-text ms-1">Tipos de envío</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('calendar') }}">
                     <div
