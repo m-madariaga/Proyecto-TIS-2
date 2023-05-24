@@ -252,7 +252,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="region" class="form-label">Region</label>
-                                <select id="text" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                <select id="region" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
                                     <option value="">{{ Auth::user()->region_fk }}</option>
                                     @foreach ($regions as $region)
                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
@@ -268,7 +268,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="city" class="form-label">City</label>
-                                <select id="text" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                <select id="city" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
                                     <option value="">{{ Auth::user()->city_fk }}</option>
                                     @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>

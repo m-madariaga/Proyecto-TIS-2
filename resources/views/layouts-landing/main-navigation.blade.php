@@ -31,8 +31,7 @@
         <div class="row">
             <div class="col-lg-12 text-right">
                 <div class="logo_container">
-                    <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 3rem;"
-                        alt="main_logo">
+                    <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 3rem;" alt="main_logo">
                 </div>
                 <nav class="navbar">
                     <ul class="navbar_menu">
@@ -44,7 +43,12 @@
                         <li><a href="#">sale</a></li>
                     </ul>
                     <ul class="navbar_user">
-                        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                        <li>
+                            <form action="{{ route('search') }}" method="GET" class="search_form">
+                                <input type="text" name="query" placeholder="Search">
+                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form>
+                        </li>
 
                         <li class="checkout">
                             <a href="{{route('showcart')}}">
