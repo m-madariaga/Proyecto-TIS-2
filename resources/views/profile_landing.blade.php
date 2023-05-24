@@ -54,6 +54,26 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+
+
+        $('#editProfileLandingModal').on('show.bs.modal', function() {
+            // Do something when the modal is shown
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // MODAL EDIT PASSWORD
+        $('#openModalButton').click(function() {
+            $('#editPasswordLandingModal').modal('show');
+        });
+    });
+</script>
 @endsection
 
 @section('content')
@@ -292,51 +312,50 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProfileLandingModalLabel">Edit Profile</h5>
+                <h5 class="modal-title" id="editProfileLandingModalLabel">Update Password</h5>
             </div>
 
-            <form method="POST" action="{{route('profile_landing_edit', ['id' => Auth::user()->id])}}">
+            <form method="POST" action="{{ route('change_password_landing') }}">
                 @csrf
                 <div class="modal-body">
                     <p class="text-uppercase text-sm" id="profile_title">User Information</p>
 
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="name" class="form-label">Ingrese Password Actual</label>
-                                <input type="text" class="form-control input-field @error('name') is-invalid @enderror" name="name" id="profile_card_body" value="" required>
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
+                    <div class="form-group row">
+                        <label for="current_password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña Actual') }}</label>
 
-                        </div>
-                        <hr class="horizontal dark">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="run" class="form-label">Password nueva</label>
-                                <input type="text" class="form-control input-field @error('run') is-invalid @enderror" value="" required>
-                                @error('run')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-12">
-                            <div class="form-group">
-                                <label for="email" class="form-label">Confirme Password </label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="profile_card_body" value="" required>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
+                        <div class="col-md-6">
+                            <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autofocus>
+
+                            @error('current_password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Nueva Contraseña') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                    </div>
+
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
@@ -346,4 +365,7 @@
         </div>
     </div>
 </div>
+
+
+
 @endsection
