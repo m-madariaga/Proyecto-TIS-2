@@ -8,17 +8,6 @@
 
 @section('content')
 <div class="container-fluid py-4 mb-4">
-    <div class="row">
-        <div class="col-6 offset-6">
-            <div class="input-group mb-3">
-                <input type="text" id="productSearch" class="form-control" placeholder="Search for products" aria-label="Search for products">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="searchButton">Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="new_arrivals">
         <div class="container">
             <div class="row">
