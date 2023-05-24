@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
 
@@ -24,7 +25,7 @@ class PurcharseOrderProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         return view('purchase_order_product.create');
     }
 
@@ -35,21 +36,32 @@ class PurcharseOrderProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $request->validate([            
-            'purchase_order_id' => 'required',
-            'products_id' => 'required',
-            'cantidad' => 'required',
-            'precio' => 'required',       
-        ]);       
-        $orden_product = new Purchase_order_product([
-            'purchase_order_id' => $request->get('purchase_order_id'),
-            'products_id' => $request->get('products_id'),
-            'cantidad' => $request->get('cantidad'),
-            'precio' => $request->get('precio'),            
-        ]);       
-        $orden_product->save();
-        return redirect()->route('orden_producto')->with('success:', 'Orden de compra ingresada correctamente.');
+    {
+        $datos = $request->get('datos');
+        $id = $request->get('orden_id');
+        $all = $request->all();
+        // reiniciar los indices para que sean consecutivos
+        $cant = array();
+        foreach ($datos['cantidad'] as $key => $value) {
+            array_push($cant, $value);
+        }
+        $val = array();
+        foreach ($datos['valor'] as $key => $value) {
+            array_push($val, $value);
+        }
+        for ($i=0; $i < sizeof($datos['prod_id']); $i++) {
+            $prod_id = $datos['prod_id'][$i];
+            $cantidad = $cant[$i];
+            $valor = $val[$i];
+            $orden_product = new Purchase_order_product([
+                'purchase_order_id' => $id,
+                'products_id' => $prod_id,
+                'cantidad' => $cantidad,
+                'precio' => $valor,
+            ]);
+            $orden_product->save();
+        }
+        return redirect()->route('orden-compra')->with('success:', 'Orden de compra ingresada correctamente.');
     }
 
     /**
@@ -88,7 +100,7 @@ class PurcharseOrderProductController extends Controller
             'purchase_order_id' => 'required',
             'products_id' => 'required',
             'cantidad' => 'required',
-            'precio' => 'required',          
+            'precio' => 'required',
         ]);
         $ordenes = Purchase_order_product::all();
         $orden = $ordenes->find($id);

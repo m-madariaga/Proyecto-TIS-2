@@ -42,9 +42,7 @@
                                             <td class="text-center">{{ $orden->id }}</td>
 
                                             <td class="text-center">
-                                                @foreach ($orden->product as $prod)
-                                                    {{ $prod->nombre }}<br>
-                                                @endforeach
+
                                             </td>
                                             <td class="text-center">{{ $orden->total }}</td>
                                             <td class="text-center pt-3">

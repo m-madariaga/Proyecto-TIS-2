@@ -30,29 +30,30 @@
                             Agregar nuevo producto
                         </button>
                         <div class="table-responsive p-0 ">
-                            <table id="table" class="table display table-stripped align-items-center">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Nombre</th>
-                                        <th class="text-center">Marca</th>
-                                        <th class="text-center">Color</th>
-                                        <th class="text-center">Talla</th>
-                                        <th class="text-center">Cantidad</th>
-                                        <th class="text-center">Valor</th>
+                            <form action="{{ route('orden-compra-store') }}" method="POST">
+                                @csrf
+                                <table id="table" class="table display table-stripped align-items-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">Marca</th>
+                                            <th class="text-center">Color</th>
+                                            <th class="text-center">Talla</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Valor</th>
 
-                                    </tr>
-                                </thead>
-                                @if (isset($empty))
-                                @else
-                                    <tbody>
-                                        <form action="{{route('orden-compra-store')}}" method="POST">
-                                            @csrf
+                                        </tr>
+                                    </thead>
+                                    @if (isset($empty))
+                                    @else
+                                        <tbody>
+
                                             @foreach ($productos as $prod)
                                                 <tr>
                                                     <td class="text-center pt-3 w-2">
-                                                        <input type="checkbox" id="prod_id" name="prod_id[]"
-                                                            value="{{ $prod->id }}">
+                                                        <input type="checkbox" id="prod_id"
+                                                            name="prod_id[]" value="{{ $prod->id }}">
                                                     </td>
                                                     <td class="text-center w-6">{{ $prod->nombre }}</td>
                                                     <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
@@ -63,10 +64,12 @@
                                                     </td>
                                                     <td class="text-center pt-3 w-1">
                                                         <div class="form-group">
+
                                                             <input type="number"
                                                                 class="form-control @error('cantidad') is-invalid @enderror"
-                                                                id="cantidad" name="cantidad"
+                                                                id="cantidad" name="cantidad[]"
                                                                 value="{{ old('cantidad') }}">
+
                                                             @error('cantidad')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -76,9 +79,12 @@
                                                     </td>
                                                     <td class="text-center pt-3 w-3">
                                                         <div class="form-group">
+
                                                             <input type="number"
                                                                 class="form-control @error('valor') is-invalid @enderror"
-                                                                id="valor" name="valor" value="{{ old('valor') }}">
+                                                                id="valor" name="valor[]"
+                                                                value="{{ old('valor') }}">
+
                                                             @error('valor')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -88,10 +94,15 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        </form>
-                                    </tbody>
-                                @endif
-                            </table>
+                                        </tbody>
+                                    @endif
+                                </table>
+                                <div class="form-group text-center m-4">
+                                    <a type="button" class="btn btn-sm btn-outline-danger"
+                                        href="{{ route('orden-compra') }}">{{ __('Cancelar') }}</a>
+                                    <button type="submit" class="btn btn-primary">Agregar orden</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
