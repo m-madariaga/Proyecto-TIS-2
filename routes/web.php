@@ -54,10 +54,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
-    
+
     Route::get('/tables', function () {
         return view('tables');
     })->name('tables');
+
+
+    Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{id}', [App\Http\Controllers\UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
@@ -72,7 +76,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
 
-    Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index');   
+    Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index');
     Route::get('/paymethods/create', [App\Http\Controllers\PaymentMethodController::class, 'create'])->name('paymethods.create');
     Route::post('/paymethods/store', [App\Http\Controllers\PaymentMethodController::class, 'store'])->name('paymethods.store');
     Route::delete('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
@@ -80,7 +84,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
-  
+
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
@@ -88,7 +92,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/orders/store/{id}',[OrderController::class,'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
-    
+
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
@@ -149,7 +153,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
 
 
-  
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
@@ -160,7 +164,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analista'], function () {
     //insertar rutas de analista aqui
-    
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('analista_home');
 });
@@ -173,7 +177,7 @@ Auth::routes();
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
-Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit'); 
+Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
 
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
@@ -184,4 +188,4 @@ Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destro
 
 Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
 
-Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');   
+Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');
