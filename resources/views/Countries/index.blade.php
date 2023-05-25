@@ -246,10 +246,6 @@
 
         });
 
-        // Clear error messages when the edit modal is hidden
-        $('#editModal').on('hidden.bs.modal', function() {
-            $(this).find('.invalid-feedback').html('');
-            $(this).find('.error-message').remove();
-        });
+
     </script>
 @endsection
