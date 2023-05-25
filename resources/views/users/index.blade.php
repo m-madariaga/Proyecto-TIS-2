@@ -192,8 +192,8 @@
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Email</th>
                                         <th class="text-center">Rol</th>
-
-
+                                        <th class="text-center">Estado</th>
+                                        <th class="text-center">Visto ultima vez</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -206,7 +206,19 @@
                                             <td class="text-center">
                                                 {{ $user->roleName() }}
                                             </td>
+                                            <td class="text-center">
+                                                @if (Cache::has('is_online' . $user->id))
+                                                    <span class="text-success">En linea</span>
+                                                @else
+                                                    <span class="text-secondary">Desconectado</span>
+                                                @endif
 
+                                            </td>
+                                            <td class="text-center">
+                                                El {{ \Carbon\Carbon::parse($user->last_seen)->format('d') }}
+                                                de {{ \Carbon\Carbon::parse($user->last_seen)->format('F') }}
+                                                a las {{ \Carbon\Carbon::parse($user->last_seen)->format('H') }} hrs
+                                            </td>
                                             <td class="text-center pt-3">
                                                 <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"
