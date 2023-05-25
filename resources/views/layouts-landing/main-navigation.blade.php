@@ -44,7 +44,8 @@
                     </ul>
                     <ul class="navbar_user">
                         <li>
-                            <form action="{{ route('search') }}" method="GET" class="search_form">
+                            <form action="{{ route('search') }}" method="POST" class="search_form">
+                                @csrf 
                                 <input type="text" name="query" placeholder="Search">
                                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                             </form>
@@ -60,9 +61,10 @@
                     <div class="hamburger_container">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </div>
-
                 </nav>
             </div>
         </div>
     </div>
 </div>
+
+@yield('search_results')

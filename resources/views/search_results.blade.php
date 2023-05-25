@@ -1,0 +1,29 @@
+@extends('layouts-landing.welcome')
+
+@section('search_results')
+
+
+<div class="container">
+    <h2>Search Results</h2>
+    @if (count($results) > 0)
+    <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+        @foreach ($results as $product)
+        <!-- Product -->
+        <div class="product-item">
+            <div class="product discount product_filter">
+                <!-- <div class="product-image">
+                    <img src="{{ asset('assets/images/images-products/' . $product->imagen) }}" class="product-image__img" alt="{{ $product->nombre }}">
+                </div> -->
+                <div class="product_info">
+                    <h5 class="product_name"><a href="#">{{ $product->nombre }}</a></h5>
+                    <div class="product_price">${{ $product->precio }}</div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    @else
+    <p>No results found.</p>
+    @endif
+</div>
+@endsection

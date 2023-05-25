@@ -189,3 +189,6 @@ Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::clas
 
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
 // Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
+
+
+Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');

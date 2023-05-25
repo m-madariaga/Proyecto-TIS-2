@@ -88,22 +88,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-
+                                <span class="form-control" >{{ Auth::user()->email }}</span>
                             </div>
                         </div>
 
                     </div>
 
-
-
                     <hr class="horizontal dark">
+                    
                     <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
                         <div class="col-md-6">
@@ -261,10 +253,11 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <hr class="horizontal dark">
+                                
                                 <p class="text-uppercase text-sm">Account information</p>
                                 <div class="row">
-
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Password</label>
@@ -277,15 +270,10 @@
                                             @enderror
                                         </div>
                                     </div>
-
                                 </div>
 
 
-                                <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Profile Image</p>
-                                <div class="row">
-
-                                </div>
+                        
                             </div>
                         </div>
                         <div class="modal-footer">
