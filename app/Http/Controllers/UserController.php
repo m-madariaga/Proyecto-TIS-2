@@ -12,7 +12,8 @@ use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 class UserController extends Controller
 {
     /**
@@ -27,7 +28,7 @@ class UserController extends Controller
         $cities = City::all();
         $users = User::all();
         $roles = Role::all();
-        return view('users.index', compact('users','roles','countries','cities','regions'));
+        return view('users.index', compact('users', 'roles', 'countries', 'cities', 'regions'));
     }
 
     public function profile_argon()
@@ -67,22 +68,29 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
-            'run' => 'required|string|regex:/^\d{7,8}-[0-9K]$/',
-            'address' => 'required|string',
-            'city_fk' => 'required|exists:cities,id',
-            'country_fk' => 'required|exists:countries,id',
-            'region_fk' => 'required|exists:regions,id',
-        ]);
+        try
+        {
+            $validatedData = $request->validate([
+                'name' => 'required|string',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|string|min:8',
+                'run' => 'required|string|unique:users|regex:/^\d{7,8}-[0-9K]$/',
+                'address' => 'required|string',
+                'city_fk' => 'required|exists:cities,id',
+                'country_fk' => 'required|exists:countries,id',
+                'region_fk' => 'required|exists:regions,id',
+            ]);
 
+            $user = User::create($validatedData);
+            $user->assignRole($request->input('role'));
 
-        $user = User::create($validatedData);
-
-
-        return response()->json(['message' => 'User created successfully', 'user' => $user], 201);
+            return response()->json(['success' => true]);
+        }
+        catch (ValidationException $e)
+        {
+            $errors = $e->errors();
+            return response()->json(['success' => false, 'errors' => $errors]);
+        }
     }
 
     /**
@@ -120,7 +128,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   $user = User::find($id);
+    {
+        $user = User::find($id);
         $roles = $user->getRoleNames();
         error_log($roles);
 

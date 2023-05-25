@@ -59,6 +59,17 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         return view('tables');
     })->name('tables');
 
+    Route::get('/countries/create', [App\Http\Controllers\CountryController::class, 'create'])->name('countries.create');
+    Route::post('/countries', [App\Http\Controllers\CountryController::class, 'store'])->name('countries.store');
+    Route::get('/countries/{id}/edit', [App\Http\Controllers\CountryController::class, 'edit'])->name('countries.edit');
+    Route::put('/countries/{id}', [App\Http\Controllers\CountryController::class, 'update'])->name('countries.update');
+    Route::delete('/countries/{id}', [App\Http\Controllers\CountryController::class, 'destroy'])->name('countries.destroy');
+    Route::get('/countries', [App\Http\Controllers\CountryController::class, 'index'])->name('countries.index');
+
+
+
+
+
 
     Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
