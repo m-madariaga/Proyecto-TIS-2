@@ -63,47 +63,22 @@
                                             </td>
 
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('productos-edit', ['id' => $prod->id]) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Editar</a>
-                                                <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}" method="POST" style="display: inline;">
+                                                <a href="{{ route('productos-edit', ['id' => $prod->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                    Editar</a>
+                                                <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
+                                                    method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-product"
-                                                        data-id="{{ $prod->id }}"><i class="fa fa-trash" aria-hidden="true"> Borrar</i></button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-product"
+                                                        data-id="{{ $prod->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
-                                                    {{ $prod->marca->nombre }}
-                                                </td>
-                                                <td>
-                                                    {{ $prod->categoria->nombre }}
-                                                </td>
-                                                <td>{{ $prod->color }}</td>
-                                                <td>{{ $prod->talla }}</td>
-                                                <td>{{ $prod->stock }}</td>
-                                                <td>${{ $prod->precio }}</td>
-                                                <td>
-                                                    <div class="container d-flex justify-content-center">
-                                                        <img src="/imagen/{{ $prod->imagen }}" width="10%">
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-info"
-                                                        href="{{ route('productos-edit', ['id' => $prod->id]) }}">Editar</a>
-                                                    <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
-                                                        class="formulario-eliminar" method="POST">
-                                                        @method('DELETE')
-                                                        @csrf
-                                                        <button class="btn btn-danger btn-sm">Eliminar</button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                @endif
                             </table>
                         </div>
                     </div>
@@ -200,7 +175,4 @@
 
         });
     </script>
-
-
-
 @endsection

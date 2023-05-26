@@ -132,7 +132,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
         Route::patch('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
         Route::delete('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
-        Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
+
     });
 
     Route::group(['middleware' => ['permission:mantenedor categorias']], function () {
