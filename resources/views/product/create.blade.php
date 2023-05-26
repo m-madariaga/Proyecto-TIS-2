@@ -108,6 +108,18 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label class="form-control-label" for="visible">Hacer visible?</label>
+                                <select class="form-control @error('visible') is-invalid @enderror" id="visible" name="visible">
+                                    <option value='0'>No</option>
+                                    <option value='1' default>Si</option>
+                                </select>
+                                @error('visible')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label class="form-control-label" for="imagen">Subir imagen</label>
                                 <img id="imagenSeleccionada" style="max-height: 300px;">
                                 <div class="row mb-3">

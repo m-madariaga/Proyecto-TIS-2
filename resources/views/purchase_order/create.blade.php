@@ -217,13 +217,13 @@
                             <input name='control-hidden' id="control-hidden" value="0" hidden>
                         </div>
                         <div class="form-group">
-                            <label class="form-control-label" for="talla">Hacer visible?</label>
+                            <label class="form-control-label" for="visible">Hacer visible?</label>
                             <select class="form-control @error('visible') is-invalid @enderror" id="visible"
                                 name="visible">
                                 <option value='0'>No</option>
                                 <option value='1' default>Si</option>
                             </select>
-                            @error('talla')
+                            @error('visible')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
