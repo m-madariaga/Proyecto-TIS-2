@@ -122,7 +122,7 @@
                     </div>
                     <hr class="horizontal dark">
                     <!-- Contact Information -->
-                    <p class="text-uppercase text-sm" id="profile_title">Contact Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Address Information</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
@@ -157,7 +157,7 @@
 
                     </div>
                     <div class="row">
-                        <div class="col-md-7 col-12">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <div class="d-flex justify-content-between">
                                     <label for="password" class="form-label">Password</label>
@@ -165,8 +165,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-12">
-                            <button class="button_edit_profile btn btn-primary btn-sm btn-rounded" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Update password</button>
+                        <div class="col-md-6 col-12">
+                            <!-- <button class="button_edit_profile btn btn-primary btn-sm btn-rounded" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Update password</button> -->
+                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Update password</button>
                         </div>
                     </div>
 
@@ -214,6 +215,17 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
+                                <label for="profile_image" class="form-label">Profile Image</label>
+                                <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
+                                @error('profile_image')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
                                 <label for="run" class="form-label">Run</label>
                                 <input type="text" class="form-control input-field @error('run') is-invalid @enderror" name="run" value="{{ Auth::user()->run }}" required>
                                 @error('run')
@@ -223,7 +235,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-12 col-12">
+                        <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="profile_card_body" value="{{ Auth::user()->email }}" required>
@@ -236,7 +248,7 @@
                         </div>
                     </div>
                     <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm" id="profile_title">Contact Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Address Information</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
@@ -249,10 +261,27 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="country" class="form-label">Country</label>
+                                <select id="country" class="form-control input-field @error('country_fk') is-invalid @enderror" name="country_fk" required>
+                                    <option value="">{{ Auth::user()->country_fk }}</option>
+                                    @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_fk')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="region" class="form-label">Region</label>
-                                <select id="region" class="form-select input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                <select id="region" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
                                     <option value="">{{ Auth::user()->region_fk }}</option>
                                     @foreach ($regions as $region)
                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
@@ -268,7 +297,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="city" class="form-label">City</label>
-                                <select id="city" class="form-select input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                <select id="city" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
                                     <option value="">{{ Auth::user()->city_fk }}</option>
                                     @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -281,22 +310,12 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <label for="profile_image" class="form-label">Profile Image</label>
-                                <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
-                                @error('profile_image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
+
                     </div>
-                    <hr class="horizontal dark">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
+
                     <button type="submit" class="btn btn-sm btn-outline-success">Save changes</button>
                 </div>
             </form>
@@ -309,7 +328,7 @@
 
 <!-- MODAL PARA EDITAR CONTRASEÑA -->
 <div class="modal fade" id="editPasswordLandingModal" tabindex="-1" aria-labelledby="editProfileLandingModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editProfileLandingModalLabel">Update Password</h5>
@@ -321,9 +340,10 @@
                     <p class="text-uppercase text-sm" id="profile_title">User Information</p>
 
                     <div class="form-group row">
-                        <label for="current_password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña Actual') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="current_password" class="form-label">{{ __('Contraseña Actual') }}</label>
+
                             <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autofocus>
 
                             @error('current_password')
@@ -335,9 +355,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Nueva Contraseña') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="password" class="form-label">{{ __('Nueva Contraseña') }}</label>
+
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                             @error('password')
@@ -349,9 +370,10 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
 
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <label for="password-confirm" class="form-label">{{ __('Confirmar Contraseña') }}</label>
+
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>
                     </div>

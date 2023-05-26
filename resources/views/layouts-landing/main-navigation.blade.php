@@ -36,18 +36,24 @@
                 <nav class="navbar">
                     <ul class="navbar_menu">
                         <li><a href="{{ route('home-landing') }}">home</a></li>
-                        <li><a href="#">men</a></li>
+                        <li><a href="{{ route('men') }}">men</a></li>
                         <li><a href="{{ route('women') }}">women</a></li>
-                        <li><a href="#">kids</a></li>
-                        <li><a href="#">accesories</a></li>
+                        <li><a href="{{ route('kids') }}">kids</a></li>
+                        <li><a href="{{ route('accesorie') }}">accesories</a></li>
                         <li><a href="#">sale</a></li>
                     </ul>
                     <ul class="navbar_user">
                         <li>
-                            <form action="{{ route('search') }}" method="POST" class="search_form">
-                                @csrf 
+                            <!-- <form action="{{ route('search') }}" method="POST" class="search_form">
+                                @csrf
                                 <input type="text" name="query" placeholder="Search">
                                 <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </form> -->
+
+
+                            <form action = "{{ route('search') }}" method ="POST" class="searh_form form-inline">
+                                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                             </form>
                         </li>
 

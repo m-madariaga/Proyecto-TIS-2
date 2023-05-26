@@ -48,6 +48,11 @@ Route::get('/home-landing', function () {
 })->name('home-landing');
 
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
+Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
+Route::get('/accesorie', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
