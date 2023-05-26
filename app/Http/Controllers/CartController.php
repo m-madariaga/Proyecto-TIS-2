@@ -11,14 +11,10 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function additem(Request $request)
     {
         $productIds = $request->input('id');
+        $user = auth()->user();
 
         foreach ($productIds as $productId) {
             $product = Product::find($productId);
@@ -33,26 +29,37 @@ class CartController extends Controller
                     'urlfoto' => asset("assets/images/images-products/$product->imagen"),
                     'nombre' => null,
                 ]
-
             ]);
         }
 
-        return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
+        if ($user) {
+            return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
+        } else {
+            return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
+        }
     }
 
     public function showCart()
     {
-        $item = Cart::content();
-        return view('cart', compact('item'));
+        $user = auth()->user();
+
+        if ($user) {
+            $items = Cart::content();
+        } else {
+            $cartItems = session('cart_items', []);
+            $items = Product::whereIn('id', $cartItems)->get();
+        }
+
+        return view('cart', compact('items'));
     }
+
 
     public function removeitem(Request $request)
     {
-        $item = $request->input('rowId');
+        $item = $request->route('rowId');
         Cart::remove($item);
         return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
     }
-
     public function incrementitem(Request $request)
     {
         $item = Cart::content()->where("rowId", $request->id)->first();
@@ -85,7 +92,7 @@ class CartController extends Controller
         // $order -> fecha_pedido = $order->created_at;
         $order->estado = 1;
 
-        // $order -> user_id= auth()->user()->id;
+        $order->user_id = auth()->user()->id;
         $order->save();
 
         foreach (Cart::content() as $item) {

@@ -22,6 +22,17 @@
     <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('js')
 
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .super_container {
+            flex-grow: 1;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,10 +47,11 @@
             
             @yield('search_results')
         </div>
-
-        <!-- Footer -->
-        @include('layouts-landing.footer-landing')
     </div>
+
+    <!-- Footer -->
+    @include('layouts-landing.footer-landing')
+
     @yield('js')
 </body>
 
