@@ -75,26 +75,28 @@ class PaymentMethodController extends Controller
             return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
         }
 
-        return view('editpaymethod', compact('paymentMethod'));
+        $selectedAccountId = $paymentMethod->$id; // Aquí asigna el ID de la cuenta bancaria seleccionada
+
+        return view('editpaymethod', compact('paymentMethod', 'selectedAccountId'));
     }
 
     public function update(Request $request, $id)
-{
-    $validatedData = $request->validate([
-        'visible' => 'required',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'visible' => 'required',
+        ]);
 
-    $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::find($id);
 
-    if ($paymentMethod) {
-        $paymentMethod->visible = $request->input('visible');
-        $paymentMethod->save();
+        if ($paymentMethod) {
+            $paymentMethod->visible = $request->input('visible');
+            $paymentMethod->save();
 
-        return redirect('/admin/paymentmethod')->with('success', 'Método de pago actualizado exitosamente!');
+            return redirect('/admin/paymentmethod')->with('success', 'Método de pago actualizado exitosamente!');
+        }
+
+        return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
     }
-
-    return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
-}
 
 
     public function destroy($id)

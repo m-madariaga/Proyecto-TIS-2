@@ -1,46 +1,40 @@
 @extends('layouts-landing.welcome')
 
 @section('css')
-    <link rel="stylesheet" href="assets/css/paymethod_style.css">
+    <link rel="stylesheet" href="assets/css/method_style.css">
 @endsection
 
 @section('content')
     <div class="container-fluid py-4" id="container-payment">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <div class="payment-method-section">
-                    <h2>Método de Pago</h2>
+                    <h2>Métodos de Pago</h2>
 
-                    <p>Seleccione un método de pago:</p>
                     <div class="card-deck mb-4">
                         @foreach ($paymentMethods as $paymentMethod)
                             @if ($paymentMethod->visible)
-                                <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
-                                    onclick="selectPaymentMethod(this)">
-                                    <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
-                                        style="cursor: pointer;">
-                                        <h5 class="card-title">{{ $paymentMethod->name }}</h5>
-                                        <div
-                                            class="payment-method-image d-flex flex-column align-items-center justify-content-center">
-                                            <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
-                                                alt="Imagen del método de pago" class="img-fluid">
+                                <div class="card" data-payment-method-id="{{ $paymentMethod->id }}" onclick="selectPaymentMethod(this)">
+                                    <div class="card-body d-flex flex-column align-items-center selectable-payment-method" style="cursor: pointer;">
+                                        <div class="payment-method-image d-flex flex-column align-items-center justify-content-center">
+                                            <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}" alt="Imagen del método de pago" class="img-fluid" style="max-height: 100px;">
                                         </div>
+                                        <h5 class="card-title text-truncate text-center" style="font-size: 1.2rem; height: 3rem; overflow: hidden;">{{ $paymentMethod->name }}</h5>
                                         <div class="form-check mt-2">
-                                            <input class="form-check-input" type="radio" name="paymentMethod"
-                                                id="paymentMethod{{ $paymentMethod->id }}" value="{{ $paymentMethod->id }}">
-                                            <label class="form-check-label" for="paymentMethod{{ $paymentMethod->id }}">
-                                                Seleccionar
-                                            </label>
+                                            <input class="form-check-input" type="radio" name="paymentMethod" id="paymentMethod{{ $paymentMethod->id }}" value="{{ $paymentMethod->id }}">
+                                            <label class="form-check-label" for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
                                         </div>
                                     </div>
                                 </div>
                             @endif
                         @endforeach
                     </div>
-
-                    <div class="checkout-button mt-4">
-                        <button onclick="proceedToCheckout()" class="btn btn-primary">Proceder con la compra</button>
-                    </div>
+                    
+                  
+                    <form action="{{ route('resume') }}" method="get">
+                        @csrf
+                        <button onclick="proceedToCheckout()" class="btn btn-primary" id="btn-continue">Continuar</button>
+                    </form>
                 </div>
             </div>
         </div>

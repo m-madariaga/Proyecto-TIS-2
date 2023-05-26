@@ -11,5 +11,8 @@ class PaymentMethod extends Model
 
     protected $fillable = ['nombre', 'imagen','visible'];
 
-
+    public function dataBankTransfers()
+    {
+        return $this->hasMany(DataBankTransfer::class, 'paymentmethod_fk');
+    }
 }

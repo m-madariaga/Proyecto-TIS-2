@@ -32,10 +32,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Picture</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
+                                <th>Nombre Producto</th>
+                                <th>Imagen Referencial</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -89,9 +89,9 @@
                         </tfoot>
                     </table>
                     @if (Auth::check())
-                        <form action="{{ route('paymentmethod') }}" method="get">
+                        <form action="{{ route('shippingmethod') }}" method="get">
                             @csrf
-                            <button type="submit" class="btn btn-danger">Checkout</button>
+                            <button type="submit" class="btn btn-danger">Continuar</button>
                         </form>
                     @else
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
@@ -121,13 +121,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Inicia sesión para continuar</h5>
+                    <h5 class="modal-title" id="loginModalLabel">Debes iniciar sesión para continuar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">Debes iniciar sesión para continuar con la compra.</p>
                     <div class="d-grid gap-2">
-                        <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary">Continuar</a>
                     </div>
                 </div>
             </div>
