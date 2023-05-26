@@ -83,11 +83,15 @@ class PurcharseOrderProductController extends Controller
      */
     public function edit(Purchase_order $id)
     {
-        // el $id sera la orden que editaremos
-        $orden = Purchase_order::all()->find($id);
-        $productos = Purchase_order_product::find($id->id);
-        dd($productos);
-        return view('purchase_order.edit', compact('orden','productos'));
+        $orden = Purchase_order::find($id);
+        $orden_productos = Purchase_order_product::find($id);
+        //se buscan los productos
+        $productos = array();
+        foreach ($orden_productos as $key => $producto) {
+            $aux = Product::find($producto->products_id);
+            array_push($productos,$aux);
+        }
+        return view('purchase_order.edit', compact('orden','productos', 'orden_productos'));
     }
 
     /**
