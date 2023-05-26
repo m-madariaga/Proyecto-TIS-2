@@ -297,12 +297,6 @@
     </div>
 </div>
 
-<!-- Best Sellers -->
-
-<div class="best_sellers">
-
-</div>
-</div>
 
 <!-- Benefit -->
 

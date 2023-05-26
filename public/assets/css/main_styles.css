@@ -229,7 +229,7 @@ h6::selection{
 }
 
 .form-control {
-	color: #d936ad;
+	color: #1e1e27;
 }
 
 section {
@@ -1759,7 +1759,6 @@ footer{
 	justify-content: center;
 	align-items: center;
 	width: auto;
-	height: 40px;
 	background: #d936ad;
 	border-radius: 3px;
 	border-color: #d936ad;
@@ -1768,6 +1767,7 @@ footer{
 	-ms-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	color: #f2f2f2;
 	
 	
 }
@@ -1789,3 +1789,7 @@ footer{
 	color: #d936ad;
 }
 
+.button_edit_password{
+	border-color: #d936ad;
+	color: #d936ad;
+}

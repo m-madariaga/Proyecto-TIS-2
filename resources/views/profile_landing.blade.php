@@ -84,22 +84,24 @@
                 <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
                     <div class="d-flex align-items-center justify-content-between">
                         <div class="d-flex align-items-center">
-                            <h4 class="mb-0 fw-bold">{{ __('Profile') }}</h4>
+                            <h4 class="mb-0 fw-bold">{{ __('Perfil') }}</h4>
 
                         </div>
                         <div class="d-flex align-items-center">
-                            <button class="button_edit_profile btn btn-primary btn-sm btn-rounded" data-bs-toggle="modal" data-bs-target="#editProfileLandingModal">Edit Profile</button>
-                        </div>
+    <button class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto" data-bs-toggle="modal" data-bs-target="#editProfileLandingModal">Editar perfil</button>
+    <button type="button" class="button_edit_password btn btn-light btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Cambiar contraseña</button>
+</div>
+
                     </div>
                 </div>
                 <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
                 <div class="card-body" id="profile_card_body">
                     <!-- User Information -->
-                    <p class="text-uppercase text-sm" id="profile_title">User Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Información Usuario</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Nombre</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->name }}</span>
                             </div>
                         </div>
@@ -114,7 +116,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">Correo electrónico</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->email }}</span>
                             </div>
                         </div>
@@ -122,55 +124,33 @@
                     </div>
                     <hr class="horizontal dark">
                     <!-- Contact Information -->
-                    <p class="text-uppercase text-sm" id="profile_title">Address Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Información dirección</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="address" class="form-label">Address</label>
+                                <label for="address" class="form-label">Dirección</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->address }}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="country" class="form-label">Country</label>
+                                <label for="country" class="form-label">País</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->country_fk }}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="region" class="form-label">Region</label>
+                                <label for="region" class="form-label">Región</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->region_fk }}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="city" class="form-label">City</label>
+                                <label for="city" class="form-label">Ciudad</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk }}</span>
                             </div>
                         </div>
                     </div>
-
-                    <hr class="horizontal dark">
-                    <!-- Password -->
-                    <div class="d-flex align-items-center justify-content-between">
-                        <p class="text-uppercase text-sm" id="profile_title">Password</p>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
-                                <div class="d-flex justify-content-between">
-                                    <label for="password" class="form-label">Password</label>
-                                    <span class="form-control ml-4" id="profile_card_body">**************</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <!-- <button class="button_edit_profile btn btn-primary btn-sm btn-rounded" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Update password</button> -->
-                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Update password</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -178,7 +158,7 @@
         <div class="col-md-5 col-12">
             <div class="card">
                 <div class="card-header" id="profile_card_header">
-                    <h4 class="mb-0 fw-bold">{{ __('Shopping history') }}</h4>
+                    <h4 class="mb-0 fw-bold">{{ __('Historial Pedido') }}</h4>
                 </div>
                 <div class="card-body">
                     <!-- Segundo formulario -->
@@ -193,18 +173,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProfileLandingModalLabel">Edit Profile</h5>
+                <h5 class="modal-title" id="editProfileLandingModalLabel">Editar Perfil</h5>
             </div>
 
             <form method="POST" action="{{ route('profile_landing_edit', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <p class="text-uppercase text-sm" id="profile_title">User Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Información usuario</p>
 
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Nombre</label>
                                 <input type="text" class="form-control input-field @error('name') is-invalid @enderror" name="name" id="profile_card_body" value="{{ Auth::user()->name }}" required>
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -215,7 +195,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="profile_image" class="form-label">Profile Image</label>
+                                <label for="profile_image" class="form-label">Imagen Perfil</label>
                                 <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
                                 @error('profile_image')
                                 <span class="invalid-feedback" role="alert">
@@ -237,7 +217,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">Correo electrónico</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="profile_card_body" value="{{ Auth::user()->email }}" required>
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -248,11 +228,11 @@
                         </div>
                     </div>
                     <hr class="horizontal dark">
-                    <p class="text-uppercase text-sm" id="profile_title">Address Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Información dirección</p>
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="address" class="form-label">Address</label>
+                                <label for="address" class="form-label">Dirección</label>
                                 <input type="text" class="form-control input-field @error('address') is-invalid @enderror" name="address" value="{{ Auth::user()->address }}" required>
                                 @error('address')
                                 <span class="invalid-feedback" role="alert">
@@ -264,7 +244,7 @@
 
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="country" class="form-label">Country</label>
+                                <label for="country" class="form-label">País</label>
                                 <select id="country" class="form-control input-field @error('country_fk') is-invalid @enderror" name="country_fk" required>
                                     <option value="">{{ Auth::user()->country_fk }}</option>
                                     @foreach ($countries as $country)
@@ -280,7 +260,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="region" class="form-label">Region</label>
+                                <label for="region" class="form-label">Región</label>
                                 <select id="region" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
                                     <option value="">{{ Auth::user()->region_fk }}</option>
                                     @foreach ($regions as $region)
@@ -296,7 +276,7 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="city" class="form-label">City</label>
+                                <label for="city" class="form-label">Ciudad</label>
                                 <select id="city" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
                                     <option value="">{{ Auth::user()->city_fk }}</option>
                                     @foreach ($cities as $city)
@@ -314,9 +294,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
-
-                    <button type="submit" class="btn btn-sm btn-outline-success">Save changes</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
                 </div>
             </form>
         </div>
@@ -331,13 +310,13 @@
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProfileLandingModalLabel">Update Password</h5>
+                <h5 class="modal-title" id="editProfileLandingModalLabel">Cambiar contraseña</h5>
             </div>
 
             <form method="POST" action="{{ route('change_password_landing') }}">
                 @csrf
                 <div class="modal-body">
-                    <p class="text-uppercase text-sm" id="profile_title">User Information</p>
+                    <p class="text-uppercase text-sm" id="profile_title">Información usuario</p>
 
                     <div class="form-group row">
 
@@ -358,7 +337,6 @@
 
                         <div class="col-md-12">
                             <label for="password" class="form-label">{{ __('Nueva Contraseña') }}</label>
-
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
 
                             @error('password')
@@ -373,15 +351,14 @@
 
                         <div class="col-md-12">
                             <label for="password-confirm" class="form-label">{{ __('Confirmar Contraseña') }}</label>
-
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>
                     </div>
 
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-sm btn-outline-success">Save changes</button>
+                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
                     </div>
             </form>
         </div>

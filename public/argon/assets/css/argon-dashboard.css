@@ -20191,6 +20191,7 @@ fieldset:disabled .btn {
 
 .avatar img {
   width: 100%;
+  margin-right: 2rem;
 }
 
 .avatar+.avatar-content {

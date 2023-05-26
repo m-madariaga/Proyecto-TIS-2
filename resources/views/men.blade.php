@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>Products</h2>
+                        <h2>Productos Hombre</h2>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                             <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id[]" value="{{ $producto->id }}">
-                                <button class="red_button add_to_cart_button" type="submit">Add to Cart</button>
+                                <button class="red_button add_to_cart_button" type="submit">Aañadir al carro</button>
                             </form>
                         </div>
                         @endforeach
