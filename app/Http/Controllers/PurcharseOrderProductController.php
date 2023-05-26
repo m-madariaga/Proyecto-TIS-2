@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
 
@@ -77,14 +78,16 @@ class PurcharseOrderProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Purchase_order_product  $Purchase_order
+     * @param  \App\Models\Purchase_order  $Purchase_order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase_order_product $id)
+    public function edit(Purchase_order $id)
     {
-        $ordenes = Purchase_order_product::all();
-        $orden = $ordenes->find($id);
-        return view('Purchase_order_product.edit', compact('orden'));
+        // el $id sera la orden que editaremos
+        $orden = Purchase_order::all()->find($id);
+        $productos = Purchase_order_product::find($id->id);
+        dd($productos);
+        return view('purchase_order.edit', compact('orden','productos'));
     }
 
     /**
@@ -121,8 +124,11 @@ class PurcharseOrderProductController extends Controller
     public function destroy(Purchase_order_product $id)
     {
         $ordenes = Purchase_order_product::all();
-        $orden = $ordenes->find($id);
-        $orden->delete();
-        return redirect()->route('orden_producto')->with('success:', 'Orden eliminada correctamente.');
+        foreach ($ordenes as $orden) {
+            if ($orden->purchase_order_id == $id->purchase_order_id) {
+                $orden->delete();
+            }
+        }
+        return redirect()->route('orden-compra-destroy',['id' => $id->purchase_order_id])->with('success:', 'Orden eliminada correctamente.');
     }
 }

@@ -40,23 +40,44 @@
                                     @foreach ($ordenes as $orden)
                                         <tr>
                                             <td class="text-center">{{ $orden->id }}</td>
-
                                             <td class="text-center">
-                                                @foreach ($orden->product as $orden_prod)
-                                                    {{$orden_prod->products->nombre}}<br>
-                                                @endforeach
+                                                <table class="table display table-stripped aling-items-left">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Nombre</th>
+                                                            <th scope="col">Marca</th>
+                                                            <th scope="col">Valor de compra</th>
+                                                            <th scope="col">Unidades</th>
+                                                        </tr>
+                                                    </thead>
+                                                    @foreach ($orden->product as $orden_prod)
+                                                        <tbody>
+                                                            <tr>
+                                                                <td scope="row">{{ $orden_prod->products->nombre }}
+                                                                </td>
+                                                                <td>{{ $orden_prod->products->marca->nombre }}</td>
+                                                                <td>{{ $orden_prod->precio }}</td>
+                                                                <td>{{ $orden_prod->cantidad }}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    @endforeach
+                                                </table>
+
+
                                             </td>
                                             <td class="text-center">{{ $orden->total }}</td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('orden-compra-edit', $orden->id) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i></a>
-                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}"
+                                                <a href="{{ route('orden-compra-product-edit', ['id' => $orden->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                    Editar</a>
+                                                <form
+                                                    action="{{ route('orden-compra-product-destroy', ['id' => $orden->id]) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
-                                                        data-id="{{ $orden->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"></i></button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-user"><i
+                                                            class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>

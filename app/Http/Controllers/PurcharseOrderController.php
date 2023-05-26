@@ -19,8 +19,7 @@ class PurcharseOrderController extends Controller
     public function index()
     {
         $ordenes = Purchase_order::all();
-        $ordenes_product = Purchase_order_product::all();
-        return view('purchase_order.index', compact('ordenes','ordenes_product'));
+        return view('purchase_order.index', compact('ordenes'));
     }
 
     /**
@@ -33,7 +32,7 @@ class PurcharseOrderController extends Controller
         $productos = Product::all();
         $marcas = Brand::all();
         $categorias = Category::all();
-        return view('purchase_order.create', compact('productos', 'marcas', 'categorias'));
+        return view('purchase_order.create', compact('productos','marcas','categorias'));
     }
 
     /**
@@ -123,7 +122,7 @@ class PurcharseOrderController extends Controller
         $orden = $ordenes->find($id);
         $orden->delete();
         return redirect()
-            ->route('orden_compra')
+            ->route('orden-compra')
             ->with('success:', 'Orden eliminada correctamente.');
     }
 }

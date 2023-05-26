@@ -11,6 +11,7 @@ class Purchase_order_product extends Model
 {
     use HasFactory;
     protected $table = 'purchase_order_products';
+    protected $primaryKey = 'purchase_order_id';
 
     protected $fillable = [
         'purchase_order_id',
