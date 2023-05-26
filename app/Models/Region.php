@@ -12,6 +12,7 @@ class Region extends Model
 
     protected $fillable = [
         'name',
+        'country_fk',
 
     ];
     public function users()

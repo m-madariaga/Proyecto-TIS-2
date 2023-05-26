@@ -66,6 +66,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/countries/{id}', [App\Http\Controllers\CountryController::class, 'destroy'])->name('countries.destroy');
     Route::get('/countries', [App\Http\Controllers\CountryController::class, 'index'])->name('countries.index');
 
+    Route::get('/regions/create', [App\Http\Controllers\RegionController::class, 'create'])->name('regions.create');
+    Route::post('/regions', [App\Http\Controllers\RegionController::class, 'store'])->name('regions.store');
+    Route::get('/regions/{id}/edit', [App\Http\Controllers\RegionController::class, 'edit'])->name('regions.edit');
+    Route::put('/regions/{id}', [App\Http\Controllers\RegionController::class, 'update'])->name('regions.update');
+    Route::delete('/regions/{id}', [App\Http\Controllers\RegionController::class, 'destroy'])->name('regions.destroy');
+    Route::get('/regions', [App\Http\Controllers\RegionController::class, 'index'])->name('regions.index');
 
 
 

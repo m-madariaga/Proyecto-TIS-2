@@ -54,6 +54,15 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
+                                                <label for="country_fk">País a que pertenece:</label>
+                                                    <select class="form-control form-select" id="country_fk"
+                                                        name="country_fk">
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                             </div>
 
                                         </div>
@@ -72,6 +81,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">Nombre Región</th>
+                                        <th class="text-center">País</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -79,7 +89,7 @@
                                     @foreach ($regions as $region)
                                         <tr>
                                             <td class="text-center">{{ $region->name }}</td>
-
+                                            <td class="text-center">{{ $region->country->name }}</td>
 
                                             <td class="text-center pt-3">
                                                 <button id="editButton"
@@ -129,6 +139,15 @@
                                                             <strong>{{ $message }}</strong>
                                                         </span>
                                                     @enderror
+                                                    <label for="country_fk">País al que pertenece:</label>
+                                                    <select class="form-control form-select" id="country_fk"
+                                                    name="country_fk">
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -185,6 +204,7 @@
             xhr.open('POST', addRegionForm.getAttribute('action'));
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
             xhr.send(formData);
         });
 
