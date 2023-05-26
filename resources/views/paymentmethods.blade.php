@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table id="users-table" class="table display table-stripped align-items-center">
+                            <table id="payment-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Id</th>
@@ -81,4 +81,23 @@
 @endsection
 
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            table = $('#payment-table').DataTable({
+                dom: 'lrtip',
+
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                },
+
+
+            });
+        });
+
+        $('#searchBar').keyup(function(){
+        table.search($(this).val()).draw() ;
+        })
+    </script>
 @endsection

@@ -97,8 +97,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#categories-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#categories-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -106,6 +106,10 @@
 
 
             });
+
+            $('#searchBar').keyup(function(){
+                table.search($(this).val()).draw() ;
+            })
         });
     </script>
 
