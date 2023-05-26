@@ -188,7 +188,9 @@ h2::selection,
 h3::selection,
 h4::selection,
 h5::selection,
-h6::selection {}
+h6::selection{
+
+} 
 
 ::-webkit-input-placeholder {
 	font-size: 16px !important;
@@ -1778,4 +1780,11 @@ footer{
 #profile_card_header{
 	background-color: transparent;
 	border-bottom: 0;
+}
+#profile_card_body{
+	color: #1e1e27;
+}
+
+#profile_title{
+	color: #d936ad;
 }

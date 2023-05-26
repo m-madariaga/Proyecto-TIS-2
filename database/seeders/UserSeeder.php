@@ -31,6 +31,7 @@ class UserSeeder extends Seeder
         $permission110 = Permission::create(['name' => 'mantenedor tipo envio']);
         $permission111 = Permission::create(['name' => 'mantenedor metodo pago']);
         $permission112 = Permission::create(['name' => 'mantenedor ordenes']);
+        $permission113 = Permission::create(['name' => 'mantenedor paises']);
         $role1->givePermissionTo($permission1);
         $role1->givePermissionTo($permission11);
         $role1->givePermissionTo($permission12);
@@ -44,8 +45,9 @@ class UserSeeder extends Seeder
         $role1->givePermissionTo($permission110);
         $role1->givePermissionTo($permission111);
         $role1->givePermissionTo($permission112);
+        $role1->givePermissionTo($permission113);
         $role11->givePermissionTo($permission1);
-        
+
         $role11->givePermissionTo($permission15);
         $role11->givePermissionTo($permission16);
         $role11->givePermissionTo($permission17);
@@ -70,6 +72,8 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Concepción';
         $user->region_fk = 'Bio-bio';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
+
 
         $user->save();
         $user->assignRole($role1);
@@ -83,6 +87,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Talcahuano';
         $user->region_fk = 'Bio-bio';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
         $user->assignRole($role11);
@@ -97,6 +102,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Santiago';
         $user->region_fk = 'Metropolitana';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
         $user->save();
         $user->assignRole($role2);
 
@@ -109,6 +115,7 @@ class UserSeeder extends Seeder
         $user->city_fk = 'Arica';
         $user->region_fk = 'Arica y Parinacota';
         $user->country_fk = 'Chile';
+        $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
         $user->assignRole($role3);

@@ -7,15 +7,17 @@ use App\Models\City;
 use App\Models\Region;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileLandingController extends Controller
 {
     public function index()
     {
+        $user = auth()->user();
         $countries = Country::all();
         $regions = Region::all();
         $cities = City::all();
-        return view('profile_landing', compact('countries', 'regions', 'cities'));
+        return view('profile_landing', compact('countries', 'regions', 'cities', 'user'));
     }
 
     public function getRegions($countryId)
@@ -40,9 +42,23 @@ class ProfileLandingController extends Controller
         $user->region_fk = $region->name;
         $user->city_fk = $city->name;
 
+        // Validar y guardar la imagen si se ha cargado una nueva
+        if ($request->hasFile('profile_image')) {
+            // Eliminar la imagen anterior si existe
+            if ($user->imagen) {
+                Storage::delete('assets/images/images-profile/' . $user->imagen);
+            }
+            $imagen = $request->file('profile_image');
+            $imageName = $imagen->getClientOriginalName();
+
+            // Guardar la nueva imagen en la carpeta 'images-profile'
+            $imagen->move(public_path('assets/images/images-profile'), $imageName);
+
+            $user->imagen = $imageName;
+        }
 
         $user->save();
-        return redirect('/profile_landing')->with('success', 'Permiso actualizado exitosamente!');
+        return redirect('/profile_landing')->with('success', 'Perfil actualizado exitosamente!');
     }
 
     public function country()

@@ -51,6 +51,7 @@
                                                 <a href="{{ route('orders-store', $order->id) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> Ver
                                                     Pedido</a>
+                                                    
                                                 <button class="btn btn-sm btn-outline-primary btnEntregar"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editDeliver-{{ $order->id }}"><i
@@ -75,13 +76,13 @@
                                                                     @csrf
                                                                     <h5>Cliente</h5>
                                                                     <div>
-                                                                        <span>Nombre: {{ $order->users->name }}</span>
+                                                                        <span>Nombre: {{ $order->user->name }}</span>
                                                                     </div>
                                                                     <div>
-                                                                        <span>Run: {{ $order->users->run }}</span>
+                                                                        <span>Run: {{ $order->user->run }}</span>
                                                                     </div>
                                                                     <div>
-                                                                        <span>Dirección: {{ $order->users->address }}</span>
+                                                                        <span>Dirección: {{ $order->user->address }}</span>
                                                                     </div>
                                                                     <div class="btn-group-toggle" data-toggle="buttons">
                                                                         <label class="btn btn-outline ">

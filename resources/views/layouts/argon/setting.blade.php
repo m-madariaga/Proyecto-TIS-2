@@ -12,8 +12,9 @@
             </div>
             <div class="row" id="header">
                 <h5 id="setting_header">
-                    <img src="/argon/assets/img/team-1.jpg" alt="profile_image" id="profile_image"
-                        class="border-radius-lg shadow-sm ">
+                    <div class="avatar avatar-xl position-relative">
+                        <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                    </div>
 
                     {{ Auth::user()->name }}
                 </h5>
@@ -38,8 +39,7 @@
             <div class="d-flex my-3">
                 <h6 class="mb-0">Navbar Fixed</h6>
                 <div class="form-check form-switch ps-0 ms-auto my-auto">
-                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed"
-                        onclick="navbarFixed(this)">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
                 </div>
             </div>
 
@@ -50,8 +50,7 @@
             <div class="mt-2 mb-5 d-flex">
                 <h6 class="mb-0">Light / Dark</h6>
                 <div class="form-check form-switch ps-0 ms-auto my-auto">
-                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version"
-                        onclick="darkMode(this)">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version" onclick="darkMode(this)">
                 </div>
             </div>
 
@@ -62,8 +61,7 @@
             <div class="d-flex my-3">
                 <h6 class="mb-0">Sign off</h6>
 
-                <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
+                <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                     <p class="text-md mb-0">
                         <i class="ni ni-user-run me-1" aria-hidden="true"></i>

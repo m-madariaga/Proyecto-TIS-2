@@ -45,7 +45,7 @@ class CategoryController extends Controller
             'descripcion' => $request->get('descripcion'),
         ]);
         $categoria->save();
-        return redirect()->route('categorias')->with('success:', 'Categoria ingresada correctamente.');
+        return redirect()->route('categorias')->with('success', 'Categoria ingresada correctamente.');
     }
 
     /**
@@ -90,7 +90,7 @@ class CategoryController extends Controller
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
         $categoria->save();
-        return redirect()->route('categorias')->with('success:','Categoria actualizada correctamente');
+        return redirect()->route('categorias')->with('success','Categoria actualizada correctamente');
     }
 
     /**
@@ -104,6 +104,6 @@ class CategoryController extends Controller
         $categorias = Category::all();
         $categoria = $categorias->find($id);
         $categoria->delete();
-        return redirect()->route('categorias')->with('success:','Categoria eliminada correctamente.');
+        return response()->json(['success' => true]);
     }
 }
