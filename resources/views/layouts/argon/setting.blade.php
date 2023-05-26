@@ -24,7 +24,7 @@
         <hr class="horizontal dark mt-4 my-1">
         <div class="card-body pt-sm-3 pt-1 overflow-auto">
             <div class="d-flex my-3">
-                <h6 class="mb-0">Profile</h6>
+                <h6 class="mb-0">Perfil</h6>
                 <a class="ps-0 ms-auto my-auto" href="{{ route('profile') }}">
                     <p class="text-md mb-0">
                         <i class="ni ni-circle-08 me-1" aria-hidden="true"></i>
@@ -37,7 +37,7 @@
             <!-- ------------------------------------------ -->
 
             <div class="d-flex my-3">
-                <h6 class="mb-0">Navbar Fixed</h6>
+                <h6 class="mb-0">Navbar Fijo</h6>
                 <div class="form-check form-switch ps-0 ms-auto my-auto">
                     <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
                 </div>
@@ -48,7 +48,7 @@
             <!-- ------------------------------------------ -->
 
             <div class="mt-2 mb-5 d-flex">
-                <h6 class="mb-0">Light / Dark</h6>
+                <h6 class="mb-0">Claro / Oscuro</h6>
                 <div class="form-check form-switch ps-0 ms-auto my-auto">
                     <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version" onclick="darkMode(this)">
                 </div>
@@ -59,7 +59,7 @@
             <!-- ------------------------------------------ -->
 
             <div class="d-flex my-3">
-                <h6 class="mb-0">Sign off</h6>
+                <h6 class="mb-0">Cerrar sesión/h6>
 
                 <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
@@ -79,7 +79,7 @@
 
             <div class="w-100 text-center">
 
-                <h6 class="mt-3">Social networks</h6>
+                <h6 class="mt-3">Redes Sociales</h6>
 
                 <a href="https://www.instagram.com/que.guay_/" class="btn btn-dark mb-0 me-2" target="_blank">
                     <i class="fab fa-instagram me-1" aria-hidden="true"></i> Instagram

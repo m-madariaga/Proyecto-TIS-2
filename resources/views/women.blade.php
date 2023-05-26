@@ -38,6 +38,7 @@
                                     <input type="hidden" name="id[]" value="{{ $producto->id }}">
                                     <button class="red_button add_to_cart_button" type="submit">Añadir al carro</button>
                                 </form>
+                            </a>
                         </div>
                         @endforeach
                     </div>

@@ -43,21 +43,21 @@
             <div class="col-md-4">
                 <div class="banner_item align-items-center" style="background-image:url(assets/images/chaleco_banner.jpeg)">
                     <div class="banner_category">
-                        <a href="#">vent</a>
+                        <a href="{{ route('women') }}">MUJER</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="banner_item align-items-center" style="background-image:url(assets/images/cartera_banner.jpeg)">
                     <div class="banner_category">
-                        <a href="#">accessories</a>
+                        <a href="{{ route('men') }}">HOMBRE</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="banner_item align-items-center" style="background-image:url(assets/images/pantalon_banner.jpeg)">
                     <div class="banner_category">
-                        <a href="#">Pants</a>
+                        <a href="{{ route('kids') }}">NIÑOS</a>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@
         <div class="row">
             <div class="col text-center">
                 <div class="section_title new_arrivals_title">
-                    <h2>New Arrivals</h2>
+                    <h2>Lo más vendido</h2>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <h2>Search Results</h2>
+    <h2>Resultados de búsqueda</h2>
     @if (count($results) > 0)
     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
         @foreach ($results as $product)
@@ -23,7 +23,7 @@
         @endforeach
     </div>
     @else
-    <p>No results found.</p>
+    <p>No hay resultados encontrados</p>
     @endif
 </div>
 @endsection
