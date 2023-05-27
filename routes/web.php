@@ -183,7 +183,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
 
-Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
 Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
@@ -201,3 +200,6 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 
 
 Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');

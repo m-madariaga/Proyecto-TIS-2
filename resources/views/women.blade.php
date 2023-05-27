@@ -23,22 +23,22 @@
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach ($productos as $index => $producto)
                         <div class="product-item">
-                            <a href="">
+                            <a href="{{ route('product.show', $producto->id) }}">
                                 <div class="product product_filter">
-                                    <div class="product_image" style="width: 100%; height: 300px;">
-                                        <img style="width: 100%; height: 100%; object-fit: cover;" src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
+                                    <div class="product_image">
+                                        <img src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
                                     </div>
                                     <div class="product_info">
                                         <h5 class="product_name"><a href="#">{{ $producto->nombre }}</a></h5>
                                         <div class="product_price">${{ $producto->precio }}</div>
                                     </div>
                                 </div>
-                                <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
-                                    @csrf
-                                    <input type="hidden" name="id[]" value="{{ $producto->id }}">
-                                    <button class="red_button add_to_cart_button" type="submit">Añadir al carro</button>
-                                </form>
                             </a>
+                            <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="id[]" value="{{ $producto->id }}">
+                                <button class="red_button add_to_cart_button" type="submit">Añadir al carro</button>
+                            </form>
                         </div>
                         @endforeach
                     </div>

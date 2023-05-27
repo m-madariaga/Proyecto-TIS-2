@@ -40,15 +40,20 @@
                         <li><a href="{{ route('women') }}">Mujer</a></li>
                         <li><a href="{{ route('kids') }}">Niños</a></li>
                         <li><a href="{{ route('accesorie') }}">Accesorios</a></li>
-                        
+
                     </ul>
                     <ul class="navbar_user">
                         <li>
                             <form action="{{ route('search') }}" method="POST" class="search_form">
                                 @csrf
-                                <input type="text" name="query" placeholder="Buscar">
-                                <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                <div class="input-group">
+                                    <input type="text" name="query" class="form-control" placeholder="Buscar" aria-label="Buscar">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
                             </form>
+
                         </li>
 
                         <li class="checkout">

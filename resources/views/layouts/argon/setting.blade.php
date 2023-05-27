@@ -59,7 +59,7 @@
             <!-- ------------------------------------------ -->
 
             <div class="d-flex my-3">
-                <h6 class="mb-0">Cerrar sesión/h6>
+                <h6 class="mb-0">Cerrar sesión</h6>
 
                 <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
