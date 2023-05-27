@@ -30,7 +30,7 @@
                             Añadir Usuario
                         </button>
 
-                        <!-- Modal -->
+                        <!-- MODAL ADD USER -->
                         <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addModalLabel"
                             aria-hidden="true" data-bs-backdrop="static">
                             <div class="modal-dialog modal-dialog-centered">
@@ -45,7 +45,7 @@
 
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="name">Nombre Usuario:</label>
+                                                <label for="name">Nombre:</label>
                                                 <input type="text"
                                                     class="form-control @error('name') is-invalid @enderror" id="name"
                                                     name="name" required>
@@ -66,6 +66,18 @@
                                                     </span>
                                                 @enderror
                                             </div>
+
+                                            <div class="form-group">
+                                                <label for="phone_number">Número Celular:</label>
+                                                <input type="text"
+                                                    class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
+                                                    name="phone_number" required>
+                                                @error('phone_number')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
                                             <div class="form-group">
                                                 <label for="password">Contraseña:</label>
                                                 <input type="password"
@@ -78,7 +90,7 @@
                                                 @enderror
                                             </div>
                                             <div class="form-group">
-                                                <label for="run">Run:</label>
+                                                <label for="run">RUN:</label>
                                                 <input type="text"
                                                     class="form-control @error('run') is-invalid @enderror" id="run"
                                                     name="run" required>
@@ -170,10 +182,6 @@
                                             </div>
                                         </div>
 
-
-
-
-
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-sm btn-outline-danger"
                                                 data-bs-dismiss="modal">Cerrar</button>
@@ -191,6 +199,7 @@
                                         <th class="text-center">Run</th>
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Email</th>
+                                        <th class="text-center">Número Celular</th>
                                         <th class="text-center">Rol</th>
                                         <th class="text-center">Estado</th>
                                         <th class="text-center">Visto ultima vez</th>
@@ -203,6 +212,7 @@
                                             <td class="text-center">{{ $user->run }}</td>
                                             <td class="text-center">{{ $user->name }}</td>
                                             <td class="text-center">{{ $user->email }}</td>
+                                            <td class="text-center">{{ $user->phone_number }}</td>
                                             <td class="text-center">
                                                 {{ $user->roleName() }}
                                             </td>

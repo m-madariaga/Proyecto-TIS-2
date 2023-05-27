@@ -100,8 +100,11 @@ class DataBankTransferController extends Controller
      * @param  \App\Models\DataBankTransfer  $dataBankTransfer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DataBankTransfer $dataBankTransfer)
+    public function destroy($id)
     {
-        //
+        $databanktransfer = DataBankTransfer::find($id);
+        $databanktransfer->delete();
+
+        return redirect('admin/databanktransfer')->with('success', 'Dato Bancario eliminado exitosamente!');
     }
 }

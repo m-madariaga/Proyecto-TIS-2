@@ -51,18 +51,91 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($databanktransfers as $databanktransfer)
-                                    <tr>
-                                        <td class="text-center">{{ $databanktransfer->id }}</td>
-                                        <td class="text-center">{{ $databanktransfer->name }}</td>
-                                        <td class="text-center">{{ $databanktransfer->run }}</td>
-                                        <td class="text-center">{{ $databanktransfer->email }}</td>
-                                        <td class="text-center">{{ $databanktransfer->bank }}</td>
-                                        <td class="text-center">{{ $databanktransfer->account_type }}</td>
-                                        <td class="text-center">{{ $databanktransfer->account_number }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td class="text-center">{{ $databanktransfer->id }}</td>
+                                            <td class="text-center">{{ $databanktransfer->name }}</td>
+                                            <td class="text-center">{{ $databanktransfer->run }}</td>
+                                            <td class="text-center">{{ $databanktransfer->email }}</td>
+                                            <td class="text-center">{{ $databanktransfer->bank }}</td>
+                                            <td class="text-center">{{ $databanktransfer->account_type }}</td>
+                                            <td class="text-center">{{ $databanktransfer->account_number }}</td>
+                                            <td class="text-center pt-3">
+                                                <button id="editButton"
+                                                    class="btn btn-sm btn-outline-primary edit-modal-btn"
+                                                    data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                                <form
+                                                    action="{{ route('databanktransfer.destroy', $databanktransfer->id) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
+                                                        data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"> Delete</i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                                aria-hidden="true" data-bs-backdrop="static">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel">Editar Datos Bancarios</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST" id="editForm" action="">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="name">Nombre:</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                        value="{{ $databanktransfer->name }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="run">RUN:</label>
+                                                    <input type="text" class="form-control" id="run" name="run"
+                                                        value="{{ $databanktransfer->run }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">Correo:</label>
+                                                    <input type="email" class="form-control" id="email" name="email"
+                                                        value="{{ $databanktransfer->email }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="bank">Banco:</label>
+                                                    <input type="text" class="form-control" id="bank" name="bank"
+                                                        value="{{ $databanktransfer->bank }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="account_type">Tipo Cuenta:</label>
+                                                    <input type="text" class="form-control" id="account_type"
+                                                        name="account_type"
+                                                        value="{{ $databanktransfer->account_type }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="account_number">N° Cuenta:</label>
+                                                    <input type="text" class="form-control" id="account_number"
+                                                        name="account_number"
+                                                        value="{{ $databanktransfer->account_number }}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                    data-bs-dismiss="modal">Cerrar</button>
+                                                <button type="submit"
+                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -72,4 +145,4 @@
 @endsection
 
 @section('js')
-@endsection 
+@endsection
