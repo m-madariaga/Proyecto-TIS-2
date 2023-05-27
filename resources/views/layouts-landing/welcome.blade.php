@@ -30,7 +30,10 @@
         }
 
         .super_container {
-            flex-grow: 1;
+            max-width: 100%;
+            min-height: calc(100vh - 8rem - 5rem);
+            margin-bottom: 5rem;
+            overflow: auto;
         }
     </style>
 </head>
@@ -44,7 +47,7 @@
 
         <div style="margin-top: 8rem; margin-bottom: 5rem">
             @yield('content')
-            
+
             @yield('search_results')
         </div>
     </div>

@@ -18,12 +18,12 @@
                 </div>
             </div>
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col">
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
-                        @foreach ($productos as $index => $producto)
+                        @foreach ($productos as $index => $producto) -->
                         <!-- Product 1 -->
-                        <div class="product-item">
+                        <!-- <div class="product-item">
                             <div class="product discount product_filter">
                                 <div class="product-image" style="width: 100%; height: 300px;">
                                     <img style="width: 100%; height: 100%; object-fit: cover;" src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
@@ -42,7 +42,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -26,9 +26,9 @@
         <div class="row align-items-center fill_height">
             <div class="col">
                 <div class="main_slider_content">
-                    <h6>Spring / Summer Collection 2021</h6>
-                    <h1>Get up to 30% Off New Arrivals</h1>
-                    <div class="red_button shop_now_button"><a href="#">shop now</a></div>
+                    <h6>Nueva colección de ropa para mujer </h6>
+                    <h1>Bienvenidos a nuestra página web</h1>
+                    <div class="red_button shop_now_button"><a href="#">Comprar ahora</a></div>
                 </div>
             </div>
         </div>

@@ -88,9 +88,9 @@
 
                         </div>
                         <div class="d-flex align-items-center">
-    <button class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto" data-bs-toggle="modal" data-bs-target="#editProfileLandingModal">Editar perfil</button>
-    <button type="button" class="button_edit_password btn btn-light btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Cambiar contraseña</button>
-</div>
+                            <button class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto" data-bs-toggle="modal" data-bs-target="#editProfileLandingModal">Editar perfil</button>
+                            <button type="button" class="button_edit_password btn btn-light btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Cambiar contraseña</button>
+                        </div>
 
                     </div>
                 </div>

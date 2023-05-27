@@ -14,16 +14,19 @@ class CartController extends Controller
     public function additem(Request $request)
     {
         $productIds = $request->input('id');
+        $quantity = $request->input('quantity');
         $user = auth()->user();
 
-        foreach ($productIds as $productId) {
+        foreach ($productIds as $index => $productId) {
             $product = Product::find($productId);
+
+            $qty = isset($quantity[$index]) ? $quantity[$index] : 1; // Verificar si el índice está definido
 
             Cart::add([
                 'id' => $product->id,
                 'name' => $product->nombre,
                 'price' => $product->precio,
-                'qty' => 1,
+                'qty' => $qty,
                 'weight' => 1,
                 'options' => [
                     'urlfoto' => asset("assets/images/images-products/$product->imagen"),
@@ -38,6 +41,8 @@ class CartController extends Controller
             return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
         }
     }
+
+
 
     public function showCart()
     {
@@ -65,7 +70,6 @@ class CartController extends Controller
         $item = Cart::content()->where("rowId", $request->id)->first();
         Cart::Update($request->id, ["qty" => $item->qty + 1]);
         return back();
-
     }
 
     public function decrementitem(Request $request)
@@ -73,14 +77,12 @@ class CartController extends Controller
         $item = Cart::content()->where("rowId", $request->id)->first();
         Cart::Update($request->id, ["qty" => $item->qty - 1]);
         return back();
-
     }
 
     public function destroycart()
     {
         Cart::destroy();
         return back();
-
     }
 
     public function confirmcart()
