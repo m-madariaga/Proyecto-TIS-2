@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use App\Models\Purchase_order;
+use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
 
 class PurcharseOrderController extends Controller
 {
-     /**
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -24,8 +28,11 @@ class PurcharseOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
-        return view('purchase_order.create');
+    {
+        $productos = Product::all();
+        $marcas = Brand::all();
+        $categorias = Category::all();
+        return view('purchase_order.create', compact('productos','marcas','categorias'));
     }
 
     /**
@@ -35,15 +42,28 @@ class PurcharseOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $request->validate([            
-            'total' => 'required',            
-        ]);       
+    {
+        $datos = $request->validate([
+            'prod_id' => 'required',
+            'cantidad' => 'required',
+            'valor' => 'required',
+        ]);
+        //se calcula el valor total de la orden
+        $aux = 0;
+        $size = sizeof($datos['cantidad']);
+        for ($i = 0; $i < $size; $i++) {
+            if ($datos['cantidad'][$i] != null) {
+                $cantidad = $datos['cantidad'][$i] * $datos['valor'][$i];
+                $aux += $cantidad;
+            }
+        }
+        $total = $aux;
         $orden = new Purchase_order([
-            'total' => $request->get('total'),
-        ]);       
+            'total' => $total,
+        ]);
         $orden->save();
-        return redirect()->route('orden_compra')->with('success:', 'Orden de compra ingresada correctamente.');
+        $orden_id = $orden->id;
+        return redirect()->route('orden-compra-product-store', compact('datos', 'orden_id'));
     }
 
     /**
@@ -79,12 +99,15 @@ class PurcharseOrderController extends Controller
     public function update(Request $request, Purchase_order $id)
     {
         $request->validate([
-            'total' => 'required',        
+            'total' => 'required',
         ]);
         $ordenes = Purchase_order::all();
         $orden = $ordenes->find($id);
-        $orden->total = $request->total;$orden->save();
-        return redirect()->route('orden_compra')->with('success:', 'Orden actualizada correctamente.');
+        $orden->total = $request->total;
+        $orden->save();
+        return redirect()
+            ->route('orden_compra')
+            ->with('success:', 'Orden actualizada correctamente.');
     }
 
     /**
@@ -98,6 +121,8 @@ class PurcharseOrderController extends Controller
         $ordenes = Purchase_order::all();
         $orden = $ordenes->find($id);
         $orden->delete();
-        return redirect()->route('orden_compra')->with('success:', 'Orden eliminada correctamente.');
+        return redirect()
+            ->route('orden-compra')
+            ->with('success:', 'Orden eliminada correctamente.');
     }
 }

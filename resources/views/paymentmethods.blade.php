@@ -1,8 +1,6 @@
 @extends('layouts.argon.app')
 
-@section('title')
-    {{ 'Payment Methods' }}
-@endsection
+@section('title', 'Payment Methods')
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
@@ -27,8 +25,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="card-header pb-0 text-end">
-                                    <a href="{{ route('paymethods.create') }}"
-                                        class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                                    <a href="{{ route('paymethods.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                                 </div>
                             </div>
                         </div>
@@ -41,6 +38,7 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Imagen</th>
+                                        <th class="text-center">Visible</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -50,22 +48,21 @@
                                             <td class="text-center">{{ $paymentMethod->id }}</td>
                                             <td class="text-center">{{ $paymentMethod->name }}</td>
                                             <td class="text-center">
-                                                <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}" alt="Imagen del método de pago" class="img-fluid" style="width: 20%">
+                                                <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}" alt="Imagen del método de pago" class="img-fluid" style="max-width: 50px;">
+                                            </td>
+                                            <td class="text-center">
+                                                @if ($paymentMethod->visible == 1)
+                                                    Mostrar
+                                                @else
+                                                    No mostrar
+                                                @endif
                                             </td>
                                             <td class="text-center pt-3">
-                                                <button id="editButton"
-                                                    class="btn btn-sm btn-outline-primary edit-modal-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
-                                                    <i class="fa fa-edit"></i>
-                                                </button>
-                                                <form action="{{ route('paymethods.destroy', $paymentMethod->id) }}"
-                                                    method="POST" style="display: inline;">
+                                                <a href="{{ route('paymethods.edit', $paymentMethod->id) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>Editar</a>
+                                                <form action="{{ route('paymethods.destroy', $paymentMethod->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-user">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
-                                                    </button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
                                                 </form>
                                             </td>
                                         </tr>

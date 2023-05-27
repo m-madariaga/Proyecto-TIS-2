@@ -34,7 +34,7 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Descripción</th>
-                                        
+
 
 
                                         <th class="text-center">Acciones</th>
@@ -158,7 +158,7 @@
                 }
             });
 
-            
+
         });
     </script>
 
