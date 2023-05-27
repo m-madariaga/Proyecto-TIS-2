@@ -20,6 +20,9 @@ use App\Http\Controllers\PaymentMethodController;
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
+use App\Http\Controllers\ChangePasswordController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +87,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-    Route::get('/users/pdf',[UserController::class, 'generate_pdf'])->name('users.generate_pdf');
+    Route::get('/users/pdf', [UserController::class, 'generate_pdf'])->name('users.generate_pdf');
 
     Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
     Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
@@ -92,11 +95,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/shipment_types/{id}/edit', [App\Http\Controllers\ShipmentTypeController::class, 'edit'])->name('shipment_types.edit');
     Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
-
     Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index');
     Route::get('/paymethods/create', [App\Http\Controllers\PaymentMethodController::class, 'create'])->name('paymethods.create');
     Route::post('/paymethods/store', [App\Http\Controllers\PaymentMethodController::class, 'store'])->name('paymethods.store');
     Route::delete('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
+
+
 
     Route::get('/page', function () {
         return view('page');
@@ -106,47 +110,47 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
-    Route::post('/orders/store/{id}',[OrderController::class,'store'])->name('orders-store');
+    Route::post('/orders/store', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
-        Route::get('/productos',[ProductController::class,'index'])->name('productos');
-        Route::get('/productos/create',[ProductController::class,'create'])->name('productos-create');
-        Route::post('/productos/store',[ProductController::class,'store'])->name('productos-store');
-        Route::get('/productos/{id}/edit',[ProductController::class,'edit'])->name('productos-edit');
-        Route::patch('/productos/{id}/update',[ProductController::class,'update'])->name('productos-update');
-        Route::delete('/productos/{id}',[ProductController::class,'destroy'])->name('productos-destroy');
+        Route::get('/productos', [ProductController::class, 'index'])->name('productos');
+        Route::get('/productos/create', [ProductController::class, 'create'])->name('productos-create');
+        Route::post('/productos/store', [ProductController::class, 'store'])->name('productos-store');
+        Route::get('/productos/{id}/edit', [ProductController::class, 'edit'])->name('productos-edit');
+        Route::patch('/productos/{id}/update', [ProductController::class, 'update'])->name('productos-update');
+        Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');
     });
 
     Route::group(['middleware' => ['permission:mantenedor ordenes']], function () {
-        Route::get('/orden-compra',[PurcharseOrderController::class,'index'])->name('orden-compra');
-        Route::get('/orden-compra/create',[PurcharseOrderController::class,'create'])->name('orden-compra-create');
-        Route::post('/orden-compra/store',[PurcharseOrderController::class,'store'])->name('orden-compra-store');
-        Route::get('/orden-compra/{id}/edit',[PurcharseOrderController::class,'edit'])->name('orden-compra-edit');
-        Route::patch('/orden-compra/{id}/update',[PurcharseOrderController::class,'update'])->name('orden-compra-update');
-        Route::delete('/orden-compra/{id}',[PurcharseOrderController::class,'destroy'])->name('orden-compra-destroy');
+        Route::get('/orden-compra', [PurcharseOrderController::class, 'index'])->name('orden-compra');
+        Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
+        Route::post('/orden-compra/store', [PurcharseOrderController::class, 'store'])->name('orden-compra-store');
+        Route::get('/orden-compra/{id}/edit', [PurcharseOrderController::class, 'edit'])->name('orden-compra-edit');
+        Route::patch('/orden-compra/{id}/update', [PurcharseOrderController::class, 'update'])->name('orden-compra-update');
+        Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
     });
 
     Route::group(['middleware' => ['permission:mantenedor categorias']], function () {
-        Route::get('/categorias',[CategoryController::class,'index'])->name('categorias');
-        Route::get('/categorias/create',[CategoryController::class,'create'])->name('categorias-create');
-        Route::post('/categorias/store',[CategoryController::class,'store'])->name('categorias-store');
-        Route::get('/categorias/{id}/edit',[CategoryController::class,'edit'])->name('categorias-edit');
-        Route::patch('/categorias/{id}/update',[CategoryController::class,'update'])->name('categorias-update');
-        Route::delete('/categorias/{id}',[CategoryController::class,'destroy'])->name('categorias-destroy');
+        Route::get('/categorias', [CategoryController::class, 'index'])->name('categorias');
+        Route::get('/categorias/create', [CategoryController::class, 'create'])->name('categorias-create');
+        Route::post('/categorias/store', [CategoryController::class, 'store'])->name('categorias-store');
+        Route::get('/categorias/{id}/edit', [CategoryController::class, 'edit'])->name('categorias-edit');
+        Route::patch('/categorias/{id}/update', [CategoryController::class, 'update'])->name('categorias-update');
+        Route::delete('/categorias/{id}', [CategoryController::class, 'destroy'])->name('categorias-destroy');
     });
 
     Route::group(['middleware' => ['permission:mantenedor marcas']], function () {
 
-        Route::get('/marcas',[BrandController::class,'index'])->name('marcas');
-        Route::get('/marcas/create',[BrandController::class,'create'])->name('marcas-create');
-        Route::post('/marcas/store',[BrandController::class,'store'])->name('marcas-store');
-        Route::get('/marcas/{id}/edit',[BrandController::class,'edit'])->name('marcas-edit');
-        Route::patch('/marcas/{id}/update',[BrandController::class,'update'])->name('marcas-update');
-        Route::delete('/marcas/{id}',[BrandController::class,'destroy'])->name('marcas-destroy');
+        Route::get('/marcas', [BrandController::class, 'index'])->name('marcas');
+        Route::get('/marcas/create', [BrandController::class, 'create'])->name('marcas-create');
+        Route::post('/marcas/store', [BrandController::class, 'store'])->name('marcas-store');
+        Route::get('/marcas/{id}/edit', [BrandController::class, 'edit'])->name('marcas-edit');
+        Route::patch('/marcas/{id}/update', [BrandController::class, 'update'])->name('marcas-update');
+        Route::delete('/marcas/{id}', [BrandController::class, 'destroy'])->name('marcas-destroy');
     });
 
     Route::group(['middleware' => ['permission:mantenedor roles']], function () {
@@ -157,7 +161,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/roles/{id}/edit', [App\Http\Controllers\RolesController::class, 'edit'])->name('roles.edit');
         Route::patch('/roles/{id}', [App\Http\Controllers\RolesController::class, 'update'])->name('roles.update');
         Route::delete('/roles/{id}', [App\Http\Controllers\RolesController::class, 'destroy'])->name('roles.destroy');
-
     });
 
     Route::group(['middleware' => ['permission:mantenedor permisos']], function () {
@@ -173,7 +176,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
-
 });
 
 
@@ -206,3 +208,8 @@ Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destro
 Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');
+
+
+
+Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
+// Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');

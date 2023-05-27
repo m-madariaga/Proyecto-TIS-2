@@ -65,21 +65,38 @@
                 <div class="card-body">
                     <p class="text-uppercase text-sm">User Information</p>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Name</label>
                                 <span class="form-control">{{ Auth::user()->name }}</span>
                             </div>
-                            <div class="col-md-5">
-                                <div class="form-group">
-                                    <label for="example-text-input" class="form-control-label">Run</label>
-                                    <span class="form-control">{{ Auth::user()->run }}</span>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="example-text-input" class="form-control-label">Porfile imagen</label>
+                            <span class="form-control">
+                                <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 20%;">
+
+                            </span>
                         </div>
 
-                        <div class="col-md-5 d-flex justify-content-center">
-                            <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Run</label>
+                                <span class="form-control">{{ Auth::user()->run }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="example-text-input" class="form-control-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
+
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+
+                            </div>
                         </div>
 
                     </div>
@@ -89,15 +106,15 @@
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Contact Information</p>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Address</label>
                                 <span class="form-control">{{ Auth::user()->address }}</span>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="example-text" class="form-control-label">Country</label>
+                                <label for="example-text-input" class="form-control-label">Country</label>
                                 <span class="form-control">{{ Auth::user()->country_fk }}</span>
                             </div>
                         </div>
@@ -118,21 +135,13 @@
                     <hr class="horizontal dark">
                     <p class="text-uppercase text-sm">Account information</p>
                     <div class="row">
-                        <div class="col-md-7">
-                            <div class="form-group">
-                                <label for="example-text-input" class="form-control-label">Email</label>
-                                <span class="form-control">{{ Auth::user()->email }}</span>
-                            </div>
-                        </div>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="example-text-input" class="form-control-label">Password</label>
                                 <span class="form-control">**************</span>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
 
@@ -140,23 +149,23 @@
 
 
         <!-- MODAL -->
-        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel">Edit profile</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
                     </div>
                     <form method="POST" action="{{ route('profile_edit', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="modal-body">
-
                             <p class="text-uppercase text-sm">User Information</p>
+
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-6 col-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Name</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ Auth::user()->name }}" required>
+                                        <input type="text" class="form-control input-field @error('name') is-invalid @enderror" id="name" name="name" value="{{ Auth::user()->name }}" required>
 
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -165,12 +174,36 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="profile_image" class="form-control-label">Profile Image</label>
+                                        <input type="file" class="form-control input-field @error('profile_imagen') is-invalid @enderror" id="profile_image" name="profile_image"> 
+
+                                        @error('profile_image')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col 12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Run</label>
-                                        <input type="text" class="form-control @error('run') is-invalid @enderror" id="run" name="run" value="{{ Auth::user()->run }}" required>
+                                        <input type="text" class="form-control input-field @error('run') is-invalid @enderror" id="run" name="run" value="{{ Auth::user()->run }}" required>
 
                                         @error('run')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="email" class="form-control-label">Email</label>
+                                        <input type="email" class="form-control input-field @error('email') is-invalid @enderror" id='email' name="email" value="{{ Auth::user()->email }}" required>
+                                        @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -181,10 +214,10 @@
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Contact Information</p>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="text-center">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Address</label>
-                                            <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ Auth::user()->address }}" required>
+                                            <input type="text" class="form-control input-field @error('address') is-invalid @enderror" id="address" name="address" value="{{ Auth::user()->address }}" required>
 
                                             @error('address')
                                             <span class="invalid-feedback" role="alert">
@@ -194,7 +227,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="region">Región:</label>
                                             <select id="region" class="form-select @error('region_fk') is-invalid @enderror" name="region_fk" required>
@@ -211,7 +244,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 col-12">
                                         <div class="form-group">
                                             <label for="city">Ciudad:</label>
                                             <select id="city" class="form-select @error('city_fk') is-invalid @enderror" name="city_fk" required>
@@ -227,54 +260,31 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <hr class="horizontal dark">
-                                    <p class="text-uppercase text-sm">Account information</p>
-                                    <div class="row">
-                                        <div class="col-md-7">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Email</label>
-                                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
-
-                                                @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group">
-                                                <label for="example-text-input" class="form-control-label">Password</label>
-                                                <input type="password" class="form-control  @error('password') is-invalid @enderror" id="password" name="password" value="{{ Auth::user()->password }}" required>
-
-                                                @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                    </div>
-
                                 </div>
                                 <hr class="horizontal dark">
-                                <p class="text-uppercase text-sm">Profile Image</p>
+                                <p class="text-uppercase text-sm">Account information</p>
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="profile_image" class="form-control-label">Profile Image</label>
-                                            <input type="file" class="form-control-file @error('profile_image') is-invalid @enderror" id="profile_image" name="profile_image">
 
-                                            @error('profile_image')
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Password</label>
+                                            <input type="password" class="form-control  @error('password') is-invalid @enderror" id="password" name="password" value="{{ Auth::user()->password }}" required>
+
+                                            @error('password')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                             @enderror
                                         </div>
                                     </div>
+
+                                </div>
+
+
+                                <hr class="horizontal dark">
+                                <p class="text-uppercase text-sm">Profile Image</p>
+                                <div class="row">
+
                                 </div>
                             </div>
                         </div>
