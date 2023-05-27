@@ -25,6 +25,10 @@
                         <h6>Editar orden de compra</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
+                        <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
+                            data-bs-target="#addModal">
+                            Agregar más productos
+                        </button>
                         <div class="table-responsive p-0 ">
                             <form action="{{ route('orden-compra-product-update', ['id' => $orden->first()->id]) }}"
                                 method="POST">
@@ -61,23 +65,27 @@
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
                                                                     {{ $orden_prod->marca->nombre }}</td>
-                                                                    <td class="">
-                                                                        @foreach ($orden_productos as $prod)
+                                                                <td class="">
+                                                                    @foreach ($orden_productos as $prod)
                                                                         @if ($prod->products_id == $orden_prod->id)
-                                                                        <div class="d-flex form-group text-center aling-items-center justify-content-center">
+                                                                            <div
+                                                                                class="d-flex form-group text-center aling-items-center justify-content-center">
 
-                                                                            <input type="number" class="form-control w-20 @error('cantidad') is-invalid @enderror" id="cantidad"
-                                                                                name="cantidad[]" value="{{ $prod->cantidad }}">
+                                                                                <input type="number"
+                                                                                    class="form-control w-20 @error('cantidad') is-invalid @enderror"
+                                                                                    id="cantidad" name="cantidad[]"
+                                                                                    value="{{ $prod->cantidad }}">
 
-                                                                            @error('cantidad')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                            @enderror
-                                                                        </div>
+                                                                                @error('cantidad')
+                                                                                    <span class="invalid-feedback"
+                                                                                        role="alert">
+                                                                                        <strong>{{ $message }}</strong>
+                                                                                    </span>
+                                                                                @enderror
+                                                                            </div>
                                                                         @endif
-                                                                        @endforeach
-                                                                    </td>
+                                                                    @endforeach
+                                                                </td>
                                                                 <td class="">
                                                                     @foreach ($orden_productos as $prod)
                                                                         @if ($prod->products_id == $orden_prod->id)
@@ -119,6 +127,92 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true"
+        data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel">Nuevo producto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('orden-compra-product-update', ['id' => $orden->first()->id]) }}" method="POST">
+                    @csrf
+                    <div class="table-responsive p-0">
+                        <table id="table" class="table display table-stripped align-items-center">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Marca</th>
+                                    <th class="text-center">Color</th>
+                                    <th class="text-center">Talla</th>
+                                    <th class="text-center">Cantidad</th>
+                                    <th class="text-center">Valor</th>
+
+                                </tr>
+                            </thead>
+                            @if (isset($empty))
+                            @else
+                                <tbody>
+
+                                    @foreach ($productosall as $prod)
+                                        <tr>
+                                            <td class="text-center pt-3 w-2">
+                                                <input type="checkbox" id="prod_id" name="prod_id[]"
+                                                    value="{{ $prod->id }}">
+                                            </td>
+                                            <td class="text-center w-6">{{ $prod->nombre }}</td>
+                                            <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
+                                            </td>
+                                            <td class="text-center pt-3 w-6">{{ $prod->color }}
+                                            </td>
+                                            <td class="text-center pt-3 w-6">{{ $prod->talla }}
+                                            </td>
+                                            <td class="text-center pt-3 w-1">
+                                                <div class="form-group">
+
+                                                    <input type="number"
+                                                        class="form-control @error('cantidadup') is-invalid @enderror"
+                                                        id="cantidadup" name="cantidadup[]" value="{{ old('cantidadup') }}">
+
+                                                    @error('cantidadup')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </td>
+                                            <td class="text-center pt-3 w-3">
+                                                <div class="form-group">
+
+                                                    <input type="number"
+                                                        class="form-control @error('valorup') is-invalid @enderror"
+                                                        id="valorup" name="valorup[]" value="{{ old('valorup') }}">
+
+                                                    @error('valorup')
+                                                        <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $message }}</strong>
+                                                        </span>
+                                                    @enderror
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            @endif
+                        </table>
+                    </div>
+                    <div class="form-group text-center m-4">
+                        <button type="button" class="btn btn-sm btn-outline-danger"
+                            data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-primary">Agregar productos</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

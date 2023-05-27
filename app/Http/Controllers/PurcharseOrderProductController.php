@@ -87,11 +87,12 @@ class PurcharseOrderProductController extends Controller
         $orden_productos = Purchase_order_product::find($id);
         //se buscan los productos
         $productos = array();
+        $productosall = Product::all();
         foreach ($orden_productos as $key => $producto) {
             $aux = Product::find($producto->products_id);
             array_push($productos,$aux);
         }
-        return view('purchase_order.edit', compact('orden','productos', 'orden_productos'));
+        return view('purchase_order.edit', compact('orden','productos', 'orden_productos', 'productosall'));
     }
 
     /**
@@ -101,14 +102,27 @@ class PurcharseOrderProductController extends Controller
      * @param  \App\Models\Purchase_order_product  $Purchase_order_product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Purchase_order_product $id)
+    public function update(Request $request, Purchase_order $id)
     {
+        $datos = $request->get('datos');
+        $all = $request->all();
+        dd($id->id);
+        // reiniciar los indices para que sean consecutivos
+        $cant = array();
+        foreach ($datos['cantidad'] as $key => $value) {
+            array_push($cant, $value);
+        }
+        $val = array();
+        foreach ($datos['valor'] as $key => $value) {
+            array_push($val, $value);
+        }
         $request->validate([
             'purchase_order_id' => 'required',
             'products_id' => 'required',
             'cantidad' => 'required',
             'precio' => 'required',
         ]);
+
         $ordenes = Purchase_order_product::all();
         $orden = $ordenes->find($id);
         $orden->purchase_order_id = $request->purchase_order_id;
