@@ -6,9 +6,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Roles</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Edit</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Editar</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0"> Editar Rol</h6>
 @endsection
@@ -56,10 +56,10 @@
                                         @if($role->role_type==2)
                                             selected='selected'
                                         @endif>Analista</option>
-                                        <option value="3"
+                                        {{-- <option value="3"
                                         @if($role->role_type==3)
                                             selected='selected'
-                                        @endif>Cliente</option>
+                                        @endif>Cliente</option> --}}
                                     </select>
                                     @error('role_type')
                                         <span class="invalid-feedback" role="alert">
@@ -71,8 +71,23 @@
                             <div class="form-group row mb-3">
                                 <label for="role_type" class="col-md-4 col-form-label text-md-right">Permisos</label>
     
-                                <div class="col-md-6">
-                                    <div class="form-check" id="check1"
+                                <div class="col-md-6" style="overflow-y: auto; max-height: 19rem">
+
+                                    @foreach ($permissions as $permission)
+                                        <div class="form-check" id="check1">
+                                            <input class="form-check-input" type="checkbox" value="{{$permission}}" name="{{$permission}}" id="{{$permission}}" 
+                                            @if($role->permissions->contains($permission))
+                                                checked
+                                            @endif>
+                                            <label class="form-check-label" for="{{$permission}}" id="label1">
+                                                {{$permission}}
+                                            </label>
+                                        </div>
+                                        
+                                    @endforeach
+
+
+                                    {{-- <div class="form-check" id="check1"
                                     @if($role->role_type==3)
                                             style="display:none"
                                         @endif>
@@ -290,7 +305,7 @@
                                         <label class="form-check-label" for="defaultCheck11" id="label11">
                                           Mantenedor método de pago
                                         </label>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -312,100 +327,5 @@
 @endsection
 
 @section('js')
-    <script>
-        function swapPermissionInputs(select){
-            // const fecha = urlParams.get('fecha');
-            // console.log(fecha);
-            if(select.value==1){
-                document.getElementById('label1').innerHTML = 'Dashboard';
-                document.getElementById('label2').innerHTML = 'Mantenedor usuarios';
-                document.getElementById('label3').innerHTML = 'Mantenedor roles';
-                document.getElementById('label4').innerHTML = 'Mantenedor permisos';
-                document.getElementById('label5').innerHTML = 'Mantenedor productos';
-                document.getElementById('label6').innerHTML = 'Mantenedor categorías';
-                document.getElementById('label7').innerHTML = 'Mantenedor marcas';
-                document.getElementById('label8').innerHTML = 'Mantenedor ventas';
-                document.getElementById('label9').innerHTML = 'Mantenedor envío';
-                document.getElementById('label10').innerHTML = 'Mantenedor tipo de envío';
-                document.getElementById('label11').innerHTML = 'Mantenedor método de pago';
-
-                document.getElementById('defaultCheck1').disabled = false;
-                document.getElementById('defaultCheck2').disabled = false;
-                document.getElementById('defaultCheck3').disabled = false;
-                document.getElementById('defaultCheck4').disabled = false;
-                document.getElementById('defaultCheck5').disabled = false;
-                document.getElementById('defaultCheck6').disabled = false;
-                document.getElementById('defaultCheck7').disabled = false;
-                document.getElementById('defaultCheck8').disabled = false;
-                document.getElementById('defaultCheck9').disabled = false;
-                document.getElementById('defaultCheck10').disabled = false;
-                document.getElementById('defaultCheck11').disabled = false;
-
-                document.getElementById('check1').style.display = "block";
-                document.getElementById('check2').style.display = "block";
-                document.getElementById('check3').style.display = "block";
-                document.getElementById('check4').style.display = "block";
-                document.getElementById('check5').style.display = "block";
-                document.getElementById('check6').style.display = "block";
-                document.getElementById('check7').style.display = "block";
-                document.getElementById('check8').style.display = "block";
-                document.getElementById('check9').style.display = "block";
-                document.getElementById('check10').style.display = "block";
-                document.getElementById('check11').style.display = "block";
-            }else if(select.value==2){
-                document.getElementById('label1').innerHTML = 'Dashboard';
-                document.getElementById('label2').innerHTML = 'Reporte ventas';
-
-                document.getElementById('defaultCheck1').disabled = false;
-                document.getElementById('defaultCheck2').disabled = false;
-                document.getElementById('defaultCheck3').disabled = true;
-                document.getElementById('defaultCheck4').disabled = true;
-                document.getElementById('defaultCheck5').disabled = true;
-                document.getElementById('defaultCheck6').disabled = true;
-                document.getElementById('defaultCheck7').disabled = true;
-                document.getElementById('defaultCheck8').disabled = true;
-                document.getElementById('defaultCheck9').disabled = true;
-                document.getElementById('defaultCheck10').disabled = true;
-                document.getElementById('defaultCheck11').disabled = true;
-
-                document.getElementById('check1').style.display = "block";
-                document.getElementById('check2').style.display = "block";
-                document.getElementById('check3').style.display = "none";
-                document.getElementById('check4').style.display = "none";
-                document.getElementById('check5').style.display = "none";
-                document.getElementById('check6').style.display = "none";
-                document.getElementById('check7').style.display = "none";
-                document.getElementById('check8').style.display = "none";
-                document.getElementById('check9').style.display = "none";
-                document.getElementById('check10').style.display = "none";
-                document.getElementById('check11').style.display = "none";
-            
-            }else{
-
-                document.getElementById('defaultCheck1').disabled = true;
-                document.getElementById('defaultCheck2').disabled = true;
-                document.getElementById('defaultCheck3').disabled = true;
-                document.getElementById('defaultCheck4').disabled = true;
-                document.getElementById('defaultCheck5').disabled = true;
-                document.getElementById('defaultCheck6').disabled = true;
-                document.getElementById('defaultCheck7').disabled = true;
-                document.getElementById('defaultCheck8').disabled = true;
-                document.getElementById('defaultCheck9').disabled = true;
-                document.getElementById('defaultCheck10').disabled = true;
-                document.getElementById('defaultCheck11').disabled = true;
-
-                document.getElementById('check1').style.display = "none";
-                document.getElementById('check2').style.display = "none";
-                document.getElementById('check3').style.display = "none";
-                document.getElementById('check4').style.display = "none";
-                document.getElementById('check5').style.display = "none";
-                document.getElementById('check6').style.display = "none";
-                document.getElementById('check7').style.display = "none";
-                document.getElementById('check8').style.display = "none";
-                document.getElementById('check9').style.display = "none";
-                document.getElementById('check10').style.display = "none";
-                document.getElementById('check11').style.display = "none";
-            }
-        }
-    </script>
+    
 @endsection

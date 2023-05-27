@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
 
@@ -24,7 +26,7 @@ class PurcharseOrderProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {        
+    {
         return view('purchase_order_product.create');
     }
 
@@ -35,21 +37,32 @@ class PurcharseOrderProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $request->validate([            
-            'purchase_order_id' => 'required',
-            'products_id' => 'required',
-            'cantidad' => 'required',
-            'precio' => 'required',       
-        ]);       
-        $orden_product = new Purchase_order_product([
-            'purchase_order_id' => $request->get('purchase_order_id'),
-            'products_id' => $request->get('products_id'),
-            'cantidad' => $request->get('cantidad'),
-            'precio' => $request->get('precio'),            
-        ]);       
-        $orden_product->save();
-        return redirect()->route('orden_producto')->with('success:', 'Orden de compra ingresada correctamente.');
+    {
+        $datos = $request->get('datos');
+        $id = $request->get('orden_id');
+        $all = $request->all();
+        // reiniciar los indices para que sean consecutivos
+        $cant = array();
+        foreach ($datos['cantidad'] as $key => $value) {
+            array_push($cant, $value);
+        }
+        $val = array();
+        foreach ($datos['valor'] as $key => $value) {
+            array_push($val, $value);
+        }
+        for ($i=0; $i < sizeof($datos['prod_id']); $i++) {
+            $prod_id = $datos['prod_id'][$i];
+            $cantidad = $cant[$i];
+            $valor = $val[$i];
+            $orden_product = new Purchase_order_product([
+                'purchase_order_id' => $id,
+                'products_id' => $prod_id,
+                'cantidad' => $cantidad,
+                'precio' => $valor,
+            ]);
+            $orden_product->save();
+        }
+        return redirect()->route('orden-compra')->with('success:', 'Orden de compra ingresada correctamente.');
     }
 
     /**
@@ -65,14 +78,16 @@ class PurcharseOrderProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Purchase_order_product  $Purchase_order
+     * @param  \App\Models\Purchase_order  $Purchase_order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Purchase_order_product $id)
+    public function edit(Purchase_order $id)
     {
-        $ordenes = Purchase_order_product::all();
-        $orden = $ordenes->find($id);
-        return view('Purchase_order_product.edit', compact('orden'));
+        // el $id sera la orden que editaremos
+        $orden = Purchase_order::all()->find($id);
+        $productos = Purchase_order_product::find($id->id);
+        dd($productos);
+        return view('purchase_order.edit', compact('orden','productos'));
     }
 
     /**
@@ -88,7 +103,7 @@ class PurcharseOrderProductController extends Controller
             'purchase_order_id' => 'required',
             'products_id' => 'required',
             'cantidad' => 'required',
-            'precio' => 'required',          
+            'precio' => 'required',
         ]);
         $ordenes = Purchase_order_product::all();
         $orden = $ordenes->find($id);
@@ -109,8 +124,11 @@ class PurcharseOrderProductController extends Controller
     public function destroy(Purchase_order_product $id)
     {
         $ordenes = Purchase_order_product::all();
-        $orden = $ordenes->find($id);
-        $orden->delete();
-        return redirect()->route('orden_producto')->with('success:', 'Orden eliminada correctamente.');
+        foreach ($ordenes as $orden) {
+            if ($orden->purchase_order_id == $id->purchase_order_id) {
+                $orden->delete();
+            }
+        }
+        return redirect()->route('orden-compra-destroy',['id' => $id->purchase_order_id])->with('success:', 'Orden eliminada correctamente.');
     }
 }

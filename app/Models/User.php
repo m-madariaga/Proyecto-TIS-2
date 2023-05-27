@@ -27,6 +27,7 @@ class User extends Authenticatable
         'password',
         'run',
         'address',
+        'phone_number',
         'city_fk',
         'country_fk',
         'region_fk',

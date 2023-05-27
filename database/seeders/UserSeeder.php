@@ -69,6 +69,7 @@ class UserSeeder extends Seeder
         $user->run = '12345678-K';
         $user->name = 'admin demo';
         $user->email = 'admin@test.cl';
+        $user->phone_number = '941130994';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 1 Los Lirios';
         $user->city_fk = 'Concepción';
@@ -84,6 +85,7 @@ class UserSeeder extends Seeder
         $user->run = '12345678-1';
         $user->name = 'moderador demo';
         $user->email = 'mod@test.cl';
+        $user->phone_number = '990959494';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 2 Los Lirios';
         $user->city_fk = 'Talcahuano';
@@ -98,8 +100,8 @@ class UserSeeder extends Seeder
         $user->run = '12345678-2';
         $user->name = 'analista demo';
         $user->email = 'analista@test.cl';
+        $user->phone_number = '963434488';
         $user->password = bcrypt('asdf1234');
-
         $user->address = 'Calle 3 Las Violetas';
         $user->city_fk = 'Santiago';
         $user->region_fk = 'Metropolitana';
@@ -112,6 +114,7 @@ class UserSeeder extends Seeder
         $user->run = '12345678-3';
         $user->name = 'cliente demo';
         $user->email = 'cliente@test.cl';
+        $user->phone_number = '975715374';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 4 Las Violetas';
         $user->city_fk = 'Arica';

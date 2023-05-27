@@ -17,7 +17,7 @@ class Product extends Model
         'color',
         'talla',
         'stock',
-        'imagen', 
+        'imagen',
         'visible',
         'marca_id',
         'categoria_id',
@@ -30,6 +30,6 @@ class Product extends Model
         return $this->belongsTo(Category::class,'categoria_id');
     }
     public function purchase_order(): BelongsToMany {
-        return $this->belongsToMany(Purchase_order::class,'purchase_order_products');
+        return $this->belongsToMany(Purchase_order::class, 'products_id');
     }
 }
