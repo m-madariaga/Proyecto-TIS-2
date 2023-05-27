@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
+use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
@@ -33,7 +34,8 @@ class RolesController extends Controller
 
     public function create()
     {
-        return view('roles.create');
+        $permissions = Permission::whereNotIn('name', ['vista cliente', 'vista admin', 'vista analista'])->pluck('name');
+        return view('roles.create', compact('permissions'));
     }
 
     public function store(Request $request)
@@ -42,74 +44,33 @@ class RolesController extends Controller
             'name' => 'required',
             'role_type' => 'nullable',
         ]);
-
-        
+ 
+        $permissions = Permission::whereNotIn('name', ['vista cliente', 'vista admin', 'vista analista'])->pluck('name');
 
         $role = Role::create(['name' => $request->name]);
 
         switch($request->role_type){
             case 1:
-                $role->givePermissionTo('vista admin');
-                if($request->defaultCheck1==1){
-                    $role->givePermissionTo('dashboard');
-                }
-                
-                if($request->defaultCheck2==2){
-                    $role->givePermissionTo('mantenedor usuarios');
-                }
-                
-                if($request->defaultCheck3==3){
-                    $role->givePermissionTo('mantenedor roles');
-                }
-                
-                if($request->defaultCheck4==4){
-                    $role->givePermissionTo('mantenedor permisos');
-                }
-                
-                if($request->defaultCheck5==5){
-                    $role->givePermissionTo('mantenedor productos');
-                }
-
-                if($request->defaultCheck6==6){
-                    $role->givePermissionTo('mantenedor categorias');
-                }
-
-                if($request->defaultCheck7==7){
-                    $role->givePermissionTo('mantenedor marcas');
-                }
-
-                if($request->defaultCheck8==8){
-                    $role->givePermissionTo('mantenedor ventas');
-                }
-
-                if($request->defaultCheck9==9){
-                    $role->givePermissionTo('mantenedor envio');
-                }
-
-                if($request->defaultCheck10==10){
-                    $role->givePermissionTo('mantenedor tipo envio');
-                }
-
-                if($request->defaultCheck11==11){
-                    $role->givePermissionTo('mantenedor metodo pago');
-                }
+                $role->givePermissionTo('vista admin');             
                 break;
             case 2:
-                $role->givePermissionTo('vista analista');
-
-                if($request->defaultCheck1==1){
-                    $role->givePermissionTo('dashboard');
-                }
-
-                if($request->defaultCheck2==2){
-                    $role->givePermissionTo('reporte ventas');
-                }
-                
+                $role->givePermissionTo('vista analista');        
                 break;
             case 3:
                 $role->givePermissionTo('vista cliente');
                 break;
             default:
+        }
+
+        foreach($request->all() as $permission){
+            if(in_array($permission, $permissions->all())){
+                $role->givePermissionTo($permission);
+                error_log($permission);
+                error_log("true");
+            }else{
+                error_log($permission);
+                error_log("false");
+            }
         }
 
         return redirect('/admin/roles')->with('success', 'Rol creado exitosamente!');
@@ -128,8 +89,9 @@ class RolesController extends Controller
         }
         $role->permissions = $role->getPermissionNames();
         error_log($role->permissions);
+        $permissions = Permission::whereNotIn('name', ['vista cliente', 'vista admin', 'vista analista'])->pluck('name');
 
-        return view('roles.edit', compact('role'));
+        return view('roles.edit', compact('role', 'permissions'));
     }
 
     public function update(Request $request, $id)
@@ -142,92 +104,38 @@ class RolesController extends Controller
         $role = Role::find($id);
         $role->name = $request->name;
         $role->save();
-        $permissions =collect();
+        $permissions = Permission::whereNotIn('name', ['vista cliente', 'vista admin', 'vista analista'])->pluck('name');
+        $newPermissions =collect();
 
         switch($request->role_type){
             case 1:
                 
-                $permissions->push('vista admin');
-                if($request->defaultCheck1==1){
-                    $permissions->push('dashboard');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck2==2){
-                    $permissions->push('mantenedor usuarios');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck3==3){
-                    $permissions->push('mantenedor roles');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck4==4){
-                    $permissions->push('mantenedor permisos');
-                    error_log($permissions);
-                }
-                
-                if($request->defaultCheck5==5){
-                    $permissions->push('mantenedor productos');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck6==6){
-                    $permissions->push('mantenedor categorias');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck7==7){
-                    $permissions->push('mantenedor marcas');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck8==8){
-                    $permissions->push('mantenedor ventas');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck9==9){
-                    $permissions->push('mantenedor envio');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck10==10){
-                    $permissions->push('mantenedor tipo envio');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck11==11){
-                    $permissions->push('mantenedor metodo pago');
-                    error_log($permissions);
-                }
-
-                $role->syncPermissions([$permissions]);
+                $newPermissions->push('vista admin');          
                 break;
             case 2:
-                $permissions->push('vista analista');
-
-                if($request->defaultCheck1==1){
-                    $permissions->push('dashboard');
-                    error_log($permissions);
-                }
-
-                if($request->defaultCheck2==2){
-                    $permissions->push('reporte ventas');
-                    error_log($permissions);
-                }
-
-                $role->syncPermissions([$permissions]);
+                $newPermissions->push('vista analista');
                 break;
             case 3:
                 $role->syncPermissions(['vista cliente']);
                 break;
             default:
         }
+
+        foreach($request->all() as $permission){
+            if(in_array($permission, $permissions->all())){
+                $newPermissions->push($permission);
+                error_log($permission);
+                error_log("true");
+            }else{
+                error_log($permission);
+                error_log("false");
+            }
+        }
+
+        $role->syncPermissions([$newPermissions]);
         error_log("test");
 
-        Mail::to('admin@test.cl')->queue(new statusChangeEmail($role->name, $request->role_type, $role->id));
+        // Mail::to('admin@test.cl')->queue(new statusChangeEmail($role->name, $request->role_type, $role->id));
 
         return redirect('/admin/roles')->with('success', 'Rol actualizado exitosamente!');
     }
