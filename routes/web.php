@@ -53,7 +53,7 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
-// rutas categorias 
+// rutas categorias
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
 Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
@@ -88,6 +88,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/regions/{id}', [App\Http\Controllers\RegionController::class, 'destroy'])->name('regions.destroy');
     Route::get('/regions', [App\Http\Controllers\RegionController::class, 'index'])->name('regions.index');
 
+    Route::get('/cities/create', [App\Http\Controllers\CityController::class, 'create'])->name('cities.create');
+    Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('cities.store');
+    Route::get('/cities/{id}/edit', [App\Http\Controllers\CityController::class, 'edit'])->name('cities.edit');
+    Route::put('/cities/{id}', [App\Http\Controllers\CityController::class, 'update'])->name('cities.update');
+    Route::delete('/cities/{id}', [App\Http\Controllers\CityController::class, 'destroy'])->name('cities.destroy');
+    Route::get('/cities', [App\Http\Controllers\CityController::class, 'index'])->name('cities.index');
 
 
 

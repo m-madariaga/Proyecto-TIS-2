@@ -54,25 +54,23 @@
                                                         <strong>{{ $message }}</strong>
                                                     </span>
                                                 @enderror
-
-                                                <label for="region_fk">Región a que pertenece:</label>
-                                                    <select class="form-control form-select" id="region_fk"
-                                                        name="region_fk">
-                                                        @foreach ($regions as $region)
-                                                            <option value="{{ $region->id }}">
-                                                                {{ $region->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
                                                 <label for="country_fk">País a que pertenece:</label>
-                                                    <select class="form-control form-select" id="country_fk"
-                                                        name="country_fk">
-                                                        @foreach ($countries as $country)
-                                                            <option value="{{ $country->id }}">
-                                                                {{ $country->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select class="form-control form-select" id="country_fk" name="country_fk">
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                <label for="region_fk">Región a que pertenece:</label>
+                                                <select class="form-control form-select" id="region_fk" name="region_fk">
+                                                    @foreach ($regions as $region)
+                                                        <option value="{{ $region->id }}">
+                                                            {{ $region->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
                                             </div>
 
                                         </div>
@@ -91,31 +89,32 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">Nombre Ciudad</th>
+                                        <th class="text-center">Región</th>
                                         <th class="text-center">País</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cities as $region)
+                                    @foreach ($cities as $city)
                                         <tr>
-                                            <td class="text-center">{{ $region->name }}</td>
-                                            <td class="text-center">{{ $region->country->name }}</td>
+                                            <td class="text-center">{{ $city->name }}</td>
+                                            <td class="text-center">{{ $city->region->name }}</td>
+                                            <td class="text-center">{{ $city->region->country->name }}</td>
 
                                             <td class="text-center pt-3">
                                                 <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editModal"
-                                                    data-region-id="{{ $region->id }}"
-                                                    data-region-name="{{ $region->name }}">
+                                                    data-city-id="{{ $city->id }}"
+                                                    data-city-name="{{ $city->name }}">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
-                                                <form action="{{ route('cities.destroy', $region->id) }}" method="POST"
+                                                <form action="{{ route('cities.destroy', $city->id) }}" method="POST"
                                                     style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-region"
-                                                        data-id="{{ $region->id }}"><i class="fa fa-trash"
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-city"
+                                                        data-id="{{ $city->id }}"><i class="fa fa-trash"
                                                             aria-hidden="true"> Delete</i></button>
                                                 </form>
                                             </td>
@@ -129,7 +128,7 @@
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editModalLabel">Editar nombre Ciudad</h5>
+                                            <h5 class="modal-title" id="editModalLabel">Editar Ciudad</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
@@ -150,14 +149,23 @@
                                                         </span>
                                                     @enderror
                                                     <label for="country_fk">País al que pertenece:</label>
-                                                    <select class="form-control form-select" id="country_fk"
-                                                    name="country_fk">
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">
-                                                            {{ $country->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                    <select class="form-control form-select" id="country_fk1"
+                                                        name="country_fk">
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label for="region_fk">Region a la que pertenece:</label>
+                                                    <select class="form-control form-select" id="region_fk1"
+                                                        name="region_fk">
+                                                        @foreach ($regions as $region)
+                                                            <option value="{{ $region->id }}">
+                                                                {{ $region->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -181,6 +189,98 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#country_fk').on('change', function() {
+                var countryId = $(this).val();
+
+
+                $('#region_fk').empty().append('<option value="">Seleccionar Región</option>');
+                $('#city_fk').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/regions/' + countryId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#region_fk').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+
+
+            $('#region_fk').on('change', function() {
+                var regionId = $(this).val();
+
+
+                $('#city_fk').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/cities/' + regionId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#city_fk').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('#country_fk1').on('change', function() {
+                var countryId = $(this).val();
+
+
+                $('#region_fk1').empty().append('<option value="">Seleccionar Región</option>');
+                $('#city_fk').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/regions/' + countryId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#region_fk1').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+
+
+            $('#region_fk1').on('change', function() {
+                var regionId = $(this).val();
+
+
+                $('#city_fk').empty().append('<option value="">Seleccionar Ciudad</option>');
+
+
+                $.ajax({
+                    url: '/cities/' + regionId,
+                    type: 'GET',
+                    success: function(response) {
+
+                        $.each(response, function(key, value) {
+                            $('#city_fk').append('<option value="' + value.id + '">' +
+                                value.name + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         // Usar Ajax para manejar el envio del formulario del modal para añadir usuarios
         var addCityForm = document.getElementById('addCityForm');
@@ -214,7 +314,8 @@
             xhr.open('POST', addCityForm.getAttribute('action'));
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Accept', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content'));
             xhr.send(formData);
         });
 
@@ -260,22 +361,20 @@
 
         $('#editModal').on('show.bs.modal', function(event) {
             const button = $(event.relatedTarget); // Button que triggerea el modal
-            const regionId = button.data('region-id');
-            const regionName = button.data('region-name');
+            const cityId = button.data('city-id');
+            const cityName = button.data('city-name');
 
             const editForm = $('#editForm');
 
 
             // Actualizar ID de la ruta
-            const actionUrl = editForm.attr('action').replace('__ID__', regionId);
+            const actionUrl = editForm.attr('action').replace('__ID__', cityId);
 
             editForm.attr('action', actionUrl);
             const nameInput = $('#editName');
-            nameInput.val(regionName);
+            nameInput.val(cityName);
             // Reemplazar el valor del nombre en el input el modal
 
         });
-
-
     </script>
 @endsection
