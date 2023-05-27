@@ -23,7 +23,7 @@
 
                         <li class="language">
                             <a href="#">
-                                English
+                                Idioma
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
@@ -36,7 +36,7 @@
                                 @if (Auth::check())
                                 {{ Auth::user()->name }}
                                 @else
-                                My Account
+                                Cuenta
                                 @endif
                                 <i class="fa fa-angle-down"></i>
                             </a>
@@ -61,12 +61,12 @@
                             <ul class="account_selection">
                                 <li>
                                     <a href="{{ route('login') }}">
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Sign In
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('register') }}">
-                                        <i class="fa fa-user-plus" aria-hidden="true"></i> Register
+                                        <i class="fa fa-user-plus" aria-hidden="true"></i> Registrarse
                                     </a>
                                 </li>
                             </ul>

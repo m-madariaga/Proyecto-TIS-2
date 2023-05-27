@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>Productos Mujer</h2>
+                        <h2>Productos Hombre</h2>
                     </div>
                 </div>
             </div>
@@ -22,22 +22,21 @@
                 <div class="col">
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach ($productos as $index => $producto)
+                        <!-- Product 1 -->
                         <div class="product-item">
-                            <a href="{{ route('product.show', $producto->id) }}">
-                                <div class="product product_filter">
-                                    <div class="product_image">
-                                        <img src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
-                                    </div>
-                                    <div class="product_info">
-                                        <h5 class="product_name"><a href="#">{{ $producto->nombre }}</a></h5>
-                                        <div class="product_price">${{ $producto->precio }}</div>
-                                    </div>
+                            <div class="product discount product_filter">
+                                <div class="product-image" style="width: 100%; height: 300px;">
+                                    <img style="width: 100%; height: 100%; object-fit: cover;" src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
                                 </div>
-                            </a>
+                                <div class="product_info">
+                                    <h5 class="product_name"><a href="#">{{ $producto->nombre }}</a></h5>
+                                    <div class="product_price">${{ $producto->precio }}</div>
+                                </div>
+                            </div>
                             <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id[]" value="{{ $producto->id }}">
-                                <button class="red_button add_to_cart_button" type="submit">Añadir al carro</button>
+                                <button class="red_button add_to_cart_button" type="submit">Aañadir al carro</button>
                             </form>
                         </div>
                         @endforeach

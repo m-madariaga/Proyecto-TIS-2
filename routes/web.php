@@ -53,7 +53,13 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
+// rutas categorias 
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
+Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
+Route::get('/accesorie', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
@@ -106,7 +112,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
-
 
 
     Route::get('/page', function () {
@@ -211,7 +216,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
 
-Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
 Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
@@ -226,9 +230,15 @@ Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::clas
 
 
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
-// Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
+
+Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
+
 
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingmethod');
 
 Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
 Route::get('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
+Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
