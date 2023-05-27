@@ -25,6 +25,10 @@ use App\Http\Controllers\ChangePasswordController;
 
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
+use App\Http\Controllers\ResumeController;
+
+
+use App\Http\Controllers\Res;
 
 
 
@@ -101,7 +105,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
-    
+    Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
 
 
 
@@ -226,5 +230,5 @@ Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordCont
 
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingmethod');
 
-Route::get('/resume', [App\Http\Controllers\ResumeController::class, 'index'])->name('resume');
-
+Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
+Route::get('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');

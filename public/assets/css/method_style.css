@@ -1,37 +1,8 @@
 
-
-
-.card {
-    transition: transform 0.3s;
-    transform: scale(0.8); 
-}
-
-.card:hover {
-    transform: scale(0.9); 
-}
-
-.card .card-title {
-    font-size: 1.2rem; 
-}
-
-.payment-method-image {
-    height: 100%;
-  }
-  
-  .payment-method-image img {
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-
-  #container-payment {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-}
-
 .card-deck .card {
     transition: all 0.4s;
 }
+
 .card-deck .card:hover {
     opacity: 1;
     transform: scale(1.02);
@@ -47,10 +18,10 @@
     transform: scale(1.02);
 }
 
-.btn-primary{
+.btn-primary {
     background-color: #8c034e;
 }
 
-.btn-primary:hover{
+.btn-primary:hover {
     background-color: #4d052c;
 }

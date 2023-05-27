@@ -48,7 +48,10 @@
     </div>
 
     <!-- Footer -->
-    @include('layouts-landing.footer-landing')
+    <header class="footer trans_300">
+        @include('layouts-landing.footer-landing')
+    </header>
+    
 
     @yield('js')
 </body>
