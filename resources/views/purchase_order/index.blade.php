@@ -104,12 +104,16 @@
 
     <script>
         $(document).ready(function() {
-            $('#users-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#users-table').DataTable({
+                dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
     </script>
 @endsection

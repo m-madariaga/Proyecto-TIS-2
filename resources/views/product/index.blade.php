@@ -115,8 +115,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#products-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#products-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -125,6 +125,10 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
     </script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
