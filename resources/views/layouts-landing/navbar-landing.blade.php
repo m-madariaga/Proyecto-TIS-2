@@ -34,29 +34,31 @@
                         <li class="account">
                             <a href="#">
                                 @if (Auth::check())
-                                {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 @else
-                                Cuenta
+                                    Cuenta
                                 @endif
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             @if (Auth::check())
-                            <ul class="account_selection">
-                                <li>
-                                    <a href="{{ route('profile_landing') }}">
-                                        Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <ul class="account_selection">
+                                    <li>
+                                        <a href="{{ route('profile_landing') }}">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
+                                            Cerrar Sesión
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
                             @else
                             <ul class="account_selection">
                                 <li>
@@ -70,6 +72,7 @@
                                     </a>
                                 </li>
                             </ul>
+                            
                             @endif
                         </li>
                     </ul>
