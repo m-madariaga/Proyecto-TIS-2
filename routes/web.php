@@ -23,6 +23,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
 
+use App\Http\Controllers\BankDataController;
+use App\Http\Controllers\ShippingMethodsController;
+
 
 
 /*
@@ -92,6 +95,13 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/paymethods/create', [App\Http\Controllers\PaymentMethodController::class, 'create'])->name('paymethods.create');
     Route::post('/paymethods/store', [App\Http\Controllers\PaymentMethodController::class, 'store'])->name('paymethods.store');
     Route::delete('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
+    Route::get('/paymethods/{id}/edit', [App\Http\Controllers\PaymentMethodController::class, 'edit'])->name('paymethods.edit');
+    Route::put('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'update'])->name('paymethods.update');
+
+    Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
+    Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
+    Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
+    
 
 
 
@@ -103,7 +113,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
-    Route::post('/orders/store', [OrderController::class, 'store'])->name('orders-store');
+    Route::post('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
 
@@ -210,5 +220,11 @@ Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::clas
 
 
 
+
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
 // Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
+
+Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingmethod');
+
+Route::get('/resume', [App\Http\Controllers\ResumeController::class, 'index'])->name('resume');
+
