@@ -39,7 +39,7 @@
                                         <tr>
                                             <td class="text-center">{{ $detail->product->nombre }}</td>
                                             <td class="text-center">{{ $detail->cantidad }}</td>
-                                            <td class="text-center">${{ $detail->product->precio }}</td>
+                                            <td class="text-center">$ {{ $detail->product->precio }}</td>
                                             <td class="text-center">{{ $detail->product->color }}</td>
                                             <td class="text-center">{{ $detail->product->talla }}</td>
                                         </tr>

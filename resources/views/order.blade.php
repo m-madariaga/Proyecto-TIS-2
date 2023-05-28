@@ -30,6 +30,8 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">Código</th>
+                                        
+                                        <th class="text-center">TOTAL</th>
                                         <th class="text-center">Fecha Pedido</th>
                                         <th class="text-center">Nombre Cliente</th>
                                         <th class="text-center">Dirección</th>
@@ -41,10 +43,11 @@
                                     @foreach ($orders as $order)
                                         <tr>
                                             <td class="text-center">{{ $order->id }}</td>
+                                            <td class="text-center">$ {{ $order->total }}</td>
                                             <td class="text-center">{{ $order->created_at }}</td>
                                             <td class="text-center">{{ $order->user->name }}</td>
                                             <td class="text-center">{{ $order->user->address }}, {{$order->user->city->name}}</td>
-
+                                            
                                             <td class="text-center">
                                                 @if ($order->estado == 0)
                                                     No entregado

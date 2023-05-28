@@ -98,9 +98,9 @@ class CartController extends Controller
     public function confirmcart()
     {
         $order = new Order();
-        $order->subtotal = Cart::subtotal();
-        $order->impuesto = Cart::tax();
-        $order->total = Cart::subtotal();
+        $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
+        $order->impuesto = Cart::tax() * 1000;
+        $order->total = Cart::subtotal() * 1000;
         $order->estado = 0;
         $order->user_id = auth()->user()->id;
         $order->save();
@@ -111,7 +111,7 @@ class CartController extends Controller
             $detail->cantidad = $item->qty;
             $detail->monto = $item->precio * $item->qty;
             $detail->producto_id = $item->id;
-            $detail->pedido_id = $order->id; 
+            $detail->pedido_id = $order->id;
             $detail->save();
         }
 
