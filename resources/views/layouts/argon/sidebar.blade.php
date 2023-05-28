@@ -1,3 +1,5 @@
+
+
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
     id="sidenav-main" style="overflow-y: auto;">
     <div class="sidenav-header">
@@ -128,7 +130,7 @@
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-warning text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Ordenes de compra</span>
+                        <span class="nav-link-text ms-1 text-truncate">Ordenes de compra</span>
                     </a>
                 </li>
             @endcan
@@ -178,7 +180,7 @@
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
                     </div>
-                    <span class="nav-link-text ms-1">Datos Transferencia Bancaria</span>
+                    <span class="nav-link-text ms-1 text-truncate">Datos Transferencia Bancaria</span>
                 </a>
             </li>
         </ul>

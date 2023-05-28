@@ -2,6 +2,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Detail;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,11 @@ class OrderController extends Controller
 
     public function store(Request $request, $id)
     {
+        $order = Order::find($id);
+        $details = Detail::with('product')->where('pedido_id', $id)->get();
+
+        return view('vieworder', compact('order', 'details'));
+
     }
 
 }

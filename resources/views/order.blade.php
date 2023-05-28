@@ -31,6 +31,8 @@
                                     <tr>
                                         <th class="text-center">Código</th>
                                         <th class="text-center">Fecha Pedido</th>
+                                        <th class="text-center">Nombre Cliente</th>
+                                        <th class="text-center">Dirección</th>
                                         <th class="text-center">Estado Entregado</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
@@ -38,8 +40,11 @@
                                 <tbody>
                                     @foreach ($orders as $order)
                                         <tr>
-                                            <td class="text-center">{{ $order->codigo }}</td>
+                                            <td class="text-center">{{ $order->id }}</td>
                                             <td class="text-center">{{ $order->created_at }}</td>
+                                            <td class="text-center">{{ $order->user->name }}</td>
+                                            <td class="text-center">{{ $order->user->address }}, {{$order->user->city->name}}</td>
+
                                             <td class="text-center">
                                                 @if ($order->estado == 0)
                                                     No entregado
@@ -82,7 +87,7 @@
                                                                         <span>Run: {{ $order->user->run }}</span>
                                                                     </div>
                                                                     <div>
-                                                                        <span>Dirección: {{ $order->user->address }}</span>
+                                                                        <span>Dirección: {{ $order->user->address }}, {{$order->user->city->name}}</span>
                                                                     </div>
                                                                     <div class="btn-group-toggle" data-toggle="buttons">
                                                                         <label class="btn btn-outline ">
