@@ -218,9 +218,9 @@
                                             </td>
                                             <td class="text-center">
                                                 @if (Cache::has('is_online' . $user->id))
-                                                    <span class="text-success">En linea</span>
+                                                    <span class="badge badge-sm bg-gradient-success">En linea</span>
                                                 @else
-                                                    <span class="text-secondary">Desconectado</span>
+                                                    <span class="badge badge-sm bg-gradient-secondary">Desconectado</span>
                                                 @endif
 
                                             </td>
