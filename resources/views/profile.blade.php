@@ -68,7 +68,7 @@
 
 
                 <div class="card-body">
-                    <p class="text-uppercase text-sm">Información Usuario</p>
+                    <p class="text-uppercase text-sm">Información usuario</p>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -76,23 +76,33 @@
                                 <span class="form-control">{{ Auth::user()->name }}</span>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12 d-flex justify-content-center">
-                            <label for="profile_image" class="form-control-label">Imagen perfil</label>
-                            <span>
-                                <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 15%;">
-                            </span>
-                        </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="run" class="form-control-label">Run</label>
                                 <span class="form-control">{{ Auth::user()->run }}</span>
                             </div>
                         </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="telefono" class="form-control-label">Teléfono</label>
+                                <span class="form-control">{{ Auth::user()->phone_number }}</span>
+                            </div>
+                        </div>
+
+
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="email" class="form-control-label">Correo electrónico</label>
                                 <span class="form-control">{{ Auth::user()->email }}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 col-12">
+                            <label for="profile_image" class="form-control-label">Imagen perfil</label>
+                            <div class=" d-flex justify-content-center">
+                                <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 15%;">
                             </div>
                         </div>
 
@@ -150,30 +160,19 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Editar Perfil</h5>
+                    <h5 class="modal-title" id="editModalLabel">Editar perfil</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form method="POST" action="{{ route('profile_edit', ['id' => Auth::user()->id]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
-                        <p class="text-uppercase text-sm">Información Usuario</p>
+                        <p class="text-uppercase text-sm">Información usuario</p>
                         <div class="row">
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="name" class="form-control-label">Nombre</label>
                                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ Auth::user()->name }}" required>
                                     @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="profile_image" class="form-control-label">Imagen Perfil</label>
-                                    <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
-                                    @error('profile_image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -193,6 +192,17 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
+                                    <label for="phone_number" class="form-control-label">Teléfono</label>
+                                    <input type="text" class="form-control @error('phone_number') is-invalid @enderror" id="phone_number" name="phone_number" value="{{ Auth::user()->phone_number }}" required>
+                                    @error('phone_number')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
                                     <label for="email" class="form-control-label">Correo electrónico</label>
                                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ Auth::user()->email }}" required>
                                     @error('email')
@@ -202,73 +212,86 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="profile_image" class="form-control-label">Imagen perfil</label>
+                                    <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
+                                    @error('profile_image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <hr class="horizontal dark">
                             <p class="text-uppercase text-sm" id="profile_title">Información dirección</p>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="address" class="form-control-label">Dirección</label>
-                                    <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ Auth::user()->address }}" required>
-                                    @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="address" class="form-control-label">Dirección</label>
+                                        <input type="text" class="form-control @error('address') is-invalid @enderror" id="address" name="address" value="{{ Auth::user()->address }}" required>
+                                        @error('address')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="country" class="form-label">País</label>
-                                    <select id="country" class="form-select @error('country_fk') is-invalid @enderror" name="country_fk" required>
-                                        <option value="">{{ Auth::user()->country_fk }}</option>
-                                        @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('country_fk')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="country" class="form-label">País</label>
+                                        <select id="country" class="form-select @error('country_fk') is-invalid @enderror" name="country_fk" required>
+                                            <option value="">{{ Auth::user()->country_fk }}</option>
+                                            @foreach ($countries as $country)
+                                            <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('country_fk')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="region">Región</label>
-                                    <select id="region" class="form-select @error('region_fk') is-invalid @enderror" name="region_fk" required>
-                                        <option value="">{{ Auth::user()->region_fk }}</option>
-                                        @foreach ($regions as $region)
-                                        <option value="{{ $region->id }}">{{ $region->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('region_fk')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="region">Región</label>
+                                        <select id="region" class="form-select @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                            <option value="">{{ Auth::user()->region_fk }}</option>
+                                            @foreach ($regions as $region)
+                                            <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('region_fk')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-6 col-12">
-                                <div class="form-group">
-                                    <label for="city">Ciudad</label>
-                                    <select id="city" class="form-select @error('city_fk') is-invalid @enderror" name="city_fk" required>
-                                        <option value="">{{ Auth::user()->city_fk }}</option>
-                                        @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('city_fk')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="city">Ciudad</label>
+                                        <select id="city" class="form-select @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                            <option value="">{{ Auth::user()->city_fk }}</option>
+                                            @foreach ($cities as $city)
+                                            <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('city_fk')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
+                        </div>
                 </form>
             </div>
         </div>
