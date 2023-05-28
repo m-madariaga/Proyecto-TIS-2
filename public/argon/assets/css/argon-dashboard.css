@@ -26973,4 +26973,9 @@ pre[class*="language-"] {
   }
 }
 
+.logo-img {
+  max-height: 6rem; 
+}
+
+
 /*# sourceMappingURL=dashboard-free.css.map */

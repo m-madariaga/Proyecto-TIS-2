@@ -105,9 +105,6 @@
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->name }}</span>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12 d-flex justify-content-center">
-                            <img src="assets/images/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
-                        </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="run" class="form-label">Run</label>
@@ -116,11 +113,22 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
+                                <label for="phone_number" class="form-label">Teléfono</label>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->phone_number }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
                                 <label for="email" class="form-label">Correo electrónico</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->email }}</span>
                             </div>
                         </div>
-
+                        <div class="col-md-6 col-12">
+                            <label for="profile_image" class="form-label">Imagen perfil</label>
+                            <div class=" d-flex justify-content-center">
+                                <img src="assets/images/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
+                            </div>
+                        </div>
                     </div>
                     <hr class="horizontal dark">
                     <!-- Contact Information -->
@@ -135,19 +143,20 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="country" class="form-label">País</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->country_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->country->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="region" class="form-label">Región</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->region_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->region->name }}</span>
+                                
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="city" class="form-label">Ciudad</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
                             </div>
                         </div>
                     </div>
@@ -195,17 +204,6 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
-                                <label for="profile_image" class="form-label">Imagen Perfil</label>
-                                <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
-                                @error('profile_image')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <div class="form-group">
                                 <label for="run" class="form-label">Run</label>
                                 <input type="text" class="form-control input-field @error('run') is-invalid @enderror" name="run" value="{{ Auth::user()->run }}" required>
                                 @error('run')
@@ -217,9 +215,32 @@
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
+                                <label for="phone_number" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control input-field @error('run') is-invalid @enderror" name="phone_number" value="{{ Auth::user()->phone_number }}" required>
+                                @error('phone_number')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
                                 <label for="email" class="form-label">Correo electrónico</label>
                                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="profile_card_body" value="{{ Auth::user()->email }}" required>
                                 @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="form-group">
+                                <label for="profile_image" class="form-label">Imagen Perfil</label>
+                                <input type="file" class="form-control input-field @error('profile_image') is-invalid @enderror" name="profile_image">
+                                @error('profile_image')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

@@ -67,7 +67,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $item->subtotal }}</td>
+                                        <td>$ {{ $item->subtotal }}</td>
                                         <td>
                                             <form action="{{ route('removeitem', ['rowId' => $item->rowId]) }}" method="POST">
                                                 @csrf
@@ -83,7 +83,7 @@
                             <tr>
                                 <td colspan="3"></td>
                                 <td>Total:</td>
-                                <td>{{ Cart::subtotal() }}</td>
+                                <td>$ {{ Cart::subtotal() }}</td>
                                 <td></td>
                             </tr>
                         </tfoot>

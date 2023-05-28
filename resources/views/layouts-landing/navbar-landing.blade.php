@@ -7,6 +7,8 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
+
+    
 </head>
 
 <div class="top_nav">
@@ -19,7 +21,6 @@
                 <div class="top_nav_right">
                     <ul class="top_nav_menu">
 
-                        <!-- Language / My Account -->
 
                         <li class="language">
                             <a href="#">
@@ -44,7 +45,7 @@
                                 <ul class="account_selection">
                                     <li>
                                         <a href="{{ route('profile_landing') }}">
-                                            Profile
+                                            Perfil
                                         </a>
                                     </li>
                                     <li>
@@ -60,19 +61,18 @@
                                     </li>
                                 </ul>
                             @else
-                            <ul class="account_selection">
-                                <li>
-                                    <a href="{{ route('login') }}">
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('register') }}">
-                                        <i class="fa fa-user-plus" aria-hidden="true"></i> Registrarse
-                                    </a>
-                                </li>
-                            </ul>
-                            
+                                <ul class="account_selection">
+                                    <li>
+                                        <a href="{{ route('login') }}">
+                                            Iniciar sesión
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('register') }}">
+                                            Registrarse
+                                        </a>
+                                    </li>
+                                </ul>
                             @endif
                         </li>
                     </ul>

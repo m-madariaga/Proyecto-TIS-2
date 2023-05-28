@@ -54,11 +54,11 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'run' => ['required', 'unique:users','regex:/^\d{7,8}-[0-9K]$/'],
+            'run' => ['required', 'unique:users', 'regex:/^\d{7,8}-[0-9K]$/'],
             'address' => ['required', 'string'],
             'city_fk' => ['required', 'string'],
             'region_fk' => ['required', 'string'],
-            'phone_number' => ['required','string','min:9','regex:/^9[0-9]{8}$/'],
+            'phone_number' => ['required', 'string', 'min:9', 'regex:/^9[0-9]{8}$/'],
             'country_fk' => ['required', 'string'],
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -73,47 +73,44 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-{
+    {
+        $user = User::create([
+            'run' => $data['run'],
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
+            'password' => Hash::make($data['password']),
+            'address' => $data['address'],
+            'city_fk' => $data['city_fk'],
+            'region_fk' => $data['region_fk'],
+            'country_fk' => $data['country_fk'],
+            'imagen' => 'perfil-de-usuario.png', 
+        ]);
 
-
-    $user= User::create([
-        'run' => $data['run'],
-        'name' => $data['name'],
-        'email' => $data['email'],
-        'phone_number' => $data['phone_number'],
-        'password' => Hash::make($data['password']),
-        'address' => $data['address'],
-        'city_fk' => $data['city_fk'],
-        'region_fk' => $data['region_fk'],
-        'country_fk' => $data['country_fk'],
-
-
-    ]);
-    $user->assignRole('cliente');
+        $user->assignRole('cliente');
 
         return $user;
+    }
 
-}
+    public function showRegistrationForm()
+    {
+        $countries = Country::all();
+        $regions = Region::all();
+        $cities = City::all();
+        return view('auth.register', compact('cities', 'regions', 'countries'));
+    }
 
-public function showRegistrationForm()
-{
-    $countries = Country::all();
-    $regions= Region::all();
-    $cities = City::all();
-    return view('auth.register', compact('cities','regions','countries'));
-}
+    public function getRegions($countryId)
+    {
+        $regions = Region::where('country_fk', $countryId)->get();
 
-public function getRegions($countryId)
-{
-    $regions = Region::where('country_fk', $countryId)->get();
+        return response()->json(['regions' => $regions]);
+    }
 
-    return response()->json(['regions' => $regions]);
-}
+    public function getCities($regionId)
+    {
+        $cities = City::where('region_fk', $regionId)->get();
 
-public function getCities($regionId)
-{
-    $cities = City::where('region_fk', $regionId)->get();
-
-    return response()->json(['cities' => $cities]);
-}
+        return response()->json(['cities' => $cities]);
+    }
 }

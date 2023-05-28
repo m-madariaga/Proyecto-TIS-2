@@ -31,6 +31,7 @@ class User extends Authenticatable
         'city_fk',
         'country_fk',
         'region_fk',
+        'imagen',
     ];
     public function roleName()
     {

@@ -15,13 +15,11 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->integer('subtotal');
-            $table->integer('impuesto');
-            $table->integer('total');
-            // $table->date('fecha_pedido');
+            $table->bigInteger('subtotal');
+            $table->bigInteger('impuesto');
+            $table->bigInteger('total');
             $table->boolean('estado')->default(0);
-            $table->timestamps(); // Agregar esta línea
-
+            $table->timestamps(); 
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

@@ -72,9 +72,9 @@ class UserSeeder extends Seeder
         $user->phone_number = '941130994';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 1 Los Lirios';
-        $user->city_fk = 'Concepción';
-        $user->region_fk = 'Bio-bio';
-        $user->country_fk = 'Chile';
+        $user->city_fk = '45';
+        $user->region_fk = '11';
+        $user->country_fk = '1';
         $user->imagen = 'perfil-de-usuario.png';
 
 
@@ -88,9 +88,9 @@ class UserSeeder extends Seeder
         $user->phone_number = '990959494';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 2 Los Lirios';
-        $user->city_fk = 'Talcahuano';
-        $user->region_fk = 'Bio-bio';
-        $user->country_fk = 'Chile';
+        $user->city_fk = '49';
+        $user->region_fk = '11';
+        $user->country_fk = '1';
         $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
@@ -103,9 +103,9 @@ class UserSeeder extends Seeder
         $user->phone_number = '963434488';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 3 Las Violetas';
-        $user->city_fk = 'Santiago';
-        $user->region_fk = 'Metropolitana';
-        $user->country_fk = 'Chile';
+        $user->city_fk = '25';
+        $user->region_fk = '7';
+        $user->country_fk = '1';
         $user->imagen = 'perfil-de-usuario.png';
         $user->save();
         $user->assignRole($role2);
