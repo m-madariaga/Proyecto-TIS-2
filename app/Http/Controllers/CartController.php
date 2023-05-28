@@ -109,7 +109,7 @@ class CartController extends Controller
             $detail = new Detail();
             $detail->precio = $item->price;
             $detail->cantidad = $item->qty;
-            $detail->monto = $item->precio * $item->qty;
+            $detail->monto = $detail->cantidad * $detail->precio ;
             $detail->producto_id = $item->id;
             $detail->pedido_id = $order->id;
             $detail->save();

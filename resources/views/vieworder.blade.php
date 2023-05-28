@@ -29,7 +29,8 @@
                                     <tr>
                                         <th class="text-center">Producto</th>
                                         <th class="text-center">Cantidad</th>
-                                        <th class="text-center">Precio</th>
+                                        <th class="text-center">Precio Unitario</th>
+                                        <th class="text-center">Precio Total</th>
                                         <th class="text-center">Color</th>
                                         <th class="text-center">Talla</th>   
                                     </tr>
@@ -40,6 +41,7 @@
                                             <td class="text-center">{{ $detail->product->nombre }}</td>
                                             <td class="text-center">{{ $detail->cantidad }}</td>
                                             <td class="text-center">$ {{ $detail->product->precio }}</td>
+                                            <td class="text-center">$ {{ $detail->monto }}</td>
                                             <td class="text-center">{{ $detail->product->color }}</td>
                                             <td class="text-center">{{ $detail->product->talla }}</td>
                                         </tr>
