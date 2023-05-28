@@ -68,9 +68,17 @@
 
 <script>
     $(document).ready(function() {
-        // MODAL EDIT PASSWORD
+
         $('#openModalButton').click(function() {
             $('#editPasswordLandingModal').modal('show');
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#openModalButton').click(function() {
+            $('#modalvieworder').modal('show');
         });
     });
 </script>
@@ -150,7 +158,7 @@
                             <div class="form-group">
                                 <label for="region" class="form-label">Región</label>
                                 <span class="form-control" id="profile_card_body">{{ Auth::user()->region->name }}</span>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
@@ -170,10 +178,41 @@
                     <h4 class="mb-0 fw-bold">{{ __('Historial Pedido') }}</h4>
                 </div>
                 <div class="card-body">
-                    <!-- Segundo formulario -->
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table id="users-table" class="table display table-stripped align-items-center">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center text-sm" id="profile_title">N° PEDIDO</th>
+                                        <th class="text-center text-sm" id="profile_title">FECHA PEDIDO</th>
+                                        <th class="text-center text-sm" id="profile_title">TOTAL</th>
+                                        <th class="text-center text-sm" id="profile_title">ACCIÓN</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                    @if ($order->user_id === Auth::user()->id)
+                                    <tr>
+                                        <td class="text-center">{{ $order->id }}</td>
+                                        <td class="text-center">{{ $order->created_at }}</td>
+                                        <td class="text-center">${{ $order->total }}</td>
+                                        <td class="text-center pt-3">
+                                            <button type="button" class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto" data-bs-toggle="modal" data-bs-target="#modalvieworder">Ver Pedido</button>
+                                        </td>
+                                    </tr>
+
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 
@@ -324,6 +363,51 @@
 </div>
 
 <!-- END MODAL -->
+
+<!-- Modal detalle pedido -->
+<div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id }}Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal{{ $order->id }}Label">Detalles del Pedido {{ $order->id }} </h5>
+            </div>
+            <div class="modal-body">
+
+                <div class="table-responsive">
+                    <table id="users-table" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center" id="profile_title">Producto</th>
+                                <th class="text-center" id="profile_title">Cantidad</th>
+                                <th class="text-center" id="profile_title">Precio Unitario</th>
+                                <th class="text-center" id="profile_title">Precio Total</th>
+                                <th class="text-center" id="profile_title">Color</th>
+                                <th class="text-center" id="profile_title">Talla</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($details as $detail)
+                            <tr>
+                                <td class="text-center">{{ $detail->product->nombre }}</td>
+                                <td class="text-center">{{ $detail->cantidad }}</td>
+                                <td class="text-center">${{ $detail->product->precio }}</td>
+                                <td class="text-center">${{ $detail->monto }}</td>
+                                <td class="text-center">{{ $detail->product->color }}</td>
+                                <td class="text-center">{{ $detail->product->talla }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Fin Modal -->
 
 
 <!-- MODAL PARA EDITAR CONTRASEÑA -->

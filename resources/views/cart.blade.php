@@ -89,7 +89,7 @@
                         </tfoot>
                     </table>
                     @if (Auth::check())
-                        <form action="{{ route('shipments.create') }}" method="get">
+                        <form action="{{ route('resume') }}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-danger">Continuar</button>
                         </form>

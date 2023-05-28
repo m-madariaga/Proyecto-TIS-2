@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\City;
 use App\Models\Region;
 use App\Models\Country;
+use App\Models\Order;
+use App\Models\Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +19,9 @@ class ProfileLandingController extends Controller
         $countries = Country::all();
         $regions = Region::all();
         $cities = City::all();
-        return view('profile_landing', compact('countries', 'regions', 'cities', 'user'));
+        $orders = Order::all();
+        $details = Detail::all();
+        return view('profile_landing', compact('countries', 'regions', 'cities', 'user','orders','details'));
     }
 
     public function getRegions($countryId)
