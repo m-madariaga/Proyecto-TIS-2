@@ -84,7 +84,7 @@ class RegisterController extends Controller
             'city_fk' => $data['city_fk'],
             'region_fk' => $data['region_fk'],
             'country_fk' => $data['country_fk'],
-            'imagen' => 'perfil-de-usuario.png', // Guarda el nombre del archivo en la base de datos
+            'imagen' => 'perfil-de-usuario.png', 
         ]);
 
         $user->assignRole('cliente');
