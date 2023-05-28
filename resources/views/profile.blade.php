@@ -99,13 +99,6 @@
                         </div>
 
 
-                        <div class="col-md-6 col-12">
-                            <label for="profile_image" class="form-control-label">Imagen perfil</label>
-                            <div class=" d-flex justify-content-center">
-                                <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 15%;">
-                            </div>
-                        </div>
-
                     </div>
 
                     <hr class="horizontal dark">
