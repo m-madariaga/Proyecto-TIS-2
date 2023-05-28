@@ -11,7 +11,8 @@ use App\Models\Region;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 class ShipmentController extends Controller
 {
     /**
@@ -44,7 +45,6 @@ class ShipmentController extends Controller
 
             $user = Auth::user();
 
-
             $shipment = new Shipment();
             $shipment->user_fk = $user->id;
             $shipment->status = 'pending';
@@ -64,8 +64,16 @@ class ShipmentController extends Controller
 
                 ];
             }
-
+            $shipment_types = shipment_type::all();
             $shipment->products = $shipmentProducts;
+            // //if(user->city->name == 'chillan' || san fernando){
+
+            //     agregar shimpent retiro en mall
+            // // }
+            // else {
+            //     agregar el metodo de despacho(starken)
+            // }
+            //shipment-> asignar el metodo de entrega
             $shipment->save();
 
             //Cart::destroy();
