@@ -117,9 +117,9 @@ class UserSeeder extends Seeder
         $user->phone_number = '975715374';
         $user->password = bcrypt('asdf1234');
         $user->address = 'Calle 4 Las Violetas';
-        $user->city_fk = 'Arica';
-        $user->region_fk = 'Arica y Parinacota';
-        $user->country_fk = 'Chile';
+        $user->city_fk = '1';
+        $user->region_fk = '1';
+        $user->country_fk = '1';
         $user->imagen = 'perfil-de-usuario.png';
 
         $user->save();
