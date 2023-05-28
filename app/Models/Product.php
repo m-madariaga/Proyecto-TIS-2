@@ -32,4 +32,8 @@ class Product extends Model
     public function purchase_order(): BelongsToMany {
         return $this->belongsToMany(Purchase_order::class, 'products_id');
     }
+    public function shipments()
+    {
+        return $this->belongsToMany(Shipment::class, 'shipment_product');
+    }
 }

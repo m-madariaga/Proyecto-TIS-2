@@ -18,7 +18,7 @@ use App\Http\Controllers\ShipmentTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentMethodController;
-
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
@@ -222,7 +222,7 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 
-
+Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
@@ -246,7 +246,7 @@ Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordCont
 Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
 
 
-Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingmethod');
+
 
 Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
 Route::get('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');

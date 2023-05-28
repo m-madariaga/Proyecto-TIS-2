@@ -105,9 +105,9 @@
                                     <p class="card-text">Nombre: {{ Auth::user()->name }}</p>
                                     <p class="card-text">Dirección: {{ Auth::user()->address }}</p>
                                     <p class="card-text">Dirección: {{ Auth::user()->phone_number }}</p>
-                                    <p class="card-text">Ciudad: {{ Auth::user()->city_fk }}</p>
-                                    <p class="card-text">Región: {{ Auth::user()->region_fk }}</p>
-                                    <p class="card-text">País: {{ Auth::user()->country_fk }}</p>
+                                    <p class="card-text">Ciudad: {{  Auth::user()->city->name }}</p>
+                                    <p class="card-text">Región: {{ Auth::user()->region->name }}</p>
+                                    <p class="card-text">País: {{ Auth::user()->country->name }}</p>
                                 </div>
                             </div>
                         </div>
@@ -117,7 +117,7 @@
 
             </div>
         </div>
-       
+
     </div>
     <div class="row justify-content-center mt-4">
         <div class="col-md-8">
