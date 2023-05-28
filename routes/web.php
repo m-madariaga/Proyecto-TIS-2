@@ -227,7 +227,7 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 
-Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
@@ -259,3 +259,5 @@ Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
