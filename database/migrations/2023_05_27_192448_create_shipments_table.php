@@ -17,6 +17,7 @@ class CreateShipmentsTable extends Migration
             $table->id();
             $table->string('user_fk');
             $table->json('products')->nullable();
+            $table->string('shipment_type_fk');
             $table->string('status');
             $table->timestamps();
         });
