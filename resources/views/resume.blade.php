@@ -15,28 +15,29 @@
         }
 
         .header_resume {
+            position: relative;
+            /* Agrega esta propiedad para posicionar los elementos internos */
             background-image: url("assets/images/lienzo.jpg");
             background-size: cover;
             background-position: center;
-            height: 300px;
+            height: 100px;
         }
 
         .header-content {
             display: flex;
-            justify-content: center;
             align-items: center;
             height: 100%;
+            padding-left: 15px;
+            /* Ajusta el espacio a la izquierda para la imagen */
         }
+
 
         .navbar-brand-img {
-            max-height: 100%;
-            max-width: 100%;
-        }
-
-        @media (max-width: 576px) {
-            .header_resume {
-                height: 200px;
-            }
+            height: 70%;
+            width: 300px; /* Cambia el valor según tus necesidades */
+    margin-left: 18rem;
+    object-fit: contain;
+            
         }
 
         /* Agrega estilos para centrar los botones */
@@ -66,7 +67,7 @@
         </div>
     </div>
 
-    <div class="container-fluid py-4 overflow-hidden" id="container-payment">
+    <div class="container-fluid overflow-hidden" id="container-payment">
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
                 <div class="row">
@@ -104,8 +105,8 @@
                                 <div class="card-body">
                                     <p class="card-text">Nombre: {{ Auth::user()->name }}</p>
                                     <p class="card-text">Dirección: {{ Auth::user()->address }}</p>
-                                    <p class="card-text">Dirección: {{ Auth::user()->phone_number }}</p>
-                                    <p class="card-text">Ciudad: {{  Auth::user()->city->name }}</p>
+                                    <p class="card-text">Número Celular: {{ Auth::user()->phone_number }}</p>
+                                    <p class="card-text">Ciudad: {{ Auth::user()->city->name }}</p>
                                     <p class="card-text">Región: {{ Auth::user()->region->name }}</p>
                                     <p class="card-text">País: {{ Auth::user()->country->name }}</p>
                                 </div>
@@ -117,19 +118,18 @@
 
             </div>
         </div>
-
-    </div>
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-8">
-            <div class="col-md-4">
-                <div class="button-container">
-                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                    <form action="{{ route('confirmcart') }}" method="POST">
-                        @csrf
-                        <!-- Agrega los campos necesarios para enviar los datos del formulario -->
-                        <input type="hidden" name="payment_method_id" id="selected-payment-method">
-                        <button type="submit" class="btn btn-primary">Continuar</button>
-                    </form>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="col-md-4">
+                    <div class="button-container">
+                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
+                        <form action="{{ route('confirmcart') }}" method="POST">
+                            @csrf
+                            <!-- Agrega los campos necesarios para enviar los datos del formulario -->
+                            <input type="hidden" name="payment_method_id" id="selected-payment-method">
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

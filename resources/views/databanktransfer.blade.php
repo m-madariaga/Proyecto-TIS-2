@@ -76,7 +76,7 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
+                                  
                                 </tbody>
                             </table>
                             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            @endforeach
                         </div>
                     </div>
                 </div>
