@@ -124,14 +124,11 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
-                        <label for="profile_image" class="form-label">Imagen perfil</label>
-                        <div class=" d-flex justify-content-center">
-                        <img src="assets/images/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
-
-
-                        </div>    
+                            <label for="profile_image" class="form-label">Imagen perfil</label>
+                            <div class=" d-flex justify-content-center">
+                                <img src="assets/images/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 40%;">
+                            </div>
                         </div>
-
                     </div>
                     <hr class="horizontal dark">
                     <!-- Contact Information -->

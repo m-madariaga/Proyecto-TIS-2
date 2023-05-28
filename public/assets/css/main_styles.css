@@ -1800,7 +1800,8 @@ footer{
 
 /* BUSCADOR */
 .search_form {
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .search_form .input-group {
@@ -1824,6 +1825,10 @@ footer{
 .search_form .btn:hover {
     background-color: #f8f9fa;
 }
+
+
+
+
 
 /* vistaproducto */
 .img-thumbnail{
@@ -1851,4 +1856,31 @@ footer{
 	background-color: #f2f2f2;
 	border-color: #8c034e;
 	color: #8c034e;
+}
+.search_form .form-control {
+    height: 30px;
+    border-radius: 15px;
+    font-size: 14px;
+}
+
+.search_form .input-group-append .search-button {
+    padding: 5px;
+    border-radius: 50%;
+    font-size: 14px;
+}
+
+@media (max-width: 767px) {
+    .search_form .form-control {
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .search_form .input-group-append .search-button {
+        padding: 3px;
+        font-size: 12px;
+    }
+}
+
+.logo-img {
+    max-height: 2rem; /* Ajusta este valor según tus necesidades */
 }

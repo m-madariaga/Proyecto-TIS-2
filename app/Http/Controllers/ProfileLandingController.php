@@ -37,6 +37,7 @@ class ProfileLandingController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->address = $request->address;
+        $user->phone_number = $request->phone_number;
         $region = Region::find($request->region_fk);
         $city = City::find($request->city_fk);
         $user->region_fk = $region->name;
