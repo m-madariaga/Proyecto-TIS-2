@@ -33,7 +33,7 @@
                                     <input id="name" type="text"
                                         class="form-control @error('name') is-invalid @enderror" name="name"
                                         value="{{ old('name') }}" required autocomplete="name" aria-label="Name"
-                                        placeholder="Name" autofocus>
+                                        placeholder="Nombre" autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -54,6 +54,17 @@
                                         </span>
                                     @enderror
 
+                                </div>
+                                <div class="mb-3">
+                                    <input id="phone_number" type="text"
+                                        class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
+                                        value="{{ old('phone_number') }}" required autocomplete="phone_number" aria-label="phone_number"
+                                        placeholder="Numero Telefonico" autofocus maxlength="10">
+                                    @error('phone_number')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
                                     <input id="run" type="text"
@@ -131,7 +142,7 @@
                                 <div class="mb-3">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
-                                        required autocomplete="new-password" placeholder="Password">
+                                        required autocomplete="new-password" placeholder="Contraseña">
 
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">

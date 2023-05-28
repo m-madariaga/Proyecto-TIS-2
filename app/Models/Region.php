@@ -12,6 +12,7 @@ class Region extends Model
 
     protected $fillable = [
         'name',
+        'country_fk',
 
     ];
     public function users()
@@ -20,10 +21,19 @@ class Region extends Model
     }
     public function cities()
     {
-        return $this->hasMany(City::class);
+        return $this->hasMany(City::class, 'region_fk');
     }
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_fk');
+    }
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($region) {
+            $region->cities()->delete();
+
+        });
     }
 }
