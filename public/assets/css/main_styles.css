@@ -229,7 +229,7 @@ h6::selection{
 }
 
 .form-control {
-	color: #d936ad;
+	color: #1e1e27;
 }
 
 section {
@@ -1087,10 +1087,14 @@ section {
 
 .product_image {
 	width: 100%;
+	height: 300px;
 }
 
 .product_image img {
 	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	
 }
 
 .product_info {
@@ -1759,7 +1763,6 @@ footer{
 	justify-content: center;
 	align-items: center;
 	width: auto;
-	height: 40px;
 	background: #d936ad;
 	border-radius: 3px;
 	border-color: #d936ad;
@@ -1768,6 +1771,7 @@ footer{
 	-ms-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
+	color: #f2f2f2;
 	
 	
 }
@@ -1787,4 +1791,64 @@ footer{
 
 #profile_title{
 	color: #d936ad;
+}
+
+.button_edit_password{
+	border-color: #d936ad;
+	color: #d936ad;
+}
+
+/* BUSCADOR */
+.search_form {
+    margin-top: 10px;
+}
+
+.search_form .input-group {
+    max-width: 300px;
+}
+
+.search_form input[type="text"] {
+	border-radius: 20px 0 0 20px;
+    border-right: none;
+    font-size: 14px;
+}
+
+.search_form .btn {
+    border-radius: 0 20px 20px 0;
+    background-color: #fff;
+    border-color: #ccc;
+    font-size: 14px;
+    color: #555;
+}
+
+.search_form .btn:hover {
+    background-color: #f8f9fa;
+}
+
+/* vistaproducto */
+.img-thumbnail{
+	width: 300px;
+	height: auto;
+}
+
+.button_carrito_p{
+	background-color: #d936ad;
+	color: #f2f2f2;
+}
+
+.button_carrito_p:hover{
+	background: #F2BBD9 !important;
+}
+
+.button_succes{
+	background-color: #f2f2f2;
+	border-color: #8c034e;
+	color: #8c034e;
+	
+}
+
+.btn-quantity{
+	background-color: #f2f2f2;
+	border-color: #8c034e;
+	color: #8c034e;
 }

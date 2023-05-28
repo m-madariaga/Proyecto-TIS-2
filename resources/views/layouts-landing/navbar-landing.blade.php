@@ -23,7 +23,7 @@
 
                         <li class="language">
                             <a href="#">
-                                English
+                                Idioma
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
@@ -34,42 +34,45 @@
                         <li class="account">
                             <a href="#">
                                 @if (Auth::check())
-                                {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }}
                                 @else
-                                My Account
+                                    Cuenta
                                 @endif
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             @if (Auth::check())
-                            <ul class="account_selection">
-                                <li>
-                                    <a href="{{ route('profile_landing') }}">
-                                        Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <ul class="account_selection">
+                                    <li>
+                                        <a href="{{ route('profile_landing') }}">
+                                            Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
+                                            Cerrar Sesión
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                </ul>
                             @else
                             <ul class="account_selection">
                                 <li>
                                     <a href="{{ route('login') }}">
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Sign In
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i> Iniciar sesión
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('register') }}">
-                                        <i class="fa fa-user-plus" aria-hidden="true"></i> Register
+                                        <i class="fa fa-user-plus" aria-hidden="true"></i> Registrarse
                                     </a>
                                 </li>
                             </ul>
+                            
                             @endif
                         </li>
                     </ul>

@@ -18,13 +18,17 @@ use App\Http\Controllers\ShipmentTypeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentMethodController;
-
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
 
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
+use App\Http\Controllers\ResumeController;
+
+
+use App\Http\Controllers\Res;
 
 
 
@@ -49,7 +53,13 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
+// rutas categorias
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
+Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
+Route::get('/accesorie', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
+
+
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
@@ -71,7 +81,19 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/countries/{id}', [App\Http\Controllers\CountryController::class, 'destroy'])->name('countries.destroy');
     Route::get('/countries', [App\Http\Controllers\CountryController::class, 'index'])->name('countries.index');
 
+    Route::get('/regions/create', [App\Http\Controllers\RegionController::class, 'create'])->name('regions.create');
+    Route::post('/regions', [App\Http\Controllers\RegionController::class, 'store'])->name('regions.store');
+    Route::get('/regions/{id}/edit', [App\Http\Controllers\RegionController::class, 'edit'])->name('regions.edit');
+    Route::put('/regions/{id}', [App\Http\Controllers\RegionController::class, 'update'])->name('regions.update');
+    Route::delete('/regions/{id}', [App\Http\Controllers\RegionController::class, 'destroy'])->name('regions.destroy');
+    Route::get('/regions', [App\Http\Controllers\RegionController::class, 'index'])->name('regions.index');
 
+    Route::get('/cities/create', [App\Http\Controllers\CityController::class, 'create'])->name('cities.create');
+    Route::post('/cities', [App\Http\Controllers\CityController::class, 'store'])->name('cities.store');
+    Route::get('/cities/{id}/edit', [App\Http\Controllers\CityController::class, 'edit'])->name('cities.edit');
+    Route::put('/cities/{id}', [App\Http\Controllers\CityController::class, 'update'])->name('cities.update');
+    Route::delete('/cities/{id}', [App\Http\Controllers\CityController::class, 'destroy'])->name('cities.destroy');
+    Route::get('/cities', [App\Http\Controllers\CityController::class, 'index'])->name('cities.index');
 
 
 
@@ -101,8 +123,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
-    
-
+    Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
 
 
     Route::get('/page', function () {
@@ -201,13 +222,12 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 
-
+Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 //Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
 
-Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
 Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incrementitem'])->name('incrementitem');
@@ -222,9 +242,15 @@ Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::clas
 
 
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
-// Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
 
-Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingmethod');
+Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
 
-Route::get('/resume', [App\Http\Controllers\ResumeController::class, 'index'])->name('resume');
 
+
+
+Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
+Route::get('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
+Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
+Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
+
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');

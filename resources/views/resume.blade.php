@@ -1,132 +1,140 @@
-<!DOCTYPE html>
-<html>
+@extends('layouts-landing.welcome')
 
-<head>
-    <title>Página de Pago</title>
-    <link rel="stylesheet" href="assets/css/method_style.css">
+@section('css')
+    @parent
+    <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
     <style>
-        body {
-            background-color: #f8f8f8;
-            font-family: Arial, sans-serif;
-            
-            margin: 0;
-            padding: 0;        }
-
-        .container-fluid {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 20px;
+        /* Agrega estilos específicos para esta vista */
+        /* Por ejemplo, para ocultar elementos */
+        .header {
+            display: none;
         }
 
-        h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
+        .footer {
+            display: none;
         }
 
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-
-        .card-body {
-            padding: 20px;
-        }
-
-        .card-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .card-text {
-            margin-bottom: 0;
-        }
-
-        .section-lienzo {
-            text-align: center;
-            height: 50vh;
-            /* Establecemos la altura al 50% de la ventana */
-            width: 100%;
-            background-image: url('/assets/images/lienzo.png');
-            background-repeat: no-repeat;
-            background-size: contain;
+        .header_resume {
+            background-image: url("assets/images/lienzo.jpg");
+            background-size: cover;
             background-position: center;
+            height: 300px;
+        }
+
+        .header-content {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: -5%;
+            height: 100%;
         }
 
-        .lienzo-img {
-            max-width: 100%;
+        .navbar-brand-img {
             max-height: 100%;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            .header_resume {
+                height: 200px;
+            }
+        }
+
+        /* Agrega estilos para centrar los botones */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .button-container button {
+            margin: 0 0.5rem;
+        }
+
+
+        .super_container {
+            margin-top: -8rem;
+            margin-bottom: 5rem;
         }
     </style>
-</head>
+@endsection
 
-<body>
-    <div class="section-lienzo">
-        <div class="col-md-12" style="padding: 0;">
+@section('content')
+    <div class="header_resume">
+        <div class="header-content">
+            <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                style="max-height: 20rem; width: auto;" alt="main_logo">
         </div>
     </div>
-    <div class="container-fluid py-4" id="container-payment">
 
-
-
-
+    <div class="container-fluid py-4 overflow-hidden" id="container-payment">
         <div class="row justify-content-center mt-4">
-            <div class="col-md-6">
-                <h2>Resumen del Pedido</h2>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="resume-section">
+                            <h2>Resumen del Pedido</h2>
+                            <div class="list-group">
+                                @foreach (Cart::content() as $index => $item)
+                                    <div class="list-group-item">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-2">
+                                                <a href="#" class="show-picture-modal"
+                                                    data-img-url="{{ $item->options->urlfoto }}">
+                                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}"
+                                                        width="70">
+                                                </a>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <h5 class="card-title">{{ $item->name }}</h5>
+                                                <p class="card-text">Precio: ${{ $item->price }}</p>
+                                                <p class="card-text">Cantidad: {{ $item->qty }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
 
-                <div class="card-deck mb-4">
-                    <!-- Iterar sobre los productos -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Producto 1</h5>
-                            <p class="card-text">Precio: $10.00</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="user-info-section">
+                            <h2>Datos del Usuario</h2>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text">Nombre: {{ Auth::user()->name }}</p>
+                                    <p class="card-text">Dirección: {{ Auth::user()->address }}</p>
+                                    <p class="card-text">Dirección: {{ Auth::user()->phone_number }}</p>
+                                    <p class="card-text">Ciudad: {{  Auth::user()->city->name }}</p>
+                                    <p class="card-text">Región: {{ Auth::user()->region->name }}</p>
+                                    <p class="card-text">País: {{ Auth::user()->country->name }}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Producto 2</h5>
-                            <p class="card-text">Precio: $15.00</p>
-                        </div>
-                    </div>
                 </div>
+
             </div>
+        </div>
 
-
-            <div class="col-md-6">
-                <h2>Métodos de Pago</h2>
-
-                <div class="card-deck mb-4">
-                    <!-- Agregar los medios de pago -->
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Tarjeta de Crédito</h5>
-                            <p class="card-text">Número de tarjeta: 1234 **** **** 5678</p>
-                            <p class="card-text">Fecha de expiración: 12/25</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Otro Método de Pago</h5>
-                            <p class="card-text">Detalles del método de pago</p>
-                        </div>
-                    </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="col-md-4">
+                <div class="button-container">
+                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
+                    <form action="{{ route('confirmcart') }}" method="POST">
+                        @csrf
+                        <!-- Agrega los campos necesarios para enviar los datos del formulario -->
+                        <input type="hidden" name="payment_method_id" id="selected-payment-method">
+                        <button type="submit" class="btn btn-primary">Continuar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+@endsection
 
-    <script src="ruta-del-archivo-js"></script>
-</body>
-
-</html>
+@section('js')
+@endsection

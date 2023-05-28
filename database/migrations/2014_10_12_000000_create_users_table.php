@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('run');
             $table->string('name');
             $table->string('address');
+            $table->string('phone_number', 9)->nullable();
             $table->string('city_fk');
             $table->string('region_fk');
             $table->string('country_fk');
