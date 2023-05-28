@@ -30,7 +30,7 @@
                             Agregar más productos
                         </button>
                         <div class="table-responsive p-0 ">
-                            <form action="{{ route('orden-compra-product-update', ['id' => $orden->first()->id]) }}"
+                            <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}"
                                 method="POST">
                                 @csrf
                                 @method('PATCH')
@@ -45,7 +45,7 @@
                                     <tbody>
 
                                         <tr>
-                                            <td class="text-center">{{ $orden->first()->id }}</td>
+                                            <td class="text-center">{{ $orden->id }}</td>
                                             <td class="text-center">
                                                 <table
                                                     class="table display table-stripped aling-items-center justify-content-center">
@@ -114,7 +114,7 @@
 
 
                                             </td>
-                                            <td class="text-center">{{ $orden->first()->total }}</td>
+                                            <td class="text-center">{{ $orden->total }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -140,7 +140,7 @@
                     <h5 class="modal-title" id="addModalLabel">Nuevo producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('orden-compra-product-update', ['id' => $orden->first()->id]) }}" method="POST">
+                <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
                     @csrf
                     <div class="table-responsive p-0">
                         <table id="table" class="table display table-stripped align-items-center">
@@ -177,10 +177,10 @@
                                                 <div class="form-group">
 
                                                     <input type="number"
-                                                        class="form-control @error('cantidadup') is-invalid @enderror"
-                                                        id="cantidadup" name="cantidadup[]" value="{{ old('cantidadup') }}">
+                                                        class="form-control @error('cantidad') is-invalid @enderror"
+                                                        id="cantidad" name="cantidad[]" value="{{ old('cantidad') }}">
 
-                                                    @error('cantidadup')
+                                                    @error('cantidad')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
@@ -191,10 +191,10 @@
                                                 <div class="form-group">
 
                                                     <input type="number"
-                                                        class="form-control @error('valorup') is-invalid @enderror"
-                                                        id="valorup" name="valorup[]" value="{{ old('valorup') }}">
+                                                        class="form-control @error('valor') is-invalid @enderror"
+                                                        id="valor" name="valor[]" value="{{ old('valor') }}">
 
-                                                    @error('valorup')
+                                                    @error('valor')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>
