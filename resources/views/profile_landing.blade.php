@@ -135,19 +135,20 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="country" class="form-label">País</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->country_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->country->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="region" class="form-label">Región</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->region_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->region->name }}</span>
+                                
                             </div>
                         </div>
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="city" class="form-label">Ciudad</label>
-                                <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk }}</span>
+                                <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
                             </div>
                         </div>
                     </div>

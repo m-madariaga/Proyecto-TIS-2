@@ -76,16 +76,11 @@
                                 <span class="form-control">{{ Auth::user()->name }}</span>
                             </div>
                         </div>
-                        <div class="col-md-6 col-12 d-flex justify-content-center">
-                            <label for="profile_image" class="form-control-label">Imagen perfil</label>
-                            <span>
-                                <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" id="profile_image" class="border-radius-lg shadow-sm img-thumbnail" style="width: 15%;">
-                            </span>
-                        </div>
+                     
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="run" class="form-control-label">Run</label>
+                                <label for="run" class="form-control-label">RUN</label>
                                 <span class="form-control">{{ Auth::user()->run }}</span>
                             </div>
                         </div>
@@ -111,19 +106,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="country" class="form-control-label">País</label>
-                                <span class="form-control">{{ Auth::user()->country_fk }}</span>
+                                <span class="form-control">{{ Auth::user()->country->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="region" class="form-control-label">Región</label>
-                                <span class="form-control">{{ Auth::user()->region_fk }}</span>
+                                <span class="form-control">{{ Auth::user()->region->name }}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="city" class="form-control-label">Ciudad</label>
-                                <span class="form-control">{{ Auth::user()->city_fk }}</span>
+                                <span class="form-control">{{ Auth::user()->city->name }}</span>
                             </div>
                         </div>
                     </div>

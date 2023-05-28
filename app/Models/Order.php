@@ -14,7 +14,6 @@ class Order extends Model
         'subtotal',
         'impuesto',
         'total',
-        // 'fecha_pedido',
         'estado',
         'user_id',
     ];
