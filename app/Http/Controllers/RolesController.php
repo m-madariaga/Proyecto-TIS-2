@@ -41,7 +41,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique',
             'role_type' => 'nullable',
         ]);
  
@@ -97,7 +97,7 @@ class RolesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique',
             'role_type' => 'nullable',
         ]);
 

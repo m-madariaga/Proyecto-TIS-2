@@ -109,17 +109,30 @@
                             </li>
                         @endcan
                         @can('mantenedor regiones')
-                        <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
-                            <a class="nav-link {{ request()->is('admin/regions') ? 'active' : '' }}"
-                                href="{{ route('regions.index') }}">
-                                <div
-                                    class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                </div>
-                                <span class="nav-link-text ms-1">Regiones</span>
-                            </a>
-                        </li>
-                    @endcan
+                            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                                <a class="nav-link {{ request()->is('admin/regions') ? 'active' : '' }}"
+                                    href="{{ route('regions.index') }}">
+                                    <div
+                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Regiones</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        @can('mantenedor envio')
+                            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                                <a class="nav-link {{ request()->is('admin/shipments/*') ? 'active' : '' }}"
+                                    href="{{ route('shipments.index') }}">
+                                    <div
+                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                                    </div>
+                                    <span class="nav-link-text ms-1">Envíos</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
             </li>
             @can('mantenedor ordenes')
