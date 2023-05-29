@@ -44,34 +44,35 @@ class ShipmentController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-
+        
             $shipment = new Shipment();
             $shipment->user_fk = $user->id;
             $shipment->status = 'pending';
             $shipment->shipment_type_fk = $request->input('shipment_type_id');
-            $shipment->save();
-
+        
+            $shipment->save(); // Guardar el envío en la base de datos
+        
             $products = Cart::content();
-
+            $shipmentProducts = [];
+        
             foreach ($products as $item) {
                 $product = Product::find($item->id);
-
+        
                 $shipment->products()->attach($product, ['quantity' => $item->qty]);
                 $shipmentProducts[] = [
                     'name' => $product->nombre,
                     'quantity' => $item->qty,
                 ];
             }
-
+        
             $shipment->products = $shipmentProducts;
-            $paymentMethods = PaymentMethod::all(); // Reemplaza PaymentMethod con el modelo adecuado para obtener los métodos de pago
-
+            $shipment->save();
+            $paymentMethods = PaymentMethod::all();
+        
             return view('paymentmethod_landing', compact('paymentMethods'));
-
         }
-
-        return redirect()->route('login')->with('error', 'Please log in to continue.');
     }
+
 
 
     /**
