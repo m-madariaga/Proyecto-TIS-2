@@ -137,7 +137,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
 
 
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
@@ -226,9 +226,8 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 
+Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 
-//Remover la ruta de abajo una vez que se pueda cerrar sesión desde el landing
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
 

@@ -37,6 +37,7 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Usuario</th>
                                         <th class="text-center">Dirección</th>
+                                        <th class="text-center">Tipo de envío</th>
                                         <th class="text-center">Estado</th>
 
 
@@ -49,6 +50,7 @@
                                             <td class="text-center">{{ $shipment->id }}</td>
                                             <td class="text-center">{{ $shipment->user->name }}</td>
                                             <td class="text-center">{{ $shipment->address }}</td>
+                                            <td class="text-center">{{ $shipment->shipment_type->nombre }}</td>
                                             <td class="text-center">{{ $shipment->status }}</td>
 
                                             <td class="text-center pt-3">
