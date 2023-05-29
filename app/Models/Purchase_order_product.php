@@ -10,7 +10,6 @@ class Purchase_order_product extends Model
 {
     use HasFactory;
     protected $table = 'purchase_order_products';
-    protected $primaryKey = 'purchase_order_id';
 
     protected $fillable = [
         'purchase_order_id',
@@ -18,11 +17,11 @@ class Purchase_order_product extends Model
         'cantidad',
         'precio',
     ];
-    public function products(): BelongsTo
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class, 'products_id');
     }
-    public function orders(): BelongsTo
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Purchase_order::class, 'purchase_order_id');
     }

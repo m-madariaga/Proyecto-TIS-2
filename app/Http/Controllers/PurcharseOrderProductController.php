@@ -107,7 +107,6 @@ class PurcharseOrderProductController extends Controller
     public function update(Request $request, Purchase_order $id)
     {
         $datos = $request->validate([
-            'prod_id' => 'required',
             'cantidad' => 'required',
             'valor' => 'required',
         ]);
@@ -158,6 +157,7 @@ class PurcharseOrderProductController extends Controller
             ->with('success:', 'Orden actualizada correctamente.');
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
@@ -166,14 +166,10 @@ class PurcharseOrderProductController extends Controller
      */
     public function destroy(Purchase_order_product $id)
     {
-        $ordenes = Purchase_order_product::all();
-        foreach ($ordenes as $orden) {
-            if ($orden->purchase_order_id == $id->purchase_order_id) {
-                $orden->delete();
-            }
-        }
+        $n_id = $id->purchase_order_id;
+        $id->delete();
         return redirect()
-            ->route('orden-compra-destroy', ['id' => $id->purchase_order_id])
+            ->route('orden-compra-product-edit',$n_id)
             ->with('success:', 'Orden eliminada correctamente.');
     }
 }

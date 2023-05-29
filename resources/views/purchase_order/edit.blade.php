@@ -30,8 +30,7 @@
                             Agregar más productos
                         </button>
                         <div class="table-responsive p-0 ">
-                            <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}"
-                                method="POST">
+                            <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <table id="users-table" class="table display table-stripped align-items-center">
@@ -55,64 +54,64 @@
                                                             <th scope="col">Marca</th>
                                                             <th scope="col">Unidades</th>
                                                             <th scope="col">Valor de compra</th>
+                                                            <th scope="col">Accion</th>
                                                         </tr>
                                                     </thead>
-                                                    @foreach ($productos as $orden_prod)
+                                                    @foreach ($orden_productos as $prod)
                                                         <tbody>
                                                             <tr class="">
                                                                 <td>
-                                                                    {{ $orden_prod->nombre }}
+                                                                    {{ $prod->product->nombre }}
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
-                                                                    {{ $orden_prod->marca->nombre }}</td>
+                                                                    {{ $prod->product->marca->nombre }}</td>
                                                                 <td class="">
-                                                                    @foreach ($orden_productos as $prod)
-                                                                        @if ($prod->products_id == $orden_prod->id)
-                                                                            <div
-                                                                                class="d-flex form-group text-center aling-items-center justify-content-center">
+                                                                    <div
+                                                                        class="d-flex form-group text-center aling-items-center justify-content-center">
 
-                                                                                <input type="number"
-                                                                                    class="form-control w-20 @error('cantidad') is-invalid @enderror"
-                                                                                    id="cantidad" name="cantidad[]"
-                                                                                    value="{{ $prod->cantidad }}">
-
-                                                                                @error('cantidad')
-                                                                                    <span class="invalid-feedback"
-                                                                                        role="alert">
-                                                                                        <strong>{{ $message }}</strong>
-                                                                                    </span>
-                                                                                @enderror
-                                                                            </div>
-                                                                        @endif
-                                                                    @endforeach
+                                                                        <input type="number"
+                                                                            class="form-control w-20 @error('cantidad') is-invalid @enderror"
+                                                                            id="cantidad" name="cantidad[]"
+                                                                            value="{{ $prod->cantidad }}">
+                                                                        @error('cantidad')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
+                                                                    </div>
                                                                 </td>
                                                                 <td class="">
-                                                                    @foreach ($orden_productos as $prod)
-                                                                        @if ($prod->products_id == $orden_prod->id)
-                                                                            <div
-                                                                                class="form-group d-flex aling-items-center justify-content-center">
+                                                                    <div
+                                                                        class="form-group d-flex aling-items-center justify-content-center">
 
-                                                                                <input type="number"
-                                                                                    class="form-control w-40 @error('valor') is-invalid @enderror"
-                                                                                    id="valor" name="valor[]"
-                                                                                    value="{{ $prod->precio }}">
+                                                                        <input type="number"
+                                                                            class="form-control w-40 @error('valor') is-invalid @enderror"
+                                                                            id="valor" name="valor[]"
+                                                                            value="{{ $prod->precio }}">
 
-                                                                                @error('valor')
-                                                                                    <span class="invalid-feedback"
-                                                                                        role="alert">
-                                                                                        <strong>{{ $message }}</strong>
-                                                                                    </span>
-                                                                                @enderror
-                                                                            </div>
-                                                                        @endif
-                                                                    @endforeach
+                                                                        @error('valor')
+                                                                            <span class="invalid-feedback" role="alert">
+                                                                                <strong>{{ $message }}</strong>
+                                                                            </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-center aling-items-center">
+                                                                    <form
+                                                                        action="{{ route('orden-compra-product-destroy', $prod->id) }}"
+                                                                        method="POST" style="display: inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-sm btn-outline-danger"><i
+                                                                                class="fa fa-trash" aria-hidden="true"></i>
+                                                                            Eliminar</button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     @endforeach
                                                 </table>
-
-
                                             </td>
                                             <td class="text-center">{{ $orden->total }}</td>
                                         </tr>
@@ -121,7 +120,7 @@
                                 <div class="form-group text-center m-4">
                                     <a type="button" class="btn btn-sm btn-outline-danger"
                                         href="{{ route('orden-compra') }}">{{ __('Cancelar') }}</a>
-                                    <button type="submit" class="btn btn-primary">Confirmar edicion</button>
+                                    <button type="submit" class="btn btn-primary">Confirmar</button>
                                 </div>
                             </form>
                         </div>
@@ -231,34 +230,6 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
-            });
-            $('#addModal').modal({
-                show: false
-            });
-
-            $('#editModal').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget); // Button que triggerea el modal
-                const shipmentTypeId = button.data('shipment-type-id');
-                const shipmentTypeName = button.data('shipment-type-name');
-
-                const editForm = $('#editForm');
-                const nombreInput = editForm.find('#nombre');
-
-                // Actualizar ID de la ruta
-                const actionUrl = editForm.attr('action').replace('__ID__', shipmentTypeId);
-                editForm.attr('action', actionUrl);
-
-                // Reemplazar el valor del nombre en el input el modal
-                nombreInput.val(shipmentTypeName);
-            });
-
-            $('#addForm').submit(function(event) {
-                var nombre = $('#nombre').val();
-
-                if (nombre.trim() === '') {
-                    event.preventDefault();
-                    alert('El campo "Nombre del tipo de envío" es obligatorio.');
-                }
             });
 
         });

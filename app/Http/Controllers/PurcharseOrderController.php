@@ -84,9 +84,10 @@ class PurcharseOrderController extends Controller
      */
     public function edit(Purchase_order $id)
     {
-        $ordenes = Purchase_order::all();
-        $orden = $ordenes->find($id);
-        return view('purchase_order.edit', compact('orden'));
+        $orden = $id;
+        $orden_productos = $orden->product;
+        $productosall = Product::all();
+        return view('purchase_order.edit', compact('orden','orden_productos','productosall'));
     }
 
     /**
@@ -98,6 +99,55 @@ class PurcharseOrderController extends Controller
      */
     public function update(Request $request, Purchase_order $id)
     {
+        $datos = $request->validate([
+            'cantidad' => 'required',
+            'valor' => 'required',
+        ]);
+        // reiniciar los indices para que sean consecutivos
+        $cant = [];
+        foreach ($datos['cantidad'] as $key => $value) {
+            if ($value != null) {
+                array_push($cant, $value);
+            }
+        }
+        $val = [];
+        foreach ($datos['valor'] as $key => $value) {
+            if ($value != null) {
+                array_push($val, $value);
+            }
+        }
+        //se agregan nuevos productos
+        for ($i = 0; $i < sizeof($datos['prod_id']); $i++) {
+            $prod_id = $datos['prod_id'][$i];
+            $cantidad = $cant[$i];
+            $valor = $val[$i];
+            $orden_product = new Purchase_order_product([
+                'purchase_order_id' => $id->id,
+                'products_id' => $prod_id,
+                'cantidad' => $cantidad,
+                'precio' => $valor,
+            ]);
+            $orden_product->save();
+        }
+        //se buscan los productos para pasarlos a la ruta
+        $orden_productos = Purchase_order_product::find($id);
+        $productos = [];
+        $aux2 = 0;
+        foreach ($orden_productos as $key => $producto) {
+            $aux = Product::find($producto->products_id);
+            array_push($productos, $aux);
+            //se recalcula el valor total de la orden
+            $aux2 += $producto->cantidad * $producto->precio;
+        }
+        $total = $aux2;
+        $ordenes = Purchase_order::all();
+        $orden = $id;
+        $orden->total = $total;
+        $orden->save();
+        $productosall = Product::all();
+        return redirect()
+            ->route('orden-compra-product-edit', ['id' => $id->id, 'orden' => $orden, 'productos' => $productos, 'productosall' => $productosall])
+            ->with('success:', 'Orden actualizada correctamente.');
         $request->validate([
             'total' => 'required',
         ]);
@@ -118,9 +168,11 @@ class PurcharseOrderController extends Controller
      */
     public function destroy(Purchase_order $id)
     {
-        $ordenes = Purchase_order::all();
-        $orden = $ordenes->find($id);
-        $orden->delete();
+        $productos = $id->product;
+        foreach ($productos as $key => $producto) {
+            $producto->delete();
+        }
+        $id->delete();
         return redirect()
             ->route('orden-compra')
             ->with('success:', 'Orden eliminada correctamente.');
