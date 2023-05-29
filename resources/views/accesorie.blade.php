@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>Hombre</h2>
+                        <h2>Accesorios</h2>
                     </div>
                 </div>
             </div>

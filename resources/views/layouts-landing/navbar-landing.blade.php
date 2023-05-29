@@ -28,8 +28,8 @@
                                 <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="language_selection">
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Spanish</a></li>
+                                <li><a href="#">Inglés</a></li>
+                                <li><a href="#">Español</a></li>
                             </ul>
                         </li>
                         <li class="account">
