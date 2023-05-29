@@ -123,7 +123,7 @@
                 <div class="col-md-4">
                     <div class="button-container">
                         <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                        <form action="{{ route('confirmcart') }}" method="POST">
+                        <form action="{{ route('shippingview.index') }}" method="GET">
                             @csrf
                             <!-- Agrega los campos necesarios para enviar los datos del formulario -->
                             <input type="hidden" name="payment_method_id" id="selected-payment-method">

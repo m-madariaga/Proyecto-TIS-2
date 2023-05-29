@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\shipment_type;
+use App\Models\ShipmentType;
 
 class ShipmentTypesSeeder extends Seeder
 {
@@ -14,8 +14,11 @@ class ShipmentTypesSeeder extends Seeder
      */
     public function run()
     {
-        shipment_type::create([
+        ShipmentType::create([
             'nombre' => 'Starken'
+        ]);
+        ShipmentType::create([
+            'nombre' => 'Retiro'
         ]);
 
         $this->command->info('ShipmentType Starken seeded successfully.');

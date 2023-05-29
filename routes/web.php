@@ -28,7 +28,6 @@ use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 
 
-use App\Http\Controllers\Res;
 
 
 
@@ -260,4 +259,5 @@ Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
-Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::get('/shippingview', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
