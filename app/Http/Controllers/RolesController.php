@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Validation\Rule;
 
 class RolesController extends Controller
 {
@@ -41,7 +42,7 @@ class RolesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique',
+            'name' => 'required|unique:roles',
             'role_type' => 'nullable',
         ]);
  
@@ -97,7 +98,7 @@ class RolesController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique',
+            'name' => ['required',Rule::unique('roles')->ignore($id)],
             'role_type' => 'nullable',
         ]);
 

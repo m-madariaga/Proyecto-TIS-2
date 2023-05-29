@@ -21,7 +21,25 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-  
+
+    public function index()
+    {
+        $shipments = shipment::all();
+        foreach ($shipments as $shipment) {
+            $user = User::find($shipment->user_fk);
+            $country = Country::find($user->country_fk);
+            $region = Region::find($user->region_fk);
+            $city = City::find($user->city_fk);
+            $address= $user->address. ', ' .$city->name. ', ' .$region->name.', '.$country->name;
+            $shipment->address= $address;
+            error_log($address);
+
+        }
+
+        return response(view('shipments.index',compact('shipments')));
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -116,5 +134,29 @@ class ShipmentController extends Controller
     public function destroy(shipment $shipment)
     {
         //
+    }
+
+    public function status_edit($id)
+    {
+        $shipment = Shipment::find($id);
+
+        return view('shipments.status_edit', compact('shipment'));
+    }
+
+    public function status_update(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $shipment = Shipment::find($id);
+        $shipment->status = $request->status;
+        $shipment->save();
+        $user = User::find($shipment->user_fk);
+
+        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->id, $shipment->status));
+
+
+        return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
     }
 }
