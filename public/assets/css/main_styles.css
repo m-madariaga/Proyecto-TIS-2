@@ -1884,3 +1884,8 @@ footer{
 .logo-img {
     max-height: 2rem; /* Ajusta este valor según tus necesidades */
 }
+
+.search-not{
+	color: #d936ad;
+
+}
