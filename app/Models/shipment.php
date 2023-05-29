@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class shipment extends Model
+class Shipment extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class shipment extends Model
 
     public function shipment_type()
     {
-        return $this->belongsTo(shipment_type::class,'shipment_type_fk');
+        return $this->belongsTo(ShipmentType::class,'shipment_type_fk');
     }
     public function products()
     {

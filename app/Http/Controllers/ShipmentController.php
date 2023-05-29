@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\shipment;
-use App\Models\shipment_type;
+use App\Models\Shipment;
+use App\Models\ShipmentType;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\City;
 use App\Models\Region;
 use App\Models\Product;
+use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Cart;
+use Gloudemans\Shoppingcart\Facades\Cart;
+
 class ShipmentController extends Controller
 {
     /**
@@ -21,19 +23,15 @@ class ShipmentController extends Controller
      */
     public function index()
     {
+        $countries = Country::all();
+        $regions = Region::all();
+        $cities = City::all();
+        $users = User::all();
+        $shipment_types = ShipmentType::all();
         $shipments = shipment::all();
-        foreach ($shipments as $shipment) {
-            $user = User::find($shipment->user_fk);
-            $country = Country::find($user->country_fk);
-            $region = Region::find($user->region_fk);
-            $city = City::find($user->city_fk);
-            $address= $user->address. ', ' .$city->name. ', ' .$region->name.', '.$country->name;
-            $shipment->address= $address;
-            error_log($address);
+        $products = Product::all();
 
-        }
-
-        return response(view('shipments.index',compact('shipments')));
+        return response(view('shipments.index', compact('shipment_types', 'users', 'cities', 'regions', 'countries', 'products', 'shipments')));
 
     }
 
@@ -42,45 +40,39 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         if (Auth::check()) {
-
             $user = Auth::user();
-
 
             $shipment = new Shipment();
             $shipment->user_fk = $user->id;
             $shipment->status = 'pending';
+            $shipment->shipment_type_fk = $request->input('shipment_type_id');
             $shipment->save();
-
 
             $products = Cart::content();
 
             foreach ($products as $item) {
                 $product = Product::find($item->id);
 
-
                 $shipment->products()->attach($product, ['quantity' => $item->qty]);
                 $shipmentProducts[] = [
                     'name' => $product->nombre,
                     'quantity' => $item->qty,
-
                 ];
             }
 
             $shipment->products = $shipmentProducts;
-            $shipment->save();
+            $paymentMethods = PaymentMethod::all(); // Reemplaza PaymentMethod con el modelo adecuado para obtener los métodos de pago
 
-            //Cart::destroy();
+            return view('paymentmethod_landing', compact('paymentMethods'));
 
-
-            return view('shippingmethod');
         }
-
 
         return redirect()->route('login')->with('error', 'Please log in to continue.');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -115,30 +107,6 @@ class ShipmentController extends Controller
         //
     }
 
-    public function status_edit($id)
-    {
-        $shipment = Shipment::find($id);
-
-        return view('shipments.status_edit', compact('shipment'));
-    }
-
-    public function status_update(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required',
-        ]);
-
-        $shipment = Shipment::find($id);
-        $shipment->status = $request->status;
-        $shipment->save();
-        $user = User::find($shipment->user_fk);
-
-        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->id, $shipment->status));
-
-
-        return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -157,12 +125,8 @@ class ShipmentController extends Controller
      * @param  \App\Models\shipment  $shipment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(shipment $shipment)
     {
-        $shipment = Shipment::find($id);
-        $shipment->delete();
-        error_log("test");
-
-        return response()->json(['success' => true]);
+        //
     }
 }

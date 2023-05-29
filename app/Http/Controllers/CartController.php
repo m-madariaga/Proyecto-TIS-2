@@ -116,6 +116,7 @@ class CartController extends Controller
         }
 
         Cart::destroy();
-        return back();
+        return redirect()->route('home-landing');
+
     }
 }
