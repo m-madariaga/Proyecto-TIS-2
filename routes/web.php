@@ -130,8 +130,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         return view('page');
     })->name('page');
 
+
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
-    Route::post('/calendar/agregar', [OrderController::class, 'index'])->name('calendar_agregar');
+    Route::post('/events', [EventController::class, 'store'])->name('event.store');
+    Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+
+
+
 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
@@ -163,7 +169,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
         Route::patch('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
         Route::delete('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
-
     });
 
     Route::group(['middleware' => ['permission:mantenedor categorias']], function () {

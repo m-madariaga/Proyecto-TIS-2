@@ -20,6 +20,7 @@
         "sass-loader": "^11.0.1"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.8",
         "fullcalendar": "^6.1.7"
     }
 }
