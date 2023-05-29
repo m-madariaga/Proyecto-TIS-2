@@ -53,7 +53,7 @@
                                                     width="70">
                                             </a>
                                         </td>
-                                        <td>{{ $item->price }}</td>
+                                        <td>$ {{ $item->price }}</td>
                                         <td>
                                             <div class="container-quantity">
                                                 <div>
@@ -91,10 +91,7 @@
                         </tfoot>
                     </table>
                     @if (Auth::check())
-                        <form action="{{ route('resume')}}" method="get">
-                            {{-- comprobar el lugar donde esta
-                            if chillan o san fernando entonces debo mostrar en la vista que el metodo es retiro en mall 
-                            else mostrar shiptments types que es starken  --}}
+                        <form action="{{ route('shippingview.index') }}" method="get">
                             @csrf
                             <button type="submit" class="btn btn-danger">Continuar</button>
                         </form>
