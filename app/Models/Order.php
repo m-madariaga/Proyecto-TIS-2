@@ -14,7 +14,6 @@ class Order extends Model
         'subtotal',
         'impuesto',
         'total',
-        // 'fecha_pedido',
         'estado',
         'user_id',
     ];
@@ -22,5 +21,9 @@ class Order extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function details()
+    {
+        return $this->hasMany(Detail::class, 'pedido_id');
     }
 }

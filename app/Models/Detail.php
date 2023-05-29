@@ -15,17 +15,17 @@ class Detail extends Model
     protected $fillable = [
         'precio',
         'cantidad',
-        'monto',  
+        'monto',
         'producto_id',
         'pedido_id ',
     ];
 
-    public function order(): BelongsTo 
+    public function order()
     {
         return $this->belongsTo(Order::class, 'pedido_id');
     }
-    
-    public function product(): BelongsTo 
+
+    public function product()
     {
         return $this->belongsTo(Product::class, 'producto_id');
     }

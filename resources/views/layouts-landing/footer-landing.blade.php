@@ -20,9 +20,9 @@
             <div class="col-8">
                 <div class="footer_nav_container d-flex flex-row align-items-center justify-content-lg-end justify-content-center">
                     <ul class="footer_nav">
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">FAQs</a></li>
-                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Reseñas</a></li>
+                        <li><a href="#">Preguntas Frecuentes</a></li>
+                        <li><a href="#">Contacto</a></li>
                     </ul>
                 </div>
             </div>

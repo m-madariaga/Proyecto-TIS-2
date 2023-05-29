@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\City;
 use Illuminate\Http\Request;
+use App\Models\Region;
+use App\Models\Country;
 
 class CityController extends Controller
 {
@@ -14,14 +16,16 @@ class CityController extends Controller
      */
     public function index()
     {
+        $countries = Country::all();
+        $regions = Region::all();
         $cities = City::all();
-        return view('cities.index', compact('cities'));
+        return view('cities.index', compact('cities', 'regions', 'countries'));
     }
     public function getCities($regionId)
-{
-    $cities = City::where('region_fk', $regionId)->get();
-    return response()->json($cities);
-}
+    {
+        $cities = City::where('region_fk', $regionId)->get();
+        return response()->json($cities);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +44,26 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try
+        {
+            $validatedData = $request->validate([
+                'name' => 'required|unique:regions|string|max:100',
+                'country_fk' => 'required|exists:countries,id',
+                'region_fk' => 'required|exists:regions,id'
+
+            ]);
+
+            $city = City::create($validatedData);
+
+
+
+            return response()->json(['success' => true]);
+        }
+        catch (ValidationException $e)
+        {
+            $errors = $e->errors();
+            return response()->json(['success' => false, 'errors' => $errors]);
+        }
     }
 
     /**
@@ -72,9 +95,24 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'name' => 'required|string|max:56',
+            'country_fk' => 'required',
+            'region_fk' => 'required',
+        ]);
+
+        $city = Region::find($id);
+
+        $city->name = $request->get('name');
+        $city->region_fk = $request->get('region_fk');
+        $city->country_fk = $request->get('country_fk');
+        $city->save();
+
+
+        return redirect('admin/cities')->with('success', 'ciudad actualizado correctamente');
     }
 
     /**
@@ -83,8 +121,11 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function destroy(City $city)
+    public function destroy($id)
     {
-        //
+        $city = City::find($id);
+        $city->delete();
+        return redirect('admin/cities')->with('success', 'Ciudad eliminado exitosamente!');
+
     }
 }

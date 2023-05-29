@@ -95,17 +95,37 @@
                 },
                 dateClick: function(info) {
                     $("#modal-event").modal("show"); // muestra el modal
-                }
+                },
+                locale: 'es', // Establece el idioma en español
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    list: 'Lista'
+                },
+                allDayText: 'Todo el día',
+                noEventsText: 'No hay eventos para mostrar',
+                eventTimeFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    meridiem: 'short'
+                },
+                weekText: 'Sem',
+                moreLinkText: 'más',
+                eventLimitText: 'más',
+                dayPopoverFormat: 'dddd D [de] MMMM [de] YYYY'
             });
+
             calendar.render();
+
             $("#btn-primary").click(function() {
-                // get datos
+
                 var title = $("#title").val();
                 var description = $("#description").val();
                 var start = $("#start").val();
                 var end = $("#end").val();
 
-                
                 var event = {
                     title: title,
                     description: description,
@@ -113,15 +133,12 @@
                     end: end
                 };
 
-                // add the event to the calendar
                 calendar.addEvent(event);
 
-                // hide the modal
                 $("#modal-event").modal("hide");
             });
+
             $("#btn-info").click(function() {
-            
-                // hide the modal
                 $("#modal-event").modal("hide");
             });
 

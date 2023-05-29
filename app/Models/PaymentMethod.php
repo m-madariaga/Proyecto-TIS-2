@@ -9,14 +9,10 @@ class PaymentMethod extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'imagen'];
+    protected $fillable = ['nombre', 'imagen','visible'];
 
-    // public function getImagenUrlAttribute()
-    // {
-    //     if ($this->imagen) {
-    //         return asset('storage/' . $this->imagen);
-    //     }
-        
-    //     return asset('images/default-payment-method.png');
-    // }
+    public function dataBankTransfers()
+    {
+        return $this->hasMany(DataBankTransfer::class, 'paymentmethod_fk');
+    }
 }

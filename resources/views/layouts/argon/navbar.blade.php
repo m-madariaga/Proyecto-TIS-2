@@ -8,9 +8,10 @@
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
                 <div class="input-group">
                     <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                    <input type="text" class="form-control" placeholder="Type here...">
+                    <input type="text" class="form-control" id="searchBar" placeholder="Buscar...">
                 </div>
             </div>
+
             <ul class="navbar-nav  justify-content-end">
                 <li class="nav-item d-xl-none pe-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">

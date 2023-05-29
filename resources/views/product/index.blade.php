@@ -63,19 +63,22 @@
                                             </td>
 
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('productos-edit', ['id' => $prod->id]) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Editar</a>
-                                                <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}" method="POST" style="display: inline;">
+                                                <a href="{{ route('productos-edit', ['id' => $prod->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                    Editar</a>
+                                                <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
+                                                    method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-product"
-                                                        data-id="{{ $prod->id }}"><i class="fa fa-trash" aria-hidden="true"> Borrar</i></button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-product"
+                                                        data-id="{{ $prod->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -112,8 +115,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#products-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#products-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -122,6 +125,10 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
     </script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -169,10 +176,7 @@
                 }
             });
 
-            
+
         });
     </script>
-
-
-
 @endsection

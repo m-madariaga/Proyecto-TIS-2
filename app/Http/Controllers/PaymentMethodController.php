@@ -12,41 +12,23 @@ class PaymentMethodController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        $paymentMethods = PaymentMethod::all(); // Obtener todos los métodos de pago desde la base de datos
-
-        return view('paymentmethod_landing', compact('paymentMethods')); // Pasar la variable $paymentMethods a la vista
+        $paymentMethods = PaymentMethod::all();
+        return view('paymentmethod_landing', compact('paymentMethods'));
     }
 
     public function index_admin()
     {
-        $paymentMethods = PaymentMethod::all(); // Obtener todos los métodos de pago desde la base de datos
-
-        return view('paymentmethods', compact('paymentMethods')); // Pasar la variable $paymentMethods a la vista
+        $paymentMethods = PaymentMethod::all();
+        return view('paymentmethods', compact('paymentMethods'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('createpaymethod');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store_landing(Request $request)
     {
         $request->validate([
@@ -62,76 +44,73 @@ class PaymentMethodController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Establece las reglas de validación para la imagen
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'visible' => 'required',
         ]);
 
-        // Procesa la imagen
-        if ($request->hasFile('image')) {
-            $imagen = $request->file('image');
-            $imageName = $imagen->getClientOriginalName(); 
-        
-            $imagen->move(public_path('argon/assets/img/images-paymethods'), $imageName);
-        
-            // Guard the image path in the database
-            $paymentMethod = new PaymentMethod;
-            $paymentMethod->name = $request->name;
-            $paymentMethod->imagen = $imageName;
-            $paymentMethod->save();
-        } else {
-            // Maneja el caso en que no se cargó una imagen
-        }
+        $imageName = $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('argon/assets/img/images-paymethods'), $imageName);
+
+        $paymentMethod = new PaymentMethod;
+        $paymentMethod->name = $request->name;
+        $paymentMethod->imagen = $imageName;
+        $paymentMethod->visible = $request->visible;
+        $paymentMethod->save();
 
         return redirect('/admin/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(PaymentMethod $paymentMethod)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(PaymentMethod $paymentMethod)
+    public function edit($id)
     {
-        //
+        $paymentMethod = PaymentMethod::find($id);
+
+        if (!$paymentMethod) {
+            return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
+        }
+
+        $selectedAccountId = $paymentMethod->$id; // Aquí asigna el ID de la cuenta bancaria seleccionada
+
+        return view('editpaymethod', compact('paymentMethod', 'selectedAccountId'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, PaymentMethod $paymentMethod)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'visible' => 'required',
+        ]);
+
+        $paymentMethod = PaymentMethod::find($id);
+
+        if ($paymentMethod) {
+            $paymentMethod->visible = $request->input('visible');
+            $paymentMethod->save();
+
+            return redirect('/admin/paymentmethod')->with('success', 'Método de pago actualizado exitosamente!');
+        }
+
+        return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\PaymentMethod  $paymentMethod
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $paymentMethod = PaymentMethod::find($id);
+
+        if (!$paymentMethod) {
+            return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
+        }
+
         $paymentMethod->delete();
 
         return redirect('/admin/paymentmethod')->with('success', 'Método de pago eliminado exitosamente!');
-
     }
+
 
 }

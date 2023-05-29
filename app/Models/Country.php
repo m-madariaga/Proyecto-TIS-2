@@ -25,6 +25,16 @@ class Country extends Model
     }
     public function regions()
     {
-        return $this->hasMany(Region::class);
+        return $this->hasMany(Region::class,'country_fk');
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($country) {
+            $country->regions()->delete();
+
+        });
     }
 }

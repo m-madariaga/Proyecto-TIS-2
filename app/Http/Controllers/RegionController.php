@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Region;
 use Illuminate\Http\Request;
+use App\Models\City;
+use App\Models\Country;
 
 class RegionController extends Controller
 {
@@ -14,8 +16,9 @@ class RegionController extends Controller
      */
     public function index()
     {
+        $countries = Country::all();
         $regions = Region::all();
-        return view('regions.index', compact('regions'));
+        return view('regions.index', compact('regions','countries'));
     }
     public function getRegions($countryId)
     {
@@ -40,7 +43,25 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try
+        {
+            $validatedData = $request->validate([
+                'name' => 'required|unique:regions|string|max:100',
+                'country_fk' => 'required|exists:countries,id',
+
+            ]);
+
+            $region = Region::create($validatedData);
+
+
+
+            return response()->json(['success' => true]);
+        }
+        catch (ValidationException $e)
+        {
+            $errors = $e->errors();
+            return response()->json(['success' => false, 'errors' => $errors]);
+        }
     }
 
     /**
@@ -72,9 +93,23 @@ class RegionController extends Controller
      * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Region $region)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'name' => 'required|string|max:56',
+            'country_fk' => 'required',
+        ]);
+
+        $region = Region::find($id);
+
+        $region->name = $request->get('name');
+        $region->country_fk = $request->get('country_fk');
+
+        $region->save();
+
+
+        return redirect('admin/regions')->with('success', 'Pais actualizado correctamente');
     }
 
     /**
@@ -83,8 +118,10 @@ class RegionController extends Controller
      * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Region $region)
+    public function destroy($id)
     {
-        //
+        $region= Region::find($id);
+        $region->delete();
+        return redirect('admin/regions')->with('success', 'Pais eliminado exitosamente!');
     }
 }
