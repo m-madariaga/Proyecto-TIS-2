@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\shipment_type;
+use App\Models\ShipmentType;
 use Illuminate\Http\Request;
 
 class ShipmentTypeController extends Controller
@@ -14,7 +14,7 @@ class ShipmentTypeController extends Controller
      */
     public function index()
     {
-        $shipment_types = shipment_type::all();
+        $shipment_types = ShipmentType::all();
         return response(view('shipment_types.index',compact('shipment_types')));
     }
 
