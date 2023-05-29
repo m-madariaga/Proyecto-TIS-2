@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Country;
 use Illuminate\Http\Request;
-
+use Illuminate\Validation\ValidationException;
 class CountryController extends Controller
 {
     /**
@@ -15,13 +15,13 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::all();
-        return view('countries.index', compact('countries'));
+        return response(view('countries.index', compact('countries')));
     }
     public function getCountries()
-{
+    {
     $countries = Country::all();
     return response()->json($countries);
-}
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -40,7 +40,23 @@ class CountryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try
+        {
+            $validatedData = $request->validate([
+                'name' => 'required|unique:countries|string|max:56',
+
+            ]);
+
+            Country::create($validatedData);
+
+
+            return response()->json(['success' => true]);
+        }
+        catch (ValidationException $e)
+        {
+            $errors = $e->errors();
+            return response()->json(['success' => false, 'errors' => $errors]);
+        }
     }
 
     /**
@@ -72,9 +88,22 @@ class CountryController extends Controller
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Country $country)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            'name' => 'required|unique:countries|string|max:56',
+
+        ]);
+
+        $country = Country::find($id);
+
+        $country->name = $request->get('name');
+
+        $country->save();
+
+
+        return redirect('admin/countries')->with('success', 'Pais actualizado correctamente');
     }
 
     /**
@@ -83,8 +112,10 @@ class CountryController extends Controller
      * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Country $country)
+    public function destroy($id)
     {
-        //
+        $country = Country::find($id);
+        $country->delete();
+        return redirect('admin/countries')->with('success', 'Pais eliminado exitosamente!');
     }
 }

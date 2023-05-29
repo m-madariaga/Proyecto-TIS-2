@@ -27,9 +27,11 @@ class User extends Authenticatable
         'password',
         'run',
         'address',
+        'phone_number',
         'city_fk',
         'country_fk',
         'region_fk',
+        'imagen',
     ];
     public function roleName()
     {
@@ -40,7 +42,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Order::class, 'id');
     }
-    
+
     public function city()
     {
         return $this->belongsTo(City::class,'city_fk');
@@ -50,7 +52,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Region::class,'region_fk');
     }
-
+    public function shipments()
+    {
+        return $this->hasMany(Shipment::class,'user_fk');
+    }
     public function country()
     {
         return $this->belongsTo(Country::class,'country_fk');

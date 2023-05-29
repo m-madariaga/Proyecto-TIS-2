@@ -15,6 +15,9 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
@@ -35,7 +38,6 @@
                                         <th class="text-center">Nombre</th>
                                         <th class="text-center">Tipo de Rol</th>
                                         <th class="text-center">Cantidad de usuarios</th>
-                                        <th class="text-center">Permisos</th>
 
 
                                         <th class="text-center">Acciones</th>
@@ -48,27 +50,39 @@
                                             <td class="text-center">{{ $role->name }}</td>
                                             <td class="text-center">{{ $role->role_type }}</td>
                                             <td class="text-center">{{ $role->role_count }}</td>
-                                            <td class="text-center">
-                                                @foreach($role->permissions as $permission)
-                                                    {{$permission}}<br>
-                                                @endforeach        
-                                            </td>
 
                                             <td class="text-center pt-3">
+                                                <button id="permissionsButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#permissionsModal" data-permissions-list="{{ $role->permissions }}">
+                                                    Ver permisos
+                                                </button>
                                                 <a href="{{ route('roles.edit', $role->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Edit</a>
+                                                        class="fa fa-edit"></i> Editar</a>
                                                 <form action="{{ route('roles.destroy', $role->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-role"
-                                                        data-id="{{ $role->id }}"><i class="fa fa-trash" aria-hidden="true"> Delete</i></button>
+                                                        data-id="{{ $role->id }}"><i class="fa fa-trash" aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
+                            <div class="modal fade" id="permissionsModal" tabindex="-1" role="dialog" aria-labelledby="permissionsModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="permissionsModalLabel">Permisos</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center" id="permissionsList"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,8 +118,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#roles-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#roles-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -114,6 +128,10 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
     </script>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -163,6 +181,33 @@
 
             
         });
+
+         $('#permissionsModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget); // Button que triggerea el modal
+                const permissions = button.data('permissions-list');
+
+                console.log("permissions");
+
+                console.log(permissions);
+
+                permissions.forEach(function(entry) {
+                    console.log(entry);
+                });
+
+
+                // const editForm = $('#editForm');
+                var p = document.getElementById("permissionsList");
+                p.innerHTML = permissions.join("<br>") ;
+                
+
+
+                // Actualizar ID de la ruta
+                // const actionUrl = editForm.attr('action').replace('__ID__', userId);
+                // editForm.attr('action', actionUrl);
+
+                // Reemplazar el valor del nombre en el input el modal
+
+            });
     </script>
 
 
