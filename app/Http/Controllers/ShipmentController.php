@@ -21,20 +21,7 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $countries = Country::all();
-        $regions = Region::all();
-        $cities = City::all();
-        $users = User::all();
-        $shipment_types = ShipmentType::all();
-        $shipments = shipment::all();
-        $products = Product::all();
-
-        return response(view('shipments.index', compact('shipment_types', 'users', 'cities', 'regions', 'countries', 'products', 'shipments')));
-
-    }
-
+  
     /**
      * Show the form for creating a new resource.
      *

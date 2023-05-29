@@ -34,10 +34,11 @@
 
         .navbar-brand-img {
             height: 70%;
-            width: 300px; /* Cambia el valor según tus necesidades */
-    margin-left: 18rem;
-    object-fit: contain;
-            
+            width: 300px;
+            /* Cambia el valor según tus necesidades */
+            margin-left: 18rem;
+            object-fit: contain;
+
         }
 
         /* Agrega estilos para centrar los botones */
