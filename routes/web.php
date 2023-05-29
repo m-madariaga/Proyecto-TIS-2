@@ -255,9 +255,9 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 
 
 
+Route::Post('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
 
-Route::get('/resume', [ResumeController::class, 'index'])->name('resume');
-Route::get('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
+
 Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])->name('search');
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 

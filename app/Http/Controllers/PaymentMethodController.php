@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\User;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 

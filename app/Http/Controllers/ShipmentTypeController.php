@@ -41,7 +41,7 @@ class ShipmentTypeController extends Controller
             'nombre' => 'required|string',
         ]);
 
-        $shipment_type = new shipment_type([
+        $shipment_type = new ShipmentType([
 
             'nombre' => $request->get('nombre'),
         ]);
@@ -58,7 +58,7 @@ class ShipmentTypeController extends Controller
      * @param  \App\Models\shipment_type  $shipment_type
      * @return \Illuminate\Http\Response
      */
-    public function show(shipment_type $shipment_type)
+    public function show(ShipmentType $shipment_type)
     {
         //
     }
@@ -71,7 +71,7 @@ class ShipmentTypeController extends Controller
      */
     public function edit($id)
     {
-        $shipment_type = shipment_type::find($id);
+        $shipment_type = ShipmentType::find($id);
 
 
 
@@ -94,7 +94,7 @@ class ShipmentTypeController extends Controller
 
         ]);
 
-        $shipment_type = shipment_type::find($id);
+        $shipment_type = ShipmentType::find($id);
 
         $shipment_type->nombre = $request->get('nombre');
 
@@ -112,7 +112,7 @@ class ShipmentTypeController extends Controller
      */
     public function destroy($id)
     {
-        $shipment_types = shipment_type::find($id);
+        $shipment_types = ShipmentType::find($id);
         $shipment_types->delete();
 
         //return response()->json(['success' => true]);
