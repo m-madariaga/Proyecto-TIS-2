@@ -48,7 +48,6 @@
         <div style="margin-top: 8rem; margin-bottom: 5rem">
             @yield('content')
 
-            @yield('search_results')
         </div>
     </div>
 

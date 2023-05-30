@@ -10,7 +10,7 @@
     <div class="product_detalle">
         <div class="container py-4 mb-4">
             <div class="row">
-                <div class="col-12 col-md-6 order-md-first">
+                <div class="col-12 col-md-6 order-md-first mb-3">
                     <div class="card d-flex align-items-center">
                         <img src="{{ asset('assets/images/images-products/' . $product->imagen) }}" class="img-thumbnail" alt="{{ $product->nombre }}">
                     </div>
