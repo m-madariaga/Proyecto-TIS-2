@@ -8,40 +8,7 @@
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
 
-    <style>
-        .top_nav .top_nav_right .top_nav_menu .account .account_selection {
-            min-width: 150px;
-            /* Ajusta el ancho deseado */
-        }
-
-        .account_selection {
-            display: none;
-            /* Oculta el menú inicialmente */
-        }
-    </style>
-  <script>
-    $(document).ready(function() {
-        $('.account').mouseenter(function() {
-            // Obtiene el menú de la cuenta y lo muestra
-            $(this).find('.account_selection').slideDown();
-        });
-
-        $('.account').mouseleave(function() {
-            // Oculta el menú de la cuenta cuando el mouse sale del elemento
-            $(this).find('.account_selection').slideUp();
-        });
-        $('.language').mouseenter(function() {
-            // Obtiene el menú de la cuenta y lo muestra
-            $(this).find('.account_selection').slideDown();
-        });
-
-        $('.language').mouseleave(function() {
-            // Oculta el menú de la cuenta cuando el mouse sale del elemento
-            $(this).find('.account_selection').slideUp();
-        });
-    });
-</script>
-
+    
 </head>
 
 <div class="top_nav">
@@ -68,6 +35,7 @@
                         <li class="account">
                             <a href="#">
                                 @if (Auth::check())
+                                
                                     {{ Auth::user()->name }}
                                 @else
                                     Cuenta

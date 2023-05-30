@@ -41,7 +41,7 @@
     <div class="container-fluid py-4 mb-4">
         <div class="new_arrivals">
             <div class="container">
-                <div class="row">
+                <div class="row mb-4">
                     <div class="col text-center">
                         <div class="section_title new_arrivals_title mb-4">
                             <h1>Conócenos</h1>

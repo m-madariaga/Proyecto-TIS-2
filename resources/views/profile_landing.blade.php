@@ -85,7 +85,7 @@
 @endsection
 
 @section('content')
-<div class="container py-4 mb-4" style="margin-top: 12rem;">
+<div class="container py-4 mb-4" >
     <div class="row">
         <div class="col-md-7 col-12">
             <div class="card">

@@ -55,6 +55,10 @@
             display: block;
             line-height: 1.2;
         }
+
+        .text{
+            color: black;
+        }
     </style>
 @endsection
 
@@ -70,27 +74,67 @@
 
     <div class="container-fluid overflow-hidden" id="container-payment">
         <div class="row justify-content-center mt-4">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h4 class="pb-1 pt-4">Productos</h4>
-                <div class="card mb-4">
-                    <div class="card-body">
+                <div class="card">
+                    <div class="card-body" style="max-width: 300px;">
                         @foreach ($cart as $item)
                             <div class="row align-items-center">
-                                <div class="col-md-4">
+                                <div class="col-3">
                                     <a href="#" class="show-picture-modal"
                                         data-img-url="{{ $item->options->urlfoto }}">
                                         <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="70">
                                     </a>
                                 </div>
-                                <div class="col-md-8">
-                                    <h6 class="card-title">{{ $item->name }}</h6>
-                                    <p class="card-text">Precio: ${{ $item->price }}</p>
-                                    <p class="card-text">Cantidad: {{ $item->qty }}</p>
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6 class="card-title">{{ $item->name }}</h6>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="card-text">Color: {{ $item->color }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="card-text">Talla: {{ $item->talla }}</p>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="d-flex justify-content-end" style="padding-left: 1rem;">
+                                                <p class="card-text">Precio: ${{ $item->price }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
+
+
                 </div>
+                <div class="card mb-5">
+                    <div class="card-body">
+                        @foreach ($cart as $item)
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-end">
+                                        <p class="card-text text-end">Total a Pagar: ${{ $item->subtotal }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check form-check-info text-end">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                    style="margin-left:1.1rem">
+                                <label class="form-check-label d-flex align-items-center" for="flexCheckDefault"
+                                    style="margin-left: 1rem;">
+                                    <span>Estoy de acuerdo con</span>
+                                    <a href="#modal-terminos" class="text-dark font-weight-bolder modal-trigger ms-2"><b>
+                                            Términos y Condiciones</b></a>
+
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
             </div>
 
             <div class="col-md-4">
