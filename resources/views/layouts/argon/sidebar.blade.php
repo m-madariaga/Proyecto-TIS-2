@@ -176,7 +176,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                    href="{{ route('paymentmethod.index') }}">
+                    href="{{ route('paymentmethod.index_admin') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>

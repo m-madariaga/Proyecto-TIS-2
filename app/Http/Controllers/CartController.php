@@ -104,19 +104,24 @@ class CartController extends Controller
         $order->estado = 0;
         $order->user_id = auth()->user()->id;
         $order->save();
-
+    
         foreach (Cart::content() as $item) {
             $detail = new Detail();
             $detail->precio = $item->price;
             $detail->cantidad = $item->qty;
-            $detail->monto = $detail->cantidad * $detail->precio ;
+            $detail->monto = $detail->cantidad * $detail->precio;
             $detail->producto_id = $item->id;
             $detail->pedido_id = $order->id;
             $detail->save();
+    
+            // Disminuir el stock del producto
+            $product = Product::find($item->id);
+            $product->stock -= $item->qty;
+            $product->save();
         }
-
+    
         Cart::destroy();
         return redirect()->route('home-landing');
-
     }
+    
 }
