@@ -24,13 +24,24 @@ class Product extends Model
         'categoria_id',
     ];
 
-    public function marca(): BelongsTo{
-        return $this->belongsTo(Brand::class,'marca_id');
+    public function marca(): BelongsTo
+    {
+        return $this->belongsTo(Brand::class, 'marca_id');
     }
-    public function categoria(): BelongsTo{
-        return $this->belongsTo(Category::class,'categoria_id');
+    public function categoria(): BelongsTo
+    {
+        return $this->belongsTo(Category::class, 'categoria_id');
     }
     public function purchase_order(): HasMany {
         return $this->hasMany(Purchase_order_product::class, 'products_id');
+    }
+    public function shipments()
+    {
+        return $this->belongsToMany(Shipment::class, 'shipment_product');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(Detail::class, 'producto_id', 'id');
     }
 }

@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\City;
 use App\Models\Region;
 use App\Models\Country;
+use App\Models\Order;
+use App\Models\Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +19,9 @@ class ProfileLandingController extends Controller
         $countries = Country::all();
         $regions = Region::all();
         $cities = City::all();
-        return view('profile_landing', compact('countries', 'regions', 'cities', 'user'));
+        $orders = Order::where('user_id', $user->id)->get(); // Obtén los pedidos del usuario conectado
+        $details = Detail::all();
+        return view('profile_landing', compact('countries', 'regions', 'cities', 'user','orders','details'));
     }
 
     public function getRegions($countryId)
@@ -37,6 +41,7 @@ class ProfileLandingController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->address = $request->address;
+        $user->phone_number = $request->phone_number;
         $region = Region::find($request->region_fk);
         $city = City::find($request->city_fk);
         $user->region_fk = $region->name;

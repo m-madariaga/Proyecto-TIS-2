@@ -2,54 +2,67 @@
 <html lang="en">
 
 <head>
-    <title>Que guay!</title>
+    <title>¡Qué guay!</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.theme.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main_styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
     @yield('css')
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/owl.carousel.js"></script>
-    <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
-    @yield('js')
 
     <style>
+        html,
         body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            height: 100%;
         }
 
-        .super_container {
-            flex-grow: 1;
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            margin-top: 8rem;
+            margin-bottom: 5rem;
+        }
+
+        .footer {
+            margin-top: auto;
         }
     </style>
 </head>
 
 <body>
-    <div class="super_container">
+    <div class="wrapper">
         <header class="header trans_300">
             @include('layouts-landing.navbar-landing')
             @include('layouts-landing.main-navigation')
         </header>
 
-        <div style="margin-top: 8rem; margin-bottom: 5rem">
-            @yield('content')
+        <div class="super_container">
+            <div class="content-wrapper">
+                @yield('content')
+            </div>
         </div>
+
+        <footer class="footer trans_300">
+            @include('layouts-landing.footer-landing')
+        </footer>
     </div>
 
-    <!-- Footer -->
-    @include('layouts-landing.footer-landing')
-
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/popper.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.js') }}"></script>
+    <script src="{{ asset('assets/js/easing.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
     @yield('js')
 </body>
 

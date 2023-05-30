@@ -73,6 +73,7 @@ class UserController extends Controller
             $validatedData = $request->validate([
                 'name' => 'required|string',
                 'email' => 'required|email|unique:users',
+                'phone_number' => 'required|string|min:9|regex:/^9[0-9]{8}$/',
                 'password' => 'required|string|min:8',
                 'run' => 'required|string|unique:users|regex:/^\d{7,8}-[0-9K]$/',
                 'address' => 'required|string',

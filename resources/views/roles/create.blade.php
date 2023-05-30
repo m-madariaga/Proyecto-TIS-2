@@ -6,9 +6,9 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Roles</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Create</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Crear</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0"> Crear Rol</h6>
 @endsection
@@ -49,7 +49,7 @@
                                     <select class="form-select" id="role_type" @error('role_type') is-invalid @enderror" name="role_type" onchange="swapPermissionInputs(this)">
                                         <option value="1">Admin</option>
                                         <option value="2">Analista</option>
-                                        <option value="3">Cliente</option>
+                                        {{-- <option value="3">Cliente</option> --}}
                                     </select>
                                     @error('role_type')
                                         <span class="invalid-feedback" role="alert">
@@ -61,83 +61,17 @@
                             <div class="form-group row mb-3">
                                 <label for="role_type" class="col-md-4 col-form-label text-md-right">Permisos</label>
     
-                                <div class="col-md-6">
-                                    <div class="form-check" id="check1">
-                                        <input class="form-check-input" type="checkbox" value="1" name="defaultCheck1" id="defaultCheck1" checked>
-                                        <label class="form-check-label" for="defaultCheck1" id="label1">
-                                          Dashboard
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check2">
-                                        <input class="form-check-input" type="checkbox" value="2" name="defaultCheck2" id="defaultCheck2" checked>
-                                        <label class="form-check-label" for="defaultCheck2" id="label2">
-                                          Mantenedor usuarios
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check3">
-                                        <input class="form-check-input" type="checkbox" value="3" name="defaultCheck3" id="defaultCheck3" checked>
-                                        <label class="form-check-label" for="defaultCheck3" id="label3">
-                                          Mantenedor roles
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check4">
-                                        <input class="form-check-input" type="checkbox" value="4" name="defaultCheck4" id="defaultCheck4" checked>
-                                        <label class="form-check-label" for="defaultCheck4" id="label4">
-                                          Mantenedor permisos
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check5">
-                                        <input class="form-check-input" type="checkbox" value="5" name="defaultCheck5" id="defaultCheck5" checked>
-                                        <label class="form-check-label" for="defaultCheck5" id="label5">
-                                          Mantenedor productos
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check6">
-                                        <input class="form-check-input" type="checkbox" value="6" name="defaultCheck6" id="defaultCheck6" checked>
-                                        <label class="form-check-label" for="defaultCheck6" id="label6">
-                                          Mantenedor categorías
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check7">
-                                        <input class="form-check-input" type="checkbox" value="7" name="defaultCheck7" id="defaultCheck7" checked>
-                                        <label class="form-check-label" for="defaultCheck7" id="label7">
-                                          Mantenedor marcas
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check8">
-                                        <input class="form-check-input" type="checkbox" value="8" name="defaultCheck8" id="defaultCheck8" checked>
-                                        <label class="form-check-label" for="defaultCheck8" id="label8">
-                                          Mantenedor ventas
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check9">
-                                        <input class="form-check-input" type="checkbox" value="9" name="defaultCheck9" id="defaultCheck9" checked>
-                                        <label class="form-check-label" for="defaultCheck9" id="label9">
-                                          Mantenedor envío
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check10">
-                                        <input class="form-check-input" type="checkbox" value="10" name="defaultCheck10" id="defaultCheck10" checked>
-                                        <label class="form-check-label" for="defaultCheck10" id="label10">
-                                          Mantenedor tipo de envío
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check" id="check11">
-                                        <input class="form-check-input" type="checkbox" value="11" name="defaultCheck11" id="defaultCheck11" checked>
-                                        <label class="form-check-label" for="defaultCheck11" id="label11">
-                                          Mantenedor método de pago
-                                        </label>
-                                    </div>
+                                <div class="col-md-6" style="overflow-y: auto; max-height: 19rem">
+                                    @foreach ($permissions as $permission)
+                                        <div class="form-check" id="check1">
+                                            <input class="form-check-input" type="checkbox" value="{{$permission}}" name="{{$permission}}" id="{{$permission}}" checked>
+                                            <label class="form-check-label" for="{{$permission}}" id="label1">
+                                                {{$permission}}
+                                            </label>
+                                        </div>
+                                        
+                                    @endforeach
+                                    
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
@@ -158,101 +92,5 @@
 @endsection
 
 @section('js')
-    <script>
-        function swapPermissionInputs(select){
-            // const fecha = urlParams.get('fecha');
-            // console.log(fecha);
-            if(select.value==1){
-                document.getElementById('label1').innerHTML = 'Dashboard';
-                document.getElementById('label2').innerHTML = 'Mantenedor usuarios';
-                document.getElementById('label3').innerHTML = 'Mantenedor roles';
-                document.getElementById('label4').innerHTML = 'Mantenedor permisos';
-                document.getElementById('label5').innerHTML = 'Mantenedor productos';
-                document.getElementById('label6').innerHTML = 'Mantenedor categorías';
-                document.getElementById('label7').innerHTML = 'Mantenedor marcas';
-                document.getElementById('label8').innerHTML = 'Mantenedor ventas';
-                document.getElementById('label9').innerHTML = 'Mantenedor envío';
-                document.getElementById('label10').innerHTML = 'Mantenedor tipo de envío';
-                document.getElementById('label11').innerHTML = 'Mantenedor método de pago';
-
-                document.getElementById('defaultCheck1').disabled = false;
-                document.getElementById('defaultCheck2').disabled = false;
-                document.getElementById('defaultCheck3').disabled = false;
-                document.getElementById('defaultCheck4').disabled = false;
-                document.getElementById('defaultCheck5').disabled = false;
-                document.getElementById('defaultCheck6').disabled = false;
-                document.getElementById('defaultCheck7').disabled = false;
-                document.getElementById('defaultCheck8').disabled = false;
-                document.getElementById('defaultCheck9').disabled = false;
-                document.getElementById('defaultCheck10').disabled = false;
-                document.getElementById('defaultCheck11').disabled = false;
-
-                document.getElementById('check1').style.display = "block";
-                document.getElementById('check2').style.display = "block";
-                document.getElementById('check3').style.display = "block";
-                document.getElementById('check4').style.display = "block";
-                document.getElementById('check5').style.display = "block";
-                document.getElementById('check6').style.display = "block";
-                document.getElementById('check7').style.display = "block";
-                document.getElementById('check8').style.display = "block";
-                document.getElementById('check9').style.display = "block";
-                document.getElementById('check10').style.display = "block";
-                document.getElementById('check11').style.display = "block";
-            }else if(select.value==2){
-                document.getElementById('label1').innerHTML = 'Dashboard';
-                document.getElementById('label2').innerHTML = 'Reporte ventas';
-
-                document.getElementById('defaultCheck1').disabled = false;
-                document.getElementById('defaultCheck2').disabled = false;
-                document.getElementById('defaultCheck3').disabled = true;
-                document.getElementById('defaultCheck4').disabled = true;
-                document.getElementById('defaultCheck5').disabled = true;
-                document.getElementById('defaultCheck6').disabled = true;
-                document.getElementById('defaultCheck7').disabled = true;
-                document.getElementById('defaultCheck8').disabled = true;
-                document.getElementById('defaultCheck9').disabled = true;
-                document.getElementById('defaultCheck10').disabled = true;
-                document.getElementById('defaultCheck11').disabled = true;
-
-                document.getElementById('check1').style.display = "block";
-                document.getElementById('check2').style.display = "block";
-                document.getElementById('check3').style.display = "none";
-                document.getElementById('check4').style.display = "none";
-                document.getElementById('check5').style.display = "none";
-                document.getElementById('check6').style.display = "none";
-                document.getElementById('check7').style.display = "none";
-                document.getElementById('check8').style.display = "none";
-                document.getElementById('check9').style.display = "none";
-                document.getElementById('check10').style.display = "none";
-                document.getElementById('check11').style.display = "none";
-                
-                
-            }else{
-
-                document.getElementById('defaultCheck1').disabled = true;
-                document.getElementById('defaultCheck2').disabled = true;
-                document.getElementById('defaultCheck3').disabled = true;
-                document.getElementById('defaultCheck4').disabled = true;
-                document.getElementById('defaultCheck5').disabled = true;
-                document.getElementById('defaultCheck6').disabled = true;
-                document.getElementById('defaultCheck7').disabled = true;
-                document.getElementById('defaultCheck8').disabled = true;
-                document.getElementById('defaultCheck9').disabled = true;
-                document.getElementById('defaultCheck10').disabled = true;
-                document.getElementById('defaultCheck11').disabled = true;
-
-                document.getElementById('check1').style.display = "none";
-                document.getElementById('check2').style.display = "none";
-                document.getElementById('check3').style.display = "none";
-                document.getElementById('check4').style.display = "none";
-                document.getElementById('check5').style.display = "none";
-                document.getElementById('check6').style.display = "none";
-                document.getElementById('check7').style.display = "none";
-                document.getElementById('check8').style.display = "none";
-                document.getElementById('check9').style.display = "none";
-                document.getElementById('check10').style.display = "none";
-                document.getElementById('check11').style.display = "none";
-            }
-        }
-    </script>
+    
 @endsection

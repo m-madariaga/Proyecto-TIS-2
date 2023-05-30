@@ -1,69 +1,201 @@
 @extends('layouts-landing.welcome')
 
 @section('css')
-    <link rel="stylesheet" href="assets/css/paymethod_style.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
+    <style>
+        /* Agrega estilos específicos para esta vista */
+        /* Por ejemplo, para ocultar elementos */
+        .header {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+
+        .header_resume {
+            position: relative;
+            background-image: url("assets/images/lienzo.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-left: 15px;
+        }
+
+        .navbar-brand-img {
+            height: 70%;
+            width: 300px;
+            margin-left: 18rem;
+            object-fit: contain;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        .button-container button {
+            margin: 0 0.5rem;
+        }
+
+        .super_container {
+            margin-top: -8rem;
+            margin-bottom: 5rem;
+        }
+
+        .multiline-text span {
+            display: block;
+            line-height: 1.2;
+        }
+
+        .container-fluid {
+            padding: 0px 10rem 0px;
+        }
+    </style>
 @endsection
 
-
 @section('content')
-    <div class="container-fluid py-4" id="container-payment">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="payment-method-section">
-                    <h2>Método de Pago</h2>
+    <div class="header_resume">
+        <div class="header-content">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
+            <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                style="max-height: 4rem; width: auto;" alt="main_logo">
+            </a>
+        </div>
+    </div>
 
-                    <p>Seleccione un método de pago:</p>
-                    <div class="card-deck mb-4">
-                        @foreach ($paymentMethods as $paymentMethod)
-                            <div class="card" data-payment-method-id="{{ $paymentMethod->id }}">
+    <div class="container-fluid overflow-hidden py-4" id="container-payment">
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Productos</h4>
+                <div class="list-group-item">
+                    @foreach ($cart as $item)
+                        <div class="row align-items-center">
+                            <div class="col-md-2">
+                                <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
+                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="70">
+                                </a>
+                            </div>
+                            <div class="col-md-10">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <p class="card-text">Precio: ${{ $item->price }}</p>
+                                <p class="card-text">Cantidad: {{ $item->qty }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Métodos de Envío</h4>
+                <div class="list-group-item">
+                   <p> Método: {{ $shipment_type }}</p>
+                   <p> Dirección: {{Auth::user()->address}}, {{Auth::user()->city->name}}</p>
+                </div>
+                <h4 class="pb-1 pt-4">Métodos de Pagos</h4>
+                <div class="card-deck">
+                    @foreach ($paymentMethods as $paymentMethod)
+                        @if ($paymentMethod->visible)
+                            <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
+                                onclick="selectPaymentMethod(this)">
                                 <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
-                                    style="cursor: pointer;" onclick="selectPaymentMethod(this)">
-                                    <h5 class="card-title">{{ $paymentMethod->name }}</h5>
+                                    style="cursor: pointer;">
                                     <div
                                         class="payment-method-image d-flex flex-column align-items-center justify-content-center">
                                         <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
-                                            alt="Imagen del método de pago" class="img-fluid">
+                                            alt="Imagen del método de pago" class="img-fluid" style="max-height: 100px;">
+                                    </div>
+                                    <h6 class="card-title text-truncate text-center multiline-text"
+                                        style="margin-top:1rem;size: 1.1rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
+                                        {{ $paymentMethod->name }}
+                                    </h6>
+
+
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="paymentMethod"
+                                            id="paymentMethod{{ $paymentMethod->id }}" value="{{ $paymentMethod->id }}">
+                                        <label class="form-check-label"
+                                            for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
+                        @endif
+                    @endforeach
 
-                    <div class="checkout-button mt-4">
-                        <button onclick="proceedToCheckout()" class="btn btn-primary">Proceder con la compra</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="button-container">
+                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
+                        <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
+                            @csrf
+                            <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
+                            <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    @guest
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="alert alert-warning" role="alert">
+                    Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
+                    para iniciar sesión.
+                </div>
+            </div>
+        </div>
+    @endguest
 @endsection
 
 @section('js')
-<script>
-    function selectPaymentMethod(card) {
-        var cards = document.getElementsByClassName('card');
-        
-        // Deseleccionar todas las tarjetas
-        for (var i = 0; i < cards.length; i++) {
-            cards[i].classList.remove('selected');
-        }
-        
-        // Seleccionar la tarjeta clickeada
-        card.classList.add('selected');
-    }
-    
-    function proceedToCheckout() {
-        var selectedCard = document.querySelector('.card.selected');
-        
-        if (selectedCard) {
-            var paymentMethodId = selectedCard.getAttribute('data-payment-method-id');
-            // Aquí puedes realizar las acciones necesarias con el método de pago seleccionado
-            
-            console.log('Se seleccionó el método de pago con ID: ' + paymentMethodId);
-        } else {
-            console.log('No se ha seleccionado ningún método de pago');
-        }
-    }
-</script>
+    <script>
+        window.onload = function() {
+            if (window.performance && window.performance.navigation.type === 1) {
+                // La página se ha cargado debido a un evento de recarga
+                alert("Advertencia: la página se ha recargado. Verifique los datos antes de continuar.");
+            }
+        };
+    </script>
+    <script>
+        function selectPaymentMethod(element) {
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function(card) {
+                card.classList.remove('selected-payment-method');
+            });
 
+            element.classList.add('selected-payment-method');
+
+            var radioInput = element.querySelector('.form-check-input');
+            radioInput.checked = true;
+
+            var paymentMethodId = element.getAttribute('data-payment-method-id');
+            document.getElementById('paymentMethod').value = paymentMethodId;
+        }
+
+        // Validación del formulario antes de enviarlo
+        document.getElementById('shipment-form').addEventListener('submit', function(event) {
+            var selectedPaymentMethod = document.querySelector('.card.selected-payment-method');
+
+            if (!selectedPaymentMethod) {
+                event.preventDefault(); // Detiene el envío del formulario
+
+                // Muestra un mensaje de error
+                alert('Por favor, selecciona un método de pago antes de continuar.');
+            }
+        });
+    </script>
 @endsection

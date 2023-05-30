@@ -25,6 +25,25 @@ class ProductController extends Controller
         $productos = Product::all();
         return view('women', compact('productos'));
     }
+
+    public function men_product(){
+
+        $productos = Product::all();
+        return view('men', compact('productos'));
+
+    }
+    public function kids_product(){
+
+        $productos = Product::all();
+        return view('kids', compact('productos'));
+
+    }
+    public function accesorie_product(){
+
+        $productos = Product::all();
+        return view('accesorie', compact('productos'));
+
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -113,9 +132,12 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $Product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $Product)
-    {
-    }
+    public function show($productId)
+{
+    $product = Product::findOrFail($productId);
+
+    return view('product.show', compact('product'));
+}
 
     /**
      * Show the form for editing the specified resource.

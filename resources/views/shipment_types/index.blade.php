@@ -150,8 +150,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#shipment_types-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#shipment_types-table').DataTable({
+                dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
@@ -186,5 +186,9 @@
                 }
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
     </script>
 @endsection

@@ -32,10 +32,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Picture</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
+                                <th>Nombre Producto</th>
+                                <th>Imagen Referencial</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -48,12 +48,12 @@
                                                 data-img-url="{{ $item->options->urlfoto }}">{{ $item->name }}</td>
                                         <td>
                                             <a href="#" class="show-picture-modal"
-                                                data-img-url="{{ $item->options->urlfoto }}">
+                                                data-img-url="{{ $item->options->urlfoto }}" style="color:black;">
                                                 <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}"
                                                     width="70">
                                             </a>
                                         </td>
-                                        <td>{{ $item->price }}</td>
+                                        <td>$ {{ $item->price }}</td>
                                         <td>
                                             <div class="container-quantity">
                                                 <div>
@@ -67,12 +67,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{ $item->subtotal }}</td>
+                                        <td>$ {{ $item->subtotal }}</td>
                                         <td>
-                                            <form action="{{ route('removeitem', ['rowId' => $item->rowId]) }}" method="POST">
+                                            <form action="{{ route('removeitem', ['rowId' => $item->rowId]) }}"
+                                                method="POST">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit" class="btn btn-link"><i class="far fa-times-circle"></i></button>
+                                                <button type="submit" class="btn btn-link"><i
+                                                        class="far fa-times-circle"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -83,19 +85,19 @@
                             <tr>
                                 <td colspan="3"></td>
                                 <td>Total:</td>
-                                <td>{{ Cart::subtotal() }}</td>
+                                <td>$ {{ Cart::subtotal() }}</td>
                                 <td></td>
                             </tr>
                         </tfoot>
                     </table>
                     @if (Auth::check())
-                        <form action="{{ route('paymentmethod') }}" method="get">
+                        <form action="{{ route('shippingview.index') }}" method="get">
                             @csrf
-                            <button type="submit" class="btn btn-danger">Checkout</button>
+                            <button type="submit" class="btn btn-danger">Continuar</button>
                         </form>
                     @else
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#loginModal">Checkout</button>
+                            data-bs-target="#loginModal">Continuar</button>
                     @endif
                 </div>
             </div>
@@ -106,7 +108,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="pictureModalLabel">Picture Preview</h5>
+                    <h5 class="modal-title" id="pictureModalLabel">Imagen Referencial</h5>
                     <button type="submit" class="btn btn-link" data-bs-dismiss="modal" aria-label="Close" style=""><i
                             class="far fa-times-circle"></i></button>
                 </div>
@@ -121,13 +123,12 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Inicia sesión para continuar</h5>
+                    <h5 class="modal-title" id="loginModalLabel">Debes iniciar sesión para continuar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p class="text-center">Debes iniciar sesión para continuar con la compra.</p>
                     <div class="d-grid gap-2">
-                        <a href="{{ route('login') }}" class="btn btn-primary">Iniciar sesión</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary">Continuar</a>
                     </div>
                 </div>
             </div>
