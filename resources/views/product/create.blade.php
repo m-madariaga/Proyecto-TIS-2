@@ -40,7 +40,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="marca">Marca</label>
-                                <select class="form-control @error('marca') is-invalid @enderror" id="marca_id"
+                                <select class="form-select @error('marca') is-invalid @enderror" id="marca_id"
                                     name="marca_id">
                                     @foreach ($marcas as $marca)
                                         <option value='{{ $marca->id }}'>{{ $marca->nombre }}</option>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="categoria">Categoria</label>
-                                <select class="form-control @error('categoria') is-invalid @enderror" id="categoria_id"
+                                <select class="form-select @error('categoria') is-invalid @enderror" id="categoria_id"
                                     name="categoria_id">
                                     @foreach ($categorias as $categoria)
                                         <option value='{{ $categoria->id }}'>{{ $categoria->nombre }}</option>

@@ -96,7 +96,7 @@
                                                     <button type="submit"
                                                         class="btn btn-sm btn-outline-danger delete-country"
                                                         data-id="{{ $country->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Delete</i></button>
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -207,8 +207,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#countries-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#countries-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -217,6 +217,11 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        });
+
         $('#addCountryModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();
