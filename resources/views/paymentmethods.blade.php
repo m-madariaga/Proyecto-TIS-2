@@ -25,7 +25,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="card-header pb-0 text-end">
-                                    <a href="{{ route('paymethods.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                                    <a href="{{ route('paymethods.create') }}"
+                                        class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +49,9 @@
                                             <td class="text-center">{{ $paymentMethod->id }}</td>
                                             <td class="text-center">{{ $paymentMethod->name }}</td>
                                             <td class="text-center">
-                                                <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}" alt="Imagen del método de pago" class="img-fluid" style="max-width: 50px;">
+                                                <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
+                                                    alt="Imagen del método de pago" class="img-fluid"
+                                                    style="max-width: 50px;">
                                             </td>
                                             <td class="text-center">
                                                 @if ($paymentMethod->visible == 1)
@@ -58,11 +61,16 @@
                                                 @endif
                                             </td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('paymethods.edit', $paymentMethod->id) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>Editar</a>
-                                                <form action="{{ route('paymethods.destroy', $paymentMethod->id) }}" method="POST" style="display: inline;">
+                                                <a href="{{ route('paymethods.edit', $paymentMethod->id) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i
+                                                        class="fa fa-edit"></i>Editar</a>
+                                                <form action="{{ route('paymethods.destroy', $paymentMethod->id) }}"
+                                                    method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user"><i class="fa fa-trash" aria-hidden="true"></i>Delete</button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-user"><i
+                                                            class="fa fa-trash" aria-hidden="true"></i>Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -93,8 +101,8 @@
             });
         });
 
-        $('#searchBar').keyup(function(){
-        table.search($(this).val()).draw() ;
+        $('#searchBar').keyup(function() {
+            table.search($(this).val()).draw();
         })
     </script>
 @endsection

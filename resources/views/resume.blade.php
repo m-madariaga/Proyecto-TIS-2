@@ -112,26 +112,20 @@
                 </div>
                 <div class="card mb-5">
                     <div class="card-body">
-                        @foreach ($cart as $item)
-                            <div class="row align-items-center">
-                                <div class="col-md-12">
-                                    <div class="d-flex justify-content-end">
-                                        <p class="card-text text-end">Total a Pagar: ${{ $item->subtotal }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-check form-check-info text-end">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                    style="margin-left:1.1rem">
-                                <label class="form-check-label d-flex align-items-center" for="flexCheckDefault"
-                                    style="margin-left: 1rem;">
-                                    <span>Estoy de acuerdo con</span>
-                                    <a href="#modal-terminos" class="text-dark font-weight-bolder modal-trigger ms-2"><b>
-                                            Términos y Condiciones</b></a>
+                       
+                        <p class="card-text text-end">Total a Pagar: ${{ Cart::subtotal() }}</p>
 
-                                </label>
-                            </div>
-                        @endforeach
+                        <div class="form-check form-check-info text-end">
+                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                                style="margin-left:1.1rem">
+                            <label class="form-check-label d-flex align-items-center" for="flexCheckDefault"
+                                style="margin-left: 1rem;">
+                                <span>Estoy de acuerdo con</span>
+                                <a href="#modal-terminos" class="text-dark font-weight-bolder modal-trigger ms-2"><b>
+                                        Términos y Condiciones</b></a>
+
+                            </label>
+                        </div>
                     </div>
                 </div>
 

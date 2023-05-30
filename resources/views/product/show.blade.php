@@ -3,8 +3,6 @@
 @section('css')
 @endsection
 
-
-
 @section('content')
 <div class="container-fluid py-4 mt-4">
     <div class="product_detalle">
@@ -21,14 +19,12 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->nombre }}</h3>
                             <h5 class="card-subtitle mb-2 text-body-secondary">Precio: ${{ $product->precio }}</h5>
-                            <p class="card-text">Descripción: {{ $product->descripcion }}</p>
-
+             
                             <div class="row">
                                 <div class="col">
                                     <div class="container-quantity mb-4">
                                         <div class="product-count">
                                             <div class="stock">Stock:{{ $product->stock }}</div>
-
 
                                             <h5 class="card-subtitle mb-2 text-body-secondary">Cantidad:</h5>
                                             <a href="#" class="button_succes btn decrease-qty">-</a>
@@ -44,7 +40,11 @@
                                         @csrf
                                         <input type="hidden" name="id[]" value="{{ $product->id }}">
                                         <input type="hidden" name="quantity" id="quantity" value="1">
+                                        @if ($product->stock === 0)
+                                        <button class="button_carrito_p btn btn-lg btn-block" type="button" disabled>Sin stock</button>
+                                        @else
                                         <button class="button_carrito_p btn btn-lg btn-block" type="submit">Añadir al carrito</button>
+                                        @endif
                                     </form>
                                 </div>
                             </div>
@@ -64,6 +64,7 @@
         const increaseBtn = document.querySelector('.increase-qty');
         const qtyBtn = document.querySelector('#qty');
         const quantityInput = document.querySelector('#quantity');
+        const stock = {{ $product->stock }}; // Get the stock value from the server-side variable
 
         let quantity = 1;
 
@@ -76,9 +77,11 @@
         });
 
         increaseBtn.addEventListener('click', () => {
-            quantity++;
-            qtyBtn.textContent = quantity;
-            quantityInput.value = quantity;
+            if (quantity < stock) { // Check if quantity is less than stock
+                quantity++;
+                qtyBtn.textContent = quantity;
+                quantityInput.value = quantity;
+            }
         });
     });
 </script>
