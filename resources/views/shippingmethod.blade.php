@@ -48,15 +48,16 @@
         .super_container {
             margin-top: -8rem;
             margin-bottom: 5rem;
-            
+
         }
+
         /* Ajusta el ancho de los contenedores */
-       
-        .container-fluid{
+
+        .container-fluid {
             padding: 0px 10rem 0px;
         }
 
-      
+
         /* Añade un poco de margen a los elementos dentro del cuadro de productos */
         .list-group-item .row {
             margin-bottom: 1rem;
@@ -153,11 +154,22 @@
                             <input type="hidden" name="shipment_id" id="shipment-id" value="">
                             <button type="submit" class="btn btn-primary">Continuar</button>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>
         </div>
+
+        @guest
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
+                        para iniciar sesión.
+                    </div>
+                </div>
+            </div>
+        @endguest
     </div>
 @endsection
 

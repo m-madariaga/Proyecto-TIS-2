@@ -3,32 +3,7 @@
 @section('css')
 @endsection
 
-@section('js')
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const decreaseBtn = document.querySelector('.decrease-qty');
-        const increaseBtn = document.querySelector('.increase-qty');
-        const qtyBtn = document.querySelector('#qty');
-        const quantityInput = document.querySelector('#quantity');
 
-        let quantity = 1;
-
-        decreaseBtn.addEventListener('click', () => {
-            if (quantity > 1) {
-                quantity--;
-                qtyBtn.textContent = quantity;
-                quantityInput.value = quantity;
-            }
-        });
-
-        increaseBtn.addEventListener('click', () => {
-            quantity++;
-            qtyBtn.textContent = quantity;
-            quantityInput.value = quantity;
-        });
-    });
-</script>
-@endsection
 
 @section('content')
 <div class="container-fluid py-4 mt-4">
@@ -80,4 +55,31 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const decreaseBtn = document.querySelector('.decrease-qty');
+        const increaseBtn = document.querySelector('.increase-qty');
+        const qtyBtn = document.querySelector('#qty');
+        const quantityInput = document.querySelector('#quantity');
+
+        let quantity = 1;
+
+        decreaseBtn.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                qtyBtn.textContent = quantity;
+                quantityInput.value = quantity;
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            quantity++;
+            qtyBtn.textContent = quantity;
+            quantityInput.value = quantity;
+        });
+    });
+</script>
 @endsection
