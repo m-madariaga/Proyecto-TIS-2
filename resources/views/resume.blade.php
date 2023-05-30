@@ -61,17 +61,19 @@
 @section('content')
     <div class="header_resume">
         <div class="header-content">
-            <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
-                style="max-height: 20rem; width: auto;" alt="main_logo">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}">
+                <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                    style="max-height: 4rem; width: auto;" alt="main_logo">
+            </a>
         </div>
     </div>
 
     <div class="container-fluid overflow-hidden" id="container-payment">
         <div class="row justify-content-center mt-4">
             <div class="col-md-4">
+                <h4 class="pb-1 pt-4">Productos</h4>
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="card-title">Productos</h5>
                         @foreach ($cart as $item)
                             <div class="row align-items-center">
                                 <div class="col-md-4">
@@ -92,24 +94,21 @@
             </div>
 
             <div class="col-md-4">
+                <h4 class="pb-1 pt-4">Resumen Información</h4>
                 <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Método de envío</h5>
-                        <p>Método de envío: {{ $shipment_type }}</p>
-                        <p>Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city->name }}</p>
-                    </div>
-                </div>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title">Métodos de Pago</h5>
-                        <div class="form-check">
-                            <p>Método de envío: {{ $paymentMethodName }}</p>
-                        </div>
 
+                    <div class="card-body">
+                        <p>Número de Celular: {{ Auth::user()->phone_number }}</p>
+                        <p>Correo Electrónico: {{ Auth::user()->email }}</p>
+
+                        <p>Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city->name }}</p>
+                        <p>Método de Envío: {{ $shipment_type }}</p>
+                        <p>Método de Pago: {{ $paymentMethodName }}</p>
                     </div>
                 </div>
+
                 <div class="button-container">
-                    <a href="#" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
                     <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
                         @csrf
                         <button type="submit" class="btn btn-primary">Realizar Pedido</button>

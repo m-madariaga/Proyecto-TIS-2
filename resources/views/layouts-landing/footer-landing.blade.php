@@ -60,7 +60,7 @@
             </div>
 
             <div class="col-lg-2 col-md-6 col-sm-6 mb-3 mt-3 footer_nav">
-            <h5><strong>Sobre Que Guay</strong></h5>
+            <h5><strong>Sobre Que Guay!</strong></h5>
                 
                 <ul>
                     <li class="mb-2">

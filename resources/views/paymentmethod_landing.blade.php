@@ -54,23 +54,28 @@
             display: block;
             line-height: 1.2;
         }
+
+        .container-fluid {
+            padding: 0px 10rem 0px;
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="header_resume">
         <div class="header-content">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
             <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
-                style="max-height: 20rem; width: auto;" alt="main_logo">
+                style="max-height: 4rem; width: auto;" alt="main_logo">
+            </a>
         </div>
     </div>
 
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
         <div class="row mt-4">
             <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Productos</h4>
                 <div class="list-group-item">
-                    <h6>Productos:</h6>
-
                     @foreach ($cart as $item)
                         <div class="row align-items-center">
                             <div class="col-md-2">
@@ -88,6 +93,12 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Métodos de Envío</h4>
+                <div class="list-group-item">
+                   <p> Método: {{ $shipment_type }}</p>
+                   <p> Dirección: {{Auth::user()->address}}, {{Auth::user()->city->name}}</p>
+                </div>
+                <h4 class="pb-1 pt-4">Métodos de Pagos</h4>
                 <div class="card-deck">
                     @foreach ($paymentMethods as $paymentMethod)
                         @if ($paymentMethod->visible)
@@ -101,7 +112,7 @@
                                             alt="Imagen del método de pago" class="img-fluid" style="max-height: 100px;">
                                     </div>
                                     <h6 class="card-title text-truncate text-center multiline-text"
-                                        style="font-size: 1.3rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
+                                        style="margin-top:1rem;size: 1.1rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
                                         {{ $paymentMethod->name }}
                                     </h6>
 
