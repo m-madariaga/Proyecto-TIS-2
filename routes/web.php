@@ -226,7 +226,6 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 Auth::routes();
 
 
-Route::get('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
@@ -259,4 +258,4 @@ Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
-Route::get('/shippingview', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
+Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');

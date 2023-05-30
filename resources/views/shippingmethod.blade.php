@@ -153,6 +153,7 @@
                             <input type="hidden" name="shipment_id" id="shipment-id" value="">
                             <button type="submit" class="btn btn-primary">Continuar</button>
                         </form>
+                        
                     </div>
                 </div>
             </div>

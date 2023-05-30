@@ -40,7 +40,7 @@ class PaymentMethodController extends Controller
         $paymentMethod->name = $request->name;
         $paymentMethod->save();
 
-        return redirect('/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
+        return redirect('/paymentmethod_landing')->with('success', 'Método de pago creado exitosamente!');
     }
 
     public function store(Request $request)
