@@ -117,5 +117,15 @@
                 </div>
             </div>
         </div>
+        @guest
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
+                        para iniciar sesión.
+                    </div>
+                </div>
+            </div>
+        @endguest
     </div>
 @endsection

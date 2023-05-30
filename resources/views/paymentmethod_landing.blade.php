@@ -70,6 +70,7 @@
             <div class="col-md-6">
                 <div class="list-group-item">
                     <h6>Productos:</h6>
+
                     @foreach ($cart as $item)
                         <div class="row align-items-center">
                             <div class="col-md-2">
@@ -127,8 +128,8 @@
                         <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
                         <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
                             @csrf
-                            <input type="hidden" name="shipment_type_id" id="shipment-type-id" value="">
                             <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
+                            <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
                             <button type="submit" class="btn btn-primary">Continuar</button>
                         </form>
                     </div>
@@ -136,9 +137,28 @@
             </div>
         </div>
     </div>
+
+    @guest
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="alert alert-warning" role="alert">
+                    Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
+                    para iniciar sesión.
+                </div>
+            </div>
+        </div>
+    @endguest
 @endsection
 
 @section('js')
+    <script>
+        window.onload = function() {
+            if (window.performance && window.performance.navigation.type === 1) {
+                // La página se ha cargado debido a un evento de recarga
+                alert("Advertencia: la página se ha recargado. Verifique los datos antes de continuar.");
+            }
+        };
+    </script>
     <script>
         function selectPaymentMethod(element) {
             var cards = document.querySelectorAll('.card');

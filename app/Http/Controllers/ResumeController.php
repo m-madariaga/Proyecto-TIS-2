@@ -29,7 +29,7 @@ class ResumeController extends Controller
         $user = User::find($userId);
         
         $cart = Cart::content();
-        $shipment_type = $request->input('shipment_type_id');
+        $shipment_type = $request->input('shipment_type');
         $paymentMethodId = $request->input('paymentMethod');
         $paymentMethod = PaymentMethod::find($paymentMethodId);
         
