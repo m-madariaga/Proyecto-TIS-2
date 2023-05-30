@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>Productos Mujer</h2>
+                        <h2>Mujer</h2>
                     </div>
                 </div>
             </div>

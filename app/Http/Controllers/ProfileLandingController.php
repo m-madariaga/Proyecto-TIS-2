@@ -19,7 +19,7 @@ class ProfileLandingController extends Controller
         $countries = Country::all();
         $regions = Region::all();
         $cities = City::all();
-        $orders = Order::all();
+        $orders = Order::where('user_id', $user->id)->get(); // Obtén los pedidos del usuario conectado
         $details = Detail::all();
         return view('profile_landing', compact('countries', 'regions', 'cities', 'user','orders','details'));
     }

@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
-                <a class="navbar-brand m-0" href="{{ route('home-landing') }}" target="_blank">
+                <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
                         <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img logo-img mb-2 mt-6" alt="main_logo" id="imgchange_logo">
                         <span class="ms-1 font-weight-bold"></span>
                         <span></span>
