@@ -13,7 +13,6 @@
                         <span class="ms-1 font-weight-bold"></span>
                    
                     </a>
-
                 </div>
             </div>
         </div>

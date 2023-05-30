@@ -29,8 +29,8 @@
         }
 
         .navbar-brand-img {
-            height: 70%;
-            width: 300px;
+            height: 20%;
+            width: 100px;
             margin-left: 18rem;
             object-fit: contain;
         }
@@ -48,15 +48,12 @@
         .super_container {
             margin-top: -8rem;
             margin-bottom: 5rem;
-
         }
 
         /* Ajusta el ancho de los contenedores */
-
         .container-fluid {
             padding: 0px 10rem 0px;
         }
-
 
         /* Añade un poco de margen a los elementos dentro del cuadro de productos */
         .list-group-item .row {
@@ -90,16 +87,18 @@
 @section('content')
     <div class="header_resume">
         <div class="header-content">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
             <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
-                style="max-height: 20rem; width: auto;" alt="main_logo">
+                style="max-height: 4rem; width: auto;" alt="main_logo">
+            </a>
         </div>
     </div>
 
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
         <div class="row mt-4">
             <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Productos</h4>
                 <div class="list-group-item">
-                    <h6>Productos:</h6>
                     @foreach ($cart as $item)
                         <div class="row align-items-center">
                             <div class="col-md-2">
@@ -117,6 +116,7 @@
                 </div>
             </div>
             <div class="col-md-6">
+                <h4 class="pb-1 pt-4">Métodos de Envío</h4>
                 <div class="card-deck">
                     @foreach ($shipment_types as $shipment_type)
                         @if (
@@ -154,7 +154,6 @@
                             <input type="hidden" name="shipment_id" id="shipment-id" value="">
                             <button type="submit" class="btn btn-primary">Continuar</button>
                         </form>
-
                     </div>
                 </div>
             </div>
