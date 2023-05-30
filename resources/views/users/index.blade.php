@@ -243,7 +243,7 @@
                                                     <button type="submit"
                                                         class="btn btn-sm btn-outline-danger delete-user"
                                                         data-id="{{ $user->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true">Borrar</i></button>
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
