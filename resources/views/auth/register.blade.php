@@ -1,5 +1,11 @@
 @extends('layouts.argon.auth')
 
+@section('css')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+@endsection
+
+
 @section('content')
 <main class="main-content mt-0">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-color:hotpink; background-position: top;">
@@ -7,7 +13,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
-                <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
+                    <a class="navbar-brand m-0" href="{{ route('home-landing') }}">
                         <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img logo-img mb-2 mt-6" alt="main_logo" id="imgchange_logo">
                         <span class="ms-1 font-weight-bold"></span>
                         <span></span>
@@ -149,14 +155,10 @@
                             </div>
 
 
-
-
                             <div class="form-check form-check-info text-start">
                                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Estoy de acuerdo con <a href="javascript:;" class="text-dark font-weight-bolder">Términos
-                                        y
-                                        Condiciones</a>
+                                    Estoy de acuerdo con <a href="#" class="text-dark font-weight-bolder" id="mostrar-modal">Términos y Condiciones</a>
                                 </label>
                             </div>
                             <div class="text-center">
@@ -164,7 +166,6 @@
                             </div>
                             <p class="text-sm mt-3 mb-0">¿Ya tienes una cuenta? <a href="{{ route('login') }}" class="text-dark font-weight-bolder">Iniciar sesión</a></p>
                         </form>
-
                     </div>
                 </div>
             </div>
@@ -172,65 +173,31 @@
     </div>
 </main>
 
-<!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-<footer class="footer py-5">
-    <div class="container">
-        {{-- <div class="row">
-                <div class="col-lg-8 mb-4 mx-auto text-center">
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Company
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        About Us
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Team
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Products
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Blog
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-5 me-3 mb-sm-0 mb-2">
-                        Pricing
-                    </a>
-                </div>
-                <div class="col-lg-8 mx-auto text-center mb-4 mt-2">
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-dribbble"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-twitter"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-instagram"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-pinterest"></span>
-                    </a>
-                    <a href="javascript:;" target="_blank" class="text-secondary me-xl-4 me-4">
-                        <span class="text-lg fab fa-github"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-8 mx-auto text-center mt-1">
-                    <p class="mb-0 text-secondary">
-                        Copyright ©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script> Soft by Creative Tim.
-                    </p>
-                </div>
-            </div> --}}
+<!-- MODAL TERMINOS Y CONDICIONES -->
+<div id="modal-terminos" class="modal">
+    <div class="modal-content">
+        <h4>Términos y Condiciones</h4>
+        <p>Aquí van tus términos y condiciones.</p>
     </div>
-</footer>
+    <div class="modal-footer">
+        <a href="#" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+    </div>
+</div>
+
+
+
 @endsection
 @section('js')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modals = document.querySelectorAll('.modal');
+        M.Modal.init(modals);
+    });
+</script>
 <script>
     $(document).ready(function() {
 
@@ -277,4 +244,6 @@
         });
     });
 </script>
+
+
 @endsection

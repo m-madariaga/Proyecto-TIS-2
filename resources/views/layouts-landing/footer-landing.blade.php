@@ -45,7 +45,7 @@
             <h5><strong>Ayuda</strong></h5>
                 <ul>
                     <li class="mb-2">
-                        <a href=""></a>
+                        <a href="{{route('termsconditionsview.index')}}">Términos y condiciones</a>
                     </li>
                     <li class="mb-2">
                         <a href=""></a>
