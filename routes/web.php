@@ -265,3 +265,7 @@ Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.s
 
 Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 Route::get('/shippingview', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
+Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
+
+
+

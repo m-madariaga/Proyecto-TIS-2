@@ -1,6 +1,6 @@
 @extends('layouts-landing.welcome')
 
-@section('search_results')
+@section('content')
 
 
 
@@ -35,11 +35,11 @@
                 @endforeach
             </div>
             @else
-           
+
             <div class="row">
                 <div class="col text-center">
                     <div class="new_arrivals_title">
-                    <h4>No hay resultados encontrados</h4>
+                        <h4>No hay resultados encontrados</h4>
                     </div>
                 </div>
             </div>

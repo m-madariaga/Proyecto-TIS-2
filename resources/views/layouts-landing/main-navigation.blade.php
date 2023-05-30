@@ -8,14 +8,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toggle Hamburger -->
-    <script>
-        $(document).ready(function() {
-            $('.hamburger_container').click(function() {
-                $(this).toggleClass('open');
-                $('.navbar_menu').toggleClass('show');
-            });
-        });
-    </script>
 
     <script>
         $(document).ready(function() {
