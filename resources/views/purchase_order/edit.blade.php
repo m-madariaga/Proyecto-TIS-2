@@ -61,6 +61,8 @@
                                                         <tbody>
                                                             <tr class="">
                                                                 <td>
+                                                                    <input type="number" name="prod_id[]" id="prod_id"
+                                                                        value="{{ $prod->id }}" hidden>
                                                                     {{ $prod->product->nombre }}
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
@@ -97,16 +99,7 @@
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
-                                                                    <form
-                                                                        action="{{ route('orden-compra-product-destroy', $prod->id) }}"
-                                                                        method="POST" style="display: inline;">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-sm btn-outline-danger"><i
-                                                                                class="fa fa-trash" aria-hidden="true"></i>
-                                                                            Eliminar</button>
-                                                                    </form>
+                                                                    <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('orden-compra-product-destroy',$prod->id) }}"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -139,7 +132,8 @@
                     <h5 class="modal-title" id="addModalLabel">Nuevo producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
+                <form action="{{ route('orden-compra-product-store') }}" method="POST">
+                    <input type='number' name="orden_id" id="orden_id" value='{{ $orden->id }}' hidden>
                     @csrf
                     <div class="table-responsive p-0">
                         <table id="table" class="table display table-stripped align-items-center">

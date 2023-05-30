@@ -46,8 +46,8 @@
                                                         <tr>
                                                             <th scope="col">Nombre</th>
                                                             <th scope="col">Marca</th>
-                                                            <th scope="col">Valor de compra</th>
                                                             <th scope="col">Unidades</th>
+                                                            <th scope="col">Valor de compra</th>
                                                         </tr>
                                                     </thead>
                                                     @foreach ($orden->product as $orden_prod)
@@ -56,8 +56,8 @@
                                                                 <td scope="row">{{ $orden_prod->product->nombre }}
                                                                 </td>
                                                                 <td>{{ $orden_prod->product->marca->nombre }}</td>
-                                                                <td>{{ $orden_prod->precio }}</td>
                                                                 <td>{{ $orden_prod->cantidad }}</td>
+                                                                <td>{{ $orden_prod->precio }}</td>
                                                             </tr>
                                                         </tbody>
                                                     @endforeach
@@ -70,14 +70,13 @@
                                                 <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
                                                     Editar</a>
-                                                <form
-                                                    action="{{ route('orden-compra-destroy', $orden->id)}}"
+                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger" class="btn btn-sm btn-outline-danger "><i
-                                                            class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                        ><i class="fa fa-trash"
+                                                            aria-hidden="true"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>

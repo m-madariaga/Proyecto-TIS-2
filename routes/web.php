@@ -123,15 +123,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
         Route::post('/orden-compra/store', [PurcharseOrderController::class, 'store'])->name('orden-compra-store');
         Route::get('/orden-compra/{id}/edit', [PurcharseOrderController::class, 'edit'])->name('orden-compra-edit');
-        Route::post('/orden-compra/{id}/update', [PurcharseOrderController::class, 'update'])->name('orden-compra-update');
         Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
 
-        Route::get('/orden-compra-product', [PurcharseOrderProductController::class, 'index'])->name('orden-compra-product');
-        Route::get('/orden-compra-product/create', [PurcharseOrderProductController::class, 'create'])->name('orden-compra-product-create');
-        Route::get('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
+        Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
-        Route::post('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
-        Route::delete('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
+        Route::patch('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
+        Route::get('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
 
     });
 
