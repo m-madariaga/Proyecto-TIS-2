@@ -52,6 +52,7 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
+
 // rutas categorias
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');

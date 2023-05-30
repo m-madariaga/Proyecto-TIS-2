@@ -227,8 +227,8 @@
                                 <strong>GENERAL</strong>
                             </li>
                         </ol>
-                        <p class="terms_p">La experiencia de comprar en www.queguay.cl es fácil y segura. En este sentido, la
-                            empresa Vestuarios Que Guay SPA trabaja con los más altos estándares de seguridad y toda la información
+                        <p class="terms_p">La experiencia de comprar en www.queguay.azurewebsites.net es fácil y segura. En este sentido, la
+                            empresa Vestuarios Que Guay trabaja con los más altos estándares de seguridad y toda la información
                             que los usuarios registran en el Sitio se mantiene de forma estrictamente confidencial.</p>
     
                         <ol start="2">
@@ -263,14 +263,14 @@
                         </p>
                         <p>
                             <span class="terms_p">
-                                Vestuarios Que Guay SPA no se responsabiliza por la NO ENTREGA de pedidos por error en la digitación de
+                                Vestuarios Que Guay no se responsabiliza por la NO ENTREGA de pedidos por error en la digitación de
                                 la dirección de despacho. Se sugiere a todos los clientes corroborar los datos antes de finalizar su
                                 compra.
                             </span>
                         </p>
                         <p>
                             <span class="terms_p">
-                                Toda Promoción de envío es exclusiva para productos marca Gnomo a no ser que se informe lo contrario.
+                                Toda Promoción de envío es exclusiva para productos marca Qye Guay! a no ser que se informe lo contrario.
                             </span>
                         </p>
     
@@ -299,9 +299,9 @@
                                 <strong>DECLARACIÓN DE PRIVACIDAD</strong>
                             </li>
                         </ol>
-                        <p class="terms_p">Vestuarios Que Guay SPA no comunica ni cede a terceros, bajo ninguna circunstancia, los datos
+                        <p class="terms_p">Vestuarios Que Guay no comunica ni cede a terceros, bajo ninguna circunstancia, los datos
                             de carácter personal registrados por los usuarios en el Sitio. Sin perjuicio de lo anterior, esta información
-                            podrá ser tratada por Vestuarios Gnomowear SPA y sus asociados, únicamente para fines estadísticos y/o para
+                            podrá ser tratada por Vestuarios Que Guay y sus asociados, únicamente para fines estadísticos y/o para
                             obtener una mejor comprensión de los perfiles de los usuarios y, así, mejorar los productos ofrecidos en el
                             Sitio.</p>
                         <br>
@@ -313,7 +313,7 @@
                         </ol>
                         <p class="terms_p">Al registrarse en el Sitio se le solicitará al usuario solamente aquella información necesaria
                             para el pago del producto y su posterior envío. En ningún caso, esta información será comunicada o transmitida
-                            a terceros ajenos a Vestuarios Que Guay SPA, Que guay no almacena ni conserva la información de la tarjeta
+                            a terceros ajenos a Vestuarios Que Guay, Que guay no almacena ni conserva la información de la tarjeta
                             bancaria del usuario.</p>
                         <br>
     
@@ -324,7 +324,7 @@
                         </ol>
                         <p class="terms_p">El usuario registrado podrá ejercer sus derechos de información, modificación, eliminación,
                             cancelación y/o bloqueo de sus datos personales cuando lo estime pertinente, según lo establecido en la Ley
-                            Nº 19.628 sobre Protección de la Vida Privada. Vestuarios Gnomowear SPA pone a disposición del usuario una
+                            Nº 19.628 sobre Protección de la Vida Privada. Vestuarios Que Guay pone a disposición del usuario una
                             dirección de correo electrónico (contacto@queguay.cl), un número telefónico +569 57162265 a disposición de
                             éste para efectos de poder solicitar la modificación y/o corrección de sus datos personales.</p>
                     </div>
