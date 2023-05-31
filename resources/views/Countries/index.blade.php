@@ -280,21 +280,17 @@
 
 
     <script>
-        $(document).ready(
-
-
-
-            function() {
-                $('#countries-table').DataTable({
-                    dom: 'lfrtip',
-
-                    language: {
-                        url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-                    },
-
-
-                });
+        $(document).ready(function() {
+            table = $('#countries-table').DataTable({
+                dom: 'lrtip',
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                },
             });
+        });
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        });
         $('#addCountryModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();
