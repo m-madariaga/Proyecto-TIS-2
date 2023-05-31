@@ -189,6 +189,54 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-city', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/cities/' + id,
+                        data: {
+                            id: id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log('success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '¡Tipo de envío eliminado correctamente!',
+                                timer: 1000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
     <script>
         $(document).ready(function() {
 
@@ -299,7 +347,15 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addCityModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 1500
+                            });
+                            setTimeout(function() {
+                              location.reload();  //your code to be executed after 1 second
+                            }, 1500);
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);

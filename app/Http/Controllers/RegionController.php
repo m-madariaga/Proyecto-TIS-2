@@ -122,6 +122,6 @@ class RegionController extends Controller
     {
         $region= Region::find($id);
         $region->delete();
-        return redirect('admin/regions')->with('success', 'Pais eliminado exitosamente!');
+        return response()->json(['success' => true]);
     }
 }

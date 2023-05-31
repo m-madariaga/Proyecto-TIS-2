@@ -37,8 +37,5 @@ class ResumeController extends Controller
         return view('resume', compact('paymentMethodName', 'cart', 'shipment_type'));
     }
 
-    public function orderConfirmation()
-    {
-        return view('order_confirmation');
-    }
+
 }

@@ -18,6 +18,7 @@
 
 @section('content')
     <div class="container-fluid py-4">
+
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
@@ -43,6 +44,16 @@
                                     <form method="POST" id="addUserForm" action="{{ route('users.store') }}">
                                         @csrf
 
+
+                                        @if (session('error'))
+                                            <script>
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Error',
+                                                    text: '{{ session('error') }}'
+                                                });
+                                            </script>
+                                        @endif
                                         <div class="modal-body">
                                             <div class="form-group">
                                                 <label for="name">Nombre:</label>
@@ -70,8 +81,8 @@
                                             <div class="form-group">
                                                 <label for="phone_number">Número Celular:</label>
                                                 <input type="text"
-                                                    class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
-                                                    name="phone_number" required>
+                                                    class="form-control @error('phone_number') is-invalid @enderror"
+                                                    id="phone_number" name="phone_number" required>
                                                 @error('phone_number')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -191,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('users.generate_pdf') }}" hidden>Descargar pdf</a>
+
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>
@@ -299,6 +310,13 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
     <script>
         // Usar Ajax para manejar el envio del formulario del modal para añadir usuarios
         var addUserForm = document.getElementById('addUserForm');
@@ -317,7 +335,19 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addUserModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 2000
+                            });
+                            setTimeout(function() {
+                              location.reload();  //your code to be executed after 1 second
+                            }, 1000);
+                             // se recarga al mismo tiempo que se esconde el modal
+
+
+
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
@@ -351,6 +381,54 @@
                 errorField.after(errorLabel);
             }
         }
+    </script>
+    <script>
+        $(document).on('click', '.delete-user', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/users/' + id,
+                        data: {
+                            id: id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log('success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '¡Rol eliminado correctamente!',
+                                timer: 1000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+
+        });
+
     </script>
     <script>
         $(document).ready(function() {

@@ -8,9 +8,6 @@ use App\Models\User;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Region;
-use Barryvdh\DomPDF\Facade\PDF;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
@@ -38,16 +35,6 @@ class UserController extends Controller
         return view('profile', compact('users'));
     }
 
-
-
-    public function generate_pdf()
-    {
-        $users = User::all();
-        $fecha_actual = Carbon::now();
-        Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
-        $pdf = PDF::loadView('receipt.ticket', ['users' => $users, 'fecha_actual' => $fecha_actual]);
-        return $pdf->stream('ticket.pdf');
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -154,7 +141,7 @@ class UserController extends Controller
 
         // dejar para futuro sweetalert return response()->json(['success' => true]);
 
-        return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+        return response()->json(['success' => true]);
     }
 
     public function getRegions($countryId)

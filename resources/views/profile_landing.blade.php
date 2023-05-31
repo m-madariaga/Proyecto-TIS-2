@@ -173,7 +173,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk}}</span>
                                 </div>
                             </div>
                         </div>
@@ -202,9 +202,9 @@
                                         @foreach ($orders as $order)
                                             @if ($order->user_id === Auth::user()->id)
                                                 <tr>
-                                                    <td class="text-center">{{ $order->id }}</td>
-                                                    <td class="text-center">{{ $order->created_at }}</td>
-                                                    <td class="text-center">${{ $order->total }}</td>
+                                                    <td class="text-center">{{ $order->id ?? 'test'}}</td>
+                                                    <td class="text-center">{{ $order->created_at ?? 'test' }}</td>
+                                                    <td class="text-center">${{ $order->total ?? 'test'}}</td>
                                                     <td class="text-center pt-3">
                                                         <button type="button"
                                                             class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
@@ -333,7 +333,6 @@
                                     <select id="country"
                                         class="form-control input-field @error('country_fk') is-invalid @enderror"
                                         name="country_fk" required>
-                                        <option value="">{{ Auth::user()->country_fk }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
@@ -397,12 +396,12 @@
     <!-- END MODAL -->
 
     <!-- Modal detalle pedido -->
-    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id }}Label"
+    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test'}}Label"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal{{ $order->id }}Label">Detalles del Pedido {{ $order->id }}
+                    <h5 class="modal-title" id="modal{{ $order->id ?? 'test'}}Label">Detalles del Pedido {{ $order->id ?? 'test'}}
                     </h5>
                 </div>
                 <div class="modal-body">
