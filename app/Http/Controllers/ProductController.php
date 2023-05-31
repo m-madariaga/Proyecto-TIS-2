@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
@@ -26,23 +27,20 @@ class ProductController extends Controller
         return view('women', compact('productos'));
     }
 
-    public function men_product(){
-
+    public function men_product()
+    {
         $productos = Product::all();
         return view('men', compact('productos'));
-
     }
-    public function kids_product(){
-
+    public function kids_product()
+    {
         $productos = Product::all();
         return view('kids', compact('productos'));
-
     }
-    public function accesorie_product(){
-
+    public function accesorie_product()
+    {
         $productos = Product::all();
         return view('accesorie', compact('productos'));
-
     }
     /**
      * Show the form for creating a new resource.
@@ -64,66 +62,70 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        @error_log('entrando a store');
-        $request->validate(
-            [
-                'marca_id' => 'required|exists:brands,id',
-                'categoria_id' => 'required|exists:categories,id',
-                'nombre' => 'required',
-                'precio' => 'required',
-                'color' => 'required',
-                'talla' => 'required',
-                'stock' => 'required',
-                'visible' => 'required',
-                'imagen' => 'required|image|mimes:jpeg,png,jpg,svg',
-            ],
-            [
-                'marca_id.required' => 'El campo marca es requerido.',
-                'marca_id.exists' => 'La marca seleccionada no existe en nuestra base de datos.',
-                'categoria_id.required' => 'El campo categoría es requerido.',
-                'categoria_id.exists' => 'La categoría seleccionada no existe en nuestra base de datos.',
-                'nombre.required' => 'El campo nombre es requerido.',
-                'precio.required' => 'El campo precio es requerido.',
-                'color.required' => 'El campo color es requerido.',
-                'talla.required' => 'El campo talla es requerido.',
-                'stock.required' => 'El campo stock es requerido.',
-                'imagen.required' => 'El campo imagen es requerido.',
-                'imagen.image' => 'El archivo seleccionado debe ser una imagen.',
-                'imagen.mimes' => 'El archivo seleccionado debe tener uno de los siguientes formatos: jpeg, png, jpg o svg.',
-            ],
-        );
-        @error_log('despues de validar');
-        $imagenUser = '';
-        if ($image = $request->file('imagen')) {
-            $rutaGuardarImg = 'imagen/';
-            $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
-            $image->move($rutaGuardarImg, $imagenUser);
+        try {
+            $validatedData = $request->validate(
+                [
+                    'marca_id' => 'required|exists:brands,id',
+                    'categoria_id' => 'required|exists:categories,id',
+                    'nombre' => 'required|string',
+                    'precio' => 'required|numeric|gt:0',
+                    'color' => 'required|string',
+                    'talla' => 'required|string|max:10',
+                    'stock' => 'required|numeric|gte:0',
+                    'visible' => 'required|numeric|in:0,1',
+                    'imagen' => 'required|image|mimes:jpeg,png,jpg,svg',
+                ],
+                [
+                    'nombre.required' => 'El campo nombre es obligatorio.',
+                    'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
+                    'marca_id.required' => 'El campo marca es obligatorio.',
+                    'marca_id.exists' => 'La marca seleccionada no existe.',
+                    'categoria_id.required' => 'El campo categoria es obligatorio.',
+                    'categoria_id.exists' => 'La categoría seleccionada no existe.',
+                    'precio.required' => 'El campo precio es obligatorio.',
+                    'precio.numeric' => 'El campo precio debe ser un número.',
+                    'precio.gt' => 'El campo precio debe ser mayor a 0.',
+                    'color.required' => 'El campo color es obligatorio.',
+                    'color.string' => 'El campo color debe ser una cadena de texto.',
+                    'talla.required' => 'El campo talla es obligatorio.',
+                    'talla.string' => 'El campo talla debe ser una cadena de texto.',
+                    'talla.max' => 'El campo talla no debe exceder los 10 caracteres.',
+                    'stock.required' => 'El campo stock es obligatorio.',
+                    'stock.numeric' => 'El campo stock debe ser un número.',
+                    'stock.gte' => 'El campo stock debe ser mayor o igual a 0.',
+                    'visible.required' => 'El campo visible es obligatorio.',
+                    'visible.numeric' => 'El campo visible debe ser un número.',
+                    'visible.in' => 'El campo visible solo puede tener los valores 0 o 1.',
+                    'imagen.required' => 'Debe subir una imagen.',
+                    'imagen.image' => 'El archivo subido debe ser una imagen.',
+                    'imagen.mimes' => 'El archivo debe ser de tipo JPEG, PNG, JPG o SVG.',
+                ],
+            );
+
+            $imagenUser = '';
+            if ($image = $request->file('imagen')) {
+                $rutaGuardarImg = 'imagen/';
+                $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
+                $image->move($rutaGuardarImg, $imagenUser);
+            }
+            $producto = new Product([
+                'marca_id' => $request->get('marca_id'),
+                'categoria_id' => $request->get('categoria_id'),
+                'nombre' => $request->get('nombre'),
+                'precio' => $request->get('precio'),
+                'color' => $request->get('color'),
+                'talla' => $request->get('talla'),
+                'stock' => $request->get('stock'),
+                'visible' => $request->get('visible'),
+                'imagen' => $imagenUser,
+            ]);
+            $producto->save();
+
+            return response()->json(['success' => true]);
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            return response()->json(['success' => false, 'errors' => $errors]);
         }
-        @error_log('despues de imagen');
-        $producto = new Product([
-            'marca_id' => $request->get('marca_id'),
-            'categoria_id' => $request->get('categoria_id'),
-            'nombre' => $request->get('nombre'),
-            'precio' => $request->get('precio'),
-            'color' => $request->get('color'),
-            'talla' => $request->get('talla'),
-            'stock' => $request->get('stock'),
-            'visible' => $request->get('visible'),
-            'imagen' => $imagenUser,
-        ]);
-        $producto->save();
-        if ($request->__isset('control-hidden')) {
-            $productos = Product::all();
-            $marcas = Brand::all();
-            $categorias = Category::all();
-            return redirect()
-                ->route('orden-compra-create', compact('productos', 'marcas', 'categorias'))
-                ->with('success:', 'Producto nuevo ingresado correctamente.');
-        }
-        return redirect()
-            ->route('productos')
-            ->with('success:', 'Producto ingresado correctamente.');
-        return redirect()->route('productos')->with('success', 'Producto ingresado correctamente.');
     }
 
     /**
@@ -133,11 +135,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($productId)
-{
-    $product = Product::findOrFail($productId);
+    {
+        $product = Product::findOrFail($productId);
 
-    return view('product.show', compact('product'));
-}
+        return view('product.show', compact('product'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -163,7 +165,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $id)
     {
-        error_log('test');
         $request->validate([
             'marca_id' => 'required',
             'categoria_id' => 'required',
@@ -175,7 +176,6 @@ class ProductController extends Controller
             'visible' => 'required',
             'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
-        error_log('test');
         $productos = Product::all();
         $product = $productos->find($id);
         $product->marca_id = $request->marca_id;
@@ -192,7 +192,6 @@ class ProductController extends Controller
             $image->move($rutaGuardarImg, $imagenUser);
             $product->imagen = $imagenUser;
         } else {
-            unset($product->imagen);
         }
         $product->save();
         return redirect()
