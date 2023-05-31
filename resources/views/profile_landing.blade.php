@@ -166,7 +166,7 @@
                                 <div class="form-group">
                                     <label for="region" class="form-label">Región</label>
                                     <span class="form-control"
-                                        id="profile_card_body">{{ Auth::user()->region->name }}</span>
+                                        id="profile_card_body">{{ Auth::user()->region_fk }}</span>
 
                                 </div>
                             </div>
