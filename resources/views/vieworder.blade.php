@@ -5,9 +5,9 @@
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Página</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Pedido</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Ver Pedido</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Pedido</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Ver Pedido</h6>
 @endsection
 
 @section('css')
@@ -29,10 +29,10 @@
                                     <tr>
                                         <th class="text-center">Producto</th>
                                         <th class="text-center">Cantidad</th>
-                                        <th class="text-center">Precio Unitario</th>
-                                        <th class="text-center">Precio Total</th>
                                         <th class="text-center">Color</th>
-                                        <th class="text-center">Talla</th>   
+                                        <th class="text-center">Talla</th> 
+                                        <th class="text-center">Precio Unitario</th>
+                                        <th class="text-center">Precio Total</th>  
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,10 +40,10 @@
                                         <tr>
                                             <td class="text-center">{{ $detail->product->nombre }}</td>
                                             <td class="text-center">{{ $detail->cantidad }}</td>
-                                            <td class="text-center">$ {{ $detail->product->precio }}</td>
-                                            <td class="text-center">$ {{ $detail->monto }}</td>
                                             <td class="text-center">{{ $detail->product->color }}</td>
                                             <td class="text-center">{{ $detail->product->talla }}</td>
+                                            <td class="text-center">$ {{ $detail->product->precio }}</td>
+                                            <td class="text-center">$ {{ $detail->monto }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

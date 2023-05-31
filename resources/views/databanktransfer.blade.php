@@ -63,7 +63,7 @@
                                                 <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
-                                                    <i class="fa fa-edit"></i>
+                                                    <i class="fa fa-edit">Editar</i>
                                                 </button>
                                                 <form
                                                     action="{{ route('databanktransfer.destroy', $databanktransfer->id) }}"
@@ -72,11 +72,11 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
                                                         data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Delete</i></button>
+                                                            aria-hidden="true"> Eliminar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
-                                  
+
                                 </tbody>
                             </table>
                             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
@@ -109,15 +109,25 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="bank">Banco:</label>
-                                                    <input type="text" class="form-control" id="bank" name="bank"
-                                                        value="{{ $databanktransfer->bank }}">
+                                                    <select id="bank" class="form-select @error('bank') is-invalid @enderror" name="bank" required>
+                                                        <option value="">Seleccionar banco</option>
+                                                        <option value="Banco de Chile" {{ $databanktransfer->bank == 'Banco de Chile' ? 'selected' : '' }}>Banco de Chile</option>
+                                                        <option value="Banco Santander" {{ $databanktransfer->bank == 'Banco Santander' ? 'selected' : '' }}>Banco Santander</option>
+                                                        <option value="Banco Estado" {{ $databanktransfer->bank == 'Banco Estado' ? 'selected' : '' }}>Banco Estado</option>
+                                       
+                                                    </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="account_type">Tipo Cuenta:</label>
-                                                    <input type="text" class="form-control" id="account_type"
-                                                        name="account_type"
-                                                        value="{{ $databanktransfer->account_type }}">
+                                                    <select id="account_type" class="form-select @error('account_type') is-invalid @enderror" name="account_type" required>
+                                                        <option value="">Seleccionar tipo de cuenta</option>
+                                                        <option value="Cuenta Corriente" {{ $databanktransfer->account_type == 'Cuenta Corriente' ? 'selected' : '' }}>Cuenta Corriente</option>
+                                                        <option value="Cuenta de Ahorro" {{ $databanktransfer->account_type == 'Cuenta de Ahorro' ? 'selected' : '' }}>Cuenta de Ahorro</option>
+                                                        <option value="Cuenta Vista" {{ $databanktransfer->account_type == 'Cuenta Vista' ? 'selected' : '' }}>Cuenta Vista</option>
+                                                        <!-- Agrega más opciones de tipos de cuenta aquí -->
+                                                    </select>
                                                 </div>
+
                                                 <div class="form-group">
                                                     <label for="account_number">N° Cuenta:</label>
                                                     <input type="text" class="form-control" id="account_number"
