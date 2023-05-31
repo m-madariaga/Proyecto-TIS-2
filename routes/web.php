@@ -247,8 +247,6 @@ Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::clas
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
 
 
-
-
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
 
 Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
@@ -267,3 +265,5 @@ Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
+
+Route::Post('/checkout', [App\Http\Controllers\CheckOutController::class, 'CheckOut'])->name('checkout');

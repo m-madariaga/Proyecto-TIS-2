@@ -105,6 +105,6 @@ class DataBankTransferController extends Controller
         $databanktransfer = DataBankTransfer::find($id);
         $databanktransfer->delete();
 
-        return response()->json(['success' => true]);
+        return redirect('admin/databanktransfer')->with('success', 'Dato Bancario eliminado exitosamente!');
     }
 }

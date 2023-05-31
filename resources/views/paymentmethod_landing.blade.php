@@ -56,7 +56,11 @@
         }
 
         .container-fluid {
-            padding: 0px 10rem 0px;
+            padding: 0px 25rem 0px;
+        }
+        
+        .cart-text{
+            color:black;
         }
     </style>
 @endsection
@@ -73,30 +77,35 @@
 
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
         <div class="row mt-4">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <h4 class="pb-1 pt-4">Productos</h4>
-                <div class="list-group-item">
+                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
                     @foreach ($cart as $item)
-                        <div class="row align-items-center">
-                            <div class="col-md-2">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6">
                                 <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
-                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="70">
+                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="120">
                                 </a>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-6">
                                 <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">Precio: ${{ $item->price }}</p>
-                                <p class="card-text">Cantidad: {{ $item->qty }}</p>
+                                <hr>
+                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
+                                <br>
+                                <span class="card-text">Precio: ${{ $item->price }}</span>
                             </div>
                         </div>
+                        <hr> 
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-6">
+            
+            <div class="col-md-4">
                 <h4 class="pb-1 pt-4">Métodos de Envío</h4>
                 <div class="list-group-item">
-                   <p> Método: {{ $shipment_type }}</p>
-                   <p> Dirección: {{Auth::user()->address}}, {{Auth::user()->city->name}}</p>
+                   <span style="font-size: 1rem;" > Método: {{ $shipment_type }}</span>
+                   <hr>
+                   <span> Dirección: {{Auth::user()->address}}, {{Auth::user()->city->name}}</span>
                 </div>
                 <h4 class="pb-1 pt-4">Métodos de Pagos</h4>
                 <div class="card-deck">
@@ -112,10 +121,9 @@
                                             alt="Imagen del método de pago" class="img-fluid" style="max-height: 100px;">
                                     </div>
                                     <h6 class="card-title text-truncate text-center multiline-text"
-                                        style="margin-top:1rem;size: 1.1rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
+                                        style="margin-top:1rem;size: 0.6rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
                                         {{ $paymentMethod->name }}
                                     </h6>
-
 
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="radio" name="paymentMethod"
