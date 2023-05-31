@@ -13,6 +13,16 @@
 @endsection
 
 @section('css')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 @endsection
 
@@ -146,6 +156,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 
@@ -183,8 +194,8 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Tipo de envío eliminado correctamente!',
-                                timer: 1000
+                                text: '¡País eliminado correctamente!',
+                                timer: 1500
                             });
                             setTimeout(function() {
                                 location.reload();
@@ -219,7 +230,16 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addCountryModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 3000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                             // se recarga al mismo tiempo que se esconde el modal
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
@@ -254,6 +274,11 @@
             }
         }
     </script>
+
+
+
+
+
     <script>
         $(document).ready(function() {
             table = $('#countries-table').DataTable({
@@ -299,8 +324,5 @@
             // Reemplazar el valor del nombre en el input el modal
 
         });
-
-
     </script>
-
 @endsection
