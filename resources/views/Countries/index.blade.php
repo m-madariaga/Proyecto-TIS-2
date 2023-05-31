@@ -199,14 +199,10 @@
                             });
                             setTimeout(function() {
                                 location.reload();
-                            }, 1500); // delay for half a second
+                            }, 1000); // delay for half a second
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: '{{ session('error') }}'
-                            });
+
                             console.log(xhr.responseText);
                         }
                     });
@@ -243,7 +239,7 @@
                             setTimeout(function() {
                                 location.reload();
                             }, 1000); // delay for half a second
-                            // se recarga al mismo tiempo que se esconde el modal
+                             // se recarga al mismo tiempo que se esconde el modal
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
