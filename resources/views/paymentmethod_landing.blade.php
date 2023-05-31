@@ -105,7 +105,7 @@
                 <div class="list-group-item">
                     <span style="font-size: 1rem;"> Método: {{ $shipment_type }}</span>
                     <hr>
-                    <span> Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city->name }}</span>
+                    <span> Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city_fk }}</span>
                 </div>
                 <h4 class="pb-1 pt-4">Métodos de Pago</h4>
                 <div class="card-deck">
