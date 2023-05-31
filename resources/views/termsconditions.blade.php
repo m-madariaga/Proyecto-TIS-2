@@ -32,7 +32,7 @@
                                 <strong> GENERAL</strong>
                             </li>
                         </ol>
-                        <P class="terms_p">La experiencia de comprar en www.queguay.cl es fácil y segura. En este sentido, la empresa Vestuarios Que Guay SPA
+                        <P class="terms_p">La experiencia de comprar en www.queguay.azurewebsites.net es fácil y segura. En este sentido, la empresa Vestuarios Que Guay 
                             trabaja con los más altos estándares de seguridad y toda la información que los usuarios registran en el Sitio se mantiene de
                             forma estrictamente confidencial.</P>
 
@@ -66,13 +66,13 @@
                         </p>
                         <p>
                             <span class="terms_p">
-                                Vestuarios Que Guay SPA no se responsabiliza por la NO ENTREGA de pedidos por error en la digitación de la dirección de despacho.
+                                Vestuarios Que Guay no se responsabiliza por la NO ENTREGA de pedidos por error en la digitación de la dirección de despacho.
                                 Se sugiere a todos los clientes corroborar los datos antes de finalizar su compra.
                             </span>
                         </p>
                         <p>
                             <span class="terms_p">
-                                Toda Promoción de envío es exclusiva para productos marca Gnomo a no ser que se informe lo contrario.
+                                Toda Promoción de envío es exclusiva para productos marca Que Guay! a no ser que se informe lo contrario.
                             </span>
                         </p>
 
@@ -81,7 +81,7 @@
                                 <strong>MEDIDAD DE SEGURIDAD</strong>
                             </li>
                         </ol>
-                        <P class="terms_p">Para cumplir los objetivos de seguridad Gnomo cuenta con la tecnología SSL (Secure Sockets Layer) que asegura, tanto la autenticidad del Sitio,
+                        <P class="terms_p">Para cumplir los objetivos de seguridad Que Guay! cuenta con la tecnología SSL (Secure Sockets Layer) que asegura, tanto la autenticidad del Sitio,
                             como el cifrado de toda la información que nos entrega el usuario. Cada vez que el usuario se registra en el Sitio y entrega información de carácter
                             personal, sin importar el lugar geográfico en donde se encuentre, a efectos de comprar un producto, el navegador por el cual ejecuta el acto se
                             conecta al Sitio a través del protocolo SSL que acredita que el usuario se encuentra efectivamente en el Sitio y en nuestros servidores
@@ -98,8 +98,8 @@
                                 <strong>DECLARACIÓN DE PRIVACIDAD</strong>
                             </li>
                         </ol>
-                        <p class="terms_p">Vestuarios Que Guay SPA no comunica ni cede a terceros, bajo ninguna circunstancia, los datos de carácter personal registrados por los usuarios
-                            en el Sitio. Sin perjuicio de lo anterior, esta información podrá ser tratada por Vestuarios Gnomowear SPA y sus asociados, únicamente para fines
+                        <p class="terms_p">Vestuarios Que Guay no comunica ni cede a terceros, bajo ninguna circunstancia, los datos de carácter personal registrados por los usuarios
+                            en el Sitio. Sin perjuicio de lo anterior, esta información podrá ser tratada por Vestuarios Que Guay y sus asociados, únicamente para fines
                             estadísticos y/o para obtener una mejor comprensión de los perfiles de los usuarios y, así, mejorar los productos ofrecidos en el Sitio.</p>
                         <br>
 
@@ -109,7 +109,7 @@
                             </li>
                         </ol>
                         <p class="terms_p">Al registrarse en el Sitio se le solicitará al usuario solamente aquella información necesaria para el pago del producto y
-                            su posterior envío. En ningún caso, esta información será comunicada o transmitida a terceros ajenos a Vestuarios Que Guay SPA, Que guay
+                            su posterior envío. En ningún caso, esta información será comunicada o transmitida a terceros ajenos a Vestuarios Que Guay , Que guay
                             no almacena ni conserva la información de la tarjeta bancaria del usuario.</p>
                         <br>
                         <ol start="6">
@@ -118,7 +118,7 @@
                             </li>
                         </ol>
                         <p class="terms_p">El usuario registrado podrá ejercer sus derechos de información, modificación, eliminación, cancelación y/o bloqueo de sus datos personales
-                            cuando lo estime pertinente, según lo establecido en la Ley Nº 19.628 sobre Protección de la Vida Privada. Vestuarios Gnomowear SPA pone a
+                            cuando lo estime pertinente, según lo establecido en la Ley Nº 19.628 sobre Protección de la Vida Privada. Vestuarios Que Guay pone a
                             disposición del usuario una dirección de correo electrónico (contacto@queguay.cl), un número telefónico +569 57162265 a disposición de éste
                             para efectos de poder solicitar la modificación y/o corrección de sus datos personales.</p>
 

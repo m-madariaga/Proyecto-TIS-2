@@ -37,7 +37,7 @@
             </div>
             <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                 <div class="nav-wrapper position-relative end-0">
-                    <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                    <!-- <ul class="nav nav-pills nav-fill p-1" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " data-bs-toggle="tab" href="javascript:;" role="tab" aria-selected="false">
                                 <i class="ni ni-email-83"></i>
@@ -45,7 +45,7 @@
                             </a>
                         </li>
 
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
     </div>
 
 
-    <!-- MODAL -->
+    <!-- MODAL EDITAR PERFIL -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -295,61 +295,63 @@
 
 
     <!-- MODAL PARA EDITAR CONTRASEÑA -->
-    <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileLandingModalLabel">Cambiar contraseña</h5>
-                </div>
-
-                <form method="POST" action="{{ route('change_password_argon') }}">
-                    @csrf
-                    <div class="modal-body">
-                        <p class="text-uppercase text-sm" id="profile_title">Información contraseña</p>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-12">
-                                <label for="current_password" class="form-control-label">{{ __('Contraseña Actual') }}</label>
-                                <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autofocus>
-                                @error('current_password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="password" class="form-control-label ">{{ __('Nueva Contraseña') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <label for="password-confirm" class="form-control-label">{{ __('Confirmar Contraseña') }}</label>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
-                            <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
-                        </div>
-                </form>
+    <div class="modal fade" id="editPasswordModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel">Cambiar contraseña</h5>
             </div>
+
+            <form method="POST" action="{{ route('change_password_argon') }}">
+                @csrf
+                <div class="modal-body">
+                    <p class="text-uppercase text-sm" id="profile_title">Información usuario</p>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-12">
+                            <label for="current_password" class="form-label">{{ __('Contraseña Actual') }}</label>
+
+                            <input id="current_password" type="password" class="form-control @error('current_password') is-invalid @enderror" name="current_password" required autofocus>
+
+                            @error('current_password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-12">
+                            <label for="password" class="form-label">{{ __('Nueva Contraseña') }}</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
+
+                            @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+                        <div class="col-md-12">
+                            <label for="password-confirm" class="form-label">{{ __('Confirmar Contraseña') }}</label>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" class="btn btn-sm btn-outline-success">Guardar</button>
+                    </div>
+            </form>
         </div>
     </div>
-
-
-</div>
 </div>
 @endsection
 
@@ -367,6 +369,14 @@
             // Do something when the modal is shown
         });
 
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('#openModalButton').click(function() {
+            $('#editPasswordModal').modal('show');
+        });
     });
 </script>
 
