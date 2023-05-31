@@ -347,7 +347,15 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addCityModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 1500
+                            });
+                            setTimeout(function() {
+                              location.reload();  //your code to be executed after 1 second
+                            }, 1500);
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
