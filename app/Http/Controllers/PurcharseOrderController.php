@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProofPayment;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
+use Barryvdh\DomPDF\Facade\PDF;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PurcharseOrderController extends Controller
 {
@@ -21,6 +25,18 @@ class PurcharseOrderController extends Controller
         $ordenes = Purchase_order::all();
         return view('purchase_order.index', compact('ordenes'));
     }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Purchase_order  $Product
+     */
+    public function generate_pdf(Purchase_order $id)
+    {
+        $productos = $id->product;
+        // Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
+        $pdf = PDF::loadView('receipt.ticket', ['orden' => $id,'productos' => $productos,]);
+        return $pdf->download('ticket.pdf');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -32,7 +48,7 @@ class PurcharseOrderController extends Controller
         $productos = Product::all();
         $marcas = Brand::all();
         $categorias = Category::all();
-        return view('purchase_order.create', compact('productos','marcas','categorias'));
+        return view('purchase_order.create', compact('productos', 'marcas', 'categorias'));
     }
 
     /**
@@ -43,11 +59,19 @@ class PurcharseOrderController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate([
-            'prod_id' => 'required',
-            'cantidad' => 'required',
-            'valor' => 'required',
-        ]);
+        $datos = $request->validate(
+            [
+                'prod_id' => 'required',
+                'cantidad' => 'required',
+                'valor' => 'required',
+            ],
+            [
+                'prod_id.required' => 'Selecciona un producto.',
+                'cantidad.required' => 'El campo cantidad es obligatorio.',
+                'valor.required' => 'El campo valor es obligatorio.',
+            ],
+        );
+
         $productos = $datos['prod_id'];
         // reiniciar los indices para que sean consecutivos y quitar los nulls
         $cant = [];
@@ -90,9 +114,7 @@ class PurcharseOrderController extends Controller
         $total = $aux;
         $orden->total = $total;
         $orden->save();
-        return redirect()
-            ->route('orden-compra')
-            ->with('success:', 'Orden de compra ingresada correctamente.');
+        return redirect()->route('orden-compra');
     }
 
     /**
@@ -116,7 +138,7 @@ class PurcharseOrderController extends Controller
         $orden = $id;
         $orden_productos = $orden->product;
         $productosall = Product::all();
-        return view('purchase_order.edit', compact('orden','orden_productos','productosall'));
+        return view('purchase_order.edit', compact('orden', 'orden_productos', 'productosall'));
     }
 
     /**
@@ -128,7 +150,6 @@ class PurcharseOrderController extends Controller
      */
     public function update(Request $request, Purchase_order $id)
     {
-
     }
 
     /**

@@ -94,6 +94,7 @@
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center">
                                 <h4 class="mb-0 fw-bold">{{ __('Perfil') }}</h4>
+
                             </div>
                             <div class="d-flex align-items-center">
                                 <button class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
@@ -102,67 +103,127 @@
                                     data-bs-toggle="modal" data-bs-target="#editPasswordLandingModal">Cambiar
                                     contraseña</button>
                             </div>
+
                         </div>
                     </div>
-                    <hr class="mt-4 mx-3">
-
-                    <div class="card-body">
+                    <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
+                    <div class="card-body" id="profile_card_body">
+                        <!-- User Information -->
+                        <p class="text-uppercase text-sm" id="profile_title">Información Usuario</p>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
                                     <label for="name" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="name" value="{{ $user->name }}"
-                                        readonly>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->name }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="run" class="form-label">Run</label>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->run }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="phone_number" class="form-label">Teléfono</label>
+                                    <span class="form-control"
+                                        id="profile_card_body">{{ Auth::user()->phone_number }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
                                     <label for="email" class="form-label">Correo electrónico</label>
-                                    <input type="email" class="form-control" id="email" value="{{ $user->email }}"
-                                        readonly>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->email }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <label for="profile_image" class="form-label">Imagen perfil</label>
+                                <div class=" d-flex justify-content-center">
+                                    <img src="assets/images/images-profile/{{ Auth::user()->imagen }}" alt="profile_image"
+                                        id="profile_image" class="border-radius-lg shadow-sm img-thumbnail"
+                                        style="width: 40%;">
                                 </div>
                             </div>
                         </div>
-
+                        <hr class="horizontal dark">
+                        <!-- Contact Information -->
+                        <p class="text-uppercase text-sm" id="profile_title">Información dirección</p>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="address" class="form-label">Dirección</label>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->address }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
                                     <label for="country" class="form-label">País</label>
-                                    <select class="form-select" id="country" disabled>
-                                        <option value="{{ $user->country->id }}">{{ $user->country->name }}</option>
-                                    </select>
+                                    <span class="form-control"
+                                        id="profile_card_body">{{ Auth::user()->country->name }}</span>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
                                     <label for="region" class="form-label">Región</label>
-                                    <select class="form-select" id="region" disabled>
-                                        <option value="{{ $user->region->id }}">{{ $user->region->name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                                    <span class="form-control"
+                                        id="profile_card_body">{{ Auth::user()->region->name }}</span>
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="city" class="form-label">Ciudad</label>
-                                    <select class="form-select" id="city" disabled>
-                                        <option value="{{ $user->city->id }}">{{ $user->city->name }}</option>
-                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="phone" class="form-label">Teléfono</label>
-                                    <input type="text" class="form-control" id="phone" value="{{ $user->phone }}"
-                                        readonly>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="city" class="form-label">Ciudad</label>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-5 col-12">
+                <div class="card">
+                    <div class="card-header" id="profile_card_header">
+                        <h4 class="mb-0 fw-bold">{{ __('Historial Pedido') }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table id="users-table" class="table display table-stripped align-items-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center text-sm" id="profile_title">N° PEDIDO</th>
+                                            <th class="text-center text-sm" id="profile_title">FECHA PEDIDO</th>
+                                            <th class="text-center text-sm" id="profile_title">TOTAL</th>
+                                            <th class="text-center text-sm" id="profile_title">ACCIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($orders as $order)
+                                            @if ($order->user_id === Auth::user()->id)
+                                                <tr>
+                                                    <td class="text-center">{{ $order->id ?? 'test'}}</td>
+                                                    <td class="text-center">{{ $order->created_at ?? 'test' }}</td>
+                                                    <td class="text-center">${{ $order->total ?? 'test'}}</td>
+                                                    <td class="text-center pt-3">
+                                                        <button type="button"
+                                                            class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
+                                                            data-bs-toggle="modal" data-bs-target="#modalvieworder">Ver
+                                                            Pedido</button>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 
@@ -186,8 +247,8 @@
                                 <div class="form-group">
                                     <label for="name" class="form-label">Nombre</label>
                                     <input type="text"
-                                        class="form-control input-field @error('name') is-invalid @enderror" name="name"
-                                        id="profile_card_body" value="{{ Auth::user()->name }}" required>
+                                        class="form-control input-field @error('name') is-invalid @enderror"
+                                        name="name" id="profile_card_body" value="{{ Auth::user()->name }}" required>
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -272,7 +333,6 @@
                                     <select id="country"
                                         class="form-control input-field @error('country_fk') is-invalid @enderror"
                                         name="country_fk" required>
-                                        <option value="">{{ Auth::user()->country_fk }}</option>
                                         @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                         @endforeach
@@ -336,7 +396,7 @@
     <!-- END MODAL -->
 
     <!-- Modal detalle pedido -->
-    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test' }}Label"
+    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test'}}Label"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">

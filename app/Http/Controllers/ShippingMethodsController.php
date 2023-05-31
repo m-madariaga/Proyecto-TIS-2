@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\User;
-
+use App\Models\Product;
 use App\Models\ShipmentType;
 use Illuminate\Http\Request;
 
@@ -30,9 +30,10 @@ class ShippingMethodsController extends Controller
         // Obtener todos los métodos de envío
         $shipment_types = ShipmentType::all();
 
+               
         $cart = Cart::content();
-
-        return view('shippingmethod', compact('shipment_types', 'cartId', 'cart', 'selectedMethod'));
+        $product = Product::all();
+        return view('shippingmethod', compact('shipment_types', 'cartId', 'cart', 'selectedMethod', 'product'));
     }
 
     private function isInChillanOrSanFernando($address)

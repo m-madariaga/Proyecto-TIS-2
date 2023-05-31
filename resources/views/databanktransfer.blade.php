@@ -13,7 +13,6 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
@@ -62,7 +61,7 @@
                                             <td class="text-center">{{ $databanktransfer->account_type }}</td>
                                             <td class="text-center">{{ $databanktransfer->account_number }}</td>
                                             <td class="text-center pt-3">
-                                                {{-- <button id="editButton"
+                                                <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
                                                     <i class="fa fa-edit">Editar</i>
@@ -72,15 +71,16 @@
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-banktransfer"
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user"
                                                         data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Borrar</i></button>
+                                                            aria-hidden="true"> Eliminar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
-                                  
-                              
-                            {{-- <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+
+                                </tbody>
+                            </table>
+                            <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
                                 aria-hidden="true" data-bs-backdrop="static">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -145,10 +145,8 @@
                                         </form>
                                     </div>
                                 </div>
-                            </div> --}}
-                                    @endforeach
-                                </tbody>
-                            </table>
+                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -197,54 +195,5 @@
         $('#searchBar').keyup(function() {
             table.search($(this).val()).draw();
         })
-    </script>
-
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).on('click', '.delete-banktransfer', function(e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            console.log(' kdñsñskd');
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log(' kdñsñskd');
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/admin/databanktransfer/' + id,
-                        data: {
-                            id: id,
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            console.log('success');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Exito',
-                                text: '¡Dato bancario eliminado correctamente!',
-                                timer: 1000
-                            });
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // delay for half a second
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(' kdñsñskd');
-                            console.log(xhr.responseText);
-                        }
-                    });
-                }
-            });
-
-            
-        });
     </script>
 @endsection
