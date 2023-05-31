@@ -125,7 +125,7 @@ class CityController extends Controller
     {
         $city = City::find($id);
         $city->delete();
-        return redirect('admin/cities')->with('success', 'Ciudad eliminado exitosamente!');
+        return response()->json(['success' => true]);
 
     }
 }

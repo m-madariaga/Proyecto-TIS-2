@@ -55,14 +55,13 @@
                                                     </span>
                                                 @enderror
                                                 <label for="country_fk">País a que pertenece:</label>
-                                                    <select class="form-control form-select" id="country_fk"
-                                                        name="country_fk">
-                                                        @foreach ($countries as $country)
-                                                            <option value="{{ $country->id }}">
-                                                                {{ $country->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select class="form-control form-select" id="country_fk" name="country_fk">
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
                                         </div>
@@ -106,7 +105,7 @@
                                                     <button type="submit"
                                                         class="btn btn-sm btn-outline-danger delete-region"
                                                         data-id="{{ $region->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Delete</i></button>
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -141,13 +140,13 @@
                                                     @enderror
                                                     <label for="country_fk">País al que pertenece:</label>
                                                     <select class="form-control form-select" id="country_fk"
-                                                    name="country_fk">
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">
-                                                            {{ $country->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                        name="country_fk">
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -171,6 +170,54 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-region', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/regions/' + id,
+                        data: {
+                            id: id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log('success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '¡Región eliminado correctamente!',
+                                timer: 1000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+
+        });
+    </script>
     <script>
         // Usar Ajax para manejar el envio del formulario del modal para añadir usuarios
         var addRegionForm = document.getElementById('addRegionForm');
@@ -189,7 +236,15 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addRegionModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 1500
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1500);
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
@@ -204,7 +259,8 @@
             xhr.open('POST', addRegionForm.getAttribute('action'));
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Accept', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content'));
             xhr.send(formData);
         });
 
@@ -227,8 +283,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#regions-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#regions-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -237,6 +293,11 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
+        
         $('#addRegionModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();
@@ -265,7 +326,5 @@
             // Reemplazar el valor del nombre en el input el modal
 
         });
-
-
     </script>
 @endsection

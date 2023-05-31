@@ -20,8 +20,17 @@ class ProfileLandingController extends Controller
         $regions = Region::all();
         $cities = City::all();
         $orders = Order::where('user_id', $user->id)->get(); // Obtén los pedidos del usuario conectado
-        $details = Detail::all();
-        return view('profile_landing', compact('countries', 'regions', 'cities', 'user','orders','details'));
+
+        if ($orders->isEmpty()) {
+            $orders = collect(); // Inicializar como una colección vacía
+            $details = collect();
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+        } else {
+            $details = Detail::all();
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+        }
+
+
     }
 
     public function getRegions($countryId)

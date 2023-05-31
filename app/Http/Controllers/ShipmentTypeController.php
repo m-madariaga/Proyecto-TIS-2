@@ -49,13 +49,13 @@ class ShipmentTypeController extends Controller
         $shipment_type->save();
 
 
-        return redirect('admin/shipment_types')->with('success', 'Tipo de envío creado exitosamente!');
+        return redirect('admin/shipment_types')->with('success');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\shipment_type  $shipment_type
+     * @param  \App\Models\ShipmentType  $shipment_type
      * @return \Illuminate\Http\Response
      */
     public function show(ShipmentType $shipment_type)
@@ -66,7 +66,7 @@ class ShipmentTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\shipment_type  $id
+     * @param  \App\Models\ShipmentType  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -83,7 +83,7 @@ class ShipmentTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\shipment_type  $id
+     * @param  \App\Models\ShipmentType  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -107,7 +107,7 @@ class ShipmentTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\shipment_type  $id
+     * @param  \App\Models\ShipmentType  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -116,7 +116,7 @@ class ShipmentTypeController extends Controller
         $shipment_types->delete();
 
         //return response()->json(['success' => true]);
-        return redirect('admin/shipment_types')->with('success', 'Tipo de envío eliminado exitosamente!');
+        return response()->json(['success' => true]);
     }
 
 }

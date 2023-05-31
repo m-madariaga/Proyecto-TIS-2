@@ -116,6 +116,7 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         $country->delete();
-        return redirect('admin/countries')->with('success', 'Pais eliminado exitosamente!');
+        return response()->json(['success' => true]);
+
     }
 }

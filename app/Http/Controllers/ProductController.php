@@ -42,6 +42,8 @@ class ProductController extends Controller
         $productos = Product::all();
         return view('accesorie', compact('productos'));
     }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -174,7 +176,7 @@ class ProductController extends Controller
             'talla' => 'required',
             'stock' => 'required',
             'visible' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'imagen' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
         $productos = Product::all();
         $product = $productos->find($id);
@@ -196,7 +198,7 @@ class ProductController extends Controller
         $product->save();
         return redirect()
             ->route('productos')
-            ->with('success:', 'Producto actualizado correctamente.');
+            ->with('success', 'Producto actualizado correctamente.');
     }
 
     /**
@@ -210,9 +212,6 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
-        return redirect()
-            ->route('productos')
-            ->with('success:', 'Producto eliminado correctamente.');
         return response()->json(['success' => true]);
     }
 }

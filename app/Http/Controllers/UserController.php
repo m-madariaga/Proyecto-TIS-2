@@ -141,7 +141,7 @@ class UserController extends Controller
 
         // dejar para futuro sweetalert return response()->json(['success' => true]);
 
-        return redirect('admin/users')->with('success', 'Usuario eliminado exitosamente!');
+        return response()->json(['success' => true]);
     }
 
     public function getRegions($countryId)

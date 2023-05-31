@@ -52,13 +52,12 @@ Route::get('/home-landing', function () {
     return view('/home-landing');
 })->name('home-landing');
 
+
 // rutas categorias
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
 Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
 Route::get('/accesorie', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
-
-
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
@@ -95,8 +94,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/cities', [App\Http\Controllers\CityController::class, 'index'])->name('cities.index');
 
 
-
-
     Route::get('/users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
     Route::post('/users', [App\Http\Controllers\UserController::class, 'store'])->name('users.store');
     Route::get('/users/{id}/edit', [App\Http\Controllers\UserController::class, 'edit'])->name('users.edit');
@@ -106,34 +103,35 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 
 
+
     Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
     Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
     Route::post('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'store'])->name('shipment_types.store');
     Route::get('/shipment_types/{id}/edit', [App\Http\Controllers\ShipmentTypeController::class, 'edit'])->name('shipment_types.edit');
     Route::put('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'update'])->name('shipment_types.update');
     Route::delete('/shipment_types/{id}', [App\Http\Controllers\ShipmentTypeController::class, 'destroy'])->name('shipment_types.destroy');
-    Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index');
+
+
+    Route::get('/admin/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index_admin'])->name('paymentmethod.index_admin');
     Route::get('/paymethods/create', [App\Http\Controllers\PaymentMethodController::class, 'create'])->name('paymethods.create');
     Route::post('/paymethods/store', [App\Http\Controllers\PaymentMethodController::class, 'store'])->name('paymethods.store');
-    Route::delete('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
-    Route::get('/paymethods/{id}/edit', [App\Http\Controllers\PaymentMethodController::class, 'edit'])->name('paymethods.edit');
-    Route::put('/paymethods/{id}', [App\Http\Controllers\PaymentMethodController::class, 'update'])->name('paymethods.update');
+    Route::get('/paymethods/{paymentMethod}/edit', [App\Http\Controllers\PaymentMethodController::class, 'edit'])->name('paymethods.edit');
+    Route::put('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'update'])->name('paymethods.update');
+    Route::delete('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
 
     Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
 
-
-    Route::get('/page', function () {
-        return view('page');
-    })->name('page');
-
-
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
+
+    Route::get('/page', function () {
+        return view('page');
+    })->name('page');
 
 
 
@@ -141,7 +139,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
-    Route::get('/orders/{id}/details', 'OrderController@getOrderDetails');
+    Route::get('/orders/{id}/details', [OrderController::class, 'getOrderDetails']);
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
@@ -244,7 +243,8 @@ Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destro
 
 Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
 
-Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod');
+Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
+Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
 
 
 
@@ -267,5 +267,3 @@ Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
-
-

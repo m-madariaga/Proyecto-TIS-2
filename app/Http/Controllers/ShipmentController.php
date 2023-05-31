@@ -13,6 +13,8 @@ use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\statusChangeEmail;
 
 class ShipmentController extends Controller
 {
@@ -157,8 +159,9 @@ class ShipmentController extends Controller
         $shipment->status = $request->status;
         $shipment->save();
         $user = User::find($shipment->user_fk);
+        error_log($request->status);
 
-        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->id, $shipment->status));
+        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
