@@ -227,8 +227,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#regions-table').DataTable({
-                dom: 'lfrtip',
+            table = $('#regions-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -237,6 +237,11 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        })
+        
         $('#addRegionModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();

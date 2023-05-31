@@ -120,12 +120,11 @@ class ProductController extends Controller
             $categorias = Category::all();
             return redirect()
                 ->route('orden-compra-create', compact('productos', 'marcas', 'categorias'))
-                ->with('success:', 'Producto nuevo ingresado correctamente.');
+                ->with('success', 'Producto nuevo ingresado correctamente.');
         }
         return redirect()
             ->route('productos')
-            ->with('success:', 'Producto ingresado correctamente.');
-        return redirect()->route('productos')->with('success', 'Producto ingresado correctamente.');
+            ->with('success', 'Producto ingresado correctamente.');
     }
 
     /**
@@ -175,7 +174,7 @@ class ProductController extends Controller
             'talla' => 'required',
             'stock' => 'required',
             'visible' => 'required',
-            'imagen' => 'required|image|mimes:jpeg,png,jpg,svg,bmp',
+            'imagen' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
         error_log('test');
         $productos = Product::all();
@@ -199,7 +198,7 @@ class ProductController extends Controller
         $product->save();
         return redirect()
             ->route('productos')
-            ->with('success:', 'Producto actualizado correctamente.');
+            ->with('success', 'Producto actualizado correctamente.');
     }
 
     /**
@@ -213,9 +212,6 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
-        return redirect()
-            ->route('productos')
-            ->with('success:', 'Producto eliminado correctamente.');
         return response()->json(['success' => true]);
     }
 }
