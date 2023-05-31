@@ -24,7 +24,7 @@
                     </a>
                 </li>
             @endcan
-            <hr class="horizontal dark my-sm-4">
+            {{-- <hr class="horizontal dark my-sm-4">
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('tables') ? 'active' : '' }}" href="{{ route('tables') }}">
                     <div
@@ -33,7 +33,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Tables</span>
                 </a>
-            </li>
+            </li> --}}
             <hr class="horizontal dark my-sm-4">
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores" role="button"
