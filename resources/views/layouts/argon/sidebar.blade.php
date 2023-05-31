@@ -193,7 +193,7 @@
                 </li>
             @endcan
 
-            @can('mantenedor transferencia bancaria')
+            @can('mantenedor datos transferencia')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                     href="{{ route('databanktransfer.index') }}">
