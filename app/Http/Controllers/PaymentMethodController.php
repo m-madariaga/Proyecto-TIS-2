@@ -106,6 +106,6 @@ class PaymentMethodController extends Controller
 
         $paymentMethod->delete();
 
-        return response()->json(['success' => true]);
+        return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago eliminado exitosamente!');
     }
 }
