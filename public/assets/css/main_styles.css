@@ -1697,6 +1697,10 @@ footer{
 	margin-right: 45px;
 }
 
+.footer_nav h5{
+	color: #F2BBD9;
+}
+
 .footer_nav li:last-child {
 	margin-right: 0px;
 }
@@ -1852,13 +1856,15 @@ footer{
 	
 }
 
+.search-container{
+	margin-top: 0.8rem;
+}
 .btn-quantity{
 	background-color: #f2f2f2;
 	border-color: #8c034e;
 	color: #8c034e;
 }
 .search_form .form-control {
-    height: 30px;
     border-radius: 15px;
     font-size: 14px;
 }
@@ -1871,7 +1877,6 @@ footer{
 
 @media (max-width: 767px) {
     .search_form .form-control {
-        height: 25px;
         font-size: 12px;
     }
 
@@ -1888,4 +1893,19 @@ footer{
 .search-not{
 	color: #d936ad;
 
+}
+
+.custom-paragraph {
+    font-size: 18px; /* Cambiar el tamaño del texto según tus preferencias */
+    color: #333; /* Cambiar el color del texto según tus preferencias */
+    text-align: center; /* Justificar el texto al centro */
+}
+
+.card-knowme {
+    border: none; /* Eliminar el borde */
+}
+
+.terms_p{
+	color: #1e1e27;
+	text-align: justify; /* Justificar el texto */
 }

@@ -115,7 +115,7 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-city"
                                                         data-id="{{ $city->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Delete</i></button>
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>

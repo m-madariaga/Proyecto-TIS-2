@@ -29,6 +29,24 @@ class PaymentMethodController extends Controller
         return view('createpaymethod');
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imageName = $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path('argon/assets/img/images-paymethods'), $imageName);
+
+        $paymentMethod = new PaymentMethod;
+        $paymentMethod->name = $request->name;
+        $paymentMethod->imagen = $imageName;
+        $paymentMethod->save();
+
+        return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago creado exitosamente!');
+    }
+
     public function store_landing(Request $request)
     {
         $request->validate([
@@ -39,27 +57,7 @@ class PaymentMethodController extends Controller
         $paymentMethod->name = $request->name;
         $paymentMethod->save();
 
-        return redirect('/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'visible' => 'required',
-        ]);
-
-        $imageName = $request->file('image')->getClientOriginalName();
-        $request->file('image')->move(public_path('argon/assets/img/images-paymethods'), $imageName);
-
-        $paymentMethod = new PaymentMethod;
-        $paymentMethod->name = $request->name;
-        $paymentMethod->imagen = $imageName;
-        $paymentMethod->visible = $request->visible;
-        $paymentMethod->save();
-
-        return redirect('/admin/paymentmethod')->with('success', 'Método de pago creado exitosamente!');
+        return redirect()->route('paymentmethod.index')->with('success', 'Método de pago creado exitosamente!');
     }
 
     public function show(PaymentMethod $paymentMethod)
@@ -72,7 +70,7 @@ class PaymentMethodController extends Controller
         $paymentMethod = PaymentMethod::find($id);
 
         if (!$paymentMethod) {
-            return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
+            return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
         }
 
         $selectedAccountId = $paymentMethod->$id; // Aquí asigna el ID de la cuenta bancaria seleccionada
@@ -92,25 +90,22 @@ class PaymentMethodController extends Controller
             $paymentMethod->visible = $request->input('visible');
             $paymentMethod->save();
 
-            return redirect('/admin/paymentmethod')->with('success', 'Método de pago actualizado exitosamente!');
+            return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago actualizado exitosamente!');
         }
 
-        return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
+        return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
     }
-
 
     public function destroy($id)
     {
         $paymentMethod = PaymentMethod::find($id);
 
         if (!$paymentMethod) {
-            return redirect('/admin/paymentmethod')->with('error', 'No se encontró el método de pago.');
+            return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
         }
 
         $paymentMethod->delete();
 
-        return redirect('/admin/paymentmethod')->with('success', 'Método de pago eliminado exitosamente!');
+        return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago eliminado exitosamente!');
     }
-
-
 }

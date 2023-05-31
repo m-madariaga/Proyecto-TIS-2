@@ -8,15 +8,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Toggle Hamburger -->
+
     <script>
         $(document).ready(function() {
             $('.hamburger_container').click(function() {
                 $(this).toggleClass('open');
                 $('.navbar_menu').toggleClass('show');
             });
+
+            $('.search_form').submit(function(e) {
+                e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+                var query = $('#search-input').val().trim(); // Obtiene el valor del campo de búsqueda y elimina los espacios en blanco
+
+                if (query !== '') { // Verifica si el campo de búsqueda no está vacío
+                    $(this).unbind('submit').submit(); // Envía el formulario de búsqueda
+                }
+            });
         });
     </script>
-
 
 </head>
 
@@ -24,11 +34,10 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-right">
-              
+
                 <div class="logo_container">
                     <a href="{{ route('home-landing') }}">
-                        <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
-                            style="max-height: 3rem;" alt="main_logo">
+                        <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 3rem;" alt="main_logo">
                     </a>
                 </div>
                 <nav class="navbar">
@@ -43,11 +52,9 @@
                                 <form action="{{ route('search') }}" method="POST" class="search_form">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="query" class="form-control" placeholder="Buscar"
-                                            aria-label="Buscar" id="search-input">
+                                        <input type="text" name="query" class="form-control" placeholder="Buscar" aria-label="Buscar" id="search-input">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-outline-secondary"><i
-                                                    class="fa fa-search" aria-hidden="true"></i></button>
+                                            <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </form>

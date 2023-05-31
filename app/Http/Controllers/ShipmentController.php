@@ -23,6 +23,7 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $shipments = shipment::all();
@@ -56,7 +57,7 @@ class ShipmentController extends Controller
             $shipment->status = 'pending';
             $shipment->shipment_type_fk = $request->input('shipment_type_id');
         
-            $shipment->save(); // Guardar el envío en la base de datos
+            $shipment->save(); 
         
             $products = Cart::content();
             $shipmentProducts = [];
@@ -74,8 +75,12 @@ class ShipmentController extends Controller
             $shipment->products = $shipmentProducts;
             $shipment->save();
             $paymentMethods = PaymentMethod::all();
-        
-            return view('paymentmethod_landing', compact('paymentMethods'));
+            $cart = Cart::content();
+            $shipment_type_id = $request->shipment_type_id;
+
+            // Obtener el nombre del tipo de envío
+            $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
+            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type'));
         }
     }
 
