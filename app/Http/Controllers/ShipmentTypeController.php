@@ -49,7 +49,7 @@ class ShipmentTypeController extends Controller
         $shipment_type->save();
 
 
-        return redirect('admin/shipment_types')->with('success', 'Tipo de envío creado exitosamente!');
+        return redirect('admin/shipment_types')->with('success');
     }
 
     /**
@@ -116,7 +116,7 @@ class ShipmentTypeController extends Controller
         $shipment_types->delete();
 
         //return response()->json(['success' => true]);
-        return redirect('admin/shipment_types')->with('success', 'Tipo de envío eliminado exitosamente!');
+        return response()->json(['success' => true]);
     }
 
 }
