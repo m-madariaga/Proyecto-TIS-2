@@ -53,8 +53,8 @@ class ProfileLandingController extends Controller
         $user->phone_number = $request->phone_number;
         $region = Region::find($request->region_fk);
         $city = City::find($request->city_fk);
-        $user->region_fk = $region->name;
-        $user->city_fk = $city->name;
+        $user->region_fk = $region->id;
+        $user->city_fk = $city->id;
 
         // Validar y guardar la imagen si se ha cargado una nueva
         if ($request->hasFile('profile_image')) {
