@@ -65,8 +65,8 @@
                                                 {{-- <button id="editButton"
                                                     class="btn btn-sm btn-outline-primary edit-modal-btn"
                                                     data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
-                                                    <i class="fa fa-edit"></i>
-                                                </button> --}}
+                                                    <i class="fa fa-edit">Editar</i>
+                                                </button>
                                                 <form
                                                     action="{{ route('databanktransfer.destroy', $databanktransfer->id) }}"
                                                     method="POST" style="display: inline;">
