@@ -55,14 +55,13 @@
                                                     </span>
                                                 @enderror
                                                 <label for="country_fk">País a que pertenece:</label>
-                                                    <select class="form-control form-select" id="country_fk"
-                                                        name="country_fk">
-                                                        @foreach ($countries as $country)
-                                                            <option value="{{ $country->id }}">
-                                                                {{ $country->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
+                                                <select class="form-control form-select" id="country_fk" name="country_fk">
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
                                         </div>
@@ -141,13 +140,13 @@
                                                     @enderror
                                                     <label for="country_fk">País al que pertenece:</label>
                                                     <select class="form-control form-select" id="country_fk"
-                                                    name="country_fk">
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">
-                                                            {{ $country->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                        name="country_fk">
+                                                        @foreach ($countries as $country)
+                                                            <option value="{{ $country->id }}">
+                                                                {{ $country->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -201,7 +200,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Tipo de envío eliminado correctamente!',
+                                text: '¡Región eliminado correctamente!',
                                 timer: 1000
                             });
                             setTimeout(function() {
@@ -237,7 +236,15 @@
                         if (response.success) {
                             // SE crea el usuario
                             $('#addRegionModal').modal('hide'); // se esconde el modal
-                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '{{ session('success') }}',
+                                timer: 1500
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1500);
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
@@ -252,7 +259,8 @@
             xhr.open('POST', addRegionForm.getAttribute('action'));
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
             xhr.setRequestHeader('Accept', 'application/json');
-            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute(
+                'content'));
             xhr.send(formData);
         });
 
@@ -313,7 +321,5 @@
             // Reemplazar el valor del nombre en el input el modal
 
         });
-
-
     </script>
 @endsection
