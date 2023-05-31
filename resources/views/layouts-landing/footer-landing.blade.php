@@ -11,20 +11,20 @@
 <footer class="footer">
     <div class="container">
         <div class="row justify-content-center">
-        <div class="col-lg-3 col-md-6 mb-3 mt-3 d-flex flex-column align-items-center">
-    <div>
-        <a href="{{ route('home-landing') }}">
-        <img src="assets/images/logo_2.png" style="max-height: 3rem;" alt="Logo"> </a>
-    </div>
-    <div>
-        <p class="">Tu estilo, tu moda</p>
-    </div>
-</div>
+            <div class="col-lg-3 col-md-6 mb-3 mt-3 d-flex flex-column align-items-center">
+                <div>
+                    <a href="{{ route('home-landing') }}">
+                        <img src="assets/images/logo_2.png" style="max-height: 3rem;" alt="Logo"> </a>
+                </div>
+                <div>
+                    <p class="">Tu estilo, tu moda</p>
+                </div>
+            </div>
 
 
 
             <div class="col-lg-2 col-md-6 col-sm-6 mb-3 mt-3 footer_nav">
-            <h5><strong>Enlaces</strong></h5>
+                <h5><strong>Enlaces</strong></h5>
                 <ul>
                     <li class="mb-2">
                         <a href="{{ route('men') }}">Hombre</a>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-lg-2 col-md-6 col-sm-6 mb-3 mt-3 footer_nav">
-            <h5><strong>Ayuda</strong></h5>
+                <h5><strong>Ayuda</strong></h5>
                 <ul>
                     <li class="mb-2">
                         <a href="{{route('termsconditionsview.index')}}">Términos y condiciones</a>
@@ -60,8 +60,8 @@
             </div>
 
             <div class="col-lg-2 col-md-6 col-sm-6 mb-3 mt-3 footer_nav">
-            <h5><strong>Sobre Que Guay!</strong></h5>
-                
+                <h5><strong>Sobre Que Guay!</strong></h5>
+
                 <ul>
                     <li class="mb-2">
                         <a href="{{route('knowmeview.index')}}">Conócenos</a>
@@ -83,7 +83,7 @@
             <div class="col-12 d-flex flex-column align-items-center text-center">
                 <div class="footer_social d-flex flex-row align-items-center justify-content-center">
                     <ul>
-                        <li><a href="https://www.instagram.com/que.guay_/"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                        <li><a href="https://www.instagram.com/que.guay_/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
                     </ul>
                 </div>
                 <div class="d-flex flex-row align-items-center justify-content-center mt-4">
