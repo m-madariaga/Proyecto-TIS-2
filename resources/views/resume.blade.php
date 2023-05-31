@@ -117,8 +117,8 @@
                         <p class="card-text text-end">Total a Pagar: ${{ Cart::subtotal() }}</p>
 
                         <div class="form-check form-check-info text-end">
-                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                style="margin-left:1.1rem">
+                            <input class="form-check-input" type="checkbox" value="" id="terms-checkbox" style="margin-left:1.1rem">
+
                             <label class="form-check-label d-flex align-items-center" for="flexCheckDefault"
                                 style="margin-left: 1rem;">
                                 <span>Estoy de acuerdo con </span>
@@ -150,7 +150,7 @@
                     <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
                     <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
                         @csrf
-                        <button type="submit" class="btn btn-primary">Realizar Pedido</button>
+                        <button type="submit" class="btn btn-primary" id="submit-button" disabled>Realizar Pedido</button>
                     </form>
                 </div>
             </div>
@@ -321,6 +321,20 @@
 
 
 @section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var termsCheckbox = document.getElementById('terms-checkbox');
+            var submitButton = document.getElementById('submit-button');
+
+            termsCheckbox.addEventListener('change', function() {
+                if (termsCheckbox.checked) {
+                    submitButton.disabled = false;
+                } else {
+                    submitButton.disabled = true;
+                }
+            });
+        });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.modal');
