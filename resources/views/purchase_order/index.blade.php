@@ -33,6 +33,7 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Productos</th>
                                         <th class="text-center">Total</th>
+                                        <th class="text-center">Fecha de compra</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -66,7 +67,11 @@
 
                                             </td>
                                             <td class="text-center">{{ $orden->total }}</td>
+                                            <td class="text-center">{{ $orden->created_at }}</td>
                                             <td class="text-center pt-3">
+                                                <a href="{{ route('orden-compra-pdf', ['id' => $orden->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    Descargar PDF</a>
                                                 <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
                                                     Editar</a>
@@ -74,9 +79,8 @@
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                        ><i class="fa fa-trash"
-                                                            aria-hidden="true"></i> Eliminar</button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
+                                                            class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -111,8 +115,8 @@
             });
         });
 
-        $('#searchBar').keyup(function(){
-            table.search($(this).val()).draw() ;
+        $('#searchBar').keyup(function() {
+            table.search($(this).val()).draw();
         })
     </script>
 @endsection

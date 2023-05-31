@@ -104,7 +104,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-    Route::get('/users/pdf', [UserController::class, 'generate_pdf'])->name('users.generate_pdf');
+
 
     Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
     Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
@@ -154,12 +154,15 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');
     });
 
+
     Route::group(['middleware' => ['permission:mantenedor ordenes']], function () {
         Route::get('/orden-compra', [PurcharseOrderController::class, 'index'])->name('orden-compra');
         Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
         Route::post('/orden-compra/store', [PurcharseOrderController::class, 'store'])->name('orden-compra-store');
         Route::get('/orden-compra/{id}/edit', [PurcharseOrderController::class, 'edit'])->name('orden-compra-edit');
         Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
+
+        Route::get('/orden-compra/{id}/pdf', [PurcharseOrderController::class, 'generate_pdf'])->name('orden-compra-pdf');
 
         Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
