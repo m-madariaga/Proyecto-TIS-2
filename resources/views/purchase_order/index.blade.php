@@ -71,10 +71,10 @@
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('orden-compra-pdf', ['id' => $orden->id]) }}"
                                                     class="btn btn-sm btn-outline-primary">
-                                                    Descargar PDF</a>
+                                                    Descargar PDF</a><br>
                                                 <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
-                                                    Editar</a>
+                                                    Editar</a><br>
                                                 <form action="{{ route('orden-compra-destroy', $orden->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
