@@ -13,6 +13,7 @@
 @endsection
 
 @section('css')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
@@ -35,7 +36,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table id="users-table" class="table display table-stripped align-items-center">
+                            <table id="databank-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Id</th>
@@ -141,8 +142,48 @@
                 </div>
             </div>
         </div>
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito',
+                    text: '{{ session('success') }}',
+                    timer: 3000
+                });
+            </script>
+        @endif
+
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ session('error') }}'
+                });
+            </script>
+        @endif
     </div>
 @endsection
 
 @section('js')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            table = $('#databank-table').DataTable({
+                dom: 'lrtip',
+
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                },
+
+
+            });
+        });
+
+        $('#searchBar').keyup(function() {
+            table.search($(this).val()).draw();
+        })
+    </script>
 @endsection
