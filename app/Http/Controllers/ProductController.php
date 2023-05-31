@@ -118,7 +118,7 @@ class ProductController extends Controller
             $categorias = Category::all();
             return redirect()
                 ->route('orden-compra-create', compact('productos', 'marcas', 'categorias'))
-                ->with('success:', 'Producto nuevo ingresado correctamente.');
+                ->with('success', 'Producto nuevo ingresado correctamente.');
         }
         return redirect()
             ->route('productos')
