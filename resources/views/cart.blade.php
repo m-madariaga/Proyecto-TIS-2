@@ -23,6 +23,7 @@
         });
     </script>
 @endsection
+
 @section('content')
     <div class="container-fluid py-4 mb-4">
         <div class="row justify-content-center">
@@ -53,7 +54,7 @@
                                                     width="70">
                                             </a>
                                         </td>
-                                        <td>{{ $item->price }}</td>
+                                        <td>$ {{ $item->price }}</td>
                                         <td>
                                             <div class="container-quantity">
                                                 <div>
@@ -90,19 +91,24 @@
                             </tr>
                         </tfoot>
                     </table>
-                    @if (Auth::check())
-                        <form action="{{ route('resume') }}" method="get">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Continuar</button>
-                        </form>
+                    @if (Cart::count() > 0)
+                        @if (Auth::check())
+                            <form action="{{ route('shippingview.index') }}" method="get">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Continuar</button>
+                            </form>
+                        @else
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Continuar</button>
+                        @endif
                     @else
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                            data-bs-target="#loginModal">Continuar</button>
+                        <p>No hay productos en el carrito. Agrega productos para continuar.</p>
                     @endif
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Modal  Imagen-->
     <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -118,6 +124,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal Debe iniciar sesion -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

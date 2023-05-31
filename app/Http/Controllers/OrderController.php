@@ -24,6 +24,7 @@ class OrderController extends Controller
         $order->save();
         return redirect()->route('orders.index');
     }
+
     public function showOrder($orderId)
     {
         $order = Order::with('user')->findOrFail($orderId);
@@ -36,7 +37,5 @@ class OrderController extends Controller
         $details = Detail::with('product')->where('pedido_id', $id)->get();
 
         return view('vieworder', compact('order', 'details'));
-
     }
-
 }

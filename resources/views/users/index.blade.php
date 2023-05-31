@@ -243,7 +243,7 @@
                                                     <button type="submit"
                                                         class="btn btn-sm btn-outline-danger delete-user"
                                                         data-id="{{ $user->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Delete</i></button>
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -354,8 +354,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#users-table').DataTable({
-                dom: 'lfrtip',
+            table= $('#users-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -364,6 +364,11 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        });
+
         $('#addUserModal').on('hide.bs.modal', function() {
             $('.invalid-feedback').html('');
             $('.error-message').remove();

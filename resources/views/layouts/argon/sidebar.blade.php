@@ -1,5 +1,3 @@
-
-
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
     id="sidenav-main" style="overflow-y: auto;">
     <div class="sidenav-header">
@@ -84,7 +82,7 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/categorias') ? 'active' : '' }}"
                                     href="{{ route('categorias') }}">
-                                    <span class="nav-link-text ms-3">Categorias</span>
+                                    <span class="nav-link-text ms-3">Categorías</span>
                                 </a>
                             </li>
                         @endcan
@@ -97,43 +95,43 @@
                             </li>
                         @endcan
                         @can('mantenedor paises')
-                            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/countries') ? 'active' : '' }}"
                                     href="{{ route('countries.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Paises</span>
+                                    <span class="nav-link-text ms-3">Países</span>
                                 </a>
                             </li>
                         @endcan
                         @can('mantenedor regiones')
-                            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/regions') ? 'active' : '' }}"
                                     href="{{ route('regions.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Regiones</span>
+                                    <span class="nav-link-text ms-3">Regiones</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor ciudades')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/cities') ? 'active' : '' }}"
+                                    href="{{ route('cities.index') }}">
+                                    <span class="nav-link-text ms-3">Ciudades</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor envio')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/shipments') ? 'active' : '' }}"
+                                    href="{{ route('shipments.index') }}">
+                                    <span class="nav-link-text ms-3">Envíos</span>
                                 </a>
                             </li>
                         @endcan
 
-                        @can('mantenedor envio')
-                            <li class="nav-item" style="{{ request()->is('admin/*') ? '' : 'display:none' }}">
-                                <a class="nav-link {{ request()->is('admin/shipments/*') ? 'active' : '' }}"
-                                    href="{{ route('shipments.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Envíos</span>
-                                </a>
-                            </li>
-                        @endcan
+
+
                     </ul>
+                </div>
+
             </li>
             @can('mantenedor ordenes')
                 <li class="nav-item">
@@ -178,7 +176,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                    href="{{ route('paymentmethod.index') }}">
+                    href="{{ route('paymentmethod.index_admin') }}">
                     <div
                         class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
