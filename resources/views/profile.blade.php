@@ -62,6 +62,7 @@
                         <div class="d-flex align-items-center">
                             <button class="btn btn-primary btn-sm ms-2 me-auto" data-bs-toggle="modal" data-bs-target="#editModal">Editar perfil</button>
                             <button type="button" class="btn btn-light btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#editPasswordModal">Cambiar contraseña</button>
+
                         </div>
                     </div>
                 </div>
@@ -120,13 +121,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="region" class="form-control-label">Región</label>
-                                <span class="form-control">{{ Auth::user()->region->name }}</span>
+                                <span class="form-control">{{ Auth::user()->region_fk }}</span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="city" class="form-control-label">Ciudad</label>
-                                <span class="form-control">{{ Auth::user()->city->name }}</span>
+                                <span class="form-control">{{ Auth::user()->city_fk }}</span>
                             </div>
                         </div>
                     </div>
@@ -235,7 +236,6 @@
                                     <div class="form-group">
                                         <label for="country" class="form-label">País</label>
                                         <select id="country" class="form-select @error('country_fk') is-invalid @enderror" name="country_fk" required>
-                                            <option value="">{{ Auth::user()->country_fk }}</option>
                                             @foreach ($countries as $country)
                                             <option value="{{ $country->id }}">{{ $country->name }}</option>
                                             @endforeach
@@ -290,7 +290,6 @@
         </div>
     </div>
     <!-- FIN MODAL -->
-
 
 
 
@@ -352,7 +351,7 @@
             </form>
         </div>
     </div>
-</div>
+
 @endsection
 
 @section('js')

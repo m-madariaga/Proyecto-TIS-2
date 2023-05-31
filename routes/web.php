@@ -122,18 +122,19 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
-
+    
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
+    Route::post('/events', [EventController::class, 'store'])->name('event.store');
+    Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
+    Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
 
     Route::get('/page', function () {
         return view('page');
     })->name('page');
 
 
-    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
-    Route::post('/events', [EventController::class, 'store'])->name('event.store');
-    Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
-    Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
-
+   
+    
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
