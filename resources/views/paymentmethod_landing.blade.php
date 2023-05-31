@@ -58,9 +58,9 @@
         .container-fluid {
             padding: 0px 25rem 0px;
         }
-        
-        .cart-text{
-            color:black;
+
+        .cart-text {
+            color: black;
         }
     </style>
 @endsection
@@ -68,9 +68,9 @@
 @section('content')
     <div class="header_resume">
         <div class="header-content">
-            <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
-            <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
-                style="max-height: 4rem; width: auto;" alt="main_logo">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}">
+                <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                    style="max-height: 4rem; width: auto;" alt="main_logo">
             </a>
         </div>
     </div>
@@ -95,19 +95,19 @@
                                 <span class="card-text">Precio: ${{ $item->price }}</span>
                             </div>
                         </div>
-                        <hr> 
+                        <hr>
                     @endforeach
                 </div>
             </div>
-            
+
             <div class="col-md-4">
                 <h4 class="pb-1 pt-4">Métodos de Envío</h4>
                 <div class="list-group-item">
-                   <span style="font-size: 1rem;" > Método: {{ $shipment_type }}</span>
-                   <hr>
-                   <span> Dirección: {{Auth::user()->address}}, {{Auth::user()->city->name}}</span>
+                    <span style="font-size: 1rem;"> Método: {{ $shipment_type }}</span>
+                    <hr>
+                    <span> Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city->name }}</span>
                 </div>
-                <h4 class="pb-1 pt-4">Métodos de Pagos</h4>
+                <h4 class="pb-1 pt-4">Métodos de Pago</h4>
                 <div class="card-deck">
                     @foreach ($paymentMethods as $paymentMethod)
                         @if ($paymentMethod->visible)
