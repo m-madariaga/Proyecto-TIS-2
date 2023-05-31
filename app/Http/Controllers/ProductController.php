@@ -44,6 +44,8 @@ class ProductController extends Controller
         return view('accesorie', compact('productos'));
 
     }
+
+
     /**
      * Show the form for creating a new resource.
      *
