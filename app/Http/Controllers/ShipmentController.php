@@ -13,6 +13,8 @@ use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\statusChangeEmail;
 
 class ShipmentController extends Controller
 {
@@ -21,6 +23,7 @@ class ShipmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $shipments = shipment::all();
@@ -54,7 +57,7 @@ class ShipmentController extends Controller
             $shipment->status = 'pending';
             $shipment->shipment_type_fk = $request->input('shipment_type_id');
         
-            $shipment->save(); // Guardar el envío en la base de datos
+            $shipment->save(); 
         
             $products = Cart::content();
             $shipmentProducts = [];
@@ -72,8 +75,12 @@ class ShipmentController extends Controller
             $shipment->products = $shipmentProducts;
             $shipment->save();
             $paymentMethods = PaymentMethod::all();
-        
-            return view('paymentmethod_landing', compact('paymentMethods'));
+            $cart = Cart::content();
+            $shipment_type_id = $request->shipment_type_id;
+
+            // Obtener el nombre del tipo de envío
+            $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
+            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type'));
         }
     }
 
@@ -152,8 +159,9 @@ class ShipmentController extends Controller
         $shipment->status = $request->status;
         $shipment->save();
         $user = User::find($shipment->user_fk);
+        error_log($request->status);
 
-        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->id, $shipment->status));
+        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');

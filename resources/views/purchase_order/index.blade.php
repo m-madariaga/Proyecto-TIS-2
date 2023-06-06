@@ -33,6 +33,7 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Productos</th>
                                         <th class="text-center">Total</th>
+                                        <th class="text-center">Fecha de compra</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -46,18 +47,18 @@
                                                         <tr>
                                                             <th scope="col">Nombre</th>
                                                             <th scope="col">Marca</th>
-                                                            <th scope="col">Valor de compra</th>
                                                             <th scope="col">Unidades</th>
+                                                            <th scope="col">Valor de compra</th>
                                                         </tr>
                                                     </thead>
                                                     @foreach ($orden->product as $orden_prod)
                                                         <tbody>
                                                             <tr>
-                                                                <td scope="row">{{ $orden_prod->products->nombre }}
+                                                                <td scope="row">{{ $orden_prod->product->nombre }}
                                                                 </td>
-                                                                <td>{{ $orden_prod->products->marca->nombre }}</td>
-                                                                <td>{{ $orden_prod->precio }}</td>
+                                                                <td>{{ $orden_prod->product->marca->nombre }}</td>
                                                                 <td>{{ $orden_prod->cantidad }}</td>
+                                                                <td>{{ $orden_prod->precio }}</td>
                                                             </tr>
                                                         </tbody>
                                                     @endforeach
@@ -66,17 +67,19 @@
 
                                             </td>
                                             <td class="text-center">{{ $orden->total }}</td>
+                                            <td class="text-center">{{ $orden->created_at }}</td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('orden-compra-product-edit', ['id' => $orden->id]) }}"
+                                                <a href="{{ route('orden-compra-pdf', ['id' => $orden->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary">
+                                                    Descargar PDF</a><br>
+                                                <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
-                                                    Editar</a>
-                                                <form
-                                                    action="{{ route('orden-compra-product-destroy', ['id' => $orden->id]) }}"
+                                                    Editar</a><br>
+                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}"
                                                     method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-user"><i
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
                                                             class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
                                                 </form>
                                             </td>
@@ -112,8 +115,8 @@
             });
         });
 
-        $('#searchBar').keyup(function(){
-            table.search($(this).val()).draw() ;
+        $('#searchBar').keyup(function() {
+            table.search($(this).val()).draw();
         })
     </script>
 @endsection

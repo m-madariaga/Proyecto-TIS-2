@@ -44,6 +44,10 @@ class CartController extends Controller
                         'nombre' => null,
                     ]
                 ]);
+
+                // Disminuir el stock del producto
+                $product->stock -= $qty;
+                $product->save();
             }
         }
 
@@ -53,6 +57,7 @@ class CartController extends Controller
             return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
         }
     }
+
 
     public function showCart()
     {
@@ -71,7 +76,14 @@ class CartController extends Controller
     public function removeitem(Request $request)
     {
         $item = $request->route('rowId');
+        $removedItem = Cart::get($item); // Obtener el producto eliminado
         Cart::remove($item);
+
+        // Incrementar el stock del producto eliminado
+        $product = Product::find($removedItem->id);
+        $product->stock += $removedItem->qty;
+        $product->save();
+
         return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
     }
 
@@ -79,13 +91,26 @@ class CartController extends Controller
     {
         $item = Cart::content()->where("rowId", $request->id)->first();
         Cart::update($request->id, $item->qty + 1);
+
+        // Disminuir el stock del producto en la base de datos
+        $product = Product::find($item->id);
+        $product->decrement('stock');
+
         return back();
     }
 
     public function decrementitem(Request $request)
     {
         $item = Cart::content()->where("rowId", $request->id)->first();
-        Cart::update($request->id, $item->qty - 1);
+
+        if ($item->qty > 1) {
+            Cart::update($request->id, $item->qty - 1);
+
+            // Aumentar el stock del producto en la base de datos
+            $product = Product::find($item->id);
+            $product->increment('stock');
+        }
+
         return back();
     }
 
@@ -109,14 +134,19 @@ class CartController extends Controller
             $detail = new Detail();
             $detail->precio = $item->price;
             $detail->cantidad = $item->qty;
-            $detail->monto = $detail->cantidad * $detail->precio ;
+            $detail->monto = $detail->cantidad * $detail->precio;
             $detail->producto_id = $item->id;
             $detail->pedido_id = $order->id;
             $detail->save();
+
+            // Disminuir el stock del producto
+            $product = Product::find($item->id);
+            $product->stock -= $item->qty;
+            $product->save();
         }
 
         Cart::destroy();
         return redirect()->route('home-landing');
-
     }
+
 }

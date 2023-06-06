@@ -17,7 +17,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('imagen')->nullable();
-            $table->boolean('visible');
+            $table->boolean('visible')->default(false); 
             $table->timestamps();
         });
     }

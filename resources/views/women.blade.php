@@ -1,6 +1,29 @@
 @extends('layouts-landing.welcome')
 
 @section('css')
+<style>
+    .product-item.out-of-stock {
+        opacity: 0.5;
+        position: relative;
+    }
+
+    .product-item.out-of-stock::after {
+        content: "No hay stock";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        max-width: 300px;
+        height: 25%;
+        max-height: 200px;
+        background-color: #000;
+        color: #fff;
+        font-size: 18px;
+        text-align: center;
+        padding: 20px;
+    }
+</style>
 @endsection
 
 @section('js')
@@ -36,7 +59,7 @@
             <div class="row">
                 <div class="col text-center">
                     <div class="section_title new_arrivals_title">
-                        <h2>Productos Mujer</h2>
+                        <h2>Mujer</h2>
                     </div>
                 </div>
             </div>
@@ -45,7 +68,7 @@
                 <div class="col">
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach ($productos as $index => $producto)
-                        <div class="product-item">
+                        <div class="product-item {{ $producto->stock === 0 ? 'out-of-stock' : '' }}">
                             <a href="{{ route('product.show', $producto->id) }}">
                                 <div class="product product_filter">
                                     <div class="product_image">
@@ -60,7 +83,9 @@
                             <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id[]" value="{{ $producto->id }}">
-                                <button class="red_button add_to_cart_button" type="submit">Añadir al carrito</button>
+                                <button class="red_button add_to_cart_button" type="submit" {{ $producto->stock === 0 ? 'disabled' : '' }}>
+                                    {{ $producto->stock === 0 ? 'Sin stock' : 'Añadir al carrito' }}
+                                </button>
                             </form>
                         </div>
                         @endforeach
@@ -70,6 +95,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

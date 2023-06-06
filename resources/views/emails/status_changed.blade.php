@@ -9,6 +9,6 @@ El estado de su orden {{$id}} ha cambiado.
 
 
 
-Thanks,<br>
-{{ config('app.name') }}
+<br>
+QG
 @endcomponent

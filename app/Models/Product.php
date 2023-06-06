@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -31,9 +32,8 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class, 'categoria_id');
     }
-    public function purchase_order(): BelongsToMany
-    {
-        return $this->belongsToMany(Purchase_order::class, 'products_id');
+    public function purchase_order(): HasMany {
+        return $this->hasMany(Purchase_order_product::class, 'products_id');
     }
     public function shipments()
     {
