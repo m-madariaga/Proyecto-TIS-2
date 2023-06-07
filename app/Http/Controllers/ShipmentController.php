@@ -173,7 +173,10 @@ class ShipmentController extends Controller
 
         $index=DB::table('shipment_statuses')->orderBy('created_at', 'desc')->first();
 
-
+        switch($index->nombre_estado){
+            case('pendiente'):
+                break;
+        }
         foreach($indexes as $index){
             error_log($index->nombre_estado);
             error_log($index->created_at);
