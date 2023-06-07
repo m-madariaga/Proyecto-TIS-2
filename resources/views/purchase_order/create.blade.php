@@ -53,7 +53,6 @@
                                                     <td class="text-center pt-3 w-2">
                                                         <input type="checkbox" id="prod_id{{ $prod->id }}"
                                                             name="prod_id[]" value="{{ $prod->id }}"
-                                                            onclick="validar_inputs(prod_id{{ $prod->id }},valor{{ $prod->id }},cantidad{{ $prod->id }})"
                                                             class="@error('prod_id') is-invalid @enderror">
                                                         @error('prod_id')
                                                             <span class="invalid-feedback" role="alert">
@@ -255,22 +254,14 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
     <script>
-        function validar_inputs(checkbox_id, precio_id, cantidad_id) {
-            var Form = document.getElementById('formulario_general');
-            var precio = document.getElementById(precio_id);
-            var cantidad = document.getElementById(cantidad_id);
-            var checkbox = document.getElementById(checkbox_id);
-            if (precio.value != '') {
-                precio.removeAttribute('disabled');
-                cantidad.removeAttribute('disabled');
+        var Form = document.getElementById('formulario_general');
+        Form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var checkbox = Form.querySelectorAll('checkbox');
+            var input = Form.querySelectorAll('input');
 
-            } else {
-                precio.setAttribute('disabled', 'disabled');
-                cantidad.setAttribute('disabled', 'disabled');
-                precio.required = true;
-                cantidad.required = true;
-            }
-        }
+
+        })
     </script>
 
     <script>
