@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shipment;
+use App\Models\shipment_status;
 use App\Models\ShipmentType;
 use App\Models\User;
 use App\Models\Country;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
+use DB;
 
 class ShipmentController extends Controller
 {
@@ -159,7 +161,23 @@ class ShipmentController extends Controller
         $shipment->status = $request->status;
         $shipment->save();
         $user = User::find($shipment->user_fk);
-        error_log($request->status);
+
+        $shipment_status = new shipment_status();
+            $shipment_status->shipment_fk = $shipment->id;
+            $shipment_status->nombre_estado = 'pendiente';
+            $shipment->shipment_type_fk = $request->input('shipment_type_id');
+        
+            $shipment_status->save();
+
+        // $indexes=DB::table('shipment_statuses')->orderBy('created_at', 'desc')->get();
+
+        $index=DB::table('shipment_statuses')->orderBy('created_at', 'desc')->first();
+
+
+        foreach($indexes as $index){
+            error_log($index->nombre_estado);
+            error_log($index->created_at);
+        }
 
         Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
