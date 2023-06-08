@@ -27,8 +27,13 @@ class OrderController extends Controller
 
     public function showOrder($orderId)
     {
-        $order = Order::with('user')->findOrFail($orderId);
-        return view('order', compact('order'));
+        $order = Order::find($orderId);
+        $details = Detail::with('product')->where('pedido_id', $orderId)->get();
+
+        return response()->json([
+            'order' => $order,
+            'details' => $details
+        ]); 
     }
 
     public function store(Request $request, $id)
@@ -38,4 +43,6 @@ class OrderController extends Controller
 
         return view('vieworder', compact('order', 'details'));
     }
+
+
 }

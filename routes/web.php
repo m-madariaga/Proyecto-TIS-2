@@ -139,8 +139,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
-    Route::get('/orders/{id}/details', [OrderController::class, 'getOrderDetails']);
-
+   
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
@@ -267,3 +266,4 @@ Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
 Route::Post('/checkout', [App\Http\Controllers\CheckOutController::class, 'CheckOut'])->name('checkout');
+Route::get('/order/{orderId}', [App\Http\Controllers\OrderController::class, 'showOrder'])->name('order.show');

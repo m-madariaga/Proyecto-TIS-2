@@ -19,18 +19,18 @@ class ProfileLandingController extends Controller
         $countries = Country::all();
         $regions = Region::all();
         $cities = City::all();
-        $orders = Order::where('user_id', $user->id)->get(); // Obtén los pedidos del usuario conectado
+        $orders = Order::with('details')->where('user_id', $user->id)->get();
+        $details = collect(); // Inicializar como una colección vacía
 
-        if ($orders->isEmpty()) {
-            $orders = collect(); // Inicializar como una colección vacía
-            $details = collect();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
-        } else {
-            $details = Detail::all();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+        if (!$orders->isEmpty()) {
+            foreach ($orders as $order) {
+                $orderDetails = Detail::where('pedido_id', $order->id)->get();
+                $details = $details->concat($orderDetails);
+            }
         }
+    
 
-
+        return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
     }
 
     public function getRegions($countryId)
@@ -53,8 +53,8 @@ class ProfileLandingController extends Controller
         $user->phone_number = $request->phone_number;
         $region = Region::find($request->region_fk);
         $city = City::find($request->city_fk);
-        $user->region_fk = $region->name;
-        $user->city_fk = $city->name;
+        $user->region_fk = $request->region_fk;
+        $user->city_fk = $request->city_fk;
 
         // Validar y guardar la imagen si se ha cargado una nueva
         if ($request->hasFile('profile_image')) {

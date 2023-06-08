@@ -22,7 +22,10 @@
     padding: 10px;
     text-align: center;
 }
-
+.table td,
+.table th {
+    vertical-align: middle !important;
+}
 .btn-danger {
     background-color: #8c034e;
     border-color: #8c034e;
