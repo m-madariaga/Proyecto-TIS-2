@@ -187,6 +187,10 @@ class ProductController extends Controller
         $product->color = $request->color;
         $product->talla = $request->talla;
         $product->stock = $request->stock;
+
+        $stock = $request->stock;
+        $product->stock = $stock < 0 ? 0 : $stock;
+    
         $product->visible = $request->visible;
         if ($image = $request->file('imagen')) {
             $rutaGuardarImg = 'imagen/';
