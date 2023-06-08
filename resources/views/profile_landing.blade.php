@@ -166,14 +166,14 @@
                                 <div class="form-group">
                                     <label for="region" class="form-label">Región</label>
                                     <span class="form-control"
-                                        id="profile_card_body">{{ Auth::user()->region_fk }}</span>
+                                        id="profile_card_body">{{ Auth::user()->region->name }}</span>
 
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk}}</span>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name}}</span>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +350,7 @@
                                     <select id="region"
                                         class="form-control input-field @error('region_fk') is-invalid @enderror"
                                         name="region_fk" required>
-                                        <option value="">{{ Auth::user()->region_fk }}</option>
+                                        <option value="">{{ Auth::user()->region->name }}</option>
                                         @foreach ($regions as $region)
                                             <option value="{{ $region->id }}">{{ $region->name }}</option>
                                         @endforeach
@@ -368,7 +368,7 @@
                                     <select id="city"
                                         class="form-control input-field @error('city_fk') is-invalid @enderror"
                                         name="city_fk" required>
-                                        <option value="">{{ Auth::user()->city_fk }}</option>
+                                        <option value="">{{ Auth::user()->city->name }}</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}">{{ $city->name }}</option>
                                         @endforeach
