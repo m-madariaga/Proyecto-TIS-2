@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Event;
@@ -35,7 +36,9 @@ class EventController extends Controller
             'color' => 'required',
         ]);
 
-        Event::create($validatedData);
+        $event = new Event($validatedData);
+        $event->user_id = auth()->user()->id; // Assuming you have user authentication
+        $event->save();
 
         return response()->json(['success' => true]);
     }

@@ -55,10 +55,10 @@
   text-align: right;
 }
 .fc-theme-standard td,
-  .fc-theme-standard th {
-    border: 1px solid #ddd;
-    border: 1px solid var(--fc-border-color, #ddd);
-  }
+.fc-theme-standard th {
+  background-color: #f2f2f2;
+  border: 1px solid #000000;
+}
 /* for FF, which doesn't expand a 100% div within a table cell. use absolute positioning */
 /* inner-wrappers are responsible for being absolute */
 /* TODO: best place for this? */

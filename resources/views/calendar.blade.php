@@ -21,11 +21,12 @@
             <div class="card p-4">
                 <div class="card-header pb-0">
                     <div class="d-flex align-items-center">
-                        <p class="mb-0">Calendario personal</p>
                     </div>
                 </div>
                 <div class="col-md-12">
+                    <div class="p-4">
                     <div id="calendar"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -64,7 +65,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <button type="submit" class="btn btn-primary" id="btn-save-event">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -121,104 +122,85 @@
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'es',
             initialView: 'dayGridMonth',
             headerToolbar: {
-                start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                start: 'prevYear,prev,next,nextYear today',
                 center: 'title',
-                end: 'prevYear,prev,next,nextYear'
+                end: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            buttonText: {
+                prevYear: 'Año anterior',
+                prev: 'Anterior',
+                next: 'Siguiente',
+                nextYear: 'Año siguiente',
+                today: 'Hoy',
+                dayGridMonth: 'Mes',
+                timeGridWeek: 'Semana',
+                timeGridDay: 'Día'
             },
             dateClick: function(info) {
                 $("#modal-event").modal("show");
             },
             eventClick: function(info) {
                 var event = info.event;
-
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                    center: 'title',
-                    end: 'prevYear,prev,next,nextYear'
-                },
-                dateClick: function(info) {
-                    $("#modal-event").modal("show"); // muestra el modal
-                },
-                locale: 'es', // Establece el idioma en español
-                buttonText: {
-                    today: 'Hoy',
-                    month: 'Mes',
-                    week: 'Semana',
-                    day: 'Día',
-                    list: 'Lista'
-                },
-                allDayText: 'Todo el día',
-                noEventsText: 'No hay eventos para mostrar',
-                eventTimeFormat: {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    meridiem: 'short'
-                },
-                weekText: 'Sem',
-                moreLinkText: 'más',
-                eventLimitText: 'más',
-                dayPopoverFormat: 'dddd D [de] MMMM [de] YYYY'
-            });
-
-            calendar.render();
-
-            $("#btn-primary").click(function() {
-
-                var title = $("#title").val();
-                var description = $("#description").val();
-                var start = $("#start").val();
-                var end = $("#end").val();
-
-                var event = {
-                    title: title,
-                    description: description,
-                    start: start,
-                    end: end
-                };
-
-                calendar.addEvent(event);
-
-                $("#modal-event").modal("hide");
-            });
-
-            $("#btn-info").click(function() {
-                $("#modal-event").modal("hide");
-            });
-
+                $("#edit-title").val(event.title);
+                $("#edit-description").val(event.extendedProps.description);
+                $("#edit-start").val(event.start.toISOString().slice(0, -8));
+                $("#edit-end").val(event.end.toISOString().slice(0, -8));
+                $("#edit-color").val(event.backgroundColor);
+                $("#btn-update-event").attr("data-event-id", event.id);
                 $("#modal-edit-event").modal("show");
             },
-            events: {!! $events->toJson() !!}
+            events: [
+                // Aquí puedes cargar los eventos desde tu controlador o API
+                @foreach($events as $event) {
+                    id: '{{ $event->id }}',
+                    title: '{{ $event->title }}',
+                    description: '{{ $event->description }}',
+                    start: '{{ $event->start }}',
+                    end: '{{ $event->end }}',
+                    backgroundColor: '{{ $event->color }}',
+                },
+                @endforeach
+            ],
         });
         calendar.render();
 
-        $("#edit-event-form").submit(function(event) {
-            event.preventDefault();
 
-            var eventId = $("#btn-update-event").attr("data-event-id");
-
-            var formData = new FormData(this);
-
-            axios.put('/event/' + eventId, formData)
+        $("#event-form").submit(function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            axios.post("{{ route('event.store') }}", formData)
                 .then(function(response) {
-                    if (response.data.success) {
-                        var event = calendar.getEventById(eventId);
-                        if (event) {
-                            event.setProp('title', formData.get('title'));
-                            event.setExtendedProp('description', formData.get('description'));
-                            event.setProp('start', formData.get('start'));
-                            event.setProp('end', formData.get('end'));
-                            event.setProp('backgroundColor', formData.get('color'));
-                            event.setProp('borderColor', formData.get('color'));
-                            event.setProp('textColor', '#FFFFFF');
-                            event.setAllDay(false);
-                        }
-                        $("#modal-edit-event").modal("hide");
-                    }
+                    $("#modal-event").modal("hide");
+                    calendar.addEvent({
+                        id: response.data.id,
+                        title: response.data.title,
+                        description: response.data.description,
+                        start: response.data.start,
+                        end: response.data.end,
+                        backgroundColor: response.data.color,
+                    });
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        });
+
+        $("#edit-event-form").submit(function(e) {
+            e.preventDefault();
+            var eventId = $("#btn-update-event").attr("data-event-id");
+            var formData = $(this).serialize();
+            axios.put("{{ route('event.update', '') }}/" + eventId, formData)
+                .then(function(response) {
+                    $("#modal-edit-event").modal("hide");
+                    var event = calendar.getEventById(eventId);
+                    event.setProp('title', response.data.title);
+                    event.setExtendedProp('description', response.data.description);
+                    event.setStart(response.data.start);
+                    event.setEnd(response.data.end);
+                    event.setProp('backgroundColor', response.data.color);
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -227,16 +209,10 @@
 
         $("#btn-delete-event").click(function() {
             var eventId = $("#btn-update-event").attr("data-event-id");
-
-            axios.delete('/event/' + eventId)
+            axios.delete("{{ route('event.destroy', '') }}/" + eventId)
                 .then(function(response) {
-                    if (response.data.success) {
-                        var event = calendar.getEventById(eventId);
-                        if (event) {
-                            event.remove();
-                        }
-                        $("#modal-edit-event").modal("hide");
-                    }
+                    $("#modal-edit-event").modal("hide");
+                    calendar.getEventById(eventId).remove();
                 })
                 .catch(function(error) {
                     console.log(error);
