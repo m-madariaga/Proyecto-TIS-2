@@ -29,7 +29,7 @@
                             data-bs-target="#addProductModal">
                             Agregar nuevo producto
                         </button>
-                        <div class="table-responsive p-0 ">
+                        <div class="table-responsive p-0">
                             <form id='formulario_general' action="{{ route('orden-compra-store') }}" method="POST">
                                 @csrf
                                 <table id="table" class="table display table-stripped align-items-center">
@@ -50,7 +50,7 @@
                                         <tbody>
                                             @foreach ($productos as $prod)
                                                 <tr>
-                                                    <td class="text-center pt-3 w-2">
+                                                    <td class="text-center w-1">
                                                         <input type="checkbox" id="prod_id{{ $prod->id }}"
                                                             name="prod_id[]" value="{{ $prod->id }}"
                                                             class="@error('prod_id') is-invalid @enderror">
@@ -61,21 +61,20 @@
                                                         @enderror
 
                                                     </td>
-                                                    <td class="text-center w-6">{{ $prod->nombre }}</td>
-                                                    <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
+                                                    <td class="text-center w-4">{{ $prod->nombre }}</td>
+                                                    <td class="text-center w-4">{{ $prod->marca->nombre }}
                                                     </td>
-                                                    <td class="text-center pt-3 w-6">{{ $prod->color }}
+                                                    <td class="text-center w-2">{{ $prod->color }}
                                                     </td>
-                                                    <td class="text-center pt-3 w-6">{{ $prod->talla }}
+                                                    <td class="text-center w-2">{{ $prod->talla }}
                                                     </td>
-                                                    <td class="text-center pt-3 w-1">
+                                                    <td class="text-center w-1">
                                                         <div class="form-group">
 
                                                             <input type="number"
                                                                 class="form-control @error('cantidad') is-invalid  @enderror"
                                                                 id="cantidad{{ $prod->id }}" name="cantidad[]"
                                                                 value="{{ old('cantidad[]') }}">
-
                                                             @error('cantidad')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -83,14 +82,13 @@
                                                             @enderror
                                                         </div>
                                                     </td>
-                                                    <td class="text-center pt-3 w-3">
+                                                    <td class="text-center w-2">
                                                         <div class="form-group">
 
                                                             <input type="number"
                                                                 class="form-control @error('valor') is-invalid  @enderror"
                                                                 id="valor{{ $prod->id }}" name="valor[]"
                                                                 value="{{ old('valor[]') }}">
-
                                                             @error('valor')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -256,12 +254,37 @@
     <script>
         var Form = document.getElementById('formulario_general');
         Form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            var checkbox = Form.querySelectorAll('checkbox');
-            var input = Form.querySelectorAll('input');
-
-
-        })
+            var inputs = Form.querySelectorAll('input');
+            inputs.forEach(function(input) {
+                //recorrer los checkbox marcados
+                if (input.type == 'checkbox' && input.checked) {
+                    event.preventDefault();
+                    // cantidad y valor del checkbox correspondiente
+                    var id_valor = 'valor' + input.value;
+                    var id_cantidad = 'cantidad' + input.value;
+                    var input_cantidad = document.getElementById(id_cantidad);
+                    var input_valor = document.getElementById(id_valor);
+                    //validaciones
+                    if (input_cantidad.value !== '' && input_cantidad.value > 0) {
+                        //el campo cantidad ingresado es valido
+                        input_cantidad.style.borderColor = '';
+                        if (input_valor.value !== '' && input_valor.value > 0) {
+                            //el campo valor ingresado es valido
+                            input_valor.style.borderColor = '';
+                            Form.submit();
+                        } else {
+                            //el campo valor no ha sido ingresado o no es valido
+                            input_valor.required = true;
+                            input_valor.style.borderColor = 'red';
+                        }
+                    } else {
+                        //el campo cantidad no ha sido ingresado o no es valido
+                        input_cantidad.required = true;
+                        input_cantidad.style.borderColor = 'red';
+                    }
+                }
+            });
+        });
     </script>
 
     <script>

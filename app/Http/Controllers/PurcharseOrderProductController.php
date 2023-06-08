@@ -16,7 +16,6 @@ class PurcharseOrderProductController extends Controller
      */
     public function index()
     {
-
     }
 
     /**
@@ -26,7 +25,6 @@ class PurcharseOrderProductController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -37,12 +35,19 @@ class PurcharseOrderProductController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate([
-            'prod_id' => 'required',
-            'cantidad' => 'required',
-            'valor' => 'required',
-            'orden_id' => 'required',
-        ]);
+        $datos = $request->validate(
+            [
+                'prod_id' => 'required',
+                'cantidad' => 'required',
+                'valor' => 'required',
+                'orden_id' => 'required',
+            ],
+            [
+                'prod_id.required' => 'Selecciona un producto.',
+                'cantidad.required' => 'El campo cantidad es obligatorio.',
+                'valor.required' => 'El campo valor es obligatorio.',
+            ],
+        );
         $productos = $datos['prod_id'];
         // reiniciar los indices para que sean consecutivos y quitar los nulls
         $cant = [];
@@ -73,7 +78,7 @@ class PurcharseOrderProductController extends Controller
         }
         //recalcular total de la orden
         $orden = Purchase_order::find($id);
-        $aux=0;
+        $aux = 0;
         foreach ($orden->product as $prod) {
             $aux += $prod->cantidad * $prod->precio;
         }
@@ -81,7 +86,7 @@ class PurcharseOrderProductController extends Controller
         $orden->total = $total;
         $orden->save();
         return redirect()
-            ->route('orden-compra-edit',$id)
+            ->route('orden-compra-edit', $id)
             ->with('success:', 'Orden de compra ingresada correctamente.');
     }
 
@@ -162,10 +167,8 @@ class PurcharseOrderProductController extends Controller
         $id->total = $total;
         $id->save();
         $ordenes = Purchase_order::all();
-        return redirect()
-            ->route('orden-compra', compact('ordenes'));
+        return redirect()->route('orden-compra', compact('ordenes'));
     }
-
 
     /**
      * Remove the specified resource from storage.
