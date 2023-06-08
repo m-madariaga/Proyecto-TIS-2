@@ -130,7 +130,7 @@
                         <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
                         <hr>
                         <span class="cart-text">Dirección: {{ Auth::user()->address }},
-                            {{ Auth::user()->city_fk}}</span>
+                            {{ Auth::user()->city->name }}</span>
                         <hr>
                         <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
                         <hr>
