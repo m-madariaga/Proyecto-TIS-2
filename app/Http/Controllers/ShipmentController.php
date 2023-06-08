@@ -40,6 +40,13 @@ class ShipmentController extends Controller
 
             $statuses=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
             $shipment->statuses = $statuses;
+            foreach($statuses as $status) {
+                if($statuses->last() == $status) {
+                    
+                    $shipment->last = $status->nombre_estado;
+                    error_log($shipment->last);
+                }
+            }
 
         }
 

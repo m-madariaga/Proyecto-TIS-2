@@ -58,7 +58,8 @@
                                                     Ver productos
                                                 </button>
                                                 <button id="statusButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#statusModal" 
-                                                data-shipment-id="{{$shipment->id}}" data-status-list="{{ json_encode($shipment->statuses) }}">
+                                                data-shipment-id="{{$shipment->id}}" data-status-list="{{ json_encode($shipment->statuses) }}"
+                                                data-last-status="{{ $shipment->last }}">
                                                     Ver estado
                                                 </button>
                                                 <!-- <a href="{{ route('shipments.status_edit', $shipment->id) }}" class="btn btn-sm btn-outline-primary"><i
@@ -95,15 +96,17 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="productsModalLabel">Estado del envío</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
                                         </div>
                                         <div class="modal-body">
                                             <p class="text-center" id="statusList"></p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cancelar envío</button>
                                             <a id='editStatus' href="{{ route('shipments.status_edit', ['id' => '5']) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Avanzar estado</a>
+                                                class="fa fa-edit"></i> Cambiar a </a>
                                         </div>
                                     </div>
                                 </div>
@@ -245,11 +248,10 @@
                 const button = $(event.relatedTarget); // Button que triggerea el modal
                 const status = button.data('status-list');
                 const shipmentId= button.data('shipment-id');
+                const last= button.data('last-status');
 
-                console.log("statuses");
-
-                console.log(status);
-                console.log(shipmentId);
+                
+                console.log(last);
                 var p = document.getElementById("statusList");
                 p.setAttribute('style', 'white-space: pre;');
                 p.textContent = "";
@@ -257,10 +259,8 @@
                 var index= 1;
 
                 status.forEach(function(entry) {
-                    console.log(entry.nombre_estado);
                     name = entry.nombre_estado;
                     p.textContent += index + ". Cambió a estado " + name + " en " + entry.created_at + "\r\n";
-                    console.log(entry.created_at);
                     index++;
                 });
 
@@ -272,8 +272,30 @@
 
 
                 // Actualizar ID de la ruta
-                const actionUrl = editStatus.attr('href').replace(/(\/admin\/shipments\/)\d+/, '$1'+shipmentId);
+                const actionUrl = editStatus.attr('href').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
                 editStatus.attr('href', actionUrl);
+
+                switch(last){
+                    case 'pendiente':
+                        console.log('Cambiar a comprado')
+                        document.getElementById("editStatus").innerText = 'Cambiar a comprado';
+                    break;
+                    case 'pagado':
+                        document.getElementById("editStatus").innerText= 'Cambiar a enviado';
+                    break;
+                    case 'enviado':
+                        document.getElementById("editStatus").innerText= 'Envío completado';
+                    break;
+                    case 'enviado':
+                        document.getElementById("editStatus").innerText= 'Envío completado';
+                    break;
+                    case 'cancelado':
+                        document.getElementById("editStatus").innerText= 'No se puede continuar el envío';
+                    break;
+
+                }
+
+                // editStatus.textContent.replace(/(estado )\w+, $1 + );
 
                 // Reemplazar el valor del nombre en el input el modal
 
