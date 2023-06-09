@@ -44,12 +44,12 @@
 
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('permissions.edit', $permission->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Edit</a>
+                                                        class="fa fa-edit"></i> Editar</a>
                                                 <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-permission"
-                                                        data-id="{{ $permission->id }}"><i class="fa fa-trash" aria-hidden="true"> Delete</i></button>
+                                                        data-id="{{ $permission->id }}"><i class="fa fa-trash" aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>

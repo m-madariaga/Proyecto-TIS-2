@@ -62,7 +62,12 @@
                                                             <tr class="">
                                                                 <td>
                                                                     <input type="number" name="prod_id[]" id="prod_id"
-                                                                        value="{{ $prod->id }}" hidden>
+                                                                        value="{{ $prod->id }}" class='form-control @error('prod_id') is-invalid @enderror' hidden>
+                                                                        @error('prod_id')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
                                                                     {{ $prod->product->nombre }}
                                                                 </td>
                                                                 <td class="text-center aling-items-center">

@@ -52,7 +52,7 @@
 
         /* Ajusta el ancho de los contenedores */
         .container-fluid {
-            padding: 0px 10rem 0px;
+            padding: 0px 25rem 0px;
         }
 
         /* Añade un poco de margen a los elementos dentro del cuadro de productos */
@@ -81,6 +81,11 @@
             max-width: 70px;
             max-height: 70px;
         }
+
+        .cart-text{
+            color:black;
+        }
+       
     </style>
 @endsection
 
@@ -95,27 +100,32 @@
     </div>
 
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
-        <div class="row mt-4">
-            <div class="col-md-6">
+        <div class="row mt-4 ">
+            <div class="col-md-8">
                 <h4 class="pb-1 pt-4">Productos</h4>
-                <div class="list-group-item">
+                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
                     @foreach ($cart as $item)
-                        <div class="row align-items-center">
-                            <div class="col-md-2">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6">
                                 <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
-                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="70">
+                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="120">
                                 </a>
                             </div>
-                            <div class="col-md-10">
+                            <div class="col-md-6">
                                 <h5 class="card-title">{{ $item->name }}</h5>
-                                <p class="card-text">Precio: ${{ $item->price }}</p>
-                                <p class="card-text">Cantidad: {{ $item->qty }}</p>
+                                <hr>
+                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
+                                <br>
+                                <span class="card-text">Precio: ${{ $item->price }}</span>
                             </div>
                         </div>
+                        <hr> 
                     @endforeach
                 </div>
             </div>
-            <div class="col-md-6">
+            
+            
+            <div class="col-md-4">
                 <h4 class="pb-1 pt-4">Métodos de Envío</h4>
                 <div class="card-deck">
                     @foreach ($shipment_types as $shipment_type)
@@ -126,9 +136,9 @@
                                 onclick="selectShipmentType(this)">
                                 <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
                                     style="cursor: pointer;">
-                                    <h5 class="card-title text-truncate text-center"
+                                    <h4 class="card-title text-truncate text-center"
                                         style="font-size: 1.2rem; height: 3rem; overflow: hidden;">
-                                        {{ $shipment_type->nombre }}</h5>
+                                        {{ $shipment_type->nombre }}</h4>
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="radio" name="shipment_type"
                                             id="shipment_type{{ $shipment_type->id }}" value="{{ $shipment_type->id }}">

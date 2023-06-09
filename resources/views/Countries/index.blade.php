@@ -295,6 +295,7 @@
         $('#searchBar').keyup(function(){
             table.search($(this).val()).draw() ;
         });
+
         $('#addCountryModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();

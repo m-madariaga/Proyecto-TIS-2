@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('users.generate_pdf') }}" hidden>Descargar pdf</a>
+
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>
@@ -272,7 +272,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <form method="POST" id="editForm"
-                                            action="{{ route('users.update', ['id' => '__ID__']) }}">
+                                            action="{{ route('users.update', ['id' => '0']) }}">
                                             @csrf
                                             @method('PUT')
 
@@ -432,8 +432,8 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#users-table').DataTable({
-                dom: 'lfrtip',
+            table= $('#users-table').DataTable({
+                dom: 'lrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -442,6 +442,11 @@
 
             });
         });
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
+        });
+
         $('#addUserModal').on('hide.bs.modal', function() {
             $('.invalid-feedback').html('');
             $('.error-message').remove();
@@ -462,7 +467,7 @@
 
 
             // Actualizar ID de la ruta
-            const actionUrl = editForm.attr('action').replace('__ID__', userId);
+            const actionUrl = editForm.attr('action').replace(/(\/admin\/users\/)\d+/, '$1' + userId);
             editForm.attr('action', actionUrl);
 
             // Reemplazar el valor del nombre en el input el modal

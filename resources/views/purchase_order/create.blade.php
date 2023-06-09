@@ -26,11 +26,11 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
-                            data-bs-target="#addModal">
+                            data-bs-target="#addProductModal">
                             Agregar nuevo producto
                         </button>
                         <div class="table-responsive p-0 ">
-                            <form action="{{ route('orden-compra-store') }}" method="POST">
+                            <form id='formulario_general' action="{{ route('orden-compra-store') }}" method="POST">
                                 @csrf
                                 <table id="table" class="table display table-stripped align-items-center">
                                     <thead>
@@ -48,12 +48,18 @@
                                     @if (isset($empty))
                                     @else
                                         <tbody>
-
                                             @foreach ($productos as $prod)
                                                 <tr>
                                                     <td class="text-center pt-3 w-2">
-                                                        <input type="checkbox" id="prod_id"
-                                                            name="prod_id[]" value="{{ $prod->id }}">
+                                                        <input type="checkbox" id="prod_id" name="prod_id[]"
+                                                            value="{{ $prod->id }}"
+                                                            class="@error('prod_id') is-invalid @enderror">
+                                                        @error('prod_id')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <strong>{{ $message }}</strong>
+                                                            </span>
+                                                        @enderror
+
                                                     </td>
                                                     <td class="text-center w-6">{{ $prod->nombre }}</td>
                                                     <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
@@ -66,9 +72,9 @@
                                                         <div class="form-group">
 
                                                             <input type="number"
-                                                                class="form-control @error('cantidad') is-invalid @enderror"
+                                                                class="form-control @error('cantidad') is-invalid  @enderror"
                                                                 id="cantidad" name="cantidad[]"
-                                                                value="{{ old('cantidad') }}">
+                                                                value="{{ old('cantidad[$conteo]') }}">
 
                                                             @error('cantidad')
                                                                 <span class="invalid-feedback" role="alert">
@@ -81,9 +87,8 @@
                                                         <div class="form-group">
 
                                                             <input type="number"
-                                                                class="form-control @error('valor') is-invalid @enderror"
-                                                                id="valor" name="valor[]"
-                                                                value="{{ old('valor') }}">
+                                                                class="form-control @error('valor') is-invalid  @enderror"
+                                                                id="valor" name="valor[]" value="{{ old('valor[]') }}">
 
                                                             @error('valor')
                                                                 <span class="invalid-feedback" role="alert">
@@ -111,7 +116,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true"
+    <div id="addProductModal" class="modal fade" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true"
         data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -119,7 +124,8 @@
                     <h5 class="modal-title" id="addModalLabel">Nuevo producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('productos-store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('productos-store') }}" method="POST" enctype="multipart/form-data"
+                    id="addProductForm">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
@@ -208,7 +214,7 @@
                             <img id="imagenSeleccionada" style="max-height: 300px;">
                             <div class="row mb-3">
                                 <input name="imagen" id="imagen" type="file" required>
-                                @error('imagenSeleccionada')
+                                @error('imagen')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -245,6 +251,60 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+
+    <script>
+        // Usar Ajax para manejar el envio del formulario del modal para añadir productos
+        var addProductForm = document.getElementById('addProductForm');
+        addProductForm.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene enviar de inmediato el form
+
+            var formData = new FormData(addProductForm);
+            var xhr = new XMLHttpRequest();
+            //usar xhr para manejar la respuesta del controlador
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+
+                        // se parsea a json debido a que el controlador entrega un json
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            // SE crea el usuario
+                            $('#addProductModal').modal('hide'); // se esconde el modal
+                            location.reload(); // se recarga al mismo tiempo que se esconde el modal
+                        } else {
+                            // muestra los errores
+                            displayErrors(response.errors);
+                        }
+                    } else {
+                        // Handle AJAX request error
+                        console.error('AJAX request error');
+                    }
+                }
+            };
+
+            xhr.open('POST', addProductForm.getAttribute('action'));
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.send(formData);
+        });
+
+        // Funcion que muestra errores de validacion
+        function displayErrors(errors) {
+            // Limpia errores anteriores
+            $('.invalid-feedback').html('');
+
+            // Muestra los errores nuevos
+            for (var field in errors) {
+                var errorMessages = errors[field];
+                var errorField = $('#' + field);
+                errorField.addClass('is-invalid');
+                errorField.siblings('.invalid-feedback').html(errorMessages.join('<br>'));
+
+                var errorLabel = $('<span>').addClass('error-message text-danger').text(errorMessages.join(', '));
+                errorField.after(errorLabel);
+            }
+        }
     </script>
     <script>
         $(document).ready(function() {
