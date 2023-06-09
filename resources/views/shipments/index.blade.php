@@ -108,8 +108,9 @@
                                                 @csrf
                                                 <button type='submit' class="btn btn-sm btn-outline-danger" >Cancelar envío</button>
                                             </form>
-                                            <form id="editStatus" action="{{ route('shipments.status_edit', ['id' => '0', 'last' => 'pendiente']]) }}">
+                                            <form id="editStatus" action="{{ route('shipments.status_update', ['id' => '0', 'last' => 'pendiente']) }}">
                                                 @csrf
+                                                @method('PATCH')
                                                 <button type='submit' id='editButton' class="btn btn-sm btn-outline-primary" ><i
                                                     class="fa fa-edit"></i> Cambiar a </button>
                                             </form>

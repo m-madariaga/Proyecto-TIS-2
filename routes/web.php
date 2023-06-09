@@ -209,7 +209,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{id}/edit', [App\Http\Controllers\ShipmentController::class, 'status_edit'])->name('shipments.status_edit');
-    Route::patch('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
+    Route::patch('/shipments/{id}/{last}/update', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
     Route::delete('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{id}/{last}', [App\Http\Controllers\ShipmentController::class, 'status_cancel'])->name('shipment_cancel');
 

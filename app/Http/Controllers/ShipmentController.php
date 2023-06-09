@@ -161,16 +161,13 @@ class ShipmentController extends Controller
         return view('shipments.status_edit', compact('shipment'));
     }
 
-    public function status_update(Request $request, $id)
+    public function status_update(Request $request, $id, $last)
     {
-        $request->validate([
-            'status' => 'required',
-        ]);
 
-        $shipment = Shipment::find($id);
-        $shipment->status = $request->status;
-        $shipment->save();
-        $user = User::find($shipment->user_fk);
+        // $shipment = Shipment::find($id);
+        // $shipment->status = $request->status;
+        // $shipment->save();
+        // $user = User::find($shipment->user_fk);
 
         
 
@@ -178,32 +175,40 @@ class ShipmentController extends Controller
 
         $index=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->first();
 
-        switch($index->nombre_estado){
+        switch($last){
             case('pendiente'):
                 $shipment_status = new shipment_status();
-                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->shipment_fk = $id;
                     $shipment_status->nombre_estado = 'pagado';
                 $shipment_status->save();
+
+                $status= 'pagado';
 
                 break;
             case('pagado'):
                 $shipment_status = new shipment_status();
-                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->shipment_fk = $id;
                     $shipment_status->nombre_estado = 'enviado';
                 $shipment_status->save();
+
+                $status= 'enviado';
+
+
                 break;
             default:
                 $shipment_status = new shipment_status();
-                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->shipment_fk = $id;
                     $shipment_status->nombre_estado = 'pendiente';
                 $shipment_status->save();
+
+                $status= 'pendiente';
         }
         // foreach($indexes as $index){
         //     error_log($index->nombre_estado);
         //     error_log($index->created_at);
         // }
 
-        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
+        // Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
