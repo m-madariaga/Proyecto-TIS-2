@@ -209,11 +209,24 @@ class ShipmentController extends Controller
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
     }
 
-    public function status_cancel($id){
-        $shipment = Shipment::find($id);
-        $shipment_status = new shipment_status();
-            $shipment_status->shipment_fk = $shipment->id;
-            $shipment_status->nombre_estado = 'cancelado';
-        $shipment_status->save();
+    public function status_cancel($id, $last){
+        error_log('function start');
+        error_log($last);
+
+        if($last == 'cancelado'){
+            return redirect('/admin/shipments')->with('error', 'Este envío ya fué cancelado');
+        }elseif($last == 'enviado'){
+            return redirect('/admin/shipments')->with('error', 'Este envío ya fué completado');
+        }else{
+            $shipment = Shipment::find($id);
+                $shipment_status = new shipment_status();
+                $shipment_status->shipment_fk = $shipment->id;
+                $shipment_status->nombre_estado = 'cancelado';
+            $shipment_status->save();
+        }
+        
+        
+
+        return redirect('/admin/shipments')->with('success', 'Envío cancelado exitosamente!');
     }
 }
