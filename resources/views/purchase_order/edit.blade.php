@@ -61,15 +61,9 @@
                                                         <tbody>
                                                             <tr class="">
                                                                 <td>
-                                                                    <input type="number" name="prod_id[]" id="prod_id"
-                                                                        value="{{ $prod->id }}"
-                                                                        class='form-control @error('prod_id') is-invalid @enderror'
-                                                                        hidden>
-                                                                    @error('prod_id')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                    @enderror
+                                                                    <input type="number" name="prod_id_edit[]"
+                                                                        id="prod_id_edit" value="{{ $prod->id }}"
+                                                                        class='form-control' hidden>
                                                                     {{ $prod->product->nombre }}
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
@@ -77,32 +71,17 @@
                                                                 <td class="">
                                                                     <div
                                                                         class="d-flex form-group text-center aling-items-center justify-content-center">
-
-                                                                        <input type="number"
-                                                                            class="form-control w-20 @error('cantidad') is-invalid @enderror"
-                                                                            id="cantidad" name="cantidad[]"
+                                                                        <input type="number" class="form-control w-20"
+                                                                            id="cantidad_edit" name="cantidad_edit[]"
                                                                             value="{{ $prod->cantidad }}">
-                                                                        @error('cantidad')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
                                                                     </div>
                                                                 </td>
                                                                 <td class="">
                                                                     <div
                                                                         class="form-group d-flex aling-items-center justify-content-center">
-
-                                                                        <input type="number"
-                                                                            class="form-control w-40 @error('valor') is-invalid @enderror"
-                                                                            id="valor" name="valor[]"
+                                                                        <input type="number" class="form-control w-40"
+                                                                            id="valor_edit" name="valor_edit[]"
                                                                             value="{{ $prod->precio }}">
-
-                                                                        @error('valor')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
@@ -142,7 +121,7 @@
                     <h5 class="modal-title" id="addModalLabel">Nuevos productos a agregar</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('orden-compra-product-store') }}" method="POST" id="form_addprods" data-toggle="validator">
+                <form id="form_addprods" action="{{ route('orden-compra-product-store') }}" method="POST">
                     @csrf
                     <input type='number' name="orden_id" id="orden_id" value='{{ $orden->id }}' hidden>
                     <div class="table-responsive p-0 mt-2">
@@ -168,8 +147,8 @@
                                             <td class="text-center pt-3 w-2">
                                                 <input type="checkbox" id="prod_id{{ $prod->id }}" name="prod_id[]"
                                                     value="{{ $prod->id }}"
-                                                    class="@error('prod_id') is-invalid @enderror">
-                                                @error('prod_id')
+                                                    class="@error('prod_id{{ $prod->id }}') is-invalid @enderror">
+                                                @error('prod_id{{ $prod->id }}')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>
@@ -184,12 +163,10 @@
                                             </td>
                                             <td class="text-center pt-3 w-1">
                                                 <div class="form-group">
-
                                                     <input type="number"
                                                         class="form-control @error('cantidad') is-invalid @enderror"
                                                         id="cantidad{{ $prod->id }}" name="cantidad[]"
                                                         value="{{ old('cantidad') }}">
-
                                                     @error('cantidad')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -199,12 +176,10 @@
                                             </td>
                                             <td class="text-center pt-3 w-3">
                                                 <div class="form-group">
-
                                                     <input type="number"
                                                         class="form-control @error('valor') is-invalid @enderror"
                                                         id="valor{{ $prod->id }}" name="valor[]"
                                                         value="{{ old('valor') }}">
-
                                                     @error('valor')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -236,66 +211,57 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
     <script>
-        // Usar Ajax para manejar el envio del formulario del modal para añadir productos
-        var addProductForm = document.getElementById('form_addprods');
-        addProductForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Previene enviar de inmediato el form
-
-            var formData = new FormData(addProductForm);
-            var xhr = new XMLHttpRequest();
-            //usar xhr para manejar la respuesta del controlador
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-
-                        // se parsea a json debido a que el controlador entrega un json
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.success) {
-                            // SE crea el usuario
-                            $('#addModal').modal('hide'); // se esconde el modal
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Exito',
-                                text: '{{ session('success') }}',
-                                timer: 2000
-                            });
-                            setTimeout(function() {
-                                location.reload(); //your code to be executed after 1 second
-                            }, 1000);
-
+        var Form = document.getElementById('form_addprods');
+        Form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var inputs = Form.querySelectorAll('input');
+            var checkboxs = [];
+            inputs.forEach(function(input) {
+                if (input.type === 'checkbox') {
+                    checkboxs.push(input);
+                }
+            });
+            $('.invalid-feedback').html('')
+            var contador=0;
+            checkboxs.forEach(function(checkbox) {
+                $('.invalid-feedback').html('');
+                //recorre los checkbox marcados
+                if (checkbox.checked) {
+                    contador++;
+                    // busca la cantidad y el valor del producto
+                    var id_valor = 'valor' + checkbox.value;
+                    var id_cantidad = 'cantidad' + checkbox.value;
+                    var input_cantidad = document.getElementById(id_cantidad);
+                    var input_valor = document.getElementById(id_valor);
+                    if (input_cantidad.value !== '' && input_cantidad.value > 0) {
+                        //el campo cantidad ingresado es valido
+                        input_cantidad.style.borderColor = '';
+                        if (input_valor.value !== '' && input_valor.value > 0) {
+                            //el campo valor ingresado es valido
+                            input_valor.style.borderColor = '';
+                            Form.submit();
                         } else {
-                            // muestra los errores
-                            displayErrors(response.errors);
+                            //el campo valor no ha sido ingresado o no es valido
+                            input_valor.required = true;
+                            input_valor.style.borderColor = 'red';
                         }
                     } else {
-                        // Handle AJAX request error
-                        console.error('AJAX request error');
+                        //el campo cantidad no ha sido ingresado o no es valido
+                        input_cantidad.required = true;
+                        input_cantidad.style.borderColor = 'red';
                     }
                 }
-            };
-
-            xhr.open('POST', addProductForm.getAttribute('action'));
-            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            xhr.setRequestHeader('Accept', 'application/json');
-            xhr.send(formData);
+                if (contador===0) {
+                    var errorField = $('#prod_id' + checkbox.value);
+                    var errorLabel = $('<span>').addClass('error-message text-danger is-invalid').text(
+                        'Seleccione un producto');
+                    errorField.addClass('is-invalid');
+                    errorField.siblings('.invalid-feedback').html('');
+                    errorField.after(errorLabel);
+                    $('.invalid-feedback').html('')
+                }
+            });
         });
-
-        // Funcion que muestra errores de validacion
-        function displayErrors(errors) {
-            // Limpia errores anteriores
-            $('.invalid-feedback').html('');
-
-            // Muestra los errores nuevos
-            for (var field in errors) {
-                var errorMessages = errors[field];
-                var errorField = $('#' + field);
-                errorField.addClass('is-invalid');
-                errorField.siblings('.invalid-feedback').html(errorMessages.join('<br>'));
-
-                var errorLabel = $('<span>').addClass('error-message text-danger').text(errorMessages.join(', '));
-                errorField.after(errorLabel);
-            }
-        }
     </script>
 
     <script>

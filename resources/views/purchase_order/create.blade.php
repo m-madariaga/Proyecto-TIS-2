@@ -299,7 +299,6 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-
                         // se parsea a json debido a que el controlador entrega un json
                         var response = JSON.parse(xhr.responseText);
                         if (response.success) {
@@ -327,7 +326,6 @@
         function displayErrors(errors) {
             // Limpia errores anteriores
             $('.invalid-feedback').html('');
-
             // Muestra los errores nuevos
             for (var field in errors) {
                 var errorMessages = errors[field];

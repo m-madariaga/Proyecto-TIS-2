@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
+use illuminate\Validation\ValidationException;
 
 class PurcharseOrderProductController extends Controller
 {
@@ -35,59 +36,64 @@ class PurcharseOrderProductController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate(
-            [
-                'prod_id' => 'required',
-                'cantidad' => 'required',
-                'valor' => 'required',
-                'orden_id' => 'required',
-            ],
-            [
-                'prod_id.required' => 'Selecciona un producto.',
-                'cantidad.required' => 'El campo cantidad es obligatorio.',
-                'valor.required' => 'El campo valor es obligatorio.',
-            ],
-        );
-        $productos = $datos['prod_id'];
-        // reiniciar los indices para que sean consecutivos y quitar los nulls
-        $cant = [];
-        foreach ($datos['cantidad'] as $key => $value) {
-            if ($value != null) {
-                array_push($cant, $value);
+        try {
+            $datos = $request->validate(
+                [
+                    'prod_id' => 'required',
+                    'cantidad' => 'required',
+                    'valor' => 'required',
+                    'orden_id' => 'required',
+                ],
+                [
+                    'prod_id.required' => 'Selecciona un producto.',
+                    'cantidad.required' => 'El campo cantidad es obligatorio.',
+                    'valor.required' => 'El campo valor es obligatorio.',
+                ],
+            );
+            $productos = $datos['prod_id'];
+            // reiniciar los indices para que sean consecutivos y quitar los nulls
+            $cant = [];
+            foreach ($datos['cantidad'] as $key => $value) {
+                if ($value != null) {
+                    array_push($cant, $value);
+                }
             }
-        }
-        $val = [];
-        foreach ($datos['valor'] as $key => $value) {
-            if ($value != null) {
-                array_push($val, $value);
+            $val = [];
+            foreach ($datos['valor'] as $key => $value) {
+                if ($value != null) {
+                    array_push($val, $value);
+                }
             }
+            //agregamos los productos
+            $id = $datos['orden_id'];
+            for ($i = 0; $i < sizeof($productos); $i++) {
+                $prod_id = $datos['prod_id'][$i];
+                $cantidad = $cant[$i];
+                $valor = $val[$i];
+                $orden_product = new Purchase_order_product([
+                    'purchase_order_id' => $id,
+                    'products_id' => $prod_id,
+                    'cantidad' => $cantidad,
+                    'precio' => $valor,
+                ]);
+                $orden_product->save();
+            }
+            //recalcular total de la orden
+            $orden = Purchase_order::find($id);
+            $aux = 0;
+            foreach ($orden->product as $prod) {
+                $aux += $prod->cantidad * $prod->precio;
+            }
+            $total = $aux;
+            $orden->total = $total;
+            $orden->save();
+            return response()
+                ->json(['success' => true]);
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            return response()
+                ->json(['success' => false, 'errors' => $errors]);
         }
-        //agregamos los productos
-        $id = $datos['orden_id'];
-        for ($i = 0; $i < sizeof($productos); $i++) {
-            $prod_id = $datos['prod_id'][$i];
-            $cantidad = $cant[$i];
-            $valor = $val[$i];
-            $orden_product = new Purchase_order_product([
-                'purchase_order_id' => $id,
-                'products_id' => $prod_id,
-                'cantidad' => $cantidad,
-                'precio' => $valor,
-            ]);
-            $orden_product->save();
-        }
-        //recalcular total de la orden
-        $orden = Purchase_order::find($id);
-        $aux = 0;
-        foreach ($orden->product as $prod) {
-            $aux += $prod->cantidad * $prod->precio;
-        }
-        $total = $aux;
-        $orden->total = $total;
-        $orden->save();
-        return redirect()
-            ->route('orden-compra-edit', $id)
-            ->with('success:', 'Orden de compra ingresada correctamente.');
     }
 
     /**
@@ -130,26 +136,26 @@ class PurcharseOrderProductController extends Controller
     public function update(Request $request, Purchase_order $id)
     {
         $datos = $request->validate([
-            'prod_id' => 'required',
-            'cantidad' => 'required',
-            'valor' => 'required',
+            'prod_id_edit' => 'required',
+            'cantidad_edit' => 'required',
+            'valor_edit' => 'required',
         ]);
         // reiniciar los indices para que sean consecutivos
         $cant = [];
-        foreach ($datos['cantidad'] as $key => $value) {
+        foreach ($datos['cantidad_edit'] as $key => $value) {
             if ($value != null) {
                 array_push($cant, $value);
             }
         }
         $val = [];
-        foreach ($datos['valor'] as $key => $value) {
+        foreach ($datos['valor_edit'] as $key => $value) {
             if ($value != null) {
                 array_push($val, $value);
             }
         }
         //se actualizan los productos
-        for ($i = 0; $i < sizeof($datos['prod_id']); $i++) {
-            $prod_id = $datos['prod_id'][$i];
+        for ($i = 0; $i < sizeof($datos['prod_id_edit']); $i++) {
+            $prod_id = $datos['prod_id_edit'][$i];
             $cantidad = $cant[$i];
             $valor = $val[$i];
             $orden_product = Purchase_order_product::find($prod_id);
