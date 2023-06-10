@@ -1,9 +1,9 @@
 @component('mail::message')
 # Introduction
 
-Hola {{ $name }},
+Hola,
 
-El estado de su orden {{$id}} ha cambiado.
+El estado de la orden {{$id}} del cliente {{$name}} ha cambiado.
 
  Ahora se encuentra en estado {{$status}}.
 

@@ -26,6 +26,7 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
+use App\Http\Controllers\ReviewsController;
 
 
 
@@ -209,9 +210,11 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{id}/edit', [App\Http\Controllers\ShipmentController::class, 'status_edit'])->name('shipments.status_edit');
-    Route::patch('/shipments/{id}/{last}/update', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
+    Route::get('/shipments/{id}/{last}/update', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
     Route::delete('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{id}/{last}', [App\Http\Controllers\ShipmentController::class, 'status_cancel'])->name('shipment_cancel');
+
+    Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
 
 
 

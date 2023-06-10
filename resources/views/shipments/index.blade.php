@@ -38,7 +38,7 @@
                                         <th class="text-center">Usuario</th>
                                         <th class="text-center">Dirección</th>
                                         <th class="text-center">Tipo de envío</th>
-                                        <th class="text-center">Estado</th>
+                                        <th class="text-center">Pedido</th>
 
 
                                         <th class="text-center">Acciones</th>
@@ -51,7 +51,7 @@
                                             <td class="text-center">{{ $shipment->user->name }}</td>
                                             <td class="text-center">{{ $shipment->address }}</td>
                                             <td class="text-center">{{ $shipment->shipment_type->nombre }}</td>
-                                            <td class="text-center">{{ $shipment->status }}</td>
+                                            <td class="text-center">{{ $shipment->order_fk }}</td>
 
                                             <td class="text-center pt-3">
                                                 <button id="productsButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productsModal" data-products-list="{{ json_encode($shipment->products) }}">
@@ -110,7 +110,6 @@
                                             </form>
                                             <form id="editStatus" action="{{ route('shipments.status_update', ['id' => '0', 'last' => 'pendiente']) }}">
                                                 @csrf
-                                                @method('PATCH')
                                                 <button type='submit' id='editButton' class="btn btn-sm btn-outline-primary" ><i
                                                     class="fa fa-edit"></i> Cambiar a </button>
                                             </form>
@@ -283,7 +282,7 @@
                 const actionUrl = editStatus.attr('action').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
                 editStatus.attr('action', actionUrl);
 
-                const actionUrl2 = editStatus.attr('action').replace(/(\/admin\/shipments\/\d\/)\S+/, '$1' + last);
+                const actionUrl2 = editStatus.attr('action').replace(/(\/admin\/shipments\/\d\/)\S+(\/\S+)/, '$1' + last + '$2');
                 editStatus.attr('action', actionUrl2);
 
                 const cancelUrl = statusCancel.attr('action').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
@@ -291,7 +290,7 @@
 
                 const cancelUrl2 = statusCancel.attr('action').replace(/(\/admin\/shipments\/\d\/)\S+/, '$1' + last);
                 statusCancel.attr('action', cancelUrl2);
-
+                // 
                 switch(last){
                     case 'pendiente':
                         console.log('Cambiar a comprado')

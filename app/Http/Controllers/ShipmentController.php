@@ -10,12 +10,14 @@ use App\Models\Country;
 use App\Models\City;
 use App\Models\Region;
 use App\Models\Product;
+use App\Models\Order;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
+use App\Mail\statusChangeAdmin;
 use DB;
 
 class ShipmentController extends Controller
@@ -161,19 +163,21 @@ class ShipmentController extends Controller
         return view('shipments.status_edit', compact('shipment'));
     }
 
-    public function status_update(Request $request, $id, $last)
+    public function status_update($id, $last)
     {
+        error_log("function start");
 
-        // $shipment = Shipment::find($id);
+        $shipment = Shipment::find($id);
         // $shipment->status = $request->status;
         // $shipment->save();
-        // $user = User::find($shipment->user_fk);
+        $user = User::find($shipment->user_fk);
+        $order = Order::find($shipment->order_fk);
 
         
 
         // $indexes=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->get();
 
-        $index=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->first();
+        $index=DB::table('shipment_statuses')->where('shipment_fk', $id)->orderBy('created_at', 'desc')->first();
 
         switch($last){
             case('pendiente'):
@@ -192,6 +196,8 @@ class ShipmentController extends Controller
                 $shipment_status->save();
 
                 $status= 'enviado';
+                $order->estado = 1;
+                $order->save();
 
 
                 break;
@@ -207,8 +213,10 @@ class ShipmentController extends Controller
         //     error_log($index->nombre_estado);
         //     error_log($index->created_at);
         // }
+        $traceability = DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
 
-        // Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
+        Mail::to($user)->queue(new statusChangeEmail($user->name, $status, $id, $traceability));
+        Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, $status, $id, $traceability));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
@@ -224,10 +232,16 @@ class ShipmentController extends Controller
             return redirect('/admin/shipments')->with('error', 'Este envío ya fué completado');
         }else{
             $shipment = Shipment::find($id);
-                $shipment_status = new shipment_status();
+            $shipment_status = new shipment_status();
                 $shipment_status->shipment_fk = $shipment->id;
                 $shipment_status->nombre_estado = 'cancelado';
             $shipment_status->save();
+            
+            $user = User::find($shipment->user_fk);
+            $traceability = DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
+
+            Mail::to($user)->queue(new statusChangeEmail($user->name, 'cancelado', $id, $traceability));
+            Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, 'cancelado', $id, $traceability));
         }
         
         
