@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
@@ -36,74 +38,72 @@ class PurcharseOrderProductController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $datos = $request->validate(
-                [
-                    'prod_id' => 'required',
-                    'cantidad' => 'required',
-                    'valor' => 'required',
-                    'orden_id' => 'required',
-                ],
-                [
-                    'prod_id.required' => 'Selecciona un producto.',
-                    'cantidad.required' => 'El campo cantidad es obligatorio.',
-                    'valor.required' => 'El campo valor es obligatorio.',
-                ],
-            );
-            $productos = $datos['prod_id'];
-            // reiniciar los indices para que sean consecutivos y quitar los nulls
-            $cant = [];
-            foreach ($datos['cantidad'] as $key => $value) {
-                if ($value != null) {
-                    array_push($cant, $value);
-                }
+        $datos = $request->validate(
+            [
+                'prod_id' => 'required',
+                'cantidad' => 'required',
+                'valor' => 'required',
+                'orden_id' => 'required',
+            ],
+            [
+                'prod_id.required' => 'Selecciona un producto.',
+                'cantidad.required' => 'El campo cantidad es obligatorio.',
+                'valor.required' => 'El campo valor es obligatorio.',
+            ],
+        );
+        $productos = $datos['prod_id'];
+        // reiniciar los indices para que sean consecutivos y quitar los nulls
+        $cant = [];
+        foreach ($datos['cantidad'] as $key => $value) {
+            if ($value != null) {
+                array_push($cant, $value);
             }
-            $val = [];
-            foreach ($datos['valor'] as $key => $value) {
-                if ($value != null) {
-                    array_push($val, $value);
-                }
-            }
-            //agregamos los productos
-            $id = $datos['orden_id'];
-            for ($i = 0; $i < sizeof($productos); $i++) {
-                $prod_id = $datos['prod_id'][$i];
-                $cantidad = $cant[$i];
-                $valor = $val[$i];
-                $orden_product = new Purchase_order_product([
-                    'purchase_order_id' => $id,
-                    'products_id' => $prod_id,
-                    'cantidad' => $cantidad,
-                    'precio' => $valor,
-                ]);
-                $orden_product->save();
-            }
-            //recalcular total de la orden
-            $orden = Purchase_order::find($id);
-            $aux = 0;
-            foreach ($orden->product as $prod) {
-                $aux += $prod->cantidad * $prod->precio;
-            }
-            $total = $aux;
-            $orden->total = $total;
-            $orden->save();
-            return response()
-                ->json(['success' => true]);
-        } catch (ValidationException $e) {
-            $errors = $e->errors();
-            return response()
-                ->json(['success' => false, 'errors' => $errors]);
         }
+        $val = [];
+        foreach ($datos['valor'] as $key => $value) {
+            if ($value != null) {
+                array_push($val, $value);
+            }
+        }
+        //agregamos los productos
+        $id = $datos['orden_id'];
+        for ($i = 0; $i < sizeof($productos); $i++) {
+            $prod_id = $datos['prod_id'][$i];
+            $cantidad = $cant[$i];
+            $valor = $val[$i];
+            $orden_product = new Purchase_order_product([
+                'purchase_order_id' => $id,
+                'products_id' => $prod_id,
+                'cantidad' => $cantidad,
+                'precio' => $valor,
+            ]);
+            $orden_product->save();
+        }
+        //recalcular total de la orden
+        $orden = Purchase_order::find($id);
+        $aux = 0;
+        foreach ($orden->product as $prod) {
+            $aux += $prod->cantidad * $prod->precio;
+        }
+        $total = $aux;
+        $orden->total = $total;
+        $orden->save();
+        return redirect()->route('orden-compra-product-edit',['id' => $id, 'orden_product' => $orden->product]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Purchase_order_product  $Purchase_order_product
+     * @param  \App\Models\Purchase_order  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Purchase_order_product $Purchase_order_product)
+    public function show(Purchase_order $id)
     {
+        $orden = $id;
+        $productos = Product::all();
+        $marcas = Brand::all();
+        $categorias = Category::all();
+        return view('purchase_order.edit_add', compact('productos', 'orden', 'marcas', 'categorias'));
     }
 
     /**

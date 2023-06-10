@@ -25,10 +25,10 @@
                         <h6>Editar orden de compra</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
-                            data-bs-target="#addModal">
+                        <a class="btn btn-sm btn-outline-success ms-4"
+                            href="{{ route('orden-compra-product-add-edit', ['id' => $orden->id]) }}">
                             Agregar más productos a la orden
-                        </button>
+                        </a>
                         <div class="table-responsive p-0 ">
                             <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
                                 @csrf
@@ -111,97 +111,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade modal-xl" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true"
-        data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-2">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Nuevos productos a agregar</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="form_addprods" action="{{ route('orden-compra-product-store') }}" method="POST">
-                    @csrf
-                    <input type='number' name="orden_id" id="orden_id" value='{{ $orden->id }}' hidden>
-                    <div class="table-responsive p-0 mt-2">
-                        <table id="table" class="table display table-stripped align-items-center">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Nombre</th>
-                                    <th class="text-center">Marca</th>
-                                    <th class="text-center">Color</th>
-                                    <th class="text-center">Talla</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Valor</th>
-
-                                </tr>
-                            </thead>
-                            @if (isset($empty))
-                            @else
-                                <tbody>
-
-                                    @foreach ($productosall as $prod)
-                                        <tr>
-                                            <td class="text-center pt-3 w-2">
-                                                <input type="checkbox" id="prod_id{{ $prod->id }}" name="prod_id[]"
-                                                    value="{{ $prod->id }}"
-                                                    class="@error('prod_id{{ $prod->id }}') is-invalid @enderror">
-                                                @error('prod_id{{ $prod->id }}')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-                                            </td>
-                                            <td class="text-center w-6">{{ $prod->nombre }}</td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
-                                            </td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->color }}
-                                            </td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->talla }}
-                                            </td>
-                                            <td class="text-center pt-3 w-1">
-                                                <div class="form-group">
-                                                    <input type="number"
-                                                        class="form-control @error('cantidad') is-invalid @enderror"
-                                                        id="cantidad{{ $prod->id }}" name="cantidad[]"
-                                                        value="{{ old('cantidad') }}">
-                                                    @error('cantidad')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td class="text-center pt-3 w-3">
-                                                <div class="form-group">
-                                                    <input type="number"
-                                                        class="form-control @error('valor') is-invalid @enderror"
-                                                        id="valor{{ $prod->id }}" name="valor[]"
-                                                        value="{{ old('valor') }}">
-                                                    @error('valor')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            @endif
-                        </table>
-                    </div>
-                    <div class="form-group text-center m-4">
-                        <button type="button" class="btn btn-sm btn-outline-danger"
-                            data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Agregar productos</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('js')
@@ -210,59 +119,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    <script>
-        var Form = document.getElementById('form_addprods');
-        Form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            var inputs = Form.querySelectorAll('input');
-            var checkboxs = [];
-            inputs.forEach(function(input) {
-                if (input.type === 'checkbox') {
-                    checkboxs.push(input);
-                }
-            });
-            $('.invalid-feedback').html('')
-            var contador=0;
-            checkboxs.forEach(function(checkbox) {
-                $('.invalid-feedback').html('');
-                //recorre los checkbox marcados
-                if (checkbox.checked) {
-                    contador++;
-                    // busca la cantidad y el valor del producto
-                    var id_valor = 'valor' + checkbox.value;
-                    var id_cantidad = 'cantidad' + checkbox.value;
-                    var input_cantidad = document.getElementById(id_cantidad);
-                    var input_valor = document.getElementById(id_valor);
-                    if (input_cantidad.value !== '' && input_cantidad.value > 0) {
-                        //el campo cantidad ingresado es valido
-                        input_cantidad.style.borderColor = '';
-                        if (input_valor.value !== '' && input_valor.value > 0) {
-                            //el campo valor ingresado es valido
-                            input_valor.style.borderColor = '';
-                            Form.submit();
-                        } else {
-                            //el campo valor no ha sido ingresado o no es valido
-                            input_valor.required = true;
-                            input_valor.style.borderColor = 'red';
-                        }
-                    } else {
-                        //el campo cantidad no ha sido ingresado o no es valido
-                        input_cantidad.required = true;
-                        input_cantidad.style.borderColor = 'red';
-                    }
-                }
-                if (contador===0) {
-                    var errorField = $('#prod_id' + checkbox.value);
-                    var errorLabel = $('<span>').addClass('error-message text-danger is-invalid').text(
-                        'Seleccione un producto');
-                    errorField.addClass('is-invalid');
-                    errorField.siblings('.invalid-feedback').html('');
-                    errorField.after(errorLabel);
-                    $('.invalid-feedback').html('')
-                }
-            });
-        });
-    </script>
+
 
     <script>
         $(document).ready(function() {

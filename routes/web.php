@@ -26,10 +26,7 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
-
-
-
-
+use App\Models\Purchase_order_product;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,6 +159,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
 
         Route::get('/orden-compra/{id}/pdf', [PurcharseOrderController::class, 'generate_pdf'])->name('orden-compra-pdf');
+
+        Route::get('orden-compra-product-add/{id}/edit',[PurcharseOrderProductController::class, 'show'])->name('orden-compra-product-add-edit');
 
         Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
