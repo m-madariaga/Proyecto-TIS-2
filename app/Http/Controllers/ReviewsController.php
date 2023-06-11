@@ -25,5 +25,15 @@ class ReviewsController extends Controller
         return view('reviews.index', compact('reviews'));
     }
 
+    public function destroy($id)
+    {
+        $review = Review::find($id);
+        $review->delete();
+        error_log("test");
+
+        return response()->json(['success' => true]);
+
+    }
+
 
 }

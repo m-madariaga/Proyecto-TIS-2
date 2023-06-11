@@ -64,7 +64,7 @@
                                                 </button>
                                                 {{-- <a href="#" class="btn btn-sm btn-outline-primary"><i
                                                         class="fa fa-edit"></i> Editar</a> --}}
-                                                <form action="#" method="POST" style="display: inline;">
+                                                <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-outline-danger delete-review"
