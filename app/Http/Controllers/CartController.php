@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProofPayment;
 use App\Models\Detail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -144,7 +146,7 @@ class CartController extends Controller
             $product->stock -= $item->qty;
             $product->save();
         }
-
+        Mail::to(auth()->user()->email)->send(new ProofPayment($order->id));
         Cart::destroy();
         return redirect()->route('home-landing');
     }

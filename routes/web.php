@@ -27,10 +27,7 @@ use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
-
-
-
-
+use App\Models\Purchase_order_product;
 
 /*
 |--------------------------------------------------------------------------
@@ -160,14 +157,16 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
         Route::post('/orden-compra/store', [PurcharseOrderController::class, 'store'])->name('orden-compra-store');
         Route::get('/orden-compra/{id}/edit', [PurcharseOrderController::class, 'edit'])->name('orden-compra-edit');
-        Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
+        Route::delete('/orden-compra/{id}/destroy', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
 
         Route::get('/orden-compra/{id}/pdf', [PurcharseOrderController::class, 'generate_pdf'])->name('orden-compra-pdf');
+
+        Route::get('orden-compra-product-add/{id}/edit',[PurcharseOrderProductController::class, 'show'])->name('orden-compra-product-add-edit');
 
         Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
         Route::patch('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
-        Route::get('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
+        Route::get('/orden-compra-product/{id}/destroy', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
 
     });
 
@@ -239,6 +238,7 @@ Auth::routes();
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
+Route::get('/profile_landing/{id}/pdf',[OrderController::class, 'genera_pdf'])->name('profile_landing_order_pdf');
 
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
