@@ -24,9 +24,4 @@ class Event extends Model
         'end' => 'required|date',
         'color' => 'required',
     ];
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

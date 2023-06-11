@@ -120,7 +120,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
 
-    Route::get('/calendar', [EventController::class, 'index'])->name('event.index');
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
     Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('event.destroy');
