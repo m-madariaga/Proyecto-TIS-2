@@ -45,20 +45,25 @@ class User extends Authenticatable
 
     public function city()
     {
-        return $this->belongsTo(City::class,'city_fk');
+        return $this->belongsTo(City::class, 'city_fk');
     }
 
     public function region()
     {
-        return $this->belongsTo(Region::class,'region_fk');
+        return $this->belongsTo(Region::class, 'region_fk');
     }
     public function shipments()
     {
-        return $this->hasMany(Shipment::class,'user_fk');
+        return $this->hasMany(Shipment::class, 'user_fk');
     }
     public function country()
     {
-        return $this->belongsTo(Country::class,'country_fk');
+        return $this->belongsTo(Country::class, 'country_fk');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
     /**
      * The attributes that should be hidden for serialization.
