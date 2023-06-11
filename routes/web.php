@@ -68,10 +68,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
 
-    Route::get('/tables', function () {
-        return view('tables');
-    })->name('tables');
-
     Route::get('/countries/create', [App\Http\Controllers\CountryController::class, 'create'])->name('countries.create');
     Route::post('/countries', [App\Http\Controllers\CountryController::class, 'store'])->name('countries.store');
     Route::get('/countries/{id}/edit', [App\Http\Controllers\CountryController::class, 'edit'])->name('countries.edit');
