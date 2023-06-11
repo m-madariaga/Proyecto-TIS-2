@@ -196,9 +196,8 @@ class PurcharseOrderProductController extends Controller
         $orden->total = $total;
         $orden->save();
         $orden_productos = $orden->product;
-        $productosall = Product::all();
         return redirect()
-            ->route('orden-compra-product-edit', ['id' => $n_id, 'orden' => $orden, 'orden_productos' => $orden_productos, 'productosall' => $productosall])
+            ->route('orden-compra-product-edit', ['id' => $n_id, 'orden' => $orden, 'orden_productos' => $orden_productos])
             ->with('success:', 'Orden eliminada correctamente.');
     }
 }

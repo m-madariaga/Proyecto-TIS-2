@@ -156,7 +156,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
         Route::post('/orden-compra/store', [PurcharseOrderController::class, 'store'])->name('orden-compra-store');
         Route::get('/orden-compra/{id}/edit', [PurcharseOrderController::class, 'edit'])->name('orden-compra-edit');
-        Route::delete('/orden-compra/{id}', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
+        Route::delete('/orden-compra/{id}/destroy', [PurcharseOrderController::class, 'destroy'])->name('orden-compra-destroy');
 
         Route::get('/orden-compra/{id}/pdf', [PurcharseOrderController::class, 'generate_pdf'])->name('orden-compra-pdf');
 
@@ -165,7 +165,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
         Route::patch('/orden-compra-product/{id}/update', [PurcharseOrderProductController::class, 'update'])->name('orden-compra-product-update');
-        Route::get('/orden-compra-product/{id}', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
+        Route::get('/orden-compra-product/{id}/destroy', [PurcharseOrderProductController::class, 'destroy'])->name('orden-compra-product-destroy');
 
     });
 

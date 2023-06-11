@@ -346,34 +346,6 @@
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
             });
-            $('#addModal').modal({
-                show: false
-            });
-
-            $('#editModal').on('show.bs.modal', function(event) {
-                const button = $(event.relatedTarget); // Button que triggerea el modal
-                const shipmentTypeId = button.data('shipment-type-id');
-                const shipmentTypeName = button.data('shipment-type-name');
-
-                const editForm = $('#editForm');
-                const nombreInput = editForm.find('#nombre');
-
-                // Actualizar ID de la ruta
-                const actionUrl = editForm.attr('action').replace('__ID__', shipmentTypeId);
-                editForm.attr('action', actionUrl);
-
-                // Reemplazar el valor del nombre en el input el modal
-                nombreInput.val(shipmentTypeName);
-            });
-
-            $('#addForm').submit(function(event) {
-                var nombre = $('#nombre').val();
-
-                if (nombre.trim() === '') {
-                    event.preventDefault();
-                    alert('El campo "Nombre del tipo de envío" es obligatorio.');
-                }
-            });
 
         });
     </script>
