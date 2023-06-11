@@ -233,6 +233,7 @@ Auth::routes();
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
+Route::get('/profile_landing/{id}/pdf',[OrderController::class, 'genera_pdf'])->name('profile_landing_order_pdf');
 
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
