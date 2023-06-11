@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Shipment;
+use App\Models\shipment_status;
 use App\Models\ShipmentType;
 use App\Models\User;
 use App\Models\Country;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
+use DB;
 
 class ShipmentController extends Controller
 {
@@ -35,6 +37,16 @@ class ShipmentController extends Controller
             $address= $user->address. ', ' .$city->name. ', ' .$region->name.', '.$country->name;
             $shipment->address= $address;
             error_log($address);
+
+            $statuses=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
+            $shipment->statuses = $statuses;
+            foreach($statuses as $status) {
+                if($statuses->last() == $status) {
+                    
+                    $shipment->last = $status->nombre_estado;
+                    error_log($shipment->last);
+                }
+            }
 
         }
 
@@ -159,11 +171,49 @@ class ShipmentController extends Controller
         $shipment->status = $request->status;
         $shipment->save();
         $user = User::find($shipment->user_fk);
-        error_log($request->status);
+
+        
+
+        // $indexes=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->get();
+
+        $index=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->first();
+
+        switch($index->nombre_estado){
+            case('pendiente'):
+                $shipment_status = new shipment_status();
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'pagado';
+                $shipment_status->save();
+
+                break;
+            case('pagado'):
+                $shipment_status = new shipment_status();
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'enviado';
+                $shipment_status->save();
+                break;
+            default:
+                $shipment_status = new shipment_status();
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'pendiente';
+                $shipment_status->save();
+        }
+        // foreach($indexes as $index){
+        //     error_log($index->nombre_estado);
+        //     error_log($index->created_at);
+        // }
 
         Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
+    }
+
+    public function status_cancel($id){
+        $shipment = Shipment::find($id);
+        $shipment_status = new shipment_status();
+            $shipment_status->shipment_fk = $shipment->id;
+            $shipment_status->nombre_estado = 'cancelado';
+        $shipment_status->save();
     }
 }

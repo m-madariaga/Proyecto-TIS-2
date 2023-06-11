@@ -38,10 +38,11 @@ class ProfileController extends Controller
         $user->name = $request->name;
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
+        $user->country = Country::find($request->country->id);
         $region = Region::find($request->region_fk);
         $city = City::find($request->city_fk);
-        $user->region_fk = $region->name;
-        $user->city_fk = $city->name;
+        $user->region_fk = $region->id;
+        $user->city_fk = $city->id;
 
         // Validar y guardar la imagen si se ha cargado una nueva
         if ($request->hasFile('profile_image')) {
@@ -60,7 +61,7 @@ class ProfileController extends Controller
         }
 
         $user->save();
-        return redirect('/admin/profile')->with('success', 'Perfil actualizado exitosamente!');
+        return redirect('admin/profile')->with('success', 'Perfil actualizado exitosamente!');
     }
 
     public function country()

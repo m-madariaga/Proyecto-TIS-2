@@ -272,7 +272,7 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <form method="POST" id="editForm"
-                                            action="{{ route('users.update', ['id' => '__ID__']) }}">
+                                            action="{{ route('users.update', ['id' => '0']) }}">
                                             @csrf
                                             @method('PUT')
 
@@ -467,7 +467,7 @@
 
 
             // Actualizar ID de la ruta
-            const actionUrl = editForm.attr('action').replace('__ID__', userId);
+            const actionUrl = editForm.attr('action').replace(/(\/admin\/users\/)\d+/, '$1' + userId);
             editForm.attr('action', actionUrl);
 
             // Reemplazar el valor del nombre en el input el modal

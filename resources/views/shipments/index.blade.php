@@ -57,8 +57,13 @@
                                                 <button id="productsButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productsModal" data-products-list="{{ json_encode($shipment->products) }}">
                                                     Ver productos
                                                 </button>
-                                                <a href="{{ route('shipments.status_edit', $shipment->id) }}" class="btn btn-sm btn-outline-primary"><i
-                                                        class="fa fa-edit"></i> Editar estado</a>
+                                                <button id="statusButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#statusModal" 
+                                                data-shipment-id="{{$shipment->id}}" data-status-list="{{ json_encode($shipment->statuses) }}"
+                                                data-last-status="{{ $shipment->last }}">
+                                                    Ver estado
+                                                </button>
+                                                <!-- <a href="{{ route('shipments.status_edit', $shipment->id) }}" class="btn btn-sm btn-outline-primary"><i
+                                                        class="fa fa-edit"></i> Editar estado</a> -->
                                                 <form action="{{ route('shipments.destroy', $shipment->id) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
@@ -81,6 +86,27 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="productsModalLabel">Estado del envío</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center" id="statusList"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cancelar envío</button>
+                                            <a id='editStatus' href="{{ route('shipments.status_edit', ['id' => '5']) }}" class="btn btn-sm btn-outline-primary"><i
+                                                class="fa fa-edit"></i> Cambiar a </a>
                                         </div>
                                     </div>
                                 </div>
@@ -194,6 +220,7 @@
                 var p = document.getElementById("productsList");
                 p.setAttribute('style', 'white-space: pre;');
                 p.textContent = "";
+                
 
                 products.forEach(function(entry) {
                     console.log(entry.name);
@@ -212,6 +239,63 @@
                 // Actualizar ID de la ruta
                 // const actionUrl = editForm.attr('action').replace('__ID__', userId);
                 // editForm.attr('action', actionUrl);
+
+                // Reemplazar el valor del nombre en el input el modal
+
+            });
+
+            $('#statusModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget); // Button que triggerea el modal
+                const status = button.data('status-list');
+                const shipmentId= button.data('shipment-id');
+                const last= button.data('last-status');
+
+                
+                console.log(last);
+                var p = document.getElementById("statusList");
+                p.setAttribute('style', 'white-space: pre;');
+                p.textContent = "";
+
+                var index= 1;
+
+                status.forEach(function(entry) {
+                    name = entry.nombre_estado;
+                    p.textContent += index + ". Cambió a estado " + name + " en " + entry.created_at + "\r\n";
+                    index++;
+                });
+
+
+                const editStatus = $('#editStatus');
+                
+                // p.innerHTML = products.name.join("<br>") ;
+                
+
+
+                // Actualizar ID de la ruta
+                const actionUrl = editStatus.attr('href').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
+                editStatus.attr('href', actionUrl);
+
+                switch(last){
+                    case 'pendiente':
+                        console.log('Cambiar a comprado')
+                        document.getElementById("editStatus").innerText = 'Cambiar a comprado';
+                    break;
+                    case 'pagado':
+                        document.getElementById("editStatus").innerText= 'Cambiar a enviado';
+                    break;
+                    case 'enviado':
+                        document.getElementById("editStatus").innerText= 'Envío completado';
+                    break;
+                    case 'enviado':
+                        document.getElementById("editStatus").innerText= 'Envío completado';
+                    break;
+                    case 'cancelado':
+                        document.getElementById("editStatus").innerText= 'No se puede continuar el envío';
+                    break;
+
+                }
+
+                // editStatus.textContent.replace(/(estado )\w+, $1 + );
 
                 // Reemplazar el valor del nombre en el input el modal
 
