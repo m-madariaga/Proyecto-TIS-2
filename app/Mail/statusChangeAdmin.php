@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class statusChangeEmail extends Mailable
+class statusChangeAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -36,7 +36,7 @@ class statusChangeEmail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.status_changed')->with([
+        return $this->markdown('emails.status_changed_admin')->with([
             "name" => $this->name,
             "status" => $this->status,
             "id" => $this->id,
