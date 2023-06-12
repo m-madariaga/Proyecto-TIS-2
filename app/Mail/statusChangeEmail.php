@@ -14,19 +14,17 @@ class statusChangeEmail extends Mailable
     public $name;
     public $status;
     public $id;
-    public $traceability;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $status, $id, $traceability)
+    public function __construct($name, $status, $id)
     {
         $this->name = $name;
         $this->status = $status;
         $this->id = $id;
-        $this->traceability = $traceability;
     }
 
     /**
@@ -39,8 +37,7 @@ class statusChangeEmail extends Mailable
         return $this->markdown('emails.status_changed')->with([
             "name" => $this->name,
             "status" => $this->status,
-            "id" => $this->id,
-            "traceability" => $this->traceability
+            "id" => $this->id
 
         ]);
     }
