@@ -1,20 +1,11 @@
-<head>
-    <!-- Template Main JS File -->
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/owl.carousel.js"></script>
-    <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
-</head>
 <footer class="footer">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-3 col-md-6 mb-3 mt-3 d-flex flex-column align-items-center">
                 <div>
                     <a href="{{ route('home-landing') }}">
-                        <img src="assets/images/logo_2.png" style="max-height: 3rem;" alt="Logo"> </a>
+                        <img src="{{asset('assets/images/logo_2.png')}}" style="max-height: 3rem;" alt="Logo"> </a>
+   
                 </div>
                 <div>
                     <p class="">Tu estilo, tu moda</p>
