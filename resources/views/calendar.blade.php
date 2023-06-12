@@ -131,9 +131,7 @@
             font-size: 1.2rem;
         }
 
-        .fc-toolbar .fc-toolbar-section:nth-child(3) {
-            flex-basis: 
-        }}
+        }
 </style>
 @endsection
 
@@ -241,6 +239,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -288,6 +288,7 @@
                 @endforeach
             ],
         });
+        
         calendar.render();
 
 
@@ -305,6 +306,8 @@
                         end: response.data.end,
                         backgroundColor: response.data.color,
                     });
+                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -324,6 +327,8 @@
                     event.setStart(response.data.start);
                     event.setEnd(response.data.end);
                     event.setProp('backgroundColor', response.data.color);
+                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -336,6 +341,8 @@
                 .then(function(response) {
                     $("#modal-edit-event").modal("hide");
                     calendar.getEventById(eventId).remove();
+                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
                 })
                 .catch(function(error) {
                     console.log(error);
