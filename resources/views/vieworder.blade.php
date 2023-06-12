@@ -12,7 +12,6 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css" />
 @endsection
 
 @section('content')
@@ -31,9 +30,9 @@
                                         <th class="text-center">Producto</th>
                                         <th class="text-center">Cantidad</th>
                                         <th class="text-center">Color</th>
-                                        <th class="text-center">Talla</th>
+                                        <th class="text-center">Talla</th> 
                                         <th class="text-center">Precio Unitario</th>
-                                        <th class="text-center">Precio Total</th>
+                                        <th class="text-center">Precio Total</th>  
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,9 +57,7 @@
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#users-table').DataTable();

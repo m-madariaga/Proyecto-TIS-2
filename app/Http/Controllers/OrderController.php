@@ -27,13 +27,8 @@ class OrderController extends Controller
 
     public function showOrder($orderId)
     {
-        $order = Order::find($orderId);
-        $details = Detail::with('product')->where('pedido_id', $orderId)->get();
-
-        return response()->json([
-            'order' => $order,
-            'details' => $details
-        ]); 
+        $order = Order::with('user')->findOrFail($orderId);
+        return view('order', compact('order'));
     }
 
     public function store(Request $request, $id)

@@ -4,6 +4,11 @@
 @endsection
 
 @section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <script>
         $(document).ready(function() {
 
@@ -59,6 +64,12 @@
                 // Do something when the modal is shown
             });
 
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
             $('#openModalButton').click(function() {
                 $('#editPasswordLandingModal').modal('show');
             });
@@ -67,28 +78,9 @@
 
     <script>
         $(document).ready(function() {
-            $('.view-order').on('click', function() {
-                var orderId = $(this).data('order-id');
-                var modalTableBody = $('#modal-table-body');
-
-                // Limpiar el cuerpo de la tabla modal
-                modalTableBody.empty();
-
-                // Obtener los detalles del pedido directamente del HTML de la página
-                var details = $('#order-details-' + orderId).html();
-
-                // Agregar los detalles al cuerpo de la tabla modal
-                modalTableBody.html(details);
-
-                // Mostrar el modal
+            $('#openModalButton').click(function() {
                 $('#modalvieworder').modal('show');
             });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('#orderTable').DataTable();
         });
     </script>
 @endsection
@@ -173,14 +165,15 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="region" class="form-label">Región</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->region_fk }}</span>
+                                    <span class="form-control"
+                                        id="profile_card_body">{{ Auth::user()->region->name }}</span>
 
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk }}</span>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -190,63 +183,50 @@
 
             <div class="col-md-5 col-12">
                 <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0 fw-bold">{{ __('Historial de Pedidos') }}</h4>
+                    <div class="card-header" id="profile_card_header">
+                        <h4 class="mb-0 fw-bold">{{ __('Historial Pedido') }}</h4>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-stripped" id="orderTable">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">N° PEDIDO</th>
-                                        <th class="text-center">FECHA PEDIDO</th>
-                                        <th class="text-center">TOTAL</th>
-                                        <th class="text-center">ACCIÓN</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($orders as $order)
-                                        @if ($order->user_id === Auth::user()->id)
-                                            <tr>
-                                                <td class="text-center">{{ $order->id }}</td>
-                                                <td class="text-center">{{ $order->created_at }}</td>
-                                                <td class="text-center">${{ $order->total }}</td>
-                                                <td class="text-center">
-                                                    <button type="button"
-                                                        class="view-order button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
-                                                        data-order-id="{{ $order->id }}">Ver Pedido</button>
-
-                                                    <div class="d-none" id="order-details-{{ $order->id }}">
-                                                        <table class="table">
-                                                            <tbody>
-                                                                @foreach ($order->details as $detail)
-                                                                    <tr>
-                                                                        <td class="text-center">
-                                                                            {{ $detail->product->nombre }}</td>
-                                                                        <td class="text-center">{{ $detail->cantidad }}
-                                                                        </td>
-                                                                        <td class="text-center">${{ $detail->precio }}
-                                                                        </td>
-                                                                        <td class="text-center">${{ $detail->monto }}</td>
-                                                                        <td class="text-center">
-                                                                            {{ $detail->product->color }}</td>
-                                                                        <td class="text-center">
-                                                                            {{ $detail->product->talla }}</td>
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table id="users-table" class="table display table-stripped align-items-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center text-sm" id="profile_title">N° PEDIDO</th>
+                                            <th class="text-center text-sm" id="profile_title">FECHA PEDIDO</th>
+                                            <th class="text-center text-sm" id="profile_title">TOTAL</th>
+                                            <th class="text-center text-sm" id="profile_title">ACCIÓN</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($orders as $order)
+                                            @if ($order->user_id === Auth::user()->id)
+                                                <tr>
+                                                    <td class="text-center">{{ $order->id ?? 'test' }}</td>
+                                                    <td class="text-center">{{ $order->created_at ?? 'test' }}</td>
+                                                    <td class="text-center align-middle">${{ $order->total ?? 'test' }}</td>
+                                                    <td class="text-center pt-3">
+                                                        <button type="button"
+                                                            class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
+                                                            data-bs-toggle="modal" data-bs-target="#modalvieworder">Ver
+                                                            Pedido</button>
+                                                        <a href="{{ route('profile_landing_order_pdf', ['id' => $order->id]) }}" type="button"
+                                                            class="button_edit_profile btn btn-sm btn-rounded text-white me-auto m-2 mx-2" >Detalle en PDF
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
         </div>
     </div>
 
@@ -429,21 +409,34 @@
                     </h5>
                 </div>
                 <div class="modal-body">
+
                     <div class="table-responsive">
-                        <table id="modal-table" class="table table-striped">
+                        <table id="users-table" class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Producto</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Precio Unitario</th>
-                                    <th class="text-center">Precio Total</th>
-                                    <th class="text-center">Color</th>
-                                    <th class="text-center">Talla</th>
+                                    <th class="text-center" id="profile_title">Producto</th>
+                                    <th class="text-center" id="profile_title">Cantidad</th>
+                                    <th class="text-center" id="profile_title">Precio Unitario</th>
+                                    <th class="text-center" id="profile_title">Precio Total</th>
+                                    <th class="text-center" id="profile_title">Color</th>
+                                    <th class="text-center" id="profile_title">Talla</th>
                                 </tr>
                             </thead>
-                            <tbody id="modal-table-body"></tbody>
+                            <tbody>
+                                @foreach ($details as $detail)
+                                    <tr>
+                                        <td class="text-center">{{ $detail->product->nombre }}</td>
+                                        <td class="text-center">{{ $detail->cantidad }}</td>
+                                        <td class="text-center">${{ $detail->product->precio }}</td>
+                                        <td class="text-center">${{ $detail->monto }}</td>
+                                        <td class="text-center">{{ $detail->product->color }}</td>
+                                        <td class="text-center">{{ $detail->product->talla }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
