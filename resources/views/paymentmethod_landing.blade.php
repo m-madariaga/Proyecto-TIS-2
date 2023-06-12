@@ -65,6 +65,8 @@
     </style>
 @endsection
 
+
+
 @section('content')
     <div class="header_resume">
         <div class="header-content">
@@ -75,89 +77,8 @@
         </div>
     </div>
 
-    <div class="container-fluid overflow-hidden py-4" id="container-payment">
-        <div class="row mt-4">
-            <div class="col-md-8">
-                <h4 class="pb-1 pt-4">Productos</h4>
-                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
-                    @foreach ($cart as $item)
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-6">
-                                <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
-                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="120">
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <h5 class="card-title">{{ $item->name }}</h5>
-                                <hr>
-                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
-                                <br>
-                                <span class="card-text">Precio: ${{ $item->price }}</span>
-                            </div>
-                        </div>
-                        <hr>
-                    @endforeach
-                </div>
-            </div>
 
-            <div class="col-md-4">
-                <h4 class="pb-1 pt-4">Métodos de Envío</h4>
-                <div class="list-group-item">
-                    <span style="font-size: 1rem;"> Método: {{ $shipment_type }}</span>
-                    <hr>
-                    <span> Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city->name }}</span>
-                </div>
-                <h4 class="pb-1 pt-4">Métodos de Pago</h4>
-                <div class="card-deck">
-                    @foreach ($paymentMethods as $paymentMethod)
-                        @if ($paymentMethod->visible)
-                            <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
-                                onclick="selectPaymentMethod(this)">
-                                <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
-                                    style="cursor: pointer;">
-                                    <div
-                                        class="payment-method-image d-flex flex-column align-items-center justify-content-center">
-                                        <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
-                                            alt="Imagen del método de pago" class="img-fluid" style="max-height: 100px;">
-                                    </div>
-                                    <h6 class="card-title text-truncate text-center multiline-text"
-                                        style="margin-top:1rem;size: 0.6rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
-                                        {{ $paymentMethod->name }}
-                                    </h6>
-
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="radio" name="paymentMethod"
-                                            id="paymentMethod{{ $paymentMethod->id }}" value="{{ $paymentMethod->id }}">
-                                        <label class="form-check-label"
-                                            for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                    @endforeach
-
-                </div>
-            </div>
-        </div>
-
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-6">
-                <div class="col-md-12">
-                    <div class="button-container">
-                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                        <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
-                            @csrf
-                            <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
-                            <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
-                            <button type="submit" class="btn btn-primary">Continuar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @guest
+    @if (!Auth::check())
         <div class="row justify-content-center mt-4">
             <div class="col-md-6">
                 <div class="alert alert-warning" role="alert">
@@ -166,8 +87,130 @@
                 </div>
             </div>
         </div>
-    @endguest
+    @else
+        <div class="container py-4 mb-4" style="margin-top: 2rem;">
+            <div class="row">
+                <div class="col-md-7 col-12">
+                    <div class="card">
+                        <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="mb-0 fw-bold">{{ __('Productos') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
+                        <div class="card-body" id="profile_card_body">
+                            <div class="list-group-item text-center" style="padding-bottom: 1rem;">
+                                @foreach ($cart as $item)
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-md-6">
+                                            <a href="#" class="show-picture-modal"
+                                                data-img-url="{{ $item->options->urlfoto }}">
+                                                <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}"
+                                                    width="120">
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="card-title">{{ $item->name }}</h5>
+                                            <hr>
+                                            <span class="card-text">Cantidad: {{ $item->qty }}</span>
+                                            <br>
+                                            <span class="card-text">Precio: ${{ $item->price }}</span>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-12">
+                    <div class="card">
+                        <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="mb-0 fw-bold">{{ __('Métodos de Envios') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="list-group-item">
+                                    <span style="font-size: 1rem;"> Método: {{ $shipment_type }}</span>
+                                    <hr>
+                                    <span> Dirección: {{ Auth::user()->address }}, {{ Auth::user()->city_fk }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- ------------------------------- --}}
+                        <hr>
+                        {{-- -------------------------------------- --}}
+                        <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <h4 class="mb-0 fw-bold">{{ __('Métodos de Pago') }}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <div class="card-deck">
+                                    @foreach ($paymentMethods as $paymentMethod)
+                                        @if ($paymentMethod->visible)
+                                            <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
+                                                onclick="selectPaymentMethod(this)">
+                                                <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
+                                                    style="cursor: pointer;">
+                                                    <div
+                                                        class="payment-method-image d-flex flex-column align-items-center justify-content-center">
+                                                        <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
+                                                            alt="Imagen del método de pago" class="img-fluid"
+                                                            style="max-height: 100px;">
+                                                    </div>
+                                                    <h6 class="card-title text-truncate text-center multiline-text"
+                                                        style="margin-top:1rem;size: 0.6rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
+                                                        {{ $paymentMethod->name }}
+                                                    </h6>
+
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="radio" name="paymentMethod"
+                                                            id="paymentMethod{{ $paymentMethod->id }}"
+                                                            value="{{ $paymentMethod->id }}">
+                                                        <label class="form-check-label"
+                                                            for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="button-container">
+                                <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
+                                <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
+                                    @csrf
+                                    <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
+                                    <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                                    <button type="submit" class="btn btn-primary">Continuar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
+
+
 
 @section('js')
     <script>

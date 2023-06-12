@@ -3,8 +3,6 @@
 @section('css')
 @endsection
 
-
-
 @section('content')
 
 <div class="container-fluid py-4 mb-4">
@@ -135,5 +133,4 @@
 @endsection
 
 @section('js')
-
 @endsection

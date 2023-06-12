@@ -46,11 +46,11 @@ class CartController extends Controller
                         'nombre' => null,
                     ]
                 ]);
-
-                // Disminuir el stock del producto
-                $product->stock -= $qty;
-                $product->save();
             }
+
+            // Disminuir el stock del producto
+            $product->stock -= $qty;
+            $product->save();
         }
 
         if ($user) {
@@ -58,9 +58,10 @@ class CartController extends Controller
         } else {
             return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
         }
+    
     }
 
-
+    
     public function showCart()
     {
         $user = auth()->user();
@@ -78,12 +79,14 @@ class CartController extends Controller
     public function removeitem(Request $request)
     {
         $item = $request->route('rowId');
-        $removedItem = Cart::get($item); // Obtener el producto eliminado
+        $cartItem = Cart::get($item);
+        $qty = $cartItem->qty;
+
         Cart::remove($item);
 
-        // Incrementar el stock del producto eliminado
-        $product = Product::find($removedItem->id);
-        $product->stock += $removedItem->qty;
+        // Aumentar el stock del producto
+        $product = Product::find($cartItem->id);
+        $product->stock += $qty;
         $product->save();
 
         return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
@@ -91,34 +94,31 @@ class CartController extends Controller
 
     public function incrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId", $request->id)->first();
-        Cart::update($request->id, $item->qty + 1);
+        $item = Cart::get($request->id);
+        $qty = $item->qty;
 
-        // Disminuir el stock del producto en la base de datos
+        Cart::update($request->id, $qty + 1);
+
+        // Disminuir el stock del producto
         $product = Product::find($item->id);
-        $product->decrement('stock');
+        $product->stock -= 1;
+        $product->save();
 
         return back();
     }
 
     public function decrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId", $request->id)->first();
+        $item = Cart::get($request->id);
+        $qty = $item->qty;
 
-        if ($item->qty > 1) {
-            Cart::update($request->id, $item->qty - 1);
+        Cart::update($request->id, $qty - 1);
 
-            // Aumentar el stock del producto en la base de datos
-            $product = Product::find($item->id);
-            $product->increment('stock');
-        }
+        // Aumentar el stock del producto
+        $product = Product::find($item->id);
+        $product->stock += 1;
+        $product->save();
 
-        return back();
-    }
-
-    public function destroycart()
-    {
-        Cart::destroy();
         return back();
     }
 
@@ -140,15 +140,9 @@ class CartController extends Controller
             $detail->producto_id = $item->id;
             $detail->pedido_id = $order->id;
             $detail->save();
-
-            // Disminuir el stock del producto
-            $product = Product::find($item->id);
-            $product->stock -= $item->qty;
-            $product->save();
         }
         Mail::to(auth()->user()->email)->send(new ProofPayment($order->id));
         Cart::destroy();
         return redirect()->route('home-landing');
     }
-
 }

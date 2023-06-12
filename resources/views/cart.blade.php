@@ -13,12 +13,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             $('.show-picture-modal').on('click', function() {
                 var imgUrl = $(this).data('img-url');
                 $('#pictureModalImage').attr('src', imgUrl);
                 $('#pictureModal').modal('show');
+            });
+
+            $('.remove-item-btn').on('click', function() {
+                var rowId = $(this).data('row-id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: 'El producto será eliminado del carrito',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Submit the form
+                        $(this).closest('form').submit();
+                    }
+                });
             });
         });
     </script>
@@ -60,10 +78,11 @@
                                                 <div>
                                                     <div class="product-count">
                                                         <a href="{{ route('decrementitem', ['id' => $item->rowId]) }}"
-                                                            class="btn bt-succes">-</a>
-                                                        <button id="qty" type="button">{{ $item->qty }}</button>
+                                                            class="button_succes btn decrease-qty">-</a>
+                                                        <button id="qty" type="button"  class="btn-quantity btn">{{ $item->qty }}</button>
+
                                                         <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
-                                                            class="btn bt-succes">+</a>
+                                                            class="button_succes btn increase-qty">+</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -74,7 +93,8 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit" class="btn btn-link"><i
+                                                <button type="button" class="btn btn-link remove-item-btn"
+                                                    data-row-id="{{ $item->rowId }}"><i
                                                         class="far fa-times-circle"></i></button>
                                             </form>
                                         </td>

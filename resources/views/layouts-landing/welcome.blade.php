@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <title>¡Qué guay!</title>
@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
+
     @yield('css')
 
     <style>
@@ -55,14 +57,37 @@
             @include('layouts-landing.footer-landing')
         </footer>
     </div>
-
-    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('assets/js/popper.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
     <script src="{{ asset('assets/js/owl.carousel.js') }}"></script>
     <script src="{{ asset('assets/js/easing.js') }}"></script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function() {
+            $('.hamburger_container').click(function() {
+                $(this).toggleClass('open');
+                $('.navbar_menu').toggleClass('show');
+            });
+
+            $('.search_form').submit(function(e) {
+                e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+                var query = $('#search-input').val()
+                    .trim(); // Obtiene el valor del campo de búsqueda y elimina los espacios en blanco
+
+                if (query !== '') { // Verifica si el campo de búsqueda no está vacío
+                    $(this).unbind('submit').submit(); // Envía el formulario de búsqueda
+                }
+            });
+        });
+    </script>
     @yield('js')
 </body>
 
