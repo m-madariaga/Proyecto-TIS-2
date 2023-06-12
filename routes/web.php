@@ -66,6 +66,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
 
+    Route::get('/tables', function () {
+        return view('tables');
+    })->name('tables');
+
     Route::get('/countries/create', [App\Http\Controllers\CountryController::class, 'create'])->name('countries.create');
     Route::post('/countries', [App\Http\Controllers\CountryController::class, 'store'])->name('countries.store');
     Route::get('/countries/{id}/edit', [App\Http\Controllers\CountryController::class, 'edit'])->name('countries.edit');
@@ -133,7 +137,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/orders', [App\Http\Controllers\OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/store/{id}', [OrderController::class, 'store'])->name('orders-store');
     Route::post('/orders/{id}/edit', [OrderController::class, 'update'])->name('orders.edit');
-   
+    Route::get('/orders/{id}/details', [OrderController::class, 'getOrderDetails']);
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
@@ -267,4 +272,3 @@ Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
 Route::Post('/checkout', [App\Http\Controllers\CheckOutController::class, 'CheckOut'])->name('checkout');
-Route::get('/order/{orderId}', [App\Http\Controllers\OrderController::class, 'showOrder'])->name('order.show');

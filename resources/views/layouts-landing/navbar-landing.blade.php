@@ -1,3 +1,16 @@
+<head>
+    <!-- Template Main JS File -->
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/popper.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/isotope.pkgd.min.js"></script>
+    <script src="assets/js/owl.carousel.js"></script>
+    <script src="assets/js/easing.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+    
+</head>
+
 <div class="top_nav">
     <div class="container">
         <div class="row">
@@ -22,6 +35,7 @@
                         <li class="account">
                             <a href="#">
                                 @if (Auth::check())
+                                
                                     {{ Auth::user()->name }}
                                 @else
                                     Cuenta

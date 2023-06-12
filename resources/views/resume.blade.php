@@ -3,7 +3,6 @@
 @section('css')
     @parent
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-Bv4RGiF15yQqREfWvYrcpy8SglHOKlZHKr+cC0swE06a4ta75Y8v0cju4QJ17X/mZ/UKhAtWjUlSEsPAZlMP9g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <style>
         /* Agrega estilos específicos para esta vista */
@@ -68,7 +67,6 @@
     </style>
 @endsection
 
-
 @section('content')
     <div class="header_resume">
         <div class="header-content">
@@ -79,126 +77,102 @@
         </div>
     </div>
 
-
-    @if (!Auth::check())
+    <div class="container-fluid overflow-hidden" id="container-payment">
         <div class="row justify-content-center mt-4">
-            <div class="col-md-6">
-                <div class="alert alert-warning" role="alert">
-                    Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
-                    para iniciar sesión.
+            <div class="col-md-8">
+                <h4 class="pb-1 pt-4">Productos</h4>
+                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
+                    @foreach ($cart as $item)
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6">
+                                <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
+                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="120">
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <hr>
+                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
+                                <br>
+                                <span class="card-text">Precio: ${{ $item->price }}</span>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
                 </div>
-            </div>
-        </div>
-    @else
-        <div class="container py-4 mb-4" style="margin-top: 2rem;">
-            <div class="row">
-                <div class="col-md-7 col-12">
-                    <div class="card">
-                        <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <h4 class="mb-0 fw-bold">{{ __('Productos') }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
-                        <div class="card-body" id="profile_card_body">
-                            <div class="list-group-item text-center" style="padding-bottom: 1rem;">
-                                @foreach ($cart as $item)
-                                    <div class="row align-items-center justify-content-center">
-                                        <div class="col-md-6">
-                                            <a href="#" class="show-picture-modal"
-                                                data-img-url="{{ $item->options->urlfoto }}">
-                                                <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}"
-                                                    width="120">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5 class="card-title">{{ $item->name }}</h5>
-                                            <hr>
-                                            <span class="card-text">Cantidad: {{ $item->qty }}</span>
-                                            <br>
-                                            <span class="card-text">Precio: ${{ $item->price }}</span>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="card-body border border-primary rounded">
-                            <div class="d-flex justify-content-end">
-                                <span class="card-text">Total a Pagar: ${{ Cart::subtotal() }}</span>
-                            </div>
-                            <div class="d-flex justify-content-end">
-                                <div class="form-check form-check-info text-end">
-                                    <input class="form-check-input me-1" type="checkbox" value="" id="terms-checkbox">
-                                    <label class="form-check-label d-flex align-items-center" for="terms-checkbox">
-                                        <span class="me-2">Estoy de acuerdo con los <a href="#modal-terminos"
-                                                class="text-dark font-weight-bolder modal-trigger"><b>Términos y
-                                                    Condiciones</b></a></span>
-                                    </label>
-                                </div>
-                            </div>
+                <div class="card-body border border-primary rounded">
+                    <div class="d-flex justify-content-end">
+                        <span class="card-text">Total a Pagar: ${{ Cart::subtotal() }}</span>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <div class="form-check form-check-info text-end">
+                            <input class="form-check-input me-1" type="checkbox" value="" id="terms-checkbox">
+                            <label class="form-check-label d-flex align-items-center" for="terms-checkbox">
+                                <span class="me-2">Estoy de acuerdo con los <a href="#modal-terminos"
+                                        class="text-dark font-weight-bolder modal-trigger"><b>Términos y
+                                            Condiciones</b></a></span>
+                            </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-md-5 col-12">
-                    <div class="card">
-                        <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center">
-                                    <h4 class="mb-0 fw-bold">{{ __('Resumen Información') }}</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <div class="card-body">
-                                    <span class="cart-text">Nombre: {{ Auth::user()->name }}</span>
-                                    <hr>
-                                    <span class="cart-text">Número de Celular: {{ Auth::user()->phone_number }}</span>
-                                    <hr>
-                                    <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
-                                    <hr>
-                                    <span class="cart-text">Dirección: {{ Auth::user()->address }},
-                                        {{ Auth::user()->city->name }}</span>
-                                    <hr>
-                                    <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
-                                    <hr>
-                                    <span class="cart-text">Método de Pago: {{ $paymentMethodName }}</span>
-                                </div>
-                            </div>
-                        </div>
+
+            </div>
+            <div class="col-md-4">
+                <h4 class="pb-1 pt-4">Resumen Información</h4>
+                <div class="card mb-4">
+
+                    <div class="card-body">
+                        <span class="cart-text">Nombre: {{ Auth::user()->name }}</span>
+                        <hr>
+                        <span class="cart-text">Número de Celular: {{ Auth::user()->phone_number }}</span>
+                        <hr>
+                        <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
+                        <hr>
+                        <span class="cart-text">Dirección: {{ Auth::user()->address }},
+                            {{ Auth::user()->city->name}}</span>
+                        <hr>
+                        <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
+                        <hr>
+                        <span class="cart-text">Método de Pago: {{ $paymentMethodName }}</span>
                     </div>
                 </div>
+
                 <div class="button-container">
                     <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
                     <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
                         @csrf
-                        <button type="submit" class="btn btn-primary" id="submit-button" disabled>Realizar
-                            Pedido</button>
+                        <button type="submit" class="btn btn-primary" id="submit-button" disabled>Realizar Pedido</button>
                     </form>
                 </div>
             </div>
         </div>
-    @endif
+        @guest
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-6">
+                    <div class="alert alert-warning" role="alert">
+                        Debes estar conectado para continuar con la compra. Haz clic <a href="{{ route('login') }}">aquí</a>
+                        para iniciar sesión.
+                    </div>
+                </div>
+            </div>
+        @endguest
 
 
+
+    </div>
+    </div>
 
 
     <div id="modal-terminos" class="modal" style="width: 50%; max-height: 100%; top: 50%; left: 25%">
         <div class="modal-content" style="background-color: white;">
             <!-- Header del modal -->
             <div
-                style="display: flex; justify-content: space-between; align-items: center; background-color: #8c034e; padding: 1rem;">
-                <h4 class="modal-header" style="color: white; margin: 0;">Términos y Condiciones</h4>
-                <button type="button" class="modal-close" aria-label="Close"
-                    style="padding: 0.5rem; background-color: transparent; border: none; color: white;">
-                    <i class="fas fa-times"></i>
-
-                </button>
+                style="display: flex; justify-content: center; align-items: center; background-color: #8c034e; padding: 1rem;">
+                <h4 class="modal-header" style="color: white; margin: 0;">
+                    Términos y Condiciones
+                </h4>
+                <button type="button" class="modal-close" aria-label="Close" style="padding: 1rem"></button>
             </div>
             <!-- Contenido del modal -->
             <div style="padding: 2rem; overflow-y: auto; max-height: 600px;">
@@ -336,7 +310,9 @@
             </div>
         </div>
     </div>
+    </div>
 
+    </div>
 @endsection
 
 
