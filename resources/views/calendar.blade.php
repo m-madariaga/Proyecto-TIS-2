@@ -133,7 +133,7 @@
 
         .fc-toolbar .fc-toolbar-section:nth-child(3) {
             flex-basis: 
-
+        }}
 </style>
 @endsection
 
