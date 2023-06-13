@@ -40,4 +40,6 @@ class ShippingMethodsController extends Controller
     {
         return strpos($address, 'chillan') !== false || strpos($address, 'san fernando') !== false;
     }
+
+    
 }

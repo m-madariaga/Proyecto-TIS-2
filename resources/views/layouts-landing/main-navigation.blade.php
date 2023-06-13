@@ -1,28 +1,3 @@
-<head>
-
-    <!-- Toggle Hamburger -->
-
-    <script>
-        $(document).ready(function() {
-            $('.hamburger_container').click(function() {
-                $(this).toggleClass('open');
-                $('.navbar_menu').toggleClass('show');
-            });
-
-            $('.search_form').submit(function(e) {
-                e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-
-                var query = $('#search-input').val().trim(); // Obtiene el valor del campo de búsqueda y elimina los espacios en blanco
-
-                if (query !== '') { // Verifica si el campo de búsqueda no está vacío
-                    $(this).unbind('submit').submit(); // Envía el formulario de búsqueda
-                }
-            });
-        });
-    </script>
-
-</head>
-
 <div class="main_nav_container">
     <div class="container">
         <div class="row">

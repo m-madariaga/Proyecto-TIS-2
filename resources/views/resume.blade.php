@@ -130,7 +130,7 @@
                         <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
                         <hr>
                         <span class="cart-text">Dirección: {{ Auth::user()->address }},
-                            {{ Auth::user()->city->name}}</span>
+                            {{ Auth::user()->city->name }}</span>
                         <hr>
                         <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
                         <hr>
@@ -140,11 +140,21 @@
 
                 <div class="button-container">
                     <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
-                    <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
-                        @csrf
-                        <button type="submit" class="btn btn-primary" id="submit-button" disabled>Realizar Pedido</button>
-                    </form>
+                    @if ($paymentMethod == 'transferencia bancaria')
+                        <a href="{{ route('cuentaBancaria') }}" class="btn btn-primary">Realizar Transferencia Bancaria</a>
+                    @elseif ($paymentMethod == 'webpay')
+                        <form action="{{ route('webpay') }}" method="POST" id="webpay-form">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Realizar Pago con Webpay</button>
+                        </form>
+                    @elseif ($paymentMethod == 'efectivo')
+                        <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Confirmar Carrito</button>
+                        </form>
+                    @endif
                 </div>
+
             </div>
         </div>
         @guest

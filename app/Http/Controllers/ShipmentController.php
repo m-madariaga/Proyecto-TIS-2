@@ -18,7 +18,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
 use App\Mail\statusChangeAdmin;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends Controller
 {

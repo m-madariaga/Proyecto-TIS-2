@@ -20,6 +20,8 @@ class CartController extends Controller
         $quantity = $request->input('quantity');
         $user = Auth::user();
 
+        // ...
+
         foreach ($productIds as $index => $productId) {
             $product = Product::find($productId);
 
@@ -39,8 +41,11 @@ class CartController extends Controller
                     if ($product->stock >= $qty) {
                         Cart::update($cartItem->first()->rowId, $qty);
                     } else {
-                        // No hay suficiente stock, mostrar un mensaje de error o realizar alguna acción apropiada
-                        return redirect()->back()->with('error', 'No hay suficiente stock disponible para este producto');
+                        // Actualizar la cantidad en el carrito al stock disponible
+                        Cart::update($cartItem->first()->rowId, $product->stock);
+
+                        // No hay suficiente stock, mostrar un mensaje de advertencia o realizar alguna acción apropiada
+                        return redirect()->back()->with('warning', 'La cantidad del producto se ha ajustado al stock disponible');
                     }
                 } else {
                     // Si el producto no existe en el carrito, agregarlo
@@ -58,6 +63,10 @@ class CartController extends Controller
 
                     // Disminuir el stock del producto
                     $product->stock -= $qty;
+
+                    // Establecer el stock mínimo como cero
+                    $product->stock = $product->stock < 0 ? 0 : $product->stock;
+
                     $product->save();
                 }
             } else {
@@ -68,6 +77,7 @@ class CartController extends Controller
 
         return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
     }
+
 
     public function showCart()
     {
@@ -81,26 +91,37 @@ class CartController extends Controller
             foreach ($cartItems as $cartItem) {
                 $product = Product::find($cartItem['id']);
                 $product->quantity = $cartItem['quantity'];
-                $items[] = $product;
+
+                // Excluir productos con stock menor o igual a cero
+                if ($product->stock > 0) {
+                    $items[] = $product;
+                }
             }
         }
 
         return view('cart', compact('items'));
     }
 
+
     public function removeitem(Request $request)
     {
-        $item = $request->route('rowId');
-        Cart::remove($item);
+        $rowId = $request->route('rowId');
+        $item = Cart::get($rowId);
 
-        // Incrementar el stock del producto eliminado
-        $removedItem = Cart::get($item); // Obtener el producto eliminado
-        $product = Product::find($removedItem->id);
-        $product->stock += $removedItem->qty;
-        $product->save();
+        if ($item) {
+            Cart::remove($rowId);
 
-        return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
+            // Incrementar el stock del producto eliminado
+            $product = Product::find($item->id);
+            $product->stock += $item->qty;
+            $product->save();
+
+            return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
+        }
+
+        return redirect()->back()->with('error', 'El producto no se encontró en el carrito');
     }
+
 
     public function incrementitem(Request $request)
     {
