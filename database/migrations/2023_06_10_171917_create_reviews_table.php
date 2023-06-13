@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShipmentsTable extends Migration
+class CreateReviewsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateShipmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('shipments', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('user_fk');
-            $table->json('products')->nullable();
-            $table->string('shipment_type_fk');
-            $table->foreignId('order_fk')->references('id')->on('orders');
+            $table->foreignId('user_fk')->references('id')->on('users');
+            $table->foreignId('product_fk')->references('id')->on('products');
+            $table->boolean('type');
+            $table->string('title');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateShipmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipments');
+        Schema::dropIfExists('reviews');
     }
 }

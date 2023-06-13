@@ -173,7 +173,7 @@
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name}}</span>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -202,14 +202,17 @@
                                         @foreach ($orders as $order)
                                             @if ($order->user_id === Auth::user()->id)
                                                 <tr>
-                                                    <td class="text-center">{{ $order->id ?? 'test'}}</td>
+                                                    <td class="text-center">{{ $order->id ?? 'test' }}</td>
                                                     <td class="text-center">{{ $order->created_at ?? 'test' }}</td>
-                                                    <td class="text-center">${{ $order->total ?? 'test'}}</td>
+                                                    <td class="text-center align-middle">${{ $order->total ?? 'test' }}</td>
                                                     <td class="text-center pt-3">
                                                         <button type="button"
                                                             class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
                                                             data-bs-toggle="modal" data-bs-target="#modalvieworder">Ver
                                                             Pedido</button>
+                                                        <a href="{{ route('profile_landing_order_pdf', ['id' => $order->id]) }}" type="button"
+                                                            class="button_edit_profile btn btn-sm btn-rounded text-white me-auto m-2 mx-2" >Detalle en PDF
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -396,12 +399,13 @@
     <!-- END MODAL -->
 
     <!-- Modal detalle pedido -->
-    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test'}}Label"
+    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test' }}Label"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal{{ $order->id ?? 'test'}}Label">Detalles del Pedido {{ $order->id ?? 'test'}}
+                    <h5 class="modal-title" id="modal{{ $order->id ?? 'test' }}Label">Detalles del Pedido
+                        {{ $order->id ?? 'test' }}
                     </h5>
                 </div>
                 <div class="modal-body">

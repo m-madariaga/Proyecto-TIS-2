@@ -76,11 +76,13 @@
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
                                                     Editar</a><br>
                                                 <form action="{{ route('orden-compra-destroy', $orden->id) }}"
-                                                    method="POST" style="display: inline;">
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i
-                                                            class="fa fa-trash" aria-hidden="true"></i> Eliminar</button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-order"
+                                                        data-id="{{ $orden->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"></i> Eliminar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -103,6 +105,52 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-order', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '/admin/orden-compra/' + id + '/destroy',
+                        data: {
+                            id: id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log('success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '¡Orden eliminada correctamente!',
+                                timer: 1000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
     </script>
 
     <script>
