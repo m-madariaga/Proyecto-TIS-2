@@ -14,24 +14,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e354a3;
         }
 
         .container {
             width: 80%;
-            height: 80%;
             margin: auto;
-            background-color: white;
-            padding: 10px;
         }
 
         .logo {
-            float: center;
+            float: left;
         }
 
         .invoice-header {
             margin-bottom: 20px;
-            padding: 20px;
+            padding-bottom: 20px;
             border-bottom: 1px solid #ccc;
         }
 
@@ -68,6 +64,10 @@
             text-align: center;
         }
 
+        .invoice-total {
+            float: right;
+        }
+
         .invoice-total td:first-child {
             font-weight: bold;
             text-align: right;
@@ -90,16 +90,13 @@
 <body>
     <div class="container">
         <header class="invoice-header">
-            <img class="logo img-fluid" src="{{ $message->embed(public_path('\assets\images\logo_2.png')) }}"
-                alt="Logo de la empresa">
+            <img class="logo img-fluid" src="..\public\assets\images\logo_2.png" alt="Logo de la empresa">
+            <h1>Detalle del Pedido</h1>
             <br><br>
-            <h1>Detalles de su Pedido</h1>
-
-            <text>Cliente: {{ $order->user->name }}<br>Direccion: {{$order->user->address}}, {{$order->user->city->name}}</text>
-
-
-            <p>N°: {{ $order->id }}</p>
-            <p>Fecha: {{ $order->created_at }}</p>
+            <text>Cliente: {{ $order->user->name }}<br>Direccion: {{ $order->user->address }},
+                {{ $order->user->city->name }}</text>
+            <p>N° de orden: {{ $order->id }}</p>
+            <p>Fecha de orden: {{ $order->created_at }}</p>
 
 
         </header>
@@ -110,18 +107,19 @@
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Precio Unitario</th>
-                        <th>Total</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($order->details as $item)
+                    @foreach ($order->details as $prod)
                         <tr>
-                            <td>{{ $item->product->nombre }}</td>
-                            <td>{{ $item->cantidad }}</td>
-                            <td>${{ $item->precio }}</td>
-                            <td>${{ $item->monto }}</td>
+                            <td>{{ $prod->product->nombre }} {{ $prod->product->marca->nombre }}</td>
+                            <td>{{ $prod->cantidad }}</td>
+                            <td>${{ $prod->precio }}</td>
+                            <td>${{ $prod->monto }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
                 <tfoot>
                     <tr class="invoice-total">
@@ -132,7 +130,6 @@
             </table>
         </section>
         <footer class="invoice-footer">
-            <p>Gracias por su compra.</p>
             <a href="https://queguay.azurewebsites.net">www.queguay.cl</a>
         </footer>
     </div>

@@ -7,9 +7,9 @@
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Agregar Orden</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Editar orden {{$orden->id}}</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Agregar Orden</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Agregar productos a la orden {{$orden->id}}</h6>
 @endsection
 
 @section('css')
@@ -22,7 +22,7 @@
             <div class="col-12">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header pb-0">
-                        <h6>Nueva orden de compra</h6>
+                        <h6>Orden numero {{$orden->id}}</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
@@ -30,8 +30,9 @@
                             Agregar nuevo producto
                         </button>
                         <div class="table-responsive p-0">
-                            <form id='formulario_general' action="{{ route('orden-compra-store') }}" method="POST">
+                            <form id='formulario_general' action="{{ route('orden-compra-product-store') }}" method="POST">
                                 @csrf
+                                <input type="number" name="orden_id" value="{{$orden->id}}" hidden>
                                 <table id="table" class="table display table-stripped align-items-center">
                                     <thead>
                                         <tr>
@@ -103,7 +104,7 @@
                                 </table>
                                 <div class="form-group text-center m-4">
                                     <a type="button" class="btn btn-sm btn-outline-danger"
-                                        href="{{ route('orden-compra') }}">{{ __('Cancelar') }}</a>
+                                        href="{{ route('orden-compra-product-edit',['id' => $orden->id]) }}">{{ __('Cancelar') }}</a>
                                     <button type="submit" class="btn btn-primary">Agregar orden</button>
                                 </div>
                             </form>
@@ -346,7 +347,6 @@
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
             });
-
         });
     </script>
 @endsection

@@ -166,14 +166,14 @@
                                 <div class="form-group">
                                     <label for="region" class="form-label">Región</label>
                                     <span class="form-control"
-                                        id="profile_card_body">{{ Auth::user()->region_fk }}</span>
+                                        id="profile_card_body">{{ Auth::user()->region->name }}</span>
 
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="city" class="form-label">Ciudad</label>
-                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city_fk}}</span>
+                                    <span class="form-control" id="profile_card_body">{{ Auth::user()->city->name }}</span>
                                 </div>
                             </div>
                         </div>
@@ -202,14 +202,17 @@
                                         @foreach ($orders as $order)
                                             @if ($order->user_id === Auth::user()->id)
                                                 <tr>
-                                                    <td class="text-center">{{ $order->id ?? 'test'}}</td>
+                                                    <td class="text-center">{{ $order->id ?? 'test' }}</td>
                                                     <td class="text-center">{{ $order->created_at ?? 'test' }}</td>
-                                                    <td class="text-center">${{ $order->total ?? 'test'}}</td>
+                                                    <td class="text-center align-middle">${{ $order->total ?? 'test' }}</td>
                                                     <td class="text-center pt-3">
                                                         <button type="button"
                                                             class="button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
                                                             data-bs-toggle="modal" data-bs-target="#modalvieworder">Ver
                                                             Pedido</button>
+                                                        <a href="{{ route('profile_landing_order_pdf', ['id' => $order->id]) }}" type="button"
+                                                            class="button_edit_profile btn btn-sm btn-rounded text-white me-auto m-2 mx-2" >Detalle en PDF
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             @endif
@@ -350,7 +353,7 @@
                                     <select id="region"
                                         class="form-control input-field @error('region_fk') is-invalid @enderror"
                                         name="region_fk" required>
-                                        <option value="">{{ Auth::user()->region_fk }}</option>
+                                        <option value="">{{ Auth::user()->region->name }}</option>
                                         @foreach ($regions as $region)
                                             <option value="{{ $region->id }}">{{ $region->name }}</option>
                                         @endforeach
@@ -368,7 +371,7 @@
                                     <select id="city"
                                         class="form-control input-field @error('city_fk') is-invalid @enderror"
                                         name="city_fk" required>
-                                        <option value="">{{ Auth::user()->city_fk }}</option>
+                                        <option value="">{{ Auth::user()->city->name }}</option>
                                         @foreach ($cities as $city)
                                             <option value="{{ $city->id }}">{{ $city->name }}</option>
                                         @endforeach
@@ -396,12 +399,13 @@
     <!-- END MODAL -->
 
     <!-- Modal detalle pedido -->
-    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test'}}Label"
+    <div class="modal fade" id="modalvieworder" tabindex="-1" aria-labelledby="modal{{ $order->id ?? 'test' }}Label"
         aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal{{ $order->id ?? 'test'}}Label">Detalles del Pedido {{ $order->id ?? 'test'}}
+                    <h5 class="modal-title" id="modal{{ $order->id ?? 'test' }}Label">Detalles del Pedido
+                        {{ $order->id ?? 'test' }}
                     </h5>
                 </div>
                 <div class="modal-body">

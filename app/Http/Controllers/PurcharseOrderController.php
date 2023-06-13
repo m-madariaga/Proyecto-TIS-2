@@ -34,7 +34,7 @@ class PurcharseOrderController extends Controller
     {
         $productos = $id->product;
         // Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
-        $pdf = PDF::loadView('receipt.ticket', ['orden' => $id,'productos' => $productos,]);
+        $pdf = PDF::loadView('receipt.ticket', ['orden' => $id, 'productos' => $productos]);
         return $pdf->download('ticket.pdf');
     }
 
@@ -165,8 +165,7 @@ class PurcharseOrderController extends Controller
             $producto->delete();
         }
         $id->delete();
-        return redirect()
-            ->route('orden-compra')
-            ->with('success:', 'Orden eliminada correctamente.');
+        return response()
+            ->json(['success' => true]);
     }
 }
