@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -139,8 +140,16 @@ class ProductController extends Controller
     public function show($productId)
     {
         $product = Product::findOrFail($productId);
+        $reviews = Review::where('product_fk', $productId)->get();
 
-        return view('product.show', compact('product'));
+        foreach($reviews as $review){
+            error_log($review->id);
+
+        }
+
+        
+
+        return view('product.show', compact('product', 'reviews'));
     }
 
     /**
