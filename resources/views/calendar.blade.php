@@ -12,6 +12,124 @@
 
 @section('css')
 <link href="{{ asset('argon/assets/css/fullcalendar.css') }}" rel="stylesheet" />
+
+<style>
+    #calendar {
+        padding: 1px;
+    }
+
+    .fc-header-toolbar {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .fc-header-toolbar .fc-button {
+        margin-right: 10px;
+        background-color: #8c034e;
+        background-image: linear-gradient(#8c034e, #6f023c);
+        color: #ffffff;
+        border-color: #8c034e;
+        border-radius: 3px;
+    }
+
+    .fc-header-toolbar .fc-button:hover {
+        background-image: linear-gradient(#6f023c, #8c034e);
+    }
+
+    .fc-header-toolbar .fc-button-group {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .fc-header-toolbar .fc-button.fc-button-primary {
+        background-color: #ffffff;
+        background-image: none;
+        color: #8c034e;
+    }
+
+    .fc-header-toolbar .fc-button.fc-button-primary:hover {
+        background-color: #f1f1f1;
+    }
+
+    .fc-daygrid-view .fc-toolbar-title {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .fc-daygrid-view .fc-daygrid-day-number {
+        position: relative;
+    }
+
+    .fc-daygrid-view .fc-daygrid-day-number::before {
+        content: attr(data-date);
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 4px;
+        background-color: #8c034e;
+        color: #ffffff;
+        font-size: 10px;
+        border-radius: 3px;
+    }
+
+    @media (max-width: 767px) {
+        .fc-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .fc-toolbar .fc-toolbar-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .fc-toolbar .fc-toolbar-section:first-child {
+            margin-right: 10px;
+        }
+
+        .fc-toolbar .fc-button {
+            margin: 0 5px;
+        }
+
+        .fc-header-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .fc-header-toolbar .fc-left,
+        .fc-header-toolbar .fc-center,
+        .fc-header-toolbar .fc-right {
+            flex-basis: 33.33%;
+        }
+
+        .fc-toolbar .fc-toolbar-section:nth-child(1),
+        .fc-toolbar .fc-toolbar-section:nth-child(2) {
+            flex-basis: 100%;
+            justify-content: center;
+        }
+
+        .fc-toolbar .fc-toolbar-section:nth-child(2) .fc-toolbar-chunk {
+            color: #8c034e;
+            font-size: 1.2rem;
+        }
+
+        /* Estilo del botón "Hoy" */
+        .fc-toolbar .fc-toolbar-section:nth-child(2) .fc-today-button {
+            border: 1px solid #8c034e;
+            padding: 8px 15px;
+            font-size: 1.2rem;
+        }
+
+    }
+</style>
 @endsection
 
 @section('content')
@@ -117,131 +235,152 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            headerToolbar: {
-                start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                center: 'title',
-                end: 'prevYear,prev,next,nextYear'
-            },
-            dateClick: function(info) {
-                $("#modal-event").modal("show");
-            },
-            eventClick: function(info) {
-                var event = info.event;
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    headerToolbar: {
+                        start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                        center: 'title',
+                        end: 'prevYear,prev,next,nextYear'
+                    },
+                    dateClick: function(info) {
+                        $("#modal-event").modal("show");
+                    },
+                    eventClick: function(info) {
+                        var event = info.event;
 
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    start: 'dayGridMonth,timeGridWeek,timeGridDay',
-                    center: 'title',
-                    end: 'prevYear,prev,next,nextYear'
-                },
-                dateClick: function(info) {
-                    $("#modal-event").modal("show"); // muestra el modal
-                },
-                locale: 'es', // Establece el idioma en español
-                buttonText: {
-                    today: 'Hoy',
-                    month: 'Mes',
-                    week: 'Semana',
-                    day: 'Día',
-                    list: 'Lista'
-                },
-                allDayText: 'Todo el día',
-                noEventsText: 'No hay eventos para mostrar',
-                eventTimeFormat: {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    meridiem: 'short'
-                },
-                weekText: 'Sem',
-                moreLinkText: 'más',
-                eventLimitText: 'más',
-                dayPopoverFormat: 'dddd D [de] MMMM [de] YYYY'
-            });
+                        var calendarEl = document.getElementById('calendar');
+                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                            initialView: 'dayGridMonth',
+                            headerToolbar: {
+                                start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                                center: 'title',
+                                end: 'prevYear,prev,next,nextYear'
+                            },
+                            dateClick: function(info) {
+                                $("#modal-event").modal("show"); // muestra el modal
+                            },
+                            locale: 'es', // Establece el idioma en español
+                            buttonText: {
+                                today: 'Hoy',
+                                month: 'Mes',
+                                week: 'Semana',
+                                day: 'Día',
+                                list: 'Lista'
+                            },
+                            allDayText: 'Todo el día',
+                            noEventsText: 'No hay eventos para mostrar',
+                            eventTimeFormat: {
+                                hour: 'numeric',
+                                minute: '2-digit',
+                                meridiem: 'short'
+                            },
+                            weekText: 'Sem',
+                            moreLinkText: 'más',
+                            eventLimitText: 'más',
+                            dayPopoverFormat: 'dddd D [de] MMMM [de] YYYY'
+                        });
 
-            calendar.render();
+                        calendar.render();
 
-            $("#btn-primary").click(function() {
+                        $("#btn-primary").click(function() {
 
-                var title = $("#title").val();
-                var description = $("#description").val();
-                var start = $("#start").val();
-                var end = $("#end").val();
+                            var title = $("#title").val();
+                            var description = $("#description").val();
+                            var start = $("#start").val();
+                            var end = $("#end").val();
 
-                var event = {
-                    title: title,
-                    description: description,
-                    start: start,
-                    end: end
-                };
+                            var event = {
+                                title: title,
+                                description: description,
+                                start: start,
+                                end: end
+                            };
 
-                calendar.addEvent(event);
+                            calendar.addEvent(event);
 
-                $("#modal-event").modal("hide");
-            });
+                            $("#modal-event").modal("hide");
+                        });
 
-            $("#btn-info").click(function() {
-                $("#modal-event").modal("hide");
-            });
+                        $("#btn-info").click(function() {
+                            $("#modal-event").modal("hide");
+                        });
 
-                $("#modal-edit-event").modal("show");
-            },
-            events: {!! $events->toJson() !!}
-        });
-        calendar.render();
-
-        $("#edit-event-form").submit(function(event) {
-            event.preventDefault();
-
-            var eventId = $("#btn-update-event").attr("data-event-id");
-
-            var formData = new FormData(this);
-
-            axios.put('/event/' + eventId, formData)
-                .then(function(response) {
-                    if (response.data.success) {
-                        var event = calendar.getEventById(eventId);
-                        if (event) {
-                            event.setProp('title', formData.get('title'));
-                            event.setExtendedProp('description', formData.get('description'));
-                            event.setProp('start', formData.get('start'));
-                            event.setProp('end', formData.get('end'));
-                            event.setProp('backgroundColor', formData.get('color'));
-                            event.setProp('borderColor', formData.get('color'));
-                            event.setProp('textColor', '#FFFFFF');
-                            event.setAllDay(false);
-                        }
-                        $("#modal-edit-event").modal("hide");
+                        $("#modal-edit-event").modal("show");
+                    },
+                    events: {
+                        !!$events - > toJson() !!
                     }
-                })
-                .catch(function(error) {
-                    console.log(error);
                 });
-        });
 
-        $("#btn-delete-event").click(function() {
-            var eventId = $("#btn-update-event").attr("data-event-id");
+                calendar.render();
 
-            axios.delete('/event/' + eventId)
-                .then(function(response) {
-                    if (response.data.success) {
-                        var event = calendar.getEventById(eventId);
-                        if (event) {
-                            event.remove();
-                        }
-                        $("#modal-edit-event").modal("hide");
-                    }
-                })
-                .catch(function(error) {
-                    console.log(error);
+                $("#edit-event-form").submit(function(event) {
+                    event.preventDefault();
+
+                    $("#event-form").submit(function(e) {
+                        e.preventDefault();
+                        var formData = $(this).serialize();
+                        axios.post("{{ route('event.store') }}", formData)
+                            .then(function(response) {
+                                $("#modal-event").modal("hide");
+                                calendar.addEvent({
+                                    id: response.data.id,
+                                    title: response.data.title,
+                                    description: response.data.description,
+                                    start: response.data.start,
+                                    end: response.data.end,
+                                    backgroundColor: response.data.color,
+                                });
+                                location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    });
+
+                    $("#edit-event-form").submit(function(e) {
+                        e.preventDefault();
+                        var eventId = $("#btn-update-event").attr("data-event-id");
+
+                        var formData = new FormData(this);
+
+                        axios.put('/event/' + eventId, formData)
+                            .then(function(response) {
+                                $("#modal-edit-event").modal("hide");
+                                var event = calendar.getEventById(eventId);
+                                event.setProp('title', response.data.title);
+                                event.setExtendedProp('description', response.data.description);
+                                event.setStart(response.data.start);
+                                event.setEnd(response.data.end);
+                                event.setProp('backgroundColor', response.data.color);
+                                location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    });
+
+                    $("#btn-delete-event").click(function() {
+                        var eventId = $("#btn-update-event").attr("data-event-id");
+
+                        axios.delete('/event/' + eventId)
+                            .then(function(response) {
+                                $("#modal-edit-event").modal("hide");
+                                calendar.getEventById(eventId).remove();
+                                location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
+
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                    });
                 });
-        });
-    });
 </script>
 @endsection
