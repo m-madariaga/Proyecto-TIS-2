@@ -13,8 +13,7 @@ class Shipment extends Model
         'user_fk',
         'status',
         'shipment_type_fk',
-        'products',
-
+      
     ];
     protected $casts = [
         'products' => 'array',

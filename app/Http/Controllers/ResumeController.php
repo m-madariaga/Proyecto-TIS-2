@@ -33,9 +33,8 @@ class ResumeController extends Controller
         $paymentMethodId = $request->input('paymentMethod');
         $paymentMethod = PaymentMethod::find($paymentMethodId);
         
-        $paymentMethodName = $paymentMethod->name;
-        return view('resume', compact('paymentMethodName', 'cart', 'shipment_type'));
+        return view('resume', compact('paymentMethod', 'cart', 'shipment_type'));
     }
-
+    
 
 }

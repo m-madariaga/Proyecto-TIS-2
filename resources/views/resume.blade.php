@@ -130,21 +130,42 @@
                         <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
                         <hr>
                         <span class="cart-text">Dirección: {{ Auth::user()->address }},
-                            {{ Auth::user()->city->name}}</span>
+                            {{ Auth::user()->city->name }}</span>
                         <hr>
                         <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
                         <hr>
-                        <span class="cart-text">Método de Pago: {{ $paymentMethodName }}</span>
+                        <span class="cart-text">Método de Pago: {{ $paymentMethod->name }}</span>
                     </div>
                 </div>
 
                 <div class="button-container">
                     <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
-                    <form action="{{ route('confirmcart') }}" method="POST" id="shipment-form">
-                        @csrf
-                        <button type="submit" class="btn btn-primary" id="submit-button" disabled>Realizar Pedido</button>
-                    </form>
+                    @if (strtolower($paymentMethod->name) == 'transferencia bancaria')
+                        <form action="{{ route('checkout_transfer') }}" method="POST" id="shipment-form">
+                            @csrf
+                            <input type="hidden" name="paymentMethod" id="paymentMethod" value="{{ $paymentMethod->id }}">
+                            <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </form>
+                    @elseif (strtolower($paymentMethod->name) == 'webpay')
+                        <form action="{{ route('checkout_transbank') }}" method="POST" id="webpay-form">
+                            @csrf
+                            <input type="hidden" name="cart" value="{{ json_encode($cart) }}">
+                            <!-- Agregar este campo oculto -->
+                            <input type="hidden" name="paymentMethod" id="paymentMethod" value="{{ $paymentMethod->id }}">
+                            <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                            <button type="submit" class="btn btn-primary">Confirmar Carrito</button>
+                        </form>
+                    @elseif (strtolower($paymentMethod->name) == 'efectivo')
+                        <form action="{{ route('confirmationcart') }}" method="POST" id="shipment-form">
+                            @csrf
+                            <button type="submit" class="btn btn-primary" id="confirmar-carrito">Confirmar Carrito</button>
+                        </form>
+                    @endif
                 </div>
+
+
+
             </div>
         </div>
         @guest
@@ -336,6 +357,34 @@
             var elems = document.querySelectorAll('.modal');
             var instances = M.Modal.init(elems, {
                 dismissible: false
+            });
+        });
+    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the "Confirmar Carrito" button element
+            var confirmButton = document.getElementById('confirmar-carrito');
+
+            // Add a click event listener to the button
+            confirmButton.addEventListener('click', function(event) {
+                // Prevent the default form submission
+                event.preventDefault();
+
+                // Show the Sweet Alert confirmation dialog
+                swal({
+                        title: "Confirmar Pedido",
+                        text: "¿Estás seguro de confirmar el carrito?",
+                        icon: "warning",
+                        buttons: ["Cancelar", "Confirmar"],
+                        dangerMode: true,
+                    })
+                    .then(function(confirm) {
+                        // If the user confirms, submit the form
+                        if (confirm) {
+                            document.getElementById('shipment-form').submit();
+                        }
+                    });
             });
         });
     </script>

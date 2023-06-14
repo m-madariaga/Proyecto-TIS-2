@@ -11,8 +11,17 @@ class PaymentMethod extends Model
 
     protected $fillable = ['nombre', 'imagen','visible'];
 
+    
+
+    // FUNCIONES QUE DEVUELVEN LOS DATOS GUARDADOS 
     public function dataBankTransfers()
     {
         return $this->hasMany(DataBankTransfer::class, 'paymentmethod_fk');
     }
+
+    public function webPayCredential()
+    {
+        return $this->hasMany(WebpayCredential::class, 'paymentmethod_fk');
+    }
+    
 }
