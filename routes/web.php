@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransbankController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\WebpayCredentialController;
 
 use App\Http\Controllers\BankDataController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
@@ -125,7 +127,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/webpay/{id}', [WebpayCredentialController::class, 'destroy'])->name('webpaycredentials.destroy');
 
     });
-
+   
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
@@ -145,6 +147,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
+
 
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
@@ -253,7 +256,7 @@ Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incr
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
 
-Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
+Route::post('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
@@ -278,4 +281,7 @@ Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::c
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
-Route::Post('/checkout', [App\Http\Controllers\CheckOutController::class, 'CheckOut'])->name('checkout');
+Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
+
+Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');
+Route::get('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');

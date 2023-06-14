@@ -139,4 +139,6 @@ class PaymentMethodController extends Controller
 
         return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago eliminado exitosamente!');
     }
+
+    
 }
