@@ -60,13 +60,14 @@
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Escribir reseña</h4>
-                            <form action="">
-                                <input type="text" class="form-control mb-1" placeholder="Título">
-                                <select class="form-select mb-1" placeholder="Tipo">
-                                    <option value="1">Positiva</option>
-                                    <option value="2">Negativa</option>
+                            <form method="POST" action="{{ route('reviews.store', [ 'productId' => $product->id, 'userId' => Auth::user()->id]) }}">
+                                @csrf
+                                <input type="text" id="title" name="title" class="form-control mb-1" placeholder="Título" required>
+                                <select class="form-select mb-1" id="type" name="type">
+                                    <option value="1" selected>Positiva</option>
+                                    <option value="0">Negativa</option>
                                 </select>
-                                <textarea class="form-control mb-1" placeholder="Descripción" rows="4"></textarea>
+                                <textarea class="form-control mb-1" id="description" name="description" placeholder="Descripción" rows="4" required></textarea>
                                 <button type="submit" class="btn">Guardar</button>
                             </form>
                         </div>
@@ -78,7 +79,7 @@
                         <div class="card-body">
                             <div class="row justify-content-between">
                                 <h4 class="col-4 card-title">{{$review->title}}</h4>
-                                <h5 class="col-sm-4 text-right align-self-center card-subtitle mb-2 text-body-secondary">
+                                <h5 class="col-sm-4 text-right align-self-center mb-2 text-body-secondary">
                                     @if ($review->type == 1)
                                         <i class="fa fa-thumbs-up"></i>
                                     @else
@@ -86,6 +87,7 @@
                                     @endif
                                 </h5>
                             </div>
+                            <h5 class="card-subtitle mb-2 text-body-secondary">{{$review->username}}</h5>
                             <p>{{$review->description}}</p>
                             
                         </div>

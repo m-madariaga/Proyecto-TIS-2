@@ -213,8 +213,12 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{id}/{last}', [App\Http\Controllers\ShipmentController::class, 'status_cancel'])->name('shipment_cancel');
 
-    Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
-    Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
+    Route::group(['middleware' => ['permission:mantenedor reviews']], function () {
+        Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
+        Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
+        
+    });
+    
 
 
 
@@ -265,6 +269,7 @@ Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsController::class, 'store'])->name('reviews.store');
 
 Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');

@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -141,11 +142,11 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($productId);
         $reviews = Review::where('product_fk', $productId)->get();
-
         foreach($reviews as $review){
-            error_log($review->id);
-
+            $review->username = User::find($review->user_fk)->name;
+            error_log($review->username);
         }
+
 
         
 
