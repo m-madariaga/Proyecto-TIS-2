@@ -16,10 +16,9 @@ class CreateShipmentsTable extends Migration
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
             $table->string('user_fk');
-            $table->string('status');
             $table->json('products')->nullable();
             $table->string('shipment_type_fk');
-            // $table->foreignId('order_fk')->references('id')->on('orders');
+            $table->foreignId('order_fk')->references('id')->on('orders');
             $table->timestamps();
         });
     }
