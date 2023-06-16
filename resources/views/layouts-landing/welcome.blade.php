@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     @yield('css')
 
     <!-- Scripts JS -->
@@ -45,7 +46,7 @@
         });
     </script>
 
-    
+
     <style>
         html,
         body {

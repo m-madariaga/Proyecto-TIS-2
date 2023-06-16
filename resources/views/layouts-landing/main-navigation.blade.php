@@ -38,6 +38,16 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="navbar_user">
+
+                        <li class="checkout">
+                            <a href="{{route('products-desired')}}">
+                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
+                                <span id="" class=""></span>
+                            </a>
+                        </li>
+                    </ul>
+
                     <div class="hamburger_container">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </div>

@@ -22,7 +22,7 @@
                         <li class="account">
                             <a href="#">
                                 @if (Auth::check())
-                                
+
                                     {{ Auth::user()->name }}
                                 @else
                                     Cuenta

@@ -127,7 +127,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/webpay/{id}', [WebpayCredentialController::class, 'destroy'])->name('webpaycredentials.destroy');
 
     });
-   
+
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
@@ -158,7 +158,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');
     });
 
-    
+
     Route::group(['middleware' => ['permission:mantenedor ordenes']], function () {
         Route::get('/orden-compra', [PurcharseOrderController::class, 'index'])->name('orden-compra');
         Route::get('/orden-compra/create', [PurcharseOrderController::class, 'create'])->name('orden-compra-create');
@@ -226,9 +226,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::group(['middleware' => ['permission:mantenedor reviews']], function () {
         Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
         Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
-        
+
     });
-    
+
 
 
 
@@ -248,7 +248,9 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
+//rutas clientes
 
+Route::get('/productos_deseados',[])->name('products-desired');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
