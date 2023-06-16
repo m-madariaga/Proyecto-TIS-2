@@ -57,5 +57,27 @@
     <script src="{{ asset('argon/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
     @yield('js')
 </body>
+{{-- @can('vista admin') --}}
+<?php use App\Http\Controllers\NotificationController;
+   $notifs= NotificationController::print();
+   
+?>
+
+@foreach ($notifs as $notif)
+<script>
+    var notif= {!! json_encode($notif->data['body']) !!};
+    Swal.fire({
+                    icon: 'warning',
+                    title: 'Advertencia',
+                    text: notif,
+                    timer: 3000
+                });
+    
+</script>
+    
+@endforeach
+{{-- @endcan --}}
+
+
 
 </html>

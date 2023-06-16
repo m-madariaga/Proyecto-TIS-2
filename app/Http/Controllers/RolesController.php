@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Validation\Rule;
+use App\Notifications\lowStockNotif;
 
 class RolesController extends Controller
 {
@@ -29,6 +30,8 @@ class RolesController extends Controller
             $role->role_count= $user_amount->count();
 
         }
+        $admin= User::find(1);
+        $admin->notify(new lowStockNotif("blusa"));
 
         return view('roles.index', compact('roles'));
     }
