@@ -24,10 +24,8 @@ class CheckOutController extends Controller
         $cart = Cart::content();
         $shipment_type = $request->input('shipment_type');
         $paymentMethodId = $request->input('paymentMethod');
-        error_log('El método es 1: ' . $cart);
         $paymentMethod = PaymentMethod::find($paymentMethodId);
 
-        error_log('El método es: ' . $paymentMethodId);
         if ($paymentMethod) {
             $dataBankTransfers = $paymentMethod->dataBankTransfers;
 

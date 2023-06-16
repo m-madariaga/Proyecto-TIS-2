@@ -272,6 +272,16 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 
 
 
+
+Route::post('/cart/generateOrder', [CartController::class, 'generateOrder'])->name('cart.generateOrder');
+
+
+Route::POST('/shippingmethod/create', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
+
+
+
+
 Route::Post('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
 
 
@@ -281,12 +291,9 @@ Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsController::class, 'store'])->name('reviews.store');
 
-Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
-Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 
 Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');
-Route::get('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');

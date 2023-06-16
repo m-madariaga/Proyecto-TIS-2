@@ -68,7 +68,7 @@
                 <div class="col">
                     <div class="product-grid" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach ($productos as $index => $producto)
-                        <div class="product-item {{ $producto->stock === 0 ? 'out-of-stock' : '' }}">
+                        <div class="product-item {{ $producto->stock <= 0 ? 'out-of-stock' : '' }}">
                             <a href="{{ route('product.show', $producto->id) }}">
                                 <div class="product product_filter">
                                     <div class="product_image">

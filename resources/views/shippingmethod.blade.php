@@ -189,9 +189,12 @@
                                 <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
                                 <form action="{{ route('shipments.create') }}" method="POST" id="shipment-form">
                                     @csrf
+                                    
                                     <input type="hidden" name="shipment_type_id" id="selected-shipment-type"
                                         value="">
                                     <input type="hidden" name="shipment_id" id="shipment-id" value="">
+                                    <input type="hidden" name="order" value="{{ json_encode($order) }}">
+
                                     <button type="submit" class="btn btn-primary">Continuar</button>
                                 </form>
                             </div>

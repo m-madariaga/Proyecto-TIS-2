@@ -11,9 +11,9 @@
             display: none;
         }
 
-        .footer {
+        /* .footer {
             display: none;
-        }
+        } */
 
         .header_resume {
             position: relative;

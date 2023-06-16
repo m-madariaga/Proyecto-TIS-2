@@ -199,6 +199,8 @@
                                     <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
                                     <input type="hidden" name="shipment_type" id="shipment_type"
                                         value="{{ $shipment_type }}">
+                                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+
                                     <button type="submit" class="btn btn-primary">Continuar</button>
                                 </form>
                             </div>
