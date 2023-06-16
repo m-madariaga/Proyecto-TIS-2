@@ -62,8 +62,12 @@
                                                         <a href="{{ route('decrementitem', ['id' => $item->rowId]) }}"
                                                             class="btn bt-succes">-</a>
                                                         <button id="qty" type="button">{{ $item->qty }}</button>
-                                                        <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
-                                                            class="btn bt-succes">+</a>
+                                                        @if ($item->qty < $item->options->stock)
+                                                            <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
+                                                                class="btn bt-succes">+</a>
+                                                        @else
+                                                            <a href="#" class="btn bt-succes" disabled>+</a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,6 +85,7 @@
                                     </tr>
                                 @endif
                             @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>
