@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\lowStockNotif;
 
 class ProductController extends Controller
 {
@@ -146,6 +147,8 @@ class ProductController extends Controller
             $review->username = User::find($review->user_fk)->name;
             error_log($review->username);
         }
+        $admin= User::find(1);
+        $admin->notify(new lowStockNotif("blusa"));
 
 
         

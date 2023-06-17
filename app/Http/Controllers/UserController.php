@@ -125,7 +125,7 @@ class UserController extends Controller
         error_log($roles);
         $user->save();
 
-        return redirect('admin/users')->with('success', 'Tipo de envío actualizado exitosamente!');
+        return redirect('admin/users')->with('success', 'Usuario actualizado exitosamente!');
     }
 
     /**
