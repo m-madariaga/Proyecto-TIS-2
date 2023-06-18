@@ -30,7 +30,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
-use App\Models\Purchase_order_product;
+use App\Http\Controllers\ProductDesiredController;
 
 /*
 |--------------------------------------------------------------------------
@@ -250,7 +250,8 @@ Auth::routes();
 
 //rutas clientes
 
-Route::get('/productos_deseados',[])->name('products-desired');
+Route::get('/productos_deseados',[ProductDesiredController::class,'show'])->name('products-desired');
+Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');

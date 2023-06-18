@@ -5,7 +5,8 @@
 
                 <div class="logo_container">
                     <a href="{{ route('home-landing') }}">
-                        <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img" style="max-height: 3rem;" alt="main_logo">
+                        <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                            style="max-height: 3rem;" alt="main_logo">
                     </a>
                 </div>
                 <nav class="navbar">
@@ -20,9 +21,11 @@
                                 <form action="{{ route('search') }}" method="POST" class="search_form">
                                     @csrf
                                     <div class="input-group">
-                                        <input type="text" name="query" class="form-control" placeholder="Buscar" aria-label="Buscar" id="search-input">
+                                        <input type="text" name="query" class="form-control" placeholder="Buscar"
+                                            aria-label="Buscar" id="search-input">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                            <button type="submit" class="btn btn-outline-secondary"><i
+                                                    class="fa fa-search" aria-hidden="true"></i></button>
                                         </div>
                                     </div>
                                 </form>
@@ -41,9 +44,10 @@
                     <ul class="navbar_user">
 
                         <li class="checkout">
-                            <a href="{{route('products-desired')}}">
+                            <a href="{{ route('products-desired', Auth::user()->id) }}">
                                 <i class="bi bi-heart-fill" aria-hidden="true"></i>
-                                <span id="" class=""></span>
+                                <span id=""
+                                    class="checkout_items">{{ count(Auth::user()->product_desired) }}</span>
                             </a>
                         </li>
                     </ul>

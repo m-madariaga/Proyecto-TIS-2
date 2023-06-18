@@ -13,7 +13,7 @@ class CreateProductDesiredTable extends Migration
      */
     public function up()
     {
-        Schema::create('product_desired', function (Blueprint $table) {
+        Schema::create('product_desireds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
@@ -30,6 +30,6 @@ class CreateProductDesiredTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('product_desired');
+        Schema::dropIfExists('product_desireds');
     }
 }
