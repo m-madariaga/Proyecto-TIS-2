@@ -12,8 +12,8 @@
         }
 
         /* .footer {
-            display: none;
-        } */
+                display: none;
+            } */
 
         .header_resume {
             position: relative;
@@ -191,8 +191,10 @@
                             <button type="submit" class="btn btn-primary">Confirmar Carrito</button>
                         </form>
                     @elseif (strtolower($paymentMethod->name) == 'efectivo')
-                        <form action="{{ route('confirmationcart') }}" method="POST" id="shipment-form">
+                        <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST"
+                            id="shipment-form">
                             @csrf
+
                             <button type="submit" class="btn btn-primary" id="confirmar-carrito">Confirmar
                                 Carrito</button>
                         </form>

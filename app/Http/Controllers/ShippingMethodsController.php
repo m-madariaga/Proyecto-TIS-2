@@ -20,7 +20,6 @@ class ShippingMethodsController extends Controller
         $cartId = $request->input('cart_id');
         $userId = auth()->id(); // Obtener el ID del usuario conectado
         $order = $request->session()->get('order');
-        @error_log("aqui llega el order:" . $order);
         // Obtener la dirección del usuario
         $user = User::find($userId);
         $address = strtolower($user->address);

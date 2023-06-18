@@ -41,7 +41,7 @@ class ResumeController extends Controller
         $order->paymentmethod_fk = $paymentMethod->id;
         $order->update(); // Guardar los cambios en la base de datos
     
-        return view('resume', compact('paymentMethod', 'cart', 'shipment_type'));
+        return view('resume', compact('paymentMethod', 'cart', 'shipment_type','order'));
     }
     
     

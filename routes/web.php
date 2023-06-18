@@ -260,7 +260,7 @@ Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incr
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
 
-Route::post('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');
+Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
