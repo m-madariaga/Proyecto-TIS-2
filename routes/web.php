@@ -260,7 +260,6 @@ Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incr
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
 
-Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
@@ -294,6 +293,8 @@ Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsContro
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
-Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 
+
+Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');
