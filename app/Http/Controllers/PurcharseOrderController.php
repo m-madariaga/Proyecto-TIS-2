@@ -12,6 +12,8 @@ use Barryvdh\DomPDF\Facade\PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class PurcharseOrderController extends Controller
 {
@@ -114,6 +116,11 @@ class PurcharseOrderController extends Controller
         $total = $aux;
         $orden->total = $total;
         $orden->save();
+
+        $action = new Action();
+            $action->name = 'Creación Orden de Compra';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
         return redirect()->route('orden-compra');
     }
 
@@ -165,6 +172,11 @@ class PurcharseOrderController extends Controller
             $producto->delete();
         }
         $id->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado orden de compra';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
         return response()
             ->json(['success' => true]);
     }

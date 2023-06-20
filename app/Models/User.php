@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\WebpayCredential;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 
 class User extends Authenticatable
@@ -40,7 +42,7 @@ class User extends Authenticatable
     }
     public function orders()
     {
-        return $this->belongsTo(Order::class, 'id');
+        return $this->belongsTo(Order::class, 'user_id');
     }
 
     public function city()
@@ -78,4 +80,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function webpayCredential(): HasOne
+    {
+        return $this->hasOne(WebpayCredential::class, 'user_id');
+    }
+
 }

@@ -17,8 +17,8 @@ class CreateShipmentsTable extends Migration
             $table->id();
             $table->string('user_fk');
             $table->json('products')->nullable();
-            $table->string('shipment_type_fk');
-            $table->foreignId('order_fk')->references('id')->on('orders');
+            $table->string('shipment_type_fk')->nullable();
+            $table->foreignId('order_fk')->references('id')->on('orders')->nullable();
             $table->timestamps();
         });
     }

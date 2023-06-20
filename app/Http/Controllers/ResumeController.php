@@ -6,6 +6,8 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Order;
+
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
@@ -27,15 +29,21 @@ class ResumeController extends Controller
         $cart = $request->input('cart_id');
         $userId = auth()->id();
         $user = User::find($userId);
-        
+    
         $cart = Cart::content();
         $shipment_type = $request->input('shipment_type');
         $paymentMethodId = $request->input('paymentMethod');
+        $order = $request->input('order');
         $paymentMethod = PaymentMethod::find($paymentMethodId);
-        
-        $paymentMethodName = $paymentMethod->name;
-        return view('resume', compact('paymentMethodName', 'cart', 'shipment_type'));
-    }
+        $orderid = json_decode($order); // Convert the $order string to an object
+        $order = Order::find($orderid->id); // Reemplaza $orderId con la variable que contiene el ID del pedido
 
+        $order->paymentmethod_fk = $paymentMethod->id;
+        $order->update(); // Guardar los cambios en la base de datos
+    
+        return view('resume', compact('paymentMethod', 'cart', 'shipment_type','order'));
+    }
+    
+    
 
 }
