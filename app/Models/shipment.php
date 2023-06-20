@@ -11,9 +11,9 @@ class Shipment extends Model
 
     protected $fillable = [
         'user_fk',
-        'status',
         'shipment_type_fk',
         'products',
+        'order_fk',
 
     ];
     protected $casts = [
@@ -32,5 +32,9 @@ class Shipment extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class, 'shipment_products');
+    }
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_fk');
     }
 }

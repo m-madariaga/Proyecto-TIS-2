@@ -129,6 +129,8 @@
 
 
 
+
+
                     </ul>
                 </div>
 
@@ -196,12 +198,49 @@
             @can('mantenedor datos transferencia')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                    href="{{ route('databanktransfer.index') }}">
+                        href="{{ route('databanktransfer.index') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1 text-truncate">Datos Transferencia Bancaria</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('mantenedor webpay')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('admin/webpay') ? 'active' : '' }}"
+                        href="{{ route('webpaycredentials.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1 text-truncate">Credenciales Webpay</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('mantenedor reviews')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('reviews.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Reseñas</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('mantenedor acciones')
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('actions.index') }}">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Acciones Realizadas</span>
                     </a>
                 </li>
             @endcan

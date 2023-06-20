@@ -3,8 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
     <style>
-        /* Agrega estilos específicos para esta vista */
-        /* Por ejemplo, para ocultar elementos */
+        /* Estilos generales */
         .header {
             display: none;
         }
@@ -62,6 +61,37 @@
         .cart-text {
             color: black;
         }
+
+        /* Estilos para los datos del cliente */
+        .customer-details {
+            margin-bottom: 1.5rem;
+            font-size: 18px;
+        }
+
+        .customer-details h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .customer-details p {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Estilos para la sección de inicio de sesión */
+        .login-section {
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .login-section .alert {
+            margin-bottom: 1rem;
+        }
+
+        .login-section a {
+            color: #007bff;
+            font-weight: bold;
+        }
     </style>
 @endsection
 
@@ -79,38 +109,45 @@
         <h4 class="pb-1 pt-4">Datos Cliente</h4>
         <div class="row mt-4">
 
-            <div class="list-group-item text-center" style="padding-bottom: 1rem;">
-                <div class="card-body">
-                    <span class="cart-text">Nombre: {{ Auth::user()->name }}</span>
-                    <hr>
-                    <span class="cart-text">Número de Celular: {{ Auth::user()->phone_number }}</span>
-                    <hr>
-                    <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
-                    <hr>
-                    <span class="cart-text">Dirección: {{ Auth::user()->address }},
-                        {{ Auth::user()->city->name }}</span>
-                    <hr>
-                    <span class="cart-text">Método de Envío: {{ $shipment_type }}</span>
-                    <hr>
-                    <span class="cart-text">Método de Pago: {{ $paymentMethodName }}</span>
+            <div class="container">
+                <h1>Checkout con Transferencia Bancaria</h1>
+
+                <div class="customer-details">
+                    <h2>Datos del Cliente:</h2>
+                    <p><strong>Nombre:</strong> {{ $name }}</p>
+                    <p><strong>RUN:</strong> {{ $run }}</p>
+                    <p><strong>Email:</strong> {{ $email }}</p>
+                </div>
+
+                <div class="customer-details">
+                    <h2>Datos de Transferencia Bancaria:</h2>
+                    <p><strong>Banco:</strong> {{ $bank }}</p>
+                    <p><strong>Tipo de cuenta:</strong> {{ $accountType }}</p>
+                    <p><strong>Número de cuenta:</strong> {{ $accountNumber }}</p>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="container">
+                    <h2>Cargar Archivo PDF</h2>
+                    <form action="#" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="pdf_file">
+                        <button type="submit" class="btn btn-primary">Cargar</button>
+                    </form>
                 </div>
             </div>
 
-        </div>
 
-        <div class="row justify-content-center mt-4">
-            <div class="col-md-6">
-                <div class="col-md-12">
-                    <div class="button-container">
-                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                        <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
-                            @csrf
-                            <button type="submit" class="btn btn-primary">Continuar</button>
-                        </form>
-                    </div>
-                </div>
+        </div>
+        <div class="row mt-4">
+            <div class="container">
+                <form action="{{ route('confirmationcart') }}" method="POST" id="shipment-form">
+                    @csrf
+                    <button type="submit" class="btn btn-primary" id="confirmar-carrito">Confirmar Carrito</button>
+                </form>
             </div>
         </div>
+
     </div>
 
     @guest
