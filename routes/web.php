@@ -260,7 +260,6 @@ Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incr
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
 
-Route::post('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
@@ -269,6 +268,16 @@ Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodCont
 Route::post('/change_password_landing', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordLanding'])->name('change_password_landing');
 
 Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordController::class, 'changePasswordArgon'])->name('change_password_argon');
+
+
+
+
+Route::post('/cart/generateOrder', [CartController::class, 'generateOrder'])->name('cart.generateOrder');
+
+
+Route::POST('/shippingmethod/create', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
+
 
 
 
@@ -281,12 +290,11 @@ Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsController::class, 'store'])->name('reviews.store');
 
-Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
-Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
-Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 
+
+Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');
-Route::get('/confirmationcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmationcart');

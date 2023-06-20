@@ -16,6 +16,7 @@ class Order extends Model
         'impuesto',
         'total',
         'estado',
+        'paymentmethod_fk',
         'user_id',
     ];
 
@@ -26,5 +27,10 @@ class Order extends Model
     public function details(): HasMany
     {
         return $this->hasMany(Detail::class, 'pedido_id');
+    }
+
+    public function paymentMethod()
+    {
+        return $this->belongsTo(PaymentMethod::class, 'paymentmethod_fk');
     }
 }

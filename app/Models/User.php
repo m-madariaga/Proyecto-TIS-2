@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
     public function orders()
     {
-        return $this->belongsTo(Order::class, 'id');
+        return $this->belongsTo(Order::class, 'user_id');
     }
 
     public function city()

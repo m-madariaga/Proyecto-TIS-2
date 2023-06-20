@@ -96,7 +96,7 @@
                     </table>
                     @if (Cart::count() > 0)
                         @if (Auth::check())
-                            <form action="{{ route('shippingview.index') }}" method="get">
+                            <form action="{{ route('cart.generateOrder') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Continuar</button>
                             </form>
