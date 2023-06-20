@@ -42,16 +42,17 @@
                         </li>
                     </ul>
                     <ul class="navbar_user">
-
-                        <li class="checkout">
-                            <a href="{{ route('products-desired', Auth::user()->id) }}">
-                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
-                                <span id=""
-                                    class="checkout_items">{{ count(Auth::user()->product_desired) }}</span>
-                            </a>
-                        </li>
+                        @if (Auth::check())
+                            <li class="checkout">
+                                <a href="{{ route('products-desired', ['user' => Auth::user()]) }}">
+                                    <i class="bi bi-heart-fill" aria-hidden="true"></i>
+                                    <span id="" class="checkout_items">
+                                        {{ count(Auth::user()->product_desired) }}
+                                    </span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
-
                     <div class="hamburger_container">
                         <i class="fa fa-bars" aria-hidden="true"></i>
                     </div>

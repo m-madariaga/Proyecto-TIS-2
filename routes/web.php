@@ -230,7 +230,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
 
 
-
+    Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
+        Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
+    });
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
@@ -250,7 +252,7 @@ Auth::routes();
 
 //rutas clientes
 
-Route::get('/productos_deseados',[ProductDesiredController::class,'show'])->name('products-desired');
+Route::get('/productos_deseados/{user}',[ProductDesiredController::class,'show'])->name('products-desired');
 Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');

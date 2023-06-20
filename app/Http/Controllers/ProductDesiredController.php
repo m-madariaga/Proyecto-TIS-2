@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product_desired;
 use App\Models\User;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
 
 class ProductDesiredController extends Controller
@@ -15,6 +16,8 @@ class ProductDesiredController extends Controller
      */
     public function index()
     {
+        $productos_deseados = Product_desired::all();
+        return view('product_desired.index',compact('productos_deseados'));
     }
     /**
      * Show the form for creating a new resource.
@@ -64,10 +67,10 @@ class ProductDesiredController extends Controller
      * @param  \App\Models\Product_desired  $Product
      * @return \Illuminate\Http\Response
      */
-    public function show(User $id)
+    public function show(User $user)
     {
-        $productos_deseados = $id->product_desired;
-        dd($productos_deseados);
+        $productos_deseados = $user->product_desired;
+        return view('profile_products_desired',compact('productos_deseados'));
     }
 
     /**

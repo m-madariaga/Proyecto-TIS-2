@@ -23,7 +23,6 @@
             text-align: center;
             padding: 20px;
         }
-
         .btn_darlike {
             position: absolute;
             top: 0%;
@@ -94,6 +93,7 @@
                                             {{ $producto->stock === 0 ? 'Sin stock' : 'Añadir al carrito' }}
                                         </button>
                                     </form>
+                                    @if (Auth::check())
                                     <form action="{{ route('like-product') }}" method="post">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $producto->id }}">
@@ -102,6 +102,8 @@
                                             <i class="bi bi-heart-fill" aria-hidden="true"></i>
                                         </button>
                                     </form>
+                                    @endif
+
                                 </div>
                             @endforeach
                         </div>
