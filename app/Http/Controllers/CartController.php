@@ -9,6 +9,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\lowStockNotif;
+use Illuminate\Support\Facades\Notification;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -89,6 +91,11 @@ class CartController extends Controller
                     $product->stock -= $qty;
                     $product->stock = max(0, $product->stock); // Convert negative stock to zero
 
+                    if($product->stock < 5){
+                        $admins = User::role('admin')->get();
+                        Notification::send($admins, new lowStockNotif("blusa"));
+                    }
+
                     $product->save();
                 }
             } else {
@@ -158,6 +165,11 @@ class CartController extends Controller
             // Disminuir el stock del producto en la base de datos
             $product = Product::find($item->id);
             $product->decrement('stock');
+
+            if($product->stock < 5){
+                $admins = User::role('admin')->get();
+                Notification::send($admins, new lowStockNotif("blusa"));
+            }
         }
 
         return back();
@@ -212,6 +224,11 @@ class CartController extends Controller
                 $product = Product::find($item->id);
                 $product->stock -= $item->qty;
                 $product->save();
+
+                if($product->stock < 5){
+                    $admins = User::role('admin')->get();
+                    Notification::send($admins, new lowStockNotif("blusa"));
+                }
 
                 $this->updateStock($item->id);
 
