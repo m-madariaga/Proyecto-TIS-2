@@ -259,11 +259,12 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $order = Order::findOrFail($orderId);
-
+       
         if ($user && $order->user_id === $user->id && $order->estado === 0) {
             $order->estado = 1; // Cambiar el estado a pagado
             $order->save();
             Mail::to($user->email)->send(new ProofPayment($order->id));
+            Cart::destroy();
             return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
         } else {
             return redirect()->back()->with('error', 'No se puede confirmar la orden');
