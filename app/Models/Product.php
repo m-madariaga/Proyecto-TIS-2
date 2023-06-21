@@ -35,6 +35,10 @@ class Product extends Model
     public function purchase_order(): HasMany {
         return $this->hasMany(Purchase_order_product::class, 'products_id');
     }
+    public function product_desired(): HasMany
+    {
+        return $this->hasMany(Product_desired::class, 'product_id');
+    }
     public function shipments()
     {
         return $this->belongsToMany(Shipment::class, 'shipment_product');

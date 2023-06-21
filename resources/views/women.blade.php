@@ -28,6 +28,11 @@
             text-align: center;
             padding: 20px;
         }
+
+        .btn_darlike {
+            position: absolute;
+            top: 0%;
+        }
     </style>
 @endsection
 

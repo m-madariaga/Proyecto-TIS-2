@@ -26,10 +26,9 @@ use App\Http\Controllers\Controller\ProductController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
-
-
-
-
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\ProductDesiredController;
+use App\Http\Controllers\ActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -126,6 +125,16 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
 
+    Route::group(['middleware' => ['permission:mantenedor webpay']], function () {
+        Route::get('/webpay', [WebpayCredentialController::class, 'index'])->name('webpaycredentials.index');
+        Route::get('/webpay/create', [WebpayCredentialController::class, 'create'])->name('webpaycredentials.create');
+        Route::post('/webpay/store', [WebpayCredentialController::class, 'store'])->name('webpaycredentials.store');
+        Route::get('/webpay/{id}/edit', [WebpayCredentialController::class, 'edit'])->name('webpaycredentials.edit');
+        Route::patch('/webpay/{id}/update', [WebpayCredentialController::class, 'update'])->name('webpaycredentials.update');
+        Route::delete('/webpay/{id}', [WebpayCredentialController::class, 'destroy'])->name('webpaycredentials.destroy');
+
+    });
+
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
     Route::put('/events/{id}', [EventController::class, 'update'])->name('event.update');
@@ -213,8 +222,26 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/shipments/{id}/edit', [App\Http\Controllers\ShipmentController::class, 'status_edit'])->name('shipments.status_edit');
     Route::patch('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
     Route::delete('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'destroy'])->name('shipments.destroy');
+    Route::get('/shipments/{id}/{last}', [App\Http\Controllers\ShipmentController::class, 'status_cancel'])->name('shipment_cancel');
+
+    Route::group(['middleware' => ['permission:mantenedor reviews']], function () {
+        Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
+        Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
+
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor acciones']], function () {
+        Route::get('/actions', [App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
+        Route::delete('/actions/{id}', [App\Http\Controllers\ActionController::class, 'destroy'])->name('actions.destroy');
+
+    });
 
 
+
+    Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
+        Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
+        Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
+    });
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
@@ -232,7 +259,10 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
+//rutas clientes
 
+Route::get('/productos_deseados/{user}',[ProductDesiredController::class,'show'])->name('products-desired');
+Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
