@@ -23,10 +23,25 @@
             text-align: center;
             padding: 20px;
         }
-
         .btn_darlike {
             position: absolute;
-            top: 0%;
+            width: 38px;
+            height: 38px;
+            top: 15px;
+            right: 15px;
+            background-color: white;
+            color: black;
+            border: 0;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+
+        }
+        .btn_darlike i{
+            font-size: 18px;
+        }
+        .isLike {
+            color: #8c034e;
         }
     </style>
 @endsection
@@ -91,8 +106,10 @@
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $producto->id }}">
                                             <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                            <button class="btn btn_darlike" type="submit">
-                                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
+                                            <button
+                                                class="btn btn_darlike  {{ Auth::user()->product_desired->contains('product_id', $producto->id) === true ? 'isLike' : '' }}"
+                                                type="submit">
+                                                <i class="bi bi-heart-fill " aria-hidden="true"></i>
                                             </button>
                                         </form>
                                     @endif
