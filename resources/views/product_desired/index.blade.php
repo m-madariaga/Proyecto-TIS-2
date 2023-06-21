@@ -14,76 +14,95 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 @endsection
 
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
+                                    <h5 class="font-weight-bolder mt-1">
+                                        {{ $product->nombre }}
+                                    </h5>
+                                    <p class="mb-0">
+                                        <span class="text-success text-sm font-weight-bolder">{{ $count }}</span>
+                                        veces
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header pb-0">
+
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('orden-compra-create') }}">Agregar
-                            orden</a>
                         <div class="table-responsive p-0">
                             <table id="users-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Id user</th>
+                                        <th class="text-center w-2">RUN</th>
+                                        <th class="text-center w-3">Nombre</th>
                                         <th class="text-center">Productos</th>
-                                        <th class="text-center">Total</th>
-                                        <th class="text-center">Fecha de compra</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($productos_deseados as $producto)
+                                    @foreach ($users as $user)
                                         <tr>
-                                            <td class="text-center">{{ $producto->user->id }}</td>
-                                            <td class="text-center">
-                                                <table class="table display table-stripped aling-items-left">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Nombre</th>
-                                                            <th scope="col">Marca</th>
-                                                            <th scope="col">Stock</th>
-                                                            <th scope="col">Precio</th>
-                                                        </tr>
-                                                    </thead>
-                                                    @foreach ($producto->product as $prod)
-                                                        <tbody>
+                                            <td class="text-center">{{ $user->run }}</td>
+                                            <td class="text-center">{{ $user->name }}</td>
+                                            @if ($user->product_desired->isNotEmpty())
+                                                <td class="text-center">
+                                                    <table class="table display table-stripped aling-items-left">
+                                                        <thead>
                                                             <tr>
-                                                                <td scope="row">{{ $prod->nombre }}
-                                                                </td>
-                                                                <td>{{ $prod->product->marca->nombre }}</td>
-                                                                <td>{{ $prod->product->stock }}</td>
-                                                                <td>{{ $prod->product->precio }}</td>
+                                                                <th scope="col" class="text-center">Nombre</th>
+                                                                <th scope="col" class="text-center">Marca</th>
+                                                                <th scope="col" class="text-center">Stock</th>
+                                                                <th scope="col" class="text-center">Precio</th>
                                                             </tr>
-                                                        </tbody>
-                                                    @endforeach
-                                                </table>
-
-
-                                            </td>
-                                            <td class="text-center">{{ $orden->total }}</td>
-                                            <td class="text-center">{{ $orden->created_at }}</td>
+                                                        </thead>
+                                                        @foreach ($user->product_desired as $prod)
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td scope="row">{{ $prod->product->nombre }}
+                                                                    </td>
+                                                                    <td>{{ $prod->product->marca->nombre }}</td>
+                                                                    <td>{{ $prod->product->stock }}</td>
+                                                                    <td>${{ $prod->product->precio }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        @endforeach
+                                                    </table>
+                                                </td>
+                                            @else
+                                                <td class="text-center">
+                                                    <h4> Este usuario no tiene productos deseados</h4>
+                                                </td>
+                                            @endif
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('orden-compra-pdf', ['id' => $orden->id]) }}"
+                                                <a href="{{ route('product_desired_pdf', ['id' => $user->id]) }}"
                                                     class="btn btn-sm btn-outline-primary">
-                                                    Descargar PDF</a><br>
-                                                <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
-                                                    Editar</a><br>
-                                                <form action="{{ route('orden-compra-destroy', $orden->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-order"
-                                                        data-id="{{ $orden->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"></i> Eliminar</button>
-                                                </form>
+                                                    Descargar PDF</a>
                                             </td>
                                         </tr>
                                     @endforeach

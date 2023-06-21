@@ -31,6 +31,7 @@ use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ProductDesiredController;
+use App\Models\Product_desired;
 
 /*
 |--------------------------------------------------------------------------
@@ -232,6 +233,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
         Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
+        Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
     });
 
 

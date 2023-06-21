@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Product_desired;
 use App\Models\User;
-use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\PDF;
+use Illuminate\Support\Facades\DB;
 
 class ProductDesiredController extends Controller
 {
@@ -16,8 +18,31 @@ class ProductDesiredController extends Controller
      */
     public function index()
     {
-        $productos_deseados = Product_desired::all();
-        return view('product_desired.index',compact('productos_deseados'));
+        $users = User::all();
+        $producto_mas_deseado = DB::table('product_desireds')
+            ->join('users', 'product_desireds.user_id', '=', 'users.id')
+            ->select('product_desireds.product_id', DB::raw('COUNT(*) as count'))
+            ->groupBy('product_desireds.product_id')
+            ->orderBy('count', 'desc')
+            ->first();
+
+        if ($producto_mas_deseado) {
+            $product = Product::find($producto_mas_deseado->product_id);
+            $count = $producto_mas_deseado->count;
+        }else{
+            $product = null;
+            $count = null;
+        }
+        return view('product_desired.index', compact('users','product','count'));
+    }
+    public function generate_pdf(User $id)
+    {
+        $usuario = $id;
+        $productos = Product_desired::all()->where('user_id', $usuario->id);
+        // Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
+        $pdf = PDF::loadView('receipt.product_desired', compact('usuario', 'productos'));
+
+        return $pdf->stream('ProductosDeseados.pdf');
     }
     /**
      * Show the form for creating a new resource.
@@ -70,7 +95,7 @@ class ProductDesiredController extends Controller
     public function show(User $user)
     {
         $productos_deseados = $user->product_desired;
-        return view('profile_products_desired',compact('productos_deseados'));
+        return view('profile_products_desired', compact('productos_deseados'));
     }
 
     /**
@@ -102,6 +127,5 @@ class ProductDesiredController extends Controller
      */
     public function destroy(Product_desired $id)
     {
-
     }
 }
