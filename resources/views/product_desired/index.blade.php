@@ -15,6 +15,14 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .disabled-pdf {
+            color: gray;
+            pointer-events: none;
+            text-decoration: none;
+            cursor: not-allowed;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -101,7 +109,7 @@
                                             @endif
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('product_desired_pdf', ['id' => $user->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary">
+                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }}">
                                                     Descargar PDF</a>
                                             </td>
                                         </tr>

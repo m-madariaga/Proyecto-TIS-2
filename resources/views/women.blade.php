@@ -41,7 +41,7 @@
             font-size: 18px;
         }
         .isLike {
-            color: #8c034e;
+            color: rgb(200, 0, 0);
         }
     </style>
 @endsection
