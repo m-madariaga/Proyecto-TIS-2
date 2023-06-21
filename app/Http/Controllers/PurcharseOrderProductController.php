@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
+use illuminate\Validation\ValidationException;
 
 class PurcharseOrderProductController extends Controller
 {
@@ -16,7 +19,6 @@ class PurcharseOrderProductController extends Controller
      */
     public function index()
     {
-
     }
 
     /**
@@ -26,7 +28,6 @@ class PurcharseOrderProductController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -37,12 +38,19 @@ class PurcharseOrderProductController extends Controller
      */
     public function store(Request $request)
     {
-        $datos = $request->validate([
-            'prod_id' => 'required',
-            'cantidad' => 'required',
-            'valor' => 'required',
-            'orden_id' => 'required',
-        ]);
+        $datos = $request->validate(
+            [
+                'prod_id' => 'required',
+                'cantidad' => 'required',
+                'valor' => 'required',
+                'orden_id' => 'required',
+            ],
+            [
+                'prod_id.required' => 'Selecciona un producto.',
+                'cantidad.required' => 'El campo cantidad es obligatorio.',
+                'valor.required' => 'El campo valor es obligatorio.',
+            ],
+        );
         $productos = $datos['prod_id'];
         // reiniciar los indices para que sean consecutivos y quitar los nulls
         $cant = [];
@@ -73,26 +81,29 @@ class PurcharseOrderProductController extends Controller
         }
         //recalcular total de la orden
         $orden = Purchase_order::find($id);
-        $aux=0;
+        $aux = 0;
         foreach ($orden->product as $prod) {
             $aux += $prod->cantidad * $prod->precio;
         }
         $total = $aux;
         $orden->total = $total;
         $orden->save();
-        return redirect()
-            ->route('orden-compra-edit',$id)
-            ->with('success:', 'Orden de compra ingresada correctamente.');
+        return redirect()->route('orden-compra-product-edit',['id' => $id, 'orden_product' => $orden->product]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Purchase_order_product  $Purchase_order_product
+     * @param  \App\Models\Purchase_order  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Purchase_order_product $Purchase_order_product)
+    public function show(Purchase_order $id)
     {
+        $orden = $id;
+        $productos = Product::all();
+        $marcas = Brand::all();
+        $categorias = Category::all();
+        return view('purchase_order.edit_add', compact('productos', 'orden', 'marcas', 'categorias'));
     }
 
     /**
@@ -125,26 +136,26 @@ class PurcharseOrderProductController extends Controller
     public function update(Request $request, Purchase_order $id)
     {
         $datos = $request->validate([
-            'prod_id' => 'required',
-            'cantidad' => 'required',
-            'valor' => 'required',
+            'prod_id_edit' => 'required',
+            'cantidad_edit' => 'required',
+            'valor_edit' => 'required',
         ]);
         // reiniciar los indices para que sean consecutivos
         $cant = [];
-        foreach ($datos['cantidad'] as $key => $value) {
+        foreach ($datos['cantidad_edit'] as $key => $value) {
             if ($value != null) {
                 array_push($cant, $value);
             }
         }
         $val = [];
-        foreach ($datos['valor'] as $key => $value) {
+        foreach ($datos['valor_edit'] as $key => $value) {
             if ($value != null) {
                 array_push($val, $value);
             }
         }
         //se actualizan los productos
-        for ($i = 0; $i < sizeof($datos['prod_id']); $i++) {
-            $prod_id = $datos['prod_id'][$i];
+        for ($i = 0; $i < sizeof($datos['prod_id_edit']); $i++) {
+            $prod_id = $datos['prod_id_edit'][$i];
             $cantidad = $cant[$i];
             $valor = $val[$i];
             $orden_product = Purchase_order_product::find($prod_id);
@@ -162,10 +173,8 @@ class PurcharseOrderProductController extends Controller
         $id->total = $total;
         $id->save();
         $ordenes = Purchase_order::all();
-        return redirect()
-            ->route('orden-compra', compact('ordenes'));
+        return redirect()->route('orden-compra', compact('ordenes'));
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -187,9 +196,8 @@ class PurcharseOrderProductController extends Controller
         $orden->total = $total;
         $orden->save();
         $orden_productos = $orden->product;
-        $productosall = Product::all();
         return redirect()
-            ->route('orden-compra-product-edit', ['id' => $n_id, 'orden' => $orden, 'orden_productos' => $orden_productos, 'productosall' => $productosall])
+            ->route('orden-compra-product-edit', ['id' => $n_id, 'orden' => $orden, 'orden_productos' => $orden_productos])
             ->with('success:', 'Orden eliminada correctamente.');
     }
 }

@@ -1,36 +1,3 @@
-
-<head>
-    <script src="assets/js/popper.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/owl.carousel.js"></script>
-    <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Toggle Hamburger -->
-
-    <script>
-        $(document).ready(function() {
-            $('.hamburger_container').click(function() {
-                $(this).toggleClass('open');
-                $('.navbar_menu').toggleClass('show');
-            });
-
-            $('.search_form').submit(function(e) {
-                e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
-
-                var query = $('#search-input').val().trim(); // Obtiene el valor del campo de búsqueda y elimina los espacios en blanco
-
-                if (query !== '') { // Verifica si el campo de búsqueda no está vacío
-                    $(this).unbind('submit').submit(); // Envía el formulario de búsqueda
-                }
-            });
-        });
-    </script>
-
-</head>
-
 <div class="main_nav_container px-4">
     
     <div class="row">
@@ -79,25 +46,14 @@
                             <span id="checkout_items" class="checkout_items">{{ Cart::count() }}</span>
                         </a>
                     </li>
-                    @if (Auth::check())
-                        <li class="checkout">
-                            <a href="{{ route('products-desired', ['user' => Auth::user()]) }}">
-                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
-                                <span id="" class="checkout_items">
-                                    {{ count(Auth::user()->product_desired) }}
-                                </span>
-                            </a>
-                        </li>
-                    @endif
                 </ul>
             </div>
         </div>
 
-
-
+       
     </div>
 </div>
 
-
+</div>
 
 @yield('search_results')

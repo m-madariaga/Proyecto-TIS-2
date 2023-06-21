@@ -24,6 +24,16 @@ class Product extends Model
         'categoria_id',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($product) {
+            if ($product->stock < 0) {
+                $product->stock = 0;
+            }
+        });
+    }
     public function marca(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'marca_id');
@@ -34,10 +44,6 @@ class Product extends Model
     }
     public function purchase_order(): HasMany {
         return $this->hasMany(Purchase_order_product::class, 'products_id');
-    }
-    public function product_desired(): HasMany
-    {
-        return $this->hasMany(Product_desired::class, 'product_id');
     }
     public function shipments()
     {

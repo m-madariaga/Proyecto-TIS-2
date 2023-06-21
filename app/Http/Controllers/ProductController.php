@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -64,8 +66,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        try
-        {
+        try {
             $validatedData = $request->validate(
                 [
                     'marca_id' => 'required|exists:brands,id',
@@ -106,8 +107,7 @@ class ProductController extends Controller
             );
 
             $imagenUser = '';
-            if ($image = $request->file('imagen'))
-            {
+            if ($image = $request->file('imagen')) {
                 $rutaGuardarImg = 'imagen/';
                 $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
                 $image->move($rutaGuardarImg, $imagenUser);
@@ -126,9 +126,7 @@ class ProductController extends Controller
             $producto->save();
 
             return response()->json(['success' => true]);
-        }
-        catch (ValidationException $e)
-        {
+        } catch (ValidationException $e) {
             $errors = $e->errors();
             return response()->json(['success' => false, 'errors' => $errors]);
         }
@@ -143,8 +141,16 @@ class ProductController extends Controller
     public function show($productId)
     {
         $product = Product::findOrFail($productId);
+        $reviews = Review::where('product_fk', $productId)->get();
+        foreach($reviews as $review){
+            $review->username = User::find($review->user_fk)->name;
+            error_log($review->username);
+        }
 
-        return view('product.show', compact('product'));
+
+        
+
+        return view('product.show', compact('product', 'reviews'));
     }
 
     /**
@@ -192,15 +198,12 @@ class ProductController extends Controller
         $product->talla = $request->talla;
         $product->stock = $request->stock;
         $product->visible = $request->visible;
-        if ($image = $request->file('imagen'))
-        {
+        if ($image = $request->file('imagen')) {
             $rutaGuardarImg = 'imagen/';
             $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
             $product->imagen = $imagenUser;
-        }
-        else
-        {
+        } else {
         }
         $product->save();
         return redirect()

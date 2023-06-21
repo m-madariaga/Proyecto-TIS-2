@@ -68,6 +68,9 @@ return [
     */
 
     'timezone' => 'America/Santiago',
+    'start_date' => env('APP_START_DATE', date('Y-m-d H:i:s')),
+    'end_date' => env('APP_END_DATE', date('Y-m-d H:i:s', strtotime('+1 hour'))),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------

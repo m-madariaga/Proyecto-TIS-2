@@ -39,7 +39,7 @@
 
         .invoice-header p {
             margin: 0;
-            text-align: left;
+            text-align: right;
         }
 
         .invoice-body {
@@ -91,11 +91,12 @@
     <div class="container">
         <header class="invoice-header">
             <img class="logo img-fluid" src="..\public\assets\images\logo_2.png" alt="Logo de la empresa">
-            <h1>Productos deseados de usuario</h1>
-
-            <p>Usuario:   {{ $usuario->name }}</p>
-            <p>RUN:   {{ $usuario->run }}</p>
-            <p>Correo:   {{ $usuario->email }}</p>
+            <h1>Detalle del Pedido</h1>
+            <br><br>
+            <text>Cliente: {{ $order->user->name }}<br>Direccion: {{ $order->user->address }},
+                {{ $order->user->city->name }}</text>
+            <p>N° de orden: {{ $order->id }}</p>
+            <p>Fecha de orden: {{ $order->created_at }}</p>
 
 
         </header>
@@ -103,22 +104,29 @@
             <table class="invoice-table">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Marca</th>
-                        <th>Stock</th>
-                        <th>Precio</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($productos as $prod)
+                    @foreach ($order->details as $prod)
                         <tr>
-                            <td>{{ $prod->product->nombre }}</td>
-                            <td>{{ $prod->product->marca->nombre }}</td>
-                            <td>{{ $prod->product->stock }}</td>
-                            <td>${{ $prod->product->precio }}</td>
+                            <td>{{ $prod->product->nombre }} {{ $prod->product->marca->nombre }}</td>
+                            <td>{{ $prod->cantidad }}</td>
+                            <td>${{ $prod->precio }}</td>
+                            <td>${{ $prod->monto }}</td>
                         </tr>
                     @endforeach
+
                 </tbody>
+                <tfoot>
+                    <tr class="invoice-total">
+                        <td colspan="3">Total:</td>
+                        <td>${{ $order->total }}</td>
+                    </tr>
+                </tfoot>
             </table>
         </section>
         <footer class="invoice-footer">

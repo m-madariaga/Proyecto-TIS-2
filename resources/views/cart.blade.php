@@ -1,11 +1,10 @@
 @extends('layouts-landing.welcome')
-
 @section('css')
-    <link rel="stylesheet" href="path/to/font-awesome/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/cart_style.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/cart_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" />
 @endsection
+
 
 @section('js')
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
@@ -61,8 +60,12 @@
                                                         <a href="{{ route('decrementitem', ['id' => $item->rowId]) }}"
                                                             class="btn bt-succes">-</a>
                                                         <button id="qty" type="button">{{ $item->qty }}</button>
-                                                        <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
-                                                            class="btn bt-succes">+</a>
+                                                        @if ($item->qty < $item->options->stock)
+                                                            <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
+                                                                class="btn bt-succes">+</a>
+                                                        @else
+                                                            <a href="#" class="btn bt-succes" disabled>+</a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -80,6 +83,7 @@
                                     </tr>
                                 @endif
                             @endforeach
+
                         </tbody>
                         <tfoot>
                             <tr>
@@ -92,7 +96,7 @@
                     </table>
                     @if (Cart::count() > 0)
                         @if (Auth::check())
-                            <form action="{{ route('shippingview.index') }}" method="get">
+                            <form action="{{ route('cart.generateOrder') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Continuar</button>
                             </form>
