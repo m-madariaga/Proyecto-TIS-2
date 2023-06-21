@@ -45,8 +45,6 @@
                             <span id="checkout_items" class="checkout_items">{{ Cart::count() }}</span>
                         </a>
                     </li>
-                </ul>
-                <ul class="navbar_user">
                     @if (Auth::check())
                         <li class="checkout">
                             <a href="{{ route('products-desired', ['user' => Auth::user()]) }}">
