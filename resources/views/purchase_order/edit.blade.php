@@ -25,10 +25,10 @@
                         <h6>Editar orden de compra</h6>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <button class="btn btn-sm btn-outline-success ms-4" data-bs-toggle="modal"
-                            data-bs-target="#addModal">
-                            Agregar más productos
-                        </button>
+                        <a class="btn btn-sm btn-outline-success ms-4"
+                            href="{{ route('orden-compra-product-add-edit', ['id' => $orden->id]) }}">
+                            Agregar más productos a la orden
+                        </a>
                         <div class="table-responsive p-0 ">
                             <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
                                 @csrf
@@ -61,13 +61,9 @@
                                                         <tbody>
                                                             <tr class="">
                                                                 <td>
-                                                                    <input type="number" name="prod_id[]" id="prod_id"
-                                                                        value="{{ $prod->id }}" class='form-control @error('prod_id') is-invalid @enderror' hidden>
-                                                                        @error('prod_id')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
+                                                                    <input type="number" name="prod_id_edit[]"
+                                                                        id="prod_id_edit" value="{{ $prod->id }}"
+                                                                        class='form-control' hidden>
                                                                     {{ $prod->product->nombre }}
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
@@ -75,36 +71,26 @@
                                                                 <td class="">
                                                                     <div
                                                                         class="d-flex form-group text-center aling-items-center justify-content-center">
-
-                                                                        <input type="number"
-                                                                            class="form-control w-20 @error('cantidad') is-invalid @enderror"
-                                                                            id="cantidad" name="cantidad[]"
+                                                                        <input type="number" class="form-control w-20"
+                                                                            id="cantidad_edit" name="cantidad_edit[]"
                                                                             value="{{ $prod->cantidad }}">
-                                                                        @error('cantidad')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
                                                                     </div>
                                                                 </td>
                                                                 <td class="">
                                                                     <div
                                                                         class="form-group d-flex aling-items-center justify-content-center">
-
-                                                                        <input type="number"
-                                                                            class="form-control w-40 @error('valor') is-invalid @enderror"
-                                                                            id="valor" name="valor[]"
+                                                                        <input type="number" class="form-control w-40"
+                                                                            id="valor_edit" name="valor_edit[]"
                                                                             value="{{ $prod->precio }}">
-
-                                                                        @error('valor')
-                                                                            <span class="invalid-feedback" role="alert">
-                                                                                <strong>{{ $message }}</strong>
-                                                                            </span>
-                                                                        @enderror
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
-                                                                    <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('orden-compra-product-destroy',$prod->id) }}"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                                                                    <a type="button"
+                                                                        class="btn btn-sm btn-outline-danger delete-product"
+                                                                        data-id="{{ $prod->id }}"
+                                                                        href="{{ route('orden-compra-product-destroy', $prod->id) }}"><i
+                                                                            class="fa fa-trash" aria-hidden="true"></i>
+                                                                        Eliminar</a>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -127,93 +113,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true"
-        data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addModalLabel">Nuevo producto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('orden-compra-product-store') }}" method="POST">
-                    <input type='number' name="orden_id" id="orden_id" value='{{ $orden->id }}' hidden>
-                    @csrf
-                    <div class="table-responsive p-0">
-                        <table id="table" class="table display table-stripped align-items-center">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th class="text-center">Nombre</th>
-                                    <th class="text-center">Marca</th>
-                                    <th class="text-center">Color</th>
-                                    <th class="text-center">Talla</th>
-                                    <th class="text-center">Cantidad</th>
-                                    <th class="text-center">Valor</th>
-
-                                </tr>
-                            </thead>
-                            @if (isset($empty))
-                            @else
-                                <tbody>
-
-                                    @foreach ($productosall as $prod)
-                                        <tr>
-                                            <td class="text-center pt-3 w-2">
-                                                <input type="checkbox" id="prod_id" name="prod_id[]"
-                                                    value="{{ $prod->id }}">
-                                            </td>
-                                            <td class="text-center w-6">{{ $prod->nombre }}</td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
-                                            </td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->color }}
-                                            </td>
-                                            <td class="text-center pt-3 w-6">{{ $prod->talla }}
-                                            </td>
-                                            <td class="text-center pt-3 w-1">
-                                                <div class="form-group">
-
-                                                    <input type="number"
-                                                        class="form-control @error('cantidad') is-invalid @enderror"
-                                                        id="cantidad" name="cantidad[]" value="{{ old('cantidad') }}">
-
-                                                    @error('cantidad')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                            <td class="text-center pt-3 w-3">
-                                                <div class="form-group">
-
-                                                    <input type="number"
-                                                        class="form-control @error('valor') is-invalid @enderror"
-                                                        id="valor" name="valor[]" value="{{ old('valor') }}">
-
-                                                    @error('valor')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            @endif
-                        </table>
-                    </div>
-                    <div class="form-group text-center m-4">
-                        <button type="button" class="btn btn-sm btn-outline-danger"
-                            data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary">Agregar productos</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('js')
@@ -221,6 +120,50 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).on('click', '.delete-product', function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: '¡Sí, bórralo!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/admin/orden-compra-product/' + id + '/destroy',
+                        data: {
+                            id: id,
+                            _token: $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(data) {
+                            console.log('success');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Exito',
+                                text: '¡Producto eliminado correctamente!',
+                                timer: 1000
+                            });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000); // delay for half a second
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
+        });
     </script>
     <script>
         $(document).ready(function() {
