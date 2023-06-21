@@ -2,29 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ProofPayment;
 use App\Models\Detail;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Notifications\lowStockNotif;
+use Illuminate\Support\Facades\Notification;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
+
+
+    public function checkStock()
+    {
+        $products = Product::all();
+
+        foreach ($products as $product) {
+            if ($product->stock <= 0) {
+                $product->stock = 0;
+                $product->save();
+            }
+        }
+    }
+    private function updateStock($productId)
+    {
+        $product = Product::find($productId);
+
+        if ($product && $product->stock < 0) {
+            $product->stock = 0;
+            $product->save();
+        }
+    }
+
     public function additem(Request $request)
     {
         $productIds = $request->input('id');
         $quantity = $request->input('quantity');
-        $user = auth()->user();
+
 
         foreach ($productIds as $index => $productId) {
             $product = Product::find($productId);
 
             $qty = isset($quantity[$index]) ? $quantity[$index] : 1; // Verificar si el índice está definido
 
-            $cartItem = Cart::search(function ($cartItem, $rowId) use ($productId) {
-                return $cartItem->id === $productId;
-            });
+            if ($product->stock >= $qty && $qty >= 1) {
+                $cartItem = Cart::search(function ($cartItem, $rowId) use ($productId) {
+                    return $cartItem->id === $productId;
+                });
 
                 if ($cartItem->isNotEmpty()) {
                     // Si el producto ya existe en el carrito, incrementar la cantidad
@@ -64,54 +93,71 @@ class CartController extends Controller
 
                     if($product->stock < 5){
                         $admins = User::role('admin')->get();
-                        Notification::send($admins, new lowStockNotif($product->nombre));
+                        Notification::send($admins, new lowStockNotif("blusa"));
                     }
 
                     $product->save();
                 }
-
+            } else {
+                // No hay suficiente stock, mostrar un mensaje de error o realizar alguna acción apropiada
+                return redirect()->back()->with('error', 'No hay suficiente stock disponible para este producto');
+            }
         }
 
-        if ($user) {
-            return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
-        } else {
-            return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
-        }
+        return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
     }
-
 
     public function showCart()
     {
-        $user = auth()->user();
+        $this->checkStock();
+
+        $user = Auth::user();
 
         if ($user) {
             $items = Cart::content();
         } else {
             $cartItems = session('cart_items', []);
-            $items = Product::whereIn('id', $cartItems)->get();
+            $items = [];
+            foreach ($cartItems as $cartItem) {
+                $product = Product::find($cartItem['id']);
+                $product->quantity = $cartItem['quantity'];
+                $items[] = $product;
+            }
         }
+
+        $items = collect($items)->filter(function ($item) {
+            return $item->stock > 0;
+        });
 
         return view('cart', compact('items'));
     }
 
+
     public function removeitem(Request $request)
     {
-        $item = $request->route('rowId');
-        $removedItem = Cart::get($item); // Obtener el producto eliminado
-        Cart::remove($item);
+        $rowId = $request->route('rowId');
+        $item = Cart::get($rowId);
 
-        // Incrementar el stock del producto eliminado
-        $product = Product::find($removedItem->id);
-        $product->stock += $removedItem->qty;
-        $product->save();
+        if ($item) {
+            Cart::remove($rowId);
 
-        return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
+            // Incrementar el stock del producto eliminado
+            $product = Product::find($item->id);
+            $product->stock += $item->qty;
+            $product->save();
+
+            $this->updateStock($product->id);
+
+            return redirect()->back()->with('success', 'El producto se ha eliminado del carrito exitosamente');
+        }
+
+        return redirect()->back()->with('error', 'El producto no se encontró en el carrito');
     }
+
 
     public function incrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId", $request->id)->first();
-        Cart::update($request->id, $item->qty + 1);
+        $item = Cart::get($request->id);
 
         if ($item) {
             Cart::update($request->id, $item->qty + 1);
@@ -122,7 +168,7 @@ class CartController extends Controller
 
             if($product->stock < 5){
                 $admins = User::role('admin')->get();
-                Notification::send($admins, new lowStockNotif($product->nombre));
+                Notification::send($admins, new lowStockNotif("blusa"));
             }
         }
 
@@ -131,9 +177,9 @@ class CartController extends Controller
 
     public function decrementitem(Request $request)
     {
-        $item = Cart::content()->where("rowId", $request->id)->first();
+        $item = Cart::get($request->id);
 
-        if ($item->qty > 1) {
+        if ($item && $item->qty > 1) {
             Cart::update($request->id, $item->qty - 1);
 
             // Aumentar el stock del producto en la base de datos
@@ -150,7 +196,7 @@ class CartController extends Controller
         return back();
     }
 
-    public function confirmcart()
+    public function generateOrder()
     {
         $user = Auth::user();
         if (Cart::count() > 0) {
@@ -181,7 +227,7 @@ class CartController extends Controller
 
                 if($product->stock < 5){
                     $admins = User::role('admin')->get();
-                    Notification::send($admins, new lowStockNotif($product->nombre));
+                    Notification::send($admins, new lowStockNotif("blusa"));
                 }
 
                 $this->updateStock($item->id);
@@ -200,24 +246,8 @@ class CartController extends Controller
         $order = Order::findOrFail($orderId);
         $order->estado = 1; // Cambiar el estado a pagado
         $order->save();
-
-        foreach (Cart::content() as $item) {
-            $detail = new Detail();
-            $detail->precio = $item->price;
-            $detail->cantidad = $item->qty;
-            $detail->monto = $detail->cantidad * $detail->precio;
-            $detail->producto_id = $item->id;
-            $detail->pedido_id = $order->id;
-            $detail->save();
-
-            // Disminuir el stock del producto
-            $product = Product::find($item->id);
-            $product->stock -= $item->qty;
-            $product->save();
-        }
-
         Cart::destroy();
-        return redirect()->route('home-landing');
+        Mail::to($user->email)->send(new ProofPayment($order->id));
+        return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
     }
-
 }
