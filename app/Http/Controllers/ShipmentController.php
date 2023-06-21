@@ -10,16 +10,13 @@ use App\Models\Country;
 use App\Models\City;
 use App\Models\Region;
 use App\Models\Product;
-use App\Models\Order;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
-use App\Mail\statusChangeAdmin;
-use Illuminate\Support\Facades\DB;
-use App\Models\Action;
+use DB;
 
 class ShipmentController extends Controller
 {
@@ -31,29 +28,30 @@ class ShipmentController extends Controller
 
     public function index()
     {
-        $shipments = Shipment::all();
-
+        $shipments = shipment::all();
         foreach ($shipments as $shipment) {
             $user = User::find($shipment->user_fk);
             $country = Country::find($user->country_fk);
             $region = Region::find($user->region_fk);
             $city = City::find($user->city_fk);
-            $address = $user->address . ', ' . $city->name . ', ' . $region->name . ', ' . $country->name;
-            $shipment->address = $address;
+            $address= $user->address. ', ' .$city->name. ', ' .$region->name.', '.$country->name;
+            $shipment->address= $address;
             error_log($address);
 
-            $statuses = DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
+            $statuses=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
             $shipment->statuses = $statuses;
-
-            foreach ($statuses as $status) {
-                if ($statuses->last() == $status) {
+            foreach($statuses as $status) {
+                if($statuses->last() == $status) {
+                    
                     $shipment->last = $status->nombre_estado;
                     error_log($shipment->last);
                 }
             }
+
         }
 
-        return response(view('shipments.index', compact('shipments')));
+        return response(view('shipments.index',compact('shipments')));
+
     }
 
     /**
@@ -63,38 +61,39 @@ class ShipmentController extends Controller
      */
     public function create(Request $request)
     {
-      
         if (Auth::check()) {
-            $order = json_decode($request->input('order')); // Convertir la cadena JSON en un objeto
-            
+            $user = Auth::user();
+        
             $shipment = new Shipment();
-            $shipment->user_fk = Auth::user()->id;
+            $shipment->user_fk = $user->id;
+            $shipment->status = 'pending';
             $shipment->shipment_type_fk = $request->input('shipment_type_id');
-            $shipment->order_fk = $order->id; // Utilizar la variable $order
-            $shipment->save();
-
+        
+            $shipment->save(); 
+        
             $products = Cart::content();
             $shipmentProducts = [];
-
+        
             foreach ($products as $item) {
                 $product = Product::find($item->id);
-
+        
                 $shipment->products()->attach($product, ['quantity' => $item->qty]);
                 $shipmentProducts[] = [
                     'name' => $product->nombre,
                     'quantity' => $item->qty,
                 ];
             }
-
+        
             $shipment->products = $shipmentProducts;
             $shipment->save();
-
             $paymentMethods = PaymentMethod::all();
             $cart = Cart::content();
             $shipment_type_id = $request->shipment_type_id;
+
+            // Obtener el nombre del tipo de envío
             $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
-            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type','order'));
-      }
+            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type'));
+        }
     }
 
 
@@ -162,100 +161,59 @@ class ShipmentController extends Controller
         return view('shipments.status_edit', compact('shipment'));
     }
 
-    public function status_update($id, $last)
+    public function status_update(Request $request, $id)
     {
-        error_log("function start");
+        $request->validate([
+            'status' => 'required',
+        ]);
 
         $shipment = Shipment::find($id);
-        // $shipment->status = $request->status;
-        // $shipment->save();
+        $shipment->status = $request->status;
+        $shipment->save();
         $user = User::find($shipment->user_fk);
-        $order = Order::find($shipment->order_fk);
 
-
+        
 
         // $indexes=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->get();
-//aqui esto es como se cambia el estado.
-        $index = DB::table('shipment_statuses')->where('shipment_fk', $id)->orderBy('created_at', 'desc')->first();
 
-        switch ($last) {
-            case ('pendiente'):
+        $index=DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'desc')->first();
+
+        switch($index->nombre_estado){
+            case('pendiente'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pagado';
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'pagado';
                 $shipment_status->save();
-
-                $status = 'pagado';
 
                 break;
-            case ('pagado'):
+            case('pagado'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'enviado';
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'enviado';
                 $shipment_status->save();
-
-                $status = 'enviado';
-                $order->estado = 1;
-                $order->save();
-
-
                 break;
             default:
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pendiente';
+                    $shipment_status->shipment_fk = $shipment->id;
+                    $shipment_status->nombre_estado = 'pendiente';
                 $shipment_status->save();
-
-                $status = 'pendiente';
         }
         // foreach($indexes as $index){
         //     error_log($index->nombre_estado);
         //     error_log($index->created_at);
         // }
-        $traceability = DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
 
-        Mail::to($user)->queue(new statusChangeEmail($user->name, $status, $id, $traceability));
-        Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, $status, $id, $traceability));
-
-        $action = new Action();
-            $action->name = 'Progresado estado de envío';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
+        Mail::to($user)->queue(new statusChangeEmail($user->name, $request->status, $request->id));
 
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
     }
 
-    public function status_cancel($id, $last)
-    {
-        error_log('function start');
-        error_log($last);
-
-        if ($last == 'cancelado') {
-            return redirect('/admin/shipments')->with('error', 'Este envío ya fué cancelado');
-        } elseif ($last == 'enviado') {
-            return redirect('/admin/shipments')->with('error', 'Este envío ya fué completado');
-        } else {
-            $shipment = Shipment::find($id);
-            $shipment_status = new shipment_status();
+    public function status_cancel($id){
+        $shipment = Shipment::find($id);
+        $shipment_status = new shipment_status();
             $shipment_status->shipment_fk = $shipment->id;
             $shipment_status->nombre_estado = 'cancelado';
-            $shipment_status->save();
-
-            $user = User::find($shipment->user_fk);
-            $traceability = DB::table('shipment_statuses')->where('shipment_fk', $shipment->id)->orderBy('created_at', 'asc')->get();
-
-            Mail::to($user)->queue(new statusChangeEmail($user->name, 'cancelado', $id, $traceability));
-            Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, 'cancelado', $id, $traceability));
-
-            $action = new Action();
-                $action->name = 'Cancelación de envío';
-                $action->user_fk = Auth::User()->id;
-            $action->save();
-        }
-
-
-
-        return redirect('/admin/shipments')->with('success', 'Envío cancelado exitosamente!');
+        $shipment_status->save();
     }
 }

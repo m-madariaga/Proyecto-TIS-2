@@ -29,7 +29,7 @@
                             data-bs-target="#addProductModal">
                             Agregar nuevo producto
                         </button>
-                        <div class="table-responsive p-0">
+                        <div class="table-responsive p-0 ">
                             <form id='formulario_general' action="{{ route('orden-compra-store') }}" method="POST">
                                 @csrf
                                 <table id="table" class="table display table-stripped align-items-center">
@@ -50,9 +50,9 @@
                                         <tbody>
                                             @foreach ($productos as $prod)
                                                 <tr>
-                                                    <td class="text-center w-1">
-                                                        <input type="checkbox" id="prod_id{{ $prod->id }}"
-                                                            name="prod_id[]" value="{{ $prod->id }}"
+                                                    <td class="text-center pt-3 w-2">
+                                                        <input type="checkbox" id="prod_id" name="prod_id[]"
+                                                            value="{{ $prod->id }}"
                                                             class="@error('prod_id') is-invalid @enderror">
                                                         @error('prod_id')
                                                             <span class="invalid-feedback" role="alert">
@@ -61,20 +61,21 @@
                                                         @enderror
 
                                                     </td>
-                                                    <td class="text-center w-4">{{ $prod->nombre }}</td>
-                                                    <td class="text-center w-4">{{ $prod->marca->nombre }}
+                                                    <td class="text-center w-6">{{ $prod->nombre }}</td>
+                                                    <td class="text-center pt-3 w-6">{{ $prod->marca->nombre }}
                                                     </td>
-                                                    <td class="text-center w-2">{{ $prod->color }}
+                                                    <td class="text-center pt-3 w-6">{{ $prod->color }}
                                                     </td>
-                                                    <td class="text-center w-2">{{ $prod->talla }}
+                                                    <td class="text-center pt-3 w-6">{{ $prod->talla }}
                                                     </td>
-                                                    <td class="text-center w-1">
+                                                    <td class="text-center pt-3 w-1">
                                                         <div class="form-group">
 
                                                             <input type="number"
                                                                 class="form-control @error('cantidad') is-invalid  @enderror"
-                                                                id="cantidad{{ $prod->id }}" name="cantidad[]"
-                                                                value="{{ old('cantidad[]') }}">
+                                                                id="cantidad" name="cantidad[]"
+                                                                value="{{ old('cantidad[$conteo]') }}">
+
                                                             @error('cantidad')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -82,13 +83,13 @@
                                                             @enderror
                                                         </div>
                                                     </td>
-                                                    <td class="text-center w-2">
+                                                    <td class="text-center pt-3 w-3">
                                                         <div class="form-group">
 
                                                             <input type="number"
                                                                 class="form-control @error('valor') is-invalid  @enderror"
-                                                                id="valor{{ $prod->id }}" name="valor[]"
-                                                                value="{{ old('valor[]') }}">
+                                                                id="valor" name="valor[]" value="{{ old('valor[]') }}">
+
                                                             @error('valor')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -251,41 +252,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
-    <script>
-        var Form = document.getElementById('formulario_general');
-        Form.addEventListener('submit', function(event) {
-            var inputs = Form.querySelectorAll('input');
-            inputs.forEach(function(input) {
-                //recorrer los checkbox marcados
-                if (input.type == 'checkbox' && input.checked) {
-                    event.preventDefault();
-                    // cantidad y valor del checkbox correspondiente
-                    var id_valor = 'valor' + input.value;
-                    var id_cantidad = 'cantidad' + input.value;
-                    var input_cantidad = document.getElementById(id_cantidad);
-                    var input_valor = document.getElementById(id_valor);
-                    //validaciones
-                    if (input_cantidad.value !== '' && input_cantidad.value > 0) {
-                        //el campo cantidad ingresado es valido
-                        input_cantidad.style.borderColor = '';
-                        if (input_valor.value !== '' && input_valor.value > 0) {
-                            //el campo valor ingresado es valido
-                            input_valor.style.borderColor = '';
-                            Form.submit();
-                        } else {
-                            //el campo valor no ha sido ingresado o no es valido
-                            input_valor.required = true;
-                            input_valor.style.borderColor = 'red';
-                        }
-                    } else {
-                        //el campo cantidad no ha sido ingresado o no es valido
-                        input_cantidad.required = true;
-                        input_cantidad.style.borderColor = 'red';
-                    }
-                }
-            });
-        });
-    </script>
 
     <script>
         // Usar Ajax para manejar el envio del formulario del modal para añadir productos
@@ -299,6 +265,7 @@
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
+
                         // se parsea a json debido a que el controlador entrega un json
                         var response = JSON.parse(xhr.responseText);
                         if (response.success) {
@@ -326,6 +293,7 @@
         function displayErrors(errors) {
             // Limpia errores anteriores
             $('.invalid-feedback').html('');
+
             // Muestra los errores nuevos
             for (var field in errors) {
                 var errorMessages = errors[field];
@@ -345,6 +313,34 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+            });
+            $('#addModal').modal({
+                show: false
+            });
+
+            $('#editModal').on('show.bs.modal', function(event) {
+                const button = $(event.relatedTarget); // Button que triggerea el modal
+                const shipmentTypeId = button.data('shipment-type-id');
+                const shipmentTypeName = button.data('shipment-type-name');
+
+                const editForm = $('#editForm');
+                const nombreInput = editForm.find('#nombre');
+
+                // Actualizar ID de la ruta
+                const actionUrl = editForm.attr('action').replace('__ID__', shipmentTypeId);
+                editForm.attr('action', actionUrl);
+
+                // Reemplazar el valor del nombre en el input el modal
+                nombreInput.val(shipmentTypeName);
+            });
+
+            $('#addForm').submit(function(event) {
+                var nombre = $('#nombre').val();
+
+                if (nombre.trim() === '') {
+                    event.preventDefault();
+                    alert('El campo "Nombre del tipo de envío" es obligatorio.');
+                }
             });
 
         });

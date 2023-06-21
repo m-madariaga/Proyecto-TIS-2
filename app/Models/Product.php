@@ -24,16 +24,6 @@ class Product extends Model
         'categoria_id',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($product) {
-            if ($product->stock < 0) {
-                $product->stock = 0;
-            }
-        });
-    }
     public function marca(): BelongsTo
     {
         return $this->belongsTo(Brand::class, 'marca_id');

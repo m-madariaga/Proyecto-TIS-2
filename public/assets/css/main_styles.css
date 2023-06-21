@@ -303,7 +303,6 @@ section {
 .super_container {
 	width: 100%;
 	overflow: hidden;
-    padding-bottom: 20px;
 }
 
 /*********************************
@@ -585,7 +584,6 @@ section {
 	width: 100%;
 	background: #FFFFFF;
 	box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
-	height: 100px;
 }
 
 .navbar {
@@ -596,19 +594,14 @@ section {
 	padding-right: 0px;
 }
 
-.carrito {
-	width: auto;
-	height: 100px;
-	float: right;
-	padding-left: 0px;
-	padding-right: 0px;
+.navbar_menu li {
+	display: inline-block;
 }
-
 
 .navbar_menu li a {
 	display: block;
 	color: #1e1e27;
-	font-size: 15px;
+	font-size: 13px;
 	font-weight: 500;
 	text-transform: uppercase;
 	padding: 20px;
@@ -624,17 +617,7 @@ section {
 }
 
 .navbar_user {
-	display: block;
-	color: #1e1e27;
-	font-size: 15px;
-	font-weight: 700;
-	text-transform: uppercase;
-	padding: 30px;
-	-webkit-transition: color 0.3s ease;
-	-moz-transition: color 0.3s ease;
-	-ms-transition: color 0.3s ease;
-	-o-transition: color 0.3s ease;
-	transition: color 0.3s ease;
+	margin-left: 37px;
 }
 
 .navbar_user li {
@@ -1061,19 +1044,16 @@ section {
 	justify-content: center;
 	width: 100%;
 	margin-top: 57px;
-	flex-wrap: wrap; 
-	box-sizing: border-box; 
-	padding: 0 1rem; 
 }
 
 .product-item {
-	width: calc(20% - 2rem); 
-	height: 450px;
+	width: 20%;
+	height: 380px;
 	cursor: pointer;
-	margin: 2rem;
-	position: relative;
-	margin-bottom: 7rem;
-	box-sizing: border-box; 
+	margin: 1rem;
+	margin-top: 2rem;
+
+	
 }
 
 .product-item::after {
@@ -1092,7 +1072,6 @@ section {
 	-ms-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
-	box-sizing: border-box; /* Agregado */
 }
 
 .product-item:hover::after {
@@ -1102,28 +1081,26 @@ section {
 
 .product {
 	width: 100%;
-	height: 100%; /* Modificado */
+	height: 340px;
 	border-right: solid 1px #e9e9e9;
 }
 
 .product_image {
 	width: 100%;
-	height: 100%; /* Modificado */
+	height: 300px;
 }
 
 .product_image img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	box-sizing: border-box; /* Agregado */
-	padding: 5px; /* Ajusta el espacio alrededor de la imagen */
+	
 }
 
 .product_info {
 	text-align: center;
 	padding-left: 10px;
 	padding-right: 10px;
-	box-sizing: border-box; /* Agregado */
 }
 
 .product_name {
@@ -1227,8 +1204,6 @@ section {
 	-ms-transition: all 0.3s ease;
 	-o-transition: all 0.3s ease;
 	transition: all 0.3s ease;
-	box-sizing: border-box; /* Agregado */
-	padding: 5px; /* Ajusta el espacio alrededor del botón */
 }
 
 .add_to_cart_button a {
@@ -1280,7 +1255,6 @@ section {
 .favorite:hover::after {
 	color: #8c034e;
 }
-
 
 /*********************************
 6. Deal of the week

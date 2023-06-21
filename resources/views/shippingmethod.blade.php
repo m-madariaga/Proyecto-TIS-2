@@ -3,6 +3,38 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
     <style>
+        /* Agrega estilos específicos para esta vista */
+        /* Por ejemplo, para ocultar elementos */
+        .header {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+
+        .header_resume {
+            position: relative;
+            background-image: url("assets/images/lienzo.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-left: 15px;
+        }
+
+        .navbar-brand-img {
+            height: 20%;
+            width: 100px;
+            margin-left: 18rem;
+            object-fit: contain;
+        }
+
         .button-container {
             display: flex;
             justify-content: center;
@@ -50,18 +82,94 @@
             max-height: 70px;
         }
 
-        .cart-text {
-            color: black;
+        .cart-text{
+            color:black;
         }
+       
     </style>
 @endsection
 
 @section('content')
-    <div class="container py-4 mb-4" style="margin-top: 15rem;">
-        <div class="button-container">
-            <button class="btn btn-secondary" onclick="goBack()">Regresar</button>
+    <div class="header_resume">
+        <div class="header-content">
+            <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
+            <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img"
+                style="max-height: 4rem; width: auto;" alt="main_logo">
+            </a>
         </div>
-        @if (!Auth::check())
+    </div>
+
+    <div class="container-fluid overflow-hidden py-4" id="container-payment">
+        <div class="row mt-4 ">
+            <div class="col-md-8">
+                <h4 class="pb-1 pt-4">Productos</h4>
+                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
+                    @foreach ($cart as $item)
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6">
+                                <a href="#" class="show-picture-modal" data-img-url="{{ $item->options->urlfoto }}">
+                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}" width="120">
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="card-title">{{ $item->name }}</h5>
+                                <hr>
+                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
+                                <br>
+                                <span class="card-text">Precio: ${{ $item->price }}</span>
+                            </div>
+                        </div>
+                        <hr> 
+                    @endforeach
+                </div>
+            </div>
+            
+            
+            <div class="col-md-4">
+                <h4 class="pb-1 pt-4">Métodos de Envío</h4>
+                <div class="card-deck">
+                    @foreach ($shipment_types as $shipment_type)
+                        @if (
+                            ($selectedMethod === 'retiro' && stripos($shipment_type->nombre, 'retiro') !== false) ||
+                                ($selectedMethod === 'starken' && stripos($shipment_type->nombre, 'starken') !== false))
+                            <div class="card" data-shipment-type-id="{{ $shipment_type->id }}"
+                                onclick="selectShipmentType(this)">
+                                <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
+                                    style="cursor: pointer;">
+                                    <h4 class="card-title text-truncate text-center"
+                                        style="font-size: 1.2rem; height: 3rem; overflow: hidden;">
+                                        {{ $shipment_type->nombre }}</h4>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="shipment_type"
+                                            id="shipment_type{{ $shipment_type->id }}" value="{{ $shipment_type->id }}">
+                                        <label class="form-check-label"
+                                            for="shipment_type{{ $shipment_type->id }}">Seleccionar</label>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="button-container">
+                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
+                        <form action="{{ route('shipments.create') }}" method="POST" id="shipment-form">
+                            @csrf
+                            <input type="hidden" name="shipment_type_id" id="selected-shipment-type" value="">
+                            <input type="hidden" name="shipment_id" id="shipment-id" value="">
+                            <button type="submit" class="btn btn-primary">Continuar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @guest
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
                     <div class="alert alert-warning" role="alert">
@@ -70,112 +178,11 @@
                     </div>
                 </div>
             </div>
-        @else
-            <div class="container py-4 mb-4" style="margin-top: 2rem;">
-                <div class="row">
-                    <div class="col-md-7 col-12">
-                        <div class="card">
-                            <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <h4 class="mb-0 fw-bold">{{ __('Productos') }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="mt-4 mx-3 my-0"> <!-- Línea separadora -->
-                            <div class="card-body" id="profile_card_body">
-                                <div class="list-group-item text-center" style="padding-bottom: 1rem;">
-                                    @foreach ($cart as $item)
-                                        <div class="row align-items-center justify-content-center">
-                                            <div class="col-md-6">
-                                                <a href="#" class="show-picture-modal"
-                                                    data-img-url="{{ $item->options->urlfoto }}">
-                                                    <img src="{{ $item->options->urlfoto }}" alt="{{ $item->name }}"
-                                                        width="120">
-                                                </a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h5 class="card-title">{{ $item->name }}</h5>
-                                                <hr>
-                                                <span class="card-text">Cantidad: {{ $item->qty }}</span>
-                                                <br>
-                                                <span class="card-text">Precio: ${{ $item->price }}</span>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-12">
-                        <div class="card">
-                            <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center">
-                                        <h4 class="mb-0 fw-bold">{{ __('Métodos de Envios') }}</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    @foreach ($shipment_types as $shipment_type)
-                                        @if (
-                                            ($selectedMethod === 'retiro' && stripos($shipment_type->nombre, 'retiro') !== false) ||
-                                                ($selectedMethod === 'starken' && stripos($shipment_type->nombre, 'starken') !== false))
-                                            <div class="card" data-shipment-type-id="{{ $shipment_type->id }}"
-                                                onclick="selectShipmentType(this)">
-                                                <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
-                                                    style="cursor: pointer;">
-                                                    <h4 class="card-title text-truncate text-center"
-                                                        style="font-size: 1.2rem; height: 3rem; overflow: hidden;">
-                                                        {{ $shipment_type->nombre }}</h4>
-                                                    <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="radio" name="shipment_type"
-                                                            id="shipment_type{{ $shipment_type->id }}"
-                                                            value="{{ $shipment_type->id }}">
-                                                        <label class="form-check-label"
-                                                            for="shipment_type{{ $shipment_type->id }}">Seleccionar</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-6">
-                            <div class="col-md-12">
-                                <div class="button-container">
-                                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                                    <form action="{{ route('shipments.create') }}" method="POST" id="shipment-form">
-                                        @csrf
-
-                                        <input type="hidden" name="shipment_type_id" id="selected-shipment-type"
-                                            value="">
-                                        <input type="hidden" name="shipment_id" id="shipment-id" value="">
-                                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
-
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+        @endguest
     </div>
 @endsection
 
 @section('js')
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
     <script>
         function selectShipmentType(element) {
             var cards = document.querySelectorAll('.card');

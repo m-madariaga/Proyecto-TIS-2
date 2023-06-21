@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 @endsection
 
 @section('content')
@@ -37,7 +38,7 @@
                                         <th class="text-center">Usuario</th>
                                         <th class="text-center">Dirección</th>
                                         <th class="text-center">Tipo de envío</th>
-                                        <th class="text-center">Pedido</th>
+                                        <th class="text-center">Estado</th>
 
 
                                         <th class="text-center">Acciones</th>
@@ -50,7 +51,7 @@
                                             <td class="text-center">{{ $shipment->user->name }}</td>
                                             <td class="text-center">{{ $shipment->address }}</td>
                                             <td class="text-center">{{ $shipment->shipment_type->nombre }}</td>
-                                            <td class="text-center">{{ $shipment->order_fk }}</td>
+                                            <td class="text-center">{{ $shipment->status }}</td>
 
                                             <td class="text-center pt-3">
                                                 <button id="productsButton" type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productsModal" data-products-list="{{ json_encode($shipment->products) }}">
@@ -103,15 +104,9 @@
                                             <p class="text-center" id="statusList"></p>
                                         </div>
                                         <div class="modal-footer">
-                                            <form id="statusCancel" action="{{ route('shipment_cancel', ['id' => '0', 'last' => 'pendiente']) }}">
-                                                @csrf
-                                                <button type='submit' class="btn btn-sm btn-outline-danger" >Cancelar envío</button>
-                                            </form>
-                                            <form id="editStatus" action="{{ route('shipments.status_update', ['id' => '0', 'last' => 'pendiente']) }}">
-                                                @csrf
-                                                <button type='submit' id='editButton' class="btn btn-sm btn-outline-primary" ><i
-                                                    class="fa fa-edit"></i> Cambiar a </button>
-                                            </form>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cancelar envío</button>
+                                            <a id='editStatus' href="{{ route('shipments.status_edit', ['id' => '5']) }}" class="btn btn-sm btn-outline-primary"><i
+                                                class="fa fa-edit"></i> Cambiar a </a>
                                         </div>
                                     </div>
                                 </div>
@@ -271,52 +266,33 @@
 
 
                 const editStatus = $('#editStatus');
-                const statusCancel = $('#statusCancel');
                 
                 // p.innerHTML = products.name.join("<br>") ;
                 
 
 
                 // Actualizar ID de la ruta
-                const actionUrl = editStatus.attr('action').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
-                editStatus.attr('action', actionUrl);
+                const actionUrl = editStatus.attr('href').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
+                editStatus.attr('href', actionUrl);
 
-                const actionUrl2 = editStatus.attr('action').replace(/(\/admin\/shipments\/\d\/)\S+(\/\S+)/, '$1' + last + '$2');
-                editStatus.attr('action', actionUrl2);
-
-                const cancelUrl = statusCancel.attr('action').replace(/(\/admin\/shipments\/)\d+/, '$1' + shipmentId);
-                statusCancel.attr('action', cancelUrl);
-
-                const cancelUrl2 = statusCancel.attr('action').replace(/(\/admin\/shipments\/\d\/)\S+/, '$1' + last);
-                statusCancel.attr('action', cancelUrl2);
-                // 
                 switch(last){
                     case 'pendiente':
                         console.log('Cambiar a comprado')
-                        document.getElementById("editButton").innerText = 'Cambiar a comprado';
+                        document.getElementById("editStatus").innerText = 'Cambiar a comprado';
                     break;
                     case 'pagado':
-                        document.getElementById("editButton").innerText= 'Cambiar a enviado';
+                        document.getElementById("editStatus").innerText= 'Cambiar a enviado';
                     break;
                     case 'enviado':
-                        document.getElementById("editButton").innerText= 'Envío completado';
+                        document.getElementById("editStatus").innerText= 'Envío completado';
                     break;
                     case 'enviado':
-                        document.getElementById("editButton").innerText= 'Envío completado';
+                        document.getElementById("editStatus").innerText= 'Envío completado';
                     break;
                     case 'cancelado':
-                        document.getElementById("editButton").innerText= 'No se puede continuar el envío';
-                        
+                        document.getElementById("editStatus").innerText= 'No se puede continuar el envío';
                     break;
 
-                }
-
-                if(last == 'cancelado' || last == 'enviado'){
-                    document.getElementById("editButton").disabled= true;
-                    document.getElementById("editButton").style.display= "none";
-                }else{
-                    document.getElementById("editButton").disabled= false;
-                    document.getElementById("editButton").style.display= "block";
                 }
 
                 // editStatus.textContent.replace(/(estado )\w+, $1 + );

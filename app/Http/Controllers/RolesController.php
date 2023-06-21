@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Validation\Rule;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
-
 
 class RolesController extends Controller
 {
@@ -32,7 +29,6 @@ class RolesController extends Controller
             $role->role_count= $user_amount->count();
 
         }
-        
 
         return view('roles.index', compact('roles'));
     }
@@ -77,11 +73,6 @@ class RolesController extends Controller
                 error_log("false");
             }
         }
-
-        $action = new Action();
-            $action->name = 'Creación Rol';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
         return redirect('/admin/roles')->with('success', 'Rol creado exitosamente!');
     }
@@ -144,10 +135,6 @@ class RolesController extends Controller
 
         $role->syncPermissions([$newPermissions]);
         error_log("test");
-        $action = new Action();
-            $action->name = 'Edición Rol';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
         // Mail::to('admin@test.cl')->queue(new statusChangeEmail($role->name, $request->role_type, $role->id));
 
@@ -160,11 +147,6 @@ class RolesController extends Controller
         $role = Role::find($id);
         $role->delete();
         error_log("test");
-
-        $action = new Action();
-            $action->name = 'Borrado Rol';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
         return response()->json(['success' => true]);
 

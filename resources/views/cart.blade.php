@@ -1,16 +1,18 @@
 @extends('layouts-landing.welcome')
+
 @section('css')
-    <link rel="stylesheet" href="{{ asset('assets/css/cart_style.css') }}">
+    <link rel="stylesheet" href="path/to/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/cart_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" />
 @endsection
 
-
 @section('js')
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
     <script>
         $(document).ready(function() {
             $('.show-picture-modal').on('click', function() {
@@ -60,12 +62,8 @@
                                                         <a href="{{ route('decrementitem', ['id' => $item->rowId]) }}"
                                                             class="btn bt-succes">-</a>
                                                         <button id="qty" type="button">{{ $item->qty }}</button>
-                                                        @if ($item->qty < $item->options->stock)
-                                                            <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
-                                                                class="btn bt-succes">+</a>
-                                                        @else
-                                                            <a href="#" class="btn bt-succes" disabled>+</a>
-                                                        @endif
+                                                        <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
+                                                            class="btn bt-succes">+</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -83,7 +81,6 @@
                                     </tr>
                                 @endif
                             @endforeach
-
                         </tbody>
                         <tfoot>
                             <tr>
@@ -96,7 +93,7 @@
                     </table>
                     @if (Cart::count() > 0)
                         @if (Auth::check())
-                            <form action="{{ route('cart.generateOrder') }}" method="POST">
+                            <form action="{{ route('shippingview.index') }}" method="get">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Continuar</button>
                             </form>

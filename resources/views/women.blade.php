@@ -318,7 +318,6 @@
                                                             class="product-image__img" alt="{{ $producto->nombre }}">
                                                     </div>
                                                     <div class="product_info">
-                                                        <h5 class="product_branch"><a href="#">{{ $producto->marca->nombre }}</a></h5>
                                                         <h5 class="product_name"><a
                                                                 href="#">{{ $producto->nombre }}</a></h5>
                                                         <div class="product_price">${{ $producto->precio }}</div>

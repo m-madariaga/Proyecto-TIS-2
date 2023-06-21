@@ -12,126 +12,6 @@
 
 @section('css')
 <link href="{{ asset('argon/assets/css/fullcalendar.css') }}" rel="stylesheet" />
-
-
-
-<style>
-    <style>#calendar {
-        padding: 1px;
-    }
-
-    .fc-header-toolbar {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .fc-header-toolbar .fc-button {
-        margin-right: 10px;
-        background-color: #8c034e;
-        background-image: linear-gradient(#8c034e, #6f023c);
-        color: #ffffff;
-        border-color: #8c034e;
-        border-radius: 3px;
-    }
-
-    .fc-header-toolbar .fc-button:hover {
-        background-image: linear-gradient(#6f023c, #8c034e);
-    }
-
-    .fc-header-toolbar .fc-button-group {
-        display: inline-block;
-        vertical-align: middle;
-    }
-
-    .fc-header-toolbar .fc-button.fc-button-primary {
-        background-color: #ffffff;
-        background-image: none;
-        color: #8c034e;
-    }
-
-    .fc-header-toolbar .fc-button.fc-button-primary:hover {
-        background-color: #f1f1f1;
-    }
-
-    .fc-daygrid-view .fc-toolbar-title {
-        display: block;
-        font-size: 18px;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-
-    .fc-daygrid-view .fc-daygrid-day-number {
-        position: relative;
-    }
-
-    .fc-daygrid-view .fc-daygrid-day-number::before {
-        content: attr(data-date);
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 2px 4px;
-        background-color: #8c034e;
-        color: #ffffff;
-        font-size: 10px;
-        border-radius: 3px;
-    }
-
-    @media (max-width: 767px) {
-        .fc-toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-
-        .fc-toolbar .fc-toolbar-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .fc-toolbar .fc-toolbar-section:first-child {
-            margin-right: 10px;
-        }
-
-        .fc-toolbar .fc-button {
-            margin: 0 5px;
-        }
-
-        .fc-header-toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .fc-header-toolbar .fc-left,
-        .fc-header-toolbar .fc-center,
-        .fc-header-toolbar .fc-right {
-            flex-basis: 33.33%;
-        }
-
-        .fc-toolbar .fc-toolbar-section:nth-child(1),
-        .fc-toolbar .fc-toolbar-section:nth-child(2) {
-            flex-basis: 100%;
-            justify-content: center;
-        }
-
-        .fc-toolbar .fc-toolbar-section:nth-child(2) .fc-toolbar-chunk {
-            color: #8c034e;
-            font-size: 1.2rem;
-        }
-
-        /* Estilo del botón "Hoy" */
-        .fc-toolbar .fc-toolbar-section:nth-child(2) .fc-today-button {
-            border: 1px solid #8c034e;
-            padding: 8px 15px;
-            font-size: 1.2rem;
-        }
-
-    }
-</style>
 @endsection
 
 @section('content')
@@ -141,12 +21,11 @@
             <div class="card p-4">
                 <div class="card-header pb-0">
                     <div class="d-flex align-items-center">
+                        <p class="mb-0">Calendario personal</p>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="p-4">
-                        <div id="calendar"></div>
-                    </div>
+                    <div id="calendar"></div>
                 </div>
             </div>
         </div>
@@ -185,7 +64,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-primary" id="btn-save-event">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>
@@ -238,97 +117,108 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.0/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-            locale: 'es',
             initialView: 'dayGridMonth',
             headerToolbar: {
-                start: 'prevYear,prev,next,nextYear today',
+                start: 'dayGridMonth,timeGridWeek,timeGridDay',
                 center: 'title',
-                end: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            buttonText: {
-                prevYear: 'Año anterior',
-                prev: 'Anterior',
-                next: 'Siguiente',
-                nextYear: 'Año siguiente',
-                today: 'Hoy',
-                dayGridMonth: 'Mes',
-                timeGridWeek: 'Semana',
-                timeGridDay: 'Día'
+                end: 'prevYear,prev,next,nextYear'
             },
             dateClick: function(info) {
                 $("#modal-event").modal("show");
             },
             eventClick: function(info) {
                 var event = info.event;
-                $("#edit-title").val(event.title);
-                $("#edit-description").val(event.extendedProps.description);
-                $("#edit-start").val(event.start.toISOString().slice(0, -8));
-                $("#edit-end").val(event.end ? event.end.toISOString().slice(0, -8) : ''); // Add a check for event.end
-                $("#edit-color").val(event.backgroundColor);
-                $("#btn-update-event").attr("data-event-id", event.id);
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'dayGridMonth,timeGridWeek,timeGridDay',
+                    center: 'title',
+                    end: 'prevYear,prev,next,nextYear'
+                },
+                dateClick: function(info) {
+                    $("#modal-event").modal("show"); // muestra el modal
+                },
+                locale: 'es', // Establece el idioma en español
+                buttonText: {
+                    today: 'Hoy',
+                    month: 'Mes',
+                    week: 'Semana',
+                    day: 'Día',
+                    list: 'Lista'
+                },
+                allDayText: 'Todo el día',
+                noEventsText: 'No hay eventos para mostrar',
+                eventTimeFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    meridiem: 'short'
+                },
+                weekText: 'Sem',
+                moreLinkText: 'más',
+                eventLimitText: 'más',
+                dayPopoverFormat: 'dddd D [de] MMMM [de] YYYY'
+            });
+
+            calendar.render();
+
+            $("#btn-primary").click(function() {
+
+                var title = $("#title").val();
+                var description = $("#description").val();
+                var start = $("#start").val();
+                var end = $("#end").val();
+
+                var event = {
+                    title: title,
+                    description: description,
+                    start: start,
+                    end: end
+                };
+
+                calendar.addEvent(event);
+
+                $("#modal-event").modal("hide");
+            });
+
+            $("#btn-info").click(function() {
+                $("#modal-event").modal("hide");
+            });
+
                 $("#modal-edit-event").modal("show");
             },
-
-            events: [
-                // Aquí puedes cargar los eventos desde tu controlador o API
-                @foreach($events as $event) {
-                    id: '{{ $event->id }}',
-                    title: '{{ $event->title }}',
-                    description: '{{ $event->description }}',
-                    start: '{{ $event->start }}',
-                    end: '{{ $event->end }}',
-                    backgroundColor: '{{ $event->color }}',
-                },
-                @endforeach
-            ],
+            events: {!! $events->toJson() !!}
         });
-
         calendar.render();
 
+        $("#edit-event-form").submit(function(event) {
+            event.preventDefault();
 
-        $("#event-form").submit(function(e) {
-            e.preventDefault();
-            var formData = $(this).serialize();
-            axios.post("{{ route('event.store') }}", formData)
-                .then(function(response) {
-                    $("#modal-event").modal("hide");
-                    calendar.addEvent({
-                        id: response.data.id,
-                        title: response.data.title,
-                        description: response.data.description,
-                        start: response.data.start,
-                        end: response.data.end,
-                        backgroundColor: response.data.color,
-                    });
-                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
-
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-        });
-
-        $("#edit-event-form").submit(function(e) {
-            e.preventDefault();
             var eventId = $("#btn-update-event").attr("data-event-id");
-            var formData = $(this).serialize();
-            axios.put("{{ route('event.update', '') }}/" + eventId, formData)
-                .then(function(response) {
-                    $("#modal-edit-event").modal("hide");
-                    var event = calendar.getEventById(eventId);
-                    event.setProp('title', response.data.title);
-                    event.setExtendedProp('description', response.data.description);
-                    event.setStart(response.data.start);
-                    event.setEnd(response.data.end);
-                    event.setProp('backgroundColor', response.data.color);
-                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
 
+            var formData = new FormData(this);
+
+            axios.put('/event/' + eventId, formData)
+                .then(function(response) {
+                    if (response.data.success) {
+                        var event = calendar.getEventById(eventId);
+                        if (event) {
+                            event.setProp('title', formData.get('title'));
+                            event.setExtendedProp('description', formData.get('description'));
+                            event.setProp('start', formData.get('start'));
+                            event.setProp('end', formData.get('end'));
+                            event.setProp('backgroundColor', formData.get('color'));
+                            event.setProp('borderColor', formData.get('color'));
+                            event.setProp('textColor', '#FFFFFF');
+                            event.setAllDay(false);
+                        }
+                        $("#modal-edit-event").modal("hide");
+                    }
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -337,12 +227,16 @@
 
         $("#btn-delete-event").click(function() {
             var eventId = $("#btn-update-event").attr("data-event-id");
-            axios.delete("{{ route('event.destroy', '') }}/" + eventId)
-                .then(function(response) {
-                    $("#modal-edit-event").modal("hide");
-                    calendar.getEventById(eventId).remove();
-                    location.reload(true); // Recargar la página de forma inmediata, omitiendo la caché
 
+            axios.delete('/event/' + eventId)
+                .then(function(response) {
+                    if (response.data.success) {
+                        var event = calendar.getEventById(eventId);
+                        if (event) {
+                            event.remove();
+                        }
+                        $("#modal-edit-event").modal("hide");
+                    }
                 })
                 .catch(function(error) {
                     console.log(error);
