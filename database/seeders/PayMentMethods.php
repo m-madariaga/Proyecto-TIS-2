@@ -31,10 +31,6 @@ class PayMentMethods extends Seeder
         $method -> visible = 1;
         $method -> save();
 
-        $method = new PaymentMethod();
-        $method -> name = 'Mercado Pago';
-        $method -> imagen = 'mercado_pago.png';
-        $method -> visible = 0;
-        $method -> save();
+   
     }
 }

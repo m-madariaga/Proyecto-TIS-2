@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PayMentMethods::class);
         
         $this->call(ShipmentTypesSeeder::class);
+        $this->call(DataBank::class);
            
     }
 }

@@ -108,7 +108,6 @@
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
         <h4 class="pb-1 pt-4">Datos Cliente</h4>
         <div class="row mt-4">
-
             <div class="container">
                 <h1>Checkout con Transferencia Bancaria</h1>
 
