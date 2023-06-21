@@ -64,7 +64,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        try {
+        try
+        {
             $validatedData = $request->validate(
                 [
                     'marca_id' => 'required|exists:brands,id',
@@ -105,7 +106,8 @@ class ProductController extends Controller
             );
 
             $imagenUser = '';
-            if ($image = $request->file('imagen')) {
+            if ($image = $request->file('imagen'))
+            {
                 $rutaGuardarImg = 'imagen/';
                 $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
                 $image->move($rutaGuardarImg, $imagenUser);
@@ -124,7 +126,9 @@ class ProductController extends Controller
             $producto->save();
 
             return response()->json(['success' => true]);
-        } catch (ValidationException $e) {
+        }
+        catch (ValidationException $e)
+        {
             $errors = $e->errors();
             return response()->json(['success' => false, 'errors' => $errors]);
         }
@@ -188,12 +192,15 @@ class ProductController extends Controller
         $product->talla = $request->talla;
         $product->stock = $request->stock;
         $product->visible = $request->visible;
-        if ($image = $request->file('imagen')) {
+        if ($image = $request->file('imagen'))
+        {
             $rutaGuardarImg = 'imagen/';
             $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
             $product->imagen = $imagenUser;
-        } else {
+        }
+        else
+        {
         }
         $product->save();
         return redirect()

@@ -4,7 +4,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ProductController;
+
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller\RolesController;
 use App\Http\Controllers\Controller\PermissionsController;
@@ -22,7 +22,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
-
+use App\Http\Controllers\Controller\ProductController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
@@ -54,6 +54,8 @@ Route::get('/home-landing', function () {
 
 
 // rutas categorias
+Route::get('/filter-products', [App\Http\Controllers\ProductController::class, 'filter'])->name('filter.products');
+
 Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
 Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
 Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
