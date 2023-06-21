@@ -23,6 +23,11 @@
             text-align: center;
             padding: 20px;
         }
+
+        .btn_darlike {
+            position: absolute;
+            top: 0%;
+        }
     </style>
 @endsection
 
@@ -64,20 +69,33 @@
             </div>
             <div class="row justify-content-center">
                 <div class="col justify-content-center">
-                    <div class="product-grid d-flex justify-content-center" data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
+                    <div class="product-grid d-flex justify-content-center"
+                        data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'>
                         @foreach ($productos as $index => $producto)
                             <div class="product-item {{ $producto->stock <= 0 ? 'out-of-stock' : '' }}">
                                 <a href="{{ route('product.show', $producto->id) }}">
                                     <div class="product product_filter">
                                         <div class="product_image">
-                                            <img src="/assets/images/images-products/{{ $producto->imagen }}" class="product-image__img" alt="{{ $producto->nombre }}">
+                                            <img src="/assets/images/images-products/{{ $producto->imagen }}"
+                                                class="product-image__img" alt="{{ $producto->nombre }}">
                                         </div>
                                         <div class="product_info">
-                                            <h5 class="product_branch"><a href="#">{{ $producto->marca->nombre }}</a></h5>
+                                            <h5 class="product_branch"><a href="#">{{ $producto->marca->nombre }}</a>
+                                            </h5>
                                             <h5 class="product_name"><a href="#">{{ $producto->nombre }}</a></h5>
                                             <div class="product_price">${{ $producto->precio }}</div>
                                         </div>
                                     </div>
+                                    @if (Auth::check())
+                                        <form action="{{ route('like-product') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{ $producto->id }}">
+                                            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                            <button class="btn btn_darlike" type="submit">
+                                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </a>
                             </div>
                         @endforeach
