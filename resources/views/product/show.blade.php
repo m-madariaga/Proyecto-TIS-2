@@ -52,51 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row card">
-                <div class="card-body">
-                    <h3 class="card-title">Reseñas del producto</h3>
-                    @auth
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Escribir reseña</h4>
-                            <form method="POST" action="{{ route('reviews.store', [ 'productId' => $product->id, 'userId' => Auth::user()->id]) }}">
-                                @csrf
-                                <input type="text" id="title" name="title" class="form-control mb-1" placeholder="Título" required>
-                                <select class="form-select mb-1" id="type" name="type">
-                                    <option value="1" selected>Positiva</option>
-                                    <option value="0">Negativa</option>
-                                </select>
-                                <textarea class="form-control mb-1" id="description" name="description" placeholder="Descripción" rows="4" required></textarea>
-                                <button type="submit" class="btn">Guardar</button>
-                            </form>
-                        </div>
-                    </div>
-                    @endauth
-                    @foreach ($reviews as $review)
-
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row justify-content-between">
-                                <h4 class="col-4 card-title">{{$review->title}}</h4>
-                                <h5 class="col-sm-4 text-right align-self-center mb-2 text-body-secondary">
-                                    @if ($review->type == 1)
-                                        <i class="fa fa-thumbs-up"></i>
-                                    @else
-                                    <i class="fa fa-thumbs-down"></i>
-                                    @endif
-                                </h5>
-                            </div>
-                            <h5 class="card-subtitle mb-2 text-body-secondary">{{$review->username}}</h5>
-                            <p>{{$review->description}}</p>
-                            
-                        </div>
-                    </div>
-                        
-                    @endforeach
-                    
-                </div>
-            </div>
         </div>
     </div>
 </div>

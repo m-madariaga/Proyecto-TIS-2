@@ -86,6 +86,11 @@ class CartController extends Controller
                     $product->stock -= $qty;
                     $product->stock = max(0, $product->stock); // Convertir stock negativo a cero
 
+                    if($product->stock < 5){
+                        $admins = User::role('admin')->get();
+                        Notification::send($admins, new lowStockNotif("blusa"));
+                    }
+
                     $product->save();
                 }
             } else {
@@ -170,6 +175,11 @@ class CartController extends Controller
             // Disminuir el stock del producto en la base de datos
             $product = Product::find($item->id);
             $product->decrement('stock');
+
+            if($product->stock < 5){
+                $admins = User::role('admin')->get();
+                Notification::send($admins, new lowStockNotif("blusa"));
+            }
         }
 
         return back();
@@ -233,8 +243,8 @@ class CartController extends Controller
                     $product->stock -= $item->qty;
                     $product->save();
 
-                    $this->updateStock($product->id);
-                }
+                $this->updateStock($item->id);
+
             }
 
             if ($order) {

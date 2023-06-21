@@ -47,25 +47,31 @@ class ProfileLandingController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
         $user->name = $request->name;
         $user->address = $request->address;
         $user->phone_number = $request->phone_number;
-        $user->region_fk = $request->region_fk;
-        $user->city_fk = $request->city_fk;
+        $region = Region::find($request->region_fk);
+        $city = City::find($request->city_fk);
+        $user->region_fk = $region->id;
+        $user->city_fk = $city->id;
 
+        // Validar y guardar la imagen si se ha cargado una nueva
         if ($request->hasFile('profile_image')) {
+            // Eliminar la imagen anterior si existe
             if ($user->imagen) {
                 Storage::delete('assets/images/images-profile/' . $user->imagen);
             }
-            $image = $request->file('profile_image');
-            $imageName = $image->getClientOriginalName();
-            $image->move(public_path('assets/images/images-profile'), $imageName);
+            $imagen = $request->file('profile_image');
+            $imageName = $imagen->getClientOriginalName();
+
+            // Guardar la nueva imagen en la carpeta 'images-profile'
+            $imagen->move(public_path('assets/images/images-profile'), $imageName);
+
             $user->imagen = $imageName;
         }
 
         $user->save();
-
         return redirect('/profile_landing')->with('success', 'Perfil actualizado exitosamente!');
     }
 

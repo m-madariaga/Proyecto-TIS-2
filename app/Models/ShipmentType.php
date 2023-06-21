@@ -11,6 +11,7 @@ class ShipmentType extends Model
 
     protected $fillable = [
         'nombre',
+
     ];
 
     public function shipments()

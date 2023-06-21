@@ -4,6 +4,38 @@
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
 
     <style>
+        /* Agrega estilos específicos para esta vista */
+        /* Por ejemplo, para ocultar elementos */
+        .header {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+
+        .header_resume {
+            position: relative;
+            background-image: url("assets/images/lienzo.jpg");
+            background-size: cover;
+            background-position: center;
+            height: 100px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding-left: 15px;
+        }
+
+        .navbar-brand-img {
+            height: 20%;
+            width: 100px;
+            margin-left: 18rem;
+            object-fit: contain;
+        }
+
         .button-container {
             display: flex;
             justify-content: center;
@@ -51,8 +83,8 @@
             max-height: 70px;
         }
 
-        .cart-text {
-            color: black;
+        .cart-text{
+            color:black;
         }
 
         .selected-method {

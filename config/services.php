@@ -29,11 +29,5 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'webpay' => [
-        'commerce_code' => env('WEBPAY_COMMERCE_CODE'),
-        'api_key' => env('WEBPAY_API_KEY'),
-        'integration_type' => env('WEBPAY_INTEGRATION_TYPE'),
-        'environment' => env('WEBPAY_ENVIRONMENT'),
-    ],
 
 ];

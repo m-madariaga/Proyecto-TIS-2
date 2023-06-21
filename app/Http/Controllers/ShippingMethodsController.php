@@ -19,7 +19,7 @@ class ShippingMethodsController extends Controller
     {
         $cartId = $request->input('cart_id');
         $userId = auth()->id(); // Obtener el ID del usuario conectado
-        $order = $request->session()->get('order');
+
         // Obtener la dirección del usuario
         $user = User::find($userId);
         $address = strtolower($user->address);
@@ -30,17 +30,14 @@ class ShippingMethodsController extends Controller
         // Obtener todos los métodos de envío
         $shipment_types = ShipmentType::all();
 
+               
         $cart = Cart::content();
         $product = Product::all();
-
-        return view('shippingmethod', compact('shipment_types', 'cartId', 'cart', 'selectedMethod', 'product', 'order'));
+        return view('shippingmethod', compact('shipment_types', 'cartId', 'cart', 'selectedMethod', 'product'));
     }
-
 
     private function isInChillanOrSanFernando($address)
     {
         return strpos($address, 'chillan') !== false || strpos($address, 'san fernando') !== false;
     }
-
-
 }

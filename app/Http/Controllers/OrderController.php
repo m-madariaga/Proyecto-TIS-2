@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Detail;
-use Barryvdh\DomPDF\Facade\PDF;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
@@ -37,10 +37,5 @@ class OrderController extends Controller
         $details = Detail::with('product')->where('pedido_id', $id)->get();
 
         return view('vieworder', compact('order', 'details'));
-    }
-    public function genera_pdf(Order $id)
-    {
-        $pdf = PDF::loadView('receipt.ticket_cliente', ['order' => $id]);
-        return $pdf->download('ticket.pdf');
     }
 }
