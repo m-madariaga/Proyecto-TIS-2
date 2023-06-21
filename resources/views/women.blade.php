@@ -27,29 +27,7 @@
 @endsection
 
 @section('js')
-    <script>
-        document.getElementById("searchButton").addEventListener("click", searchProducts);
-        document.getElementById("productSearch").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                searchProducts();
-            }
-        });
 
-        function searchProducts() {
-            var searchValue = document.getElementById("productSearch").value.toLowerCase();
-            var productItems = document.getElementsByClassName("product-item");
-
-            for (var i = 0; i < productItems.length; i++) {
-                var productName = productItems[i].getElementsByClassName("product_name")[0].innerText.toLowerCase();
-                if (productName.includes(searchValue)) {
-                    productItems[i].style.display = "block";
-                } else {
-                    productItems[i].style.display = "none";
-                }
-            }
-        }
-    </script>
 @endsection
 
 @section('content')

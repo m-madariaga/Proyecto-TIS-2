@@ -275,7 +275,7 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 Route::post('/cart/generateOrder', [CartController::class, 'generateOrder'])->name('cart.generateOrder');
 
 
-Route::POST('/shippingmethod/create', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::POST('/paymentmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 
 
