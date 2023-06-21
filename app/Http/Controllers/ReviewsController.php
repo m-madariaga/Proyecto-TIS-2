@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Review;
 use App\Models\Product;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewsController extends Controller
 {
@@ -60,6 +62,11 @@ class ReviewsController extends Controller
         $review = Review::find($id);
         $review->delete();
         error_log("test");
+
+        $action = new Action();
+            $action->name = 'Eliminación Reseña';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
 
         return response()->json(['success' => true]);
 
