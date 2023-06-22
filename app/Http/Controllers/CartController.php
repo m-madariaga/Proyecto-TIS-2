@@ -9,6 +9,12 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+<<<<<<<<< Temporary merge branch 1
+=========
+use App\Notifications\lowStockNotif;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+>>>>>>>>> Temporary merge branch 2
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -257,21 +263,17 @@ class CartController extends Controller
     // ORDEN CONFIRMADA FINALMENTE
     public function confirmOrder(Request $request, $orderId)
     {
-        if ($request->isMethod('post')) {
-            $user = Auth::user();
-            $order = Order::findOrFail($orderId);
-           
-            if ($user && $order->user_id === $user->id && $order->estado === 0) {
-                $order->estado = 1; // Cambiar el estado a pagado
-                $order->save();
-                Mail::to($user->email)->send(new ProofPayment($order->id));
-                Cart::destroy();
-                return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
-            } else {
-                return redirect()->back()->with('error', 'No se puede confirmar la orden');
-            }
+        $user = Auth::user();
+        $order = Order::findOrFail($orderId);
+       
+        if ($user && $order->user_id === $user->id && $order->estado === 0) {
+            $order->estado = 1; // Cambiar el estado a pagado
+            $order->save();
+            Mail::to($user->email)->send(new ProofPayment($order->id));
+            Cart::destroy();
+            return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
         } else {
-            return abort(405); // Método no permitido (GET)
+            return redirect()->back()->with('error', 'No se puede confirmar la orden');
         }
     }
 }
