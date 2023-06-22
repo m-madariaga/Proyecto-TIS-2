@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -45,6 +47,12 @@ class CategoryController extends Controller
             'descripcion' => $request->get('descripcion'),
         ]);
         $categoria->save();
+
+        $action = new Action();
+            $action->name = 'Creación Categoría';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
         return redirect()->route('categorias')->with('success', 'Categoria ingresada correctamente.');
     }
 
@@ -110,6 +118,12 @@ class CategoryController extends Controller
         $categorias = Category::all();
         $categoria = $categorias->find($id);
         $categoria->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado Categoría';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
         return response()->json(['success' => true]);
     }
 }

@@ -1,15 +1,15 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Punto de venta' }}
+    {{ 'Acciones' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Punto de venta</li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Acciones</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Punto de venta</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Acciones</h6>
 @endsection
 
 @section('css')
@@ -20,74 +20,67 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-12">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
-                    <div class="card-header">
-                        <h6>Confirma pedido existente</h6>
+                    <div class="card-header pb-0">
+                        <h6>Tabla de Acciones Realizadas</h6>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table id="orders-table" class="table display table-stripped align-items-center">
+                            <table id="actions-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Codigo</th>
-                                        <th class="text-center">Fecha</th>
-                                        <th class="text-center">Nombre cliente</th>
+                                        <th class="text-center">Id</th>
+                                        <th class="text-center">Usuario</th>
+                                        <th class="text-center">Descripción</th>
+                                        <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($orders as $order)
-                                        <form action="{{ route('orders.edit', ['id' => $order->id]) }}" method="POST">
-                                            @csrf
-                                            <tr>
-                                                <td><input type="checkbox" name="estado"></td>
-                                                <td>{{$order->id}}</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </form>
+                                    @foreach ($actions as $action)
+                                        <tr>
+                                            <td class="text-center">{{ $action->id }}</td>
+                                            <td class="text-center">{{ $action->username }}</td>
+                                            <td class="text-center">{{ $action->name }}</td>
+
+                                            <td class="text-center pt-3">
+                                                <form action="{{ route('actions.destroy', $action->id) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-action"
+                                                        data-id="{{ $action->id }}"><i class="fa fa-trash" aria-hidden="true"> Borrar</i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="card mb-4 ps-3 pe-3 pt-2">
-                    <div class="card-header">
-                        <h6>Realiza una nueva venta</h6>
-                    </div>
-                    <div class="card-body">
-                        <a>EL A</a>
-                        <button>l button</button>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Exito',
+                    text: '{{ session('success') }}',
+                    timer: 3000
+                });
+            </script>
+        @endif
 
-    @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Exito',
-                text: '{{ session('success') }}',
-                timer: 3000
-            });
-        </script>
-    @endif
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '{{ session('error') }}'
-            });
-        </script>
-    @endif
+        @if (session('error'))
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '{{ session('error') }}'
+                });
+            </script>
+        @endif
 
     </div>
 @endsection
@@ -95,24 +88,31 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
     <script>
         $(document).ready(function() {
-            table = $('#orders-table').DataTable({
+            table = $('#actions-table').DataTable({
                 dom: 'lrtip',
+
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+
+
             });
         });
-        $('#searchBar').keyup(function() {
-            table.search($(this).val()).draw();
+
+        $('#searchBar').keyup(function(){
+            table.search($(this).val()).draw() ;
         })
     </script>
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).on('click', '.delete-product', function(e) {
+        $(document).on('click', '.delete-action', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
+            console.log(' kdñsñskd');
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: "¡No podrás revertir esto!",
@@ -127,7 +127,7 @@
                     console.log(' kdñsñskd');
                     $.ajax({
                         type: 'DELETE',
-                        url: '/admin/productos/' + id,
+                        url: '/admin/actions/' + id,
                         data: {
                             id: id,
                             _token: $('meta[name="csrf-token"]').attr('content')
@@ -137,7 +137,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Producto eliminado correctamente!',
+                                text: '¡Acción eliminada correctamente!',
                                 timer: 1000
                             });
                             setTimeout(function() {
@@ -152,7 +152,10 @@
                 }
             });
 
-
+            
         });
     </script>
+
+
+
 @endsection

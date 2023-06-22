@@ -148,7 +148,7 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-
+                    console.log(' kdñsñskd');
                     $.ajax({
                         type: 'DELETE',
                         url: '/admin/productos/' + id,
