@@ -4,7 +4,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/mdb.min.css') }}">
 
     <style>
@@ -32,7 +32,25 @@
 
         .btn_darlike {
             position: absolute;
-            top: 0%;
+            width: 38px;
+            height: 38px;
+            top: 15px;
+            right: 15px;
+            background-color: white;
+            color: black;
+            border: 0;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+
+        }
+
+        .btn_darlike i {
+            font-size: 18px;
+        }
+
+        .isLike {
+            color: rgb(200, 0, 0);
         }
     </style>
 @endsection
@@ -196,122 +214,143 @@
                                             @endforeach
                                         </div>
                                     </div>
+                                    <<<<<<< HEAD </div>
+                                        =======
+
+
+                                        >>>>>>> Development
                                 </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button text-dark bg-light" type="button"
-                                        data-mdb-toggle="collapse" data-mdb-target="#panelsStayOpen-collapseThree"
-                                        aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                                        Precio
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree">
-                                    <div class="accordion-body">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button text-dark bg-light" type="button"
+                                            data-mdb-toggle="collapse" data-mdb-target="#panelsStayOpen-collapseThree"
+                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                            Precio
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingThree">
+                                        <div class="accordion-body">
 
-                                        <div class="row mb-3">
-                                            <div class="col-6">
-                                                <p class="mb-0">
-                                                    Min
-                                                </p>
-                                                <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" />
-                                                    <label class="form-label"
-                                                        for="typeNumber">${{ $productos->min('precio') }}</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <p class="mb-0">
-                                                    Max
-                                                </p>
-                                                <div class="form-outline">
-                                                    <input type="number" id="typeNumber" class="form-control" />
-                                                    <label class="form-label"
-                                                        for="typeNumber">${{ $productos->max('precio') }}</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button text-dark bg-light" type="button"
-                                        data-mdb-toggle="collapse" data-mdb-target="#panelsStayOpen-collapseFour"
-                                        aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                                        Talla
-                                    </button>
-                                </h2>
-                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingThree">
-                                    <div class="accordion-body">
-                                        <div>
-                                            @php
-                                                $uniqueSizes = [];
-                                            @endphp
-
-                                            @foreach ($productos as $producto)
-                                                @if (!in_array($producto->talla, $uniqueSizes))
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value=""
-                                                            id="flexCheck{{ $loop->iteration }}" checked />
-                                                        <label class="form-check-label"
-                                                            for="flexCheck{{ $loop->iteration }}">{{ $producto->talla }}</label>
-
+                                            <div class="row mb-3">
+                                                <div class="col-6">
+                                                    <p class="mb-0">
+                                                        Min
+                                                    </p>
+                                                    <div class="form-outline">
+                                                        <input type="number" id="typeNumber" class="form-control" />
+                                                        <label class="form-label"
+                                                            for="typeNumber">${{ $productos->min('precio') }}</label>
                                                     </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <p class="mb-0">
+                                                        Max
+                                                    </p>
+                                                    <div class="form-outline">
+                                                        <input type="number" id="typeNumber" class="form-control" />
+                                                        <label class="form-label"
+                                                            for="typeNumber">${{ $productos->max('precio') }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                                                    @php
-                                                        $uniqueSizes[] = $producto->talla;
-                                                    @endphp
-                                                @endif
-                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button"
-                                    class="btn btn-white w-100 border border-secondary">Filtrar</button>
-                            </div>
 
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button text-dark bg-light" type="button"
+                                            data-mdb-toggle="collapse" data-mdb-target="#panelsStayOpen-collapseFour"
+                                            aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                                            Talla
+                                        </button>
+                                    </h2>
+                                    <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingThree">
+                                        <div class="accordion-body">
+                                            <div>
+                                                @php
+                                                    $uniqueSizes = [];
+                                                @endphp
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-9">
+                                                @foreach ($productos as $producto)
+                                                    @if (!in_array($producto->talla, $uniqueSizes))
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox"
+                                                                value="" id="flexCheck{{ $loop->iteration }}"
+                                                                checked />
+                                                            <label class="form-check-label"
+                                                                for="flexCheck{{ $loop->iteration }}">{{ $producto->talla }}</label>
 
-                    <div class="row justify-content-center">
-                        <div class="col justify-content-center">
-                            <div class="product-grid d-flex justify-content-center"
-                                data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }' id="productContainer">
-                                @foreach ($productos as $index => $producto)
-                                    <div class="product-item {{ $producto->stock === 0 ? 'out-of-stock' : '' }}"
-                                        data-category="{{ $producto->categoria->nombre }}"
-                                        data-brand="{{ $producto->marca->nombre }}" data-size="{{ $producto->talla }}">
-                                        <a href="{{ route('product.show', $producto->id) }}">
-                                            <div class="product product_filter">
-                                                <div class="product_image">
-                                                    <img src="/assets/images/images-products/{{ $producto->imagen }}"
-                                                        class="product-image__img" alt="{{ $producto->nombre }}">
-                                                </div>
-                                                <div class="product_info">
-                                                    <h5 class="product_branch"><a
-                                                            href="#">{{ $producto->marca->nombre }}</a></h5>
-                                                    <h5 class="product_name"><a
-                                                            href="#">{{ $producto->nombre }}</a></h5>
-                                                    <div class="product_price">${{ $producto->precio }}</div>
-                                                </div>
+                                                        </div>
+
+                                                        @php
+                                                            $uniqueSizes[] = $producto->talla;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
                                             </div>
-                                        </a>
+                                        </div>
                                     </div>
-                                @endforeach
+                                    <button type="button"
+                                        class="btn btn-white w-100 border border-secondary">Filtrar</button>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="col-lg-9">
 
+                        <div class="row justify-content-center">
+                            <div class="col justify-content-center">
+                                <div class="product-grid d-flex justify-content-center"
+                                    data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'
+                                    id="productContainer">
+                                    @foreach ($productos as $index => $producto)
+                                        <div class="product-item {{ $producto->stock === 0 ? 'out-of-stock' : '' }}"
+                                            data-category="{{ $producto->categoria->nombre }}"
+                                            data-brand="{{ $producto->marca->nombre }}"
+                                            data-size="{{ $producto->talla }}">
+                                            <a href="{{ route('product.show', $producto->id) }}">
+                                                <div class="product product_filter">
+                                                    <div class="product_image">
+                                                        <img src="/assets/images/images-products/{{ $producto->imagen }}"
+                                                            class="product-image__img" alt="{{ $producto->nombre }}">
+                                                    </div>
+                                                    <div class="product_info">
+                                                        <h5 class="product_branch"><a
+                                                                href="#">{{ $producto->marca->nombre }}</a></h5>
+                                                        <h5 class="product_name"><a
+                                                                href="#">{{ $producto->nombre }}</a></h5>
+                                                        <div class="product_price">${{ $producto->precio }}</div>
+                                                    </div>
+                                                </div>
+                                                @if (Auth::check())
+                                                    <form action="{{ route('like-product') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $producto->id }}">
+                                                        <input type="hidden" name="user_id"
+                                                            value="{{ Auth::user()->id }}">
+                                                        <button
+                                                            class="btn btn_darlike  {{ Auth::user()->product_desired->contains('product_id', $producto->id) === true ? 'isLike' : '' }}"
+                                                            type="submit">
+                                                            <i class="bi bi-heart-fill " aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

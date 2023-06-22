@@ -9,6 +9,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\lowStockNotif;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 
@@ -259,7 +262,7 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $order = Order::findOrFail($orderId);
-       
+
         if ($user && $order->user_id === $user->id && $order->estado === 0) {
             $order->estado = 1; // Cambiar el estado a pagado
             $order->save();
