@@ -128,7 +128,7 @@
             </table>
         </section>
         <footer class="invoice-footer">
-            <a href="https://queguay.azurewebsites.net">www.queguay.cl</a>
+            <p>www.queguay.cl</p>
         </footer>
     </div>
 

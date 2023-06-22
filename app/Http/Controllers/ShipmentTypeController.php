@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ShipmentType;
 use Illuminate\Http\Request;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
 
 class ShipmentTypeController extends Controller
 {
@@ -49,11 +47,6 @@ class ShipmentTypeController extends Controller
         ]);
 
         $shipment_type->save();
-
-        $action = new Action();
-            $action->name = 'Creación Tipo de Envío';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
 
         return redirect('admin/shipment_types')->with('success');
@@ -107,11 +100,6 @@ class ShipmentTypeController extends Controller
 
         $shipment_type->save();
 
-        $action = new Action();
-            $action->name = 'Edición Tipo de Envío';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-
 
         return redirect('admin/shipment_types')->with('success', 'Tipo de envío actualizado exitosamente!');
     }
@@ -126,11 +114,6 @@ class ShipmentTypeController extends Controller
     {
         $shipment_types = ShipmentType::find($id);
         $shipment_types->delete();
-
-        $action = new Action();
-            $action->name = 'Borrado Tipo de Envío';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
         //return response()->json(['success' => true]);
         return response()->json(['success' => true]);

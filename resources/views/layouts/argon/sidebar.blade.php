@@ -78,14 +78,6 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenedor productos deseados')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/productos_deseados') ? 'active' : '' }}"
-                                    href="{{ route('product_desired') }}">
-                                    <span class="nav-link-text ms-3">Productos deseados</span>
-                                </a>
-                            </li>
-                        @endcan
                         @can('mantenedor categorias')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/categorias') ? 'active' : '' }}"
@@ -134,6 +126,11 @@
                                 </a>
                             </li>
                         @endcan
+
+
+
+
+
                     </ul>
                 </div>
 
@@ -235,7 +232,6 @@
                     </a>
                 </li>
             @endcan
-
             @can('mantenedor acciones')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('actions.index') }}">

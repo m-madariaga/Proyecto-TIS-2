@@ -141,7 +141,7 @@
         </div>
         <div class="row mt-4">
             <div class="container">
-                <form action="{{ route('confirmationcart') }}" method="POST" id="shipment-form">
+                <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST" id="shipment-form">
                     @csrf
                     <button type="submit" class="btn btn-primary" id="confirmar-carrito">Confirmar Carrito</button>
                 </form>

@@ -57,18 +57,9 @@ class CheckOutController extends Controller
             $accountNumber = 'Número de cuenta desconocido';
         }
 
-
-
-        return view('checkout_transfer', [
-            'cart' => $cart,
-            'shipment_type' => $shipment_type,
-            'name' => $name,
-            'run' => $run,
-            'email' => $email,
-            'bank' => $bank,
-            'accountType' => $accountType,
-            'accountNumber' => $accountNumber
-        ]);
+        $order = json_decode($request->input('order')); // Convertir la cadena JSON en un objeto
+        return view('checkout_transfer', compact('cart', 'shipment_type','name','email','run','bank','accountType','accountNumber','order'));
+     
     }
 
 

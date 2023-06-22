@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\DataBankTransfer;
 use Illuminate\Http\Request;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
 
 class DataBankTransferController extends Controller
 {
@@ -57,11 +55,6 @@ class DataBankTransferController extends Controller
         $databanktransfer->account_number = $request->account_number;
         $databanktransfer->save();
 
-        $action = new Action();
-            $action->name = 'Creación Datos Transferencia';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-
         return redirect('admin/databanktransfer')->with('success', 'Dato Bancario creado exitosamente!');
 
 
@@ -111,11 +104,6 @@ class DataBankTransferController extends Controller
     {
         $databanktransfer = DataBankTransfer::find($id);
         $databanktransfer->delete();
-
-        $action = new Action();
-            $action->name = 'Eliminación Datos Transferencia';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
 
         return redirect('admin/databanktransfer')->with('success', 'Dato Bancario eliminado exitosamente!');
     }
