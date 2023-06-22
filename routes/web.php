@@ -32,6 +32,7 @@ use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ProductDesiredController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\PointOfSaleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -234,6 +235,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/actions', [App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
         Route::delete('/actions/{id}', [App\Http\Controllers\ActionController::class, 'destroy'])->name('actions.destroy');
 
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor punto de venta']], function () {
+        Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
     });
 
 

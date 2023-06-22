@@ -9,8 +9,6 @@ use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -127,11 +125,6 @@ class ProductController extends Controller
             ]);
             $producto->save();
 
-            $action = new Action();
-                $action->name = 'Creación Producto';
-                $action->user_fk = Auth::User()->id;
-            $action->save();
-
             return response()->json(['success' => true]);
         } catch (ValidationException $e) {
             $errors = $e->errors();
@@ -153,7 +146,6 @@ class ProductController extends Controller
             $review->username = User::find($review->user_fk)->name;
             error_log($review->username);
         }
-        
 
 
         
@@ -214,11 +206,6 @@ class ProductController extends Controller
         } else {
         }
         $product->save();
-
-        $action = new Action();
-            $action->name = 'Edición Producto';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
         return redirect()
             ->route('productos')
             ->with('success', 'Producto actualizado correctamente.');
@@ -235,11 +222,6 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
-
-        $action = new Action();
-            $action->name = 'Borrado Producto';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
         return response()->json(['success' => true]);
     }
 }
