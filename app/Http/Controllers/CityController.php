@@ -103,9 +103,8 @@ class CityController extends Controller
             'country_fk' => 'required',
             'region_fk' => 'required',
         ]);
-        error_log($request);
 
-        $city = City::find($id);
+        $city = Region::find($id);
 
         $city->name = $request->get('name');
         $city->region_fk = $request->get('region_fk');

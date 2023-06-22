@@ -139,10 +139,10 @@
 
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="name">Ciudad:</label>
+                                                    <label for="editName">Ciudad:</label>
                                                     <input type="text"
                                                         class="form-control @error('name') is-invalid @enderror"
-                                                        id="name" name="name"required>
+                                                        id="editName" name="name"required>
                                                     @error('name')
                                                         <span class="invalid-feedback d-block" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -219,7 +219,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Ciudad eliminada correctamente!',
+                                text: '¡Tipo de envío eliminado correctamente!',
                                 timer: 1000
                             });
                             setTimeout(function() {
@@ -393,9 +393,9 @@
         }
     </script>
     <script>
-         $(document).ready(function() {
-            table=$('#cities-table').DataTable({
-                dom: 'lrtip',
+        $(document).ready(function() {
+            $('#cities-table').DataTable({
+                dom: 'lfrtip',
 
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -404,10 +404,6 @@
 
             });
         });
-
-        $('#searchBar').keyup(function(){
-            table.search($(this).val()).draw() ;
-        })
         $('#addCityModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();
