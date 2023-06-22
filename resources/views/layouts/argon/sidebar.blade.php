@@ -78,6 +78,14 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('mantenedor productos deseados')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/productos_deseados') ? 'active' : '' }}"
+                                    href="{{ route('product_desired') }}">
+                                    <span class="nav-link-text ms-3">Productos deseados</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('mantenedor categorias')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/categorias') ? 'active' : '' }}"
@@ -126,11 +134,6 @@
                                 </a>
                             </li>
                         @endcan
-
-
-
-
-
                     </ul>
                 </div>
 
@@ -232,6 +235,7 @@
                     </a>
                 </li>
             @endcan
+
             @can('mantenedor acciones')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('actions.index') }}">
@@ -240,17 +244,6 @@
                             <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Acciones Realizadas</span>
-                    </a>
-                </li>
-            @endcan
-            @can('mantenedor punto de venta')
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('point_of_sale') }}">
-                        <div
-                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Punto de venta</span>
                     </a>
                 </li>
             @endcan
