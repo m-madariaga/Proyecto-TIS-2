@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentMethodController extends Controller
 {
@@ -43,6 +45,11 @@ class PaymentMethodController extends Controller
         $paymentMethod->name = $request->name;
         $paymentMethod->imagen = $imageName;
         $paymentMethod->save();
+
+        $action = new Action();
+        $action->name = 'Creación Método de Pago';
+        $action->user_fk = Auth::User()->id;
+        $action->save();
 
         return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago creado exitosamente!');
     }
@@ -92,6 +99,7 @@ class PaymentMethodController extends Controller
 
         $paymentMethod = PaymentMethod::find($id);
 
+
         if (!$paymentMethod) {
             return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
         }
@@ -111,6 +119,8 @@ class PaymentMethodController extends Controller
                     $selectedAccount->selected = 1;
                     $selectedAccount->save();
                 }
+
+
             }
         }
 
@@ -131,6 +141,11 @@ class PaymentMethodController extends Controller
         }
 
         $paymentMethod->delete();
+
+        $action = new Action();
+        $action->name = 'Eliminación Método de Pago';
+        $action->user_fk = Auth::User()->id;
+        $action->save();
 
         return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago eliminado exitosamente!');
     }

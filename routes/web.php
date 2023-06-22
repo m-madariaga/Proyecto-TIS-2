@@ -32,6 +32,9 @@ use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Models\Purchase_order_product;
 
+use App\Http\Controllers\ProductDesiredController;
+use App\Http\Controllers\ActionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -226,9 +229,17 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::group(['middleware' => ['permission:mantenedor reviews']], function () {
         Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
         Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
-        
+
+  
+
+
     });
-    
+
+    Route::group(['middleware' => ['permission:mantenedor acciones']], function () {
+        Route::get('/actions', [App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
+        Route::delete('/actions/{id}', [App\Http\Controllers\ActionController::class, 'destroy'])->name('actions.destroy');
+
+    });
 
 
 
