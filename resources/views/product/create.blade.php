@@ -108,8 +108,8 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="visible">Hacer visible?</label>
-                                <select class="form-control @error('visible') is-invalid @enderror" id="visible" name="visible">
+                                <label class="form-select-label" for="visible">Hacer visible?</label>
+                                <select class="form-select @error('visible') is-invalid @enderror" id="visible" name="visible">
                                     <option value='0'>No</option>
                                     <option value='1' default>Si</option>
                                 </select>
