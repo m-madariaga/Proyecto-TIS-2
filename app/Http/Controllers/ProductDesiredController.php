@@ -26,14 +26,17 @@ class ProductDesiredController extends Controller
             ->orderBy('count', 'desc')
             ->first();
 
-        if ($producto_mas_deseado) {
+        if ($producto_mas_deseado)
+        {
             $product = Product::find($producto_mas_deseado->product_id);
             $count = $producto_mas_deseado->count;
-        }else{
+        }
+        else
+        {
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users','product','count'));
+        return view('product_desired.index', compact('users', 'product', 'count'));
     }
     public function generate_pdf(User $id)
     {
@@ -69,11 +72,13 @@ class ProductDesiredController extends Controller
         $existe_producto = Product_desired::where('user_id', $request->get('user_id'))
             ->where('product_id', $request->get('product_id'))
             ->exists();
-        if ($existe_producto) {
+        if ($existe_producto)
+        {
             $p = Product_desired::all()
                 ->where('user_id', $request->get('user_id'))
                 ->where('product_id', $request->get('product_id'));
-            foreach ($p as $key => $value) {
+            foreach ($p as $key => $value)
+            {
                 $value->delete();
             }
             return back();

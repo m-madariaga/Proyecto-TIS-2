@@ -6,8 +6,6 @@ use App\Models\City;
 use Illuminate\Http\Request;
 use App\Models\Region;
 use App\Models\Country;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
 
 class CityController extends Controller
 {
@@ -56,11 +54,6 @@ class CityController extends Controller
             ]);
 
             $city = City::create($validatedData);
-
-            $action = new Action();
-                $action->name = 'Creación Ciudad';
-                $action->user_fk = Auth::User()->id;
-            $action->save();
 
 
 
@@ -119,11 +112,6 @@ class CityController extends Controller
         $city->country_fk = $request->get('country_fk');
         $city->save();
 
-        $action = new Action();
-            $action->name = 'Edición Ciudad';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-
 
         return redirect('admin/cities')->with('success', 'ciudad actualizado correctamente');
     }
@@ -138,12 +126,6 @@ class CityController extends Controller
     {
         $city = City::find($id);
         $city->delete();
-
-        $action = new Action();
-            $action->name = 'Borrado Ciudad';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-        
         return response()->json(['success' => true]);
 
     }
