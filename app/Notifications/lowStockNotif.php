@@ -31,7 +31,7 @@ class lowStockNotif extends Notification
      */
     public function via($notifiable)
     {
-        return [ 'email', 'database'];
+        return [ 'mail', 'database'];
     }
 
     /**
