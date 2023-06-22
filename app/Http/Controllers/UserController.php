@@ -11,6 +11,9 @@ use App\Models\Region;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     /**

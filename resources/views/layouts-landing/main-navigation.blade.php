@@ -1,5 +1,5 @@
 <div class="main_nav_container px-4">
-    
+
     <div class="row">
         <div class="col-md-4 text-center">
             <div class="logo_container">
@@ -46,11 +46,21 @@
                             <span id="checkout_items" class="checkout_items">{{ Cart::count() }}</span>
                         </a>
                     </li>
+                    @if (Auth::check())
+                        <li class="checkout">
+                            <a href="{{ route('products-desired', ['user' => Auth::user()]) }}">
+                                <i class="bi bi-heart-fill" aria-hidden="true"></i>
+                                <span id="" class="checkout_items">
+                                    {{ count(Auth::user()->product_desired) }}
+                                </span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
 
-       
+
     </div>
 </div>
 

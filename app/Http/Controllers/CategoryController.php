@@ -90,6 +90,12 @@ class CategoryController extends Controller
         $categoria->nombre = $request->nombre;
         $categoria->descripcion = $request->descripcion;
         $categoria->save();
+
+        $action = new Action();
+            $action->name = 'Edición Categoría';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
         return redirect()->route('categorias')->with('success','Categoria actualizada correctamente');
     }
 
