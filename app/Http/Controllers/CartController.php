@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\lowStockNotif;
 use Illuminate\Support\Facades\Notification;
+use App\Models\User;
 
 use Gloudemans\Shoppingcart\Facades\Cart;
 

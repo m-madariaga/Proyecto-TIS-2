@@ -100,7 +100,7 @@ class CategoryController extends Controller
         $categoria->save();
 
         $action = new Action();
-            $action->name = 'Edición Permiso';
+            $action->name = 'Edición Categoría';
             $action->user_fk = Auth::User()->id;
         $action->save();
 
