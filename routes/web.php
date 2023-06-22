@@ -30,9 +30,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
-use App\Http\Controllers\ProductDesiredController;
-use App\Http\Controllers\ActionController;
-use App\Http\Controllers\PointOfSaleController;
+use App\Models\Purchase_order_product;
 
 /*
 |--------------------------------------------------------------------------
@@ -231,10 +229,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         
     });
     
-
-    Route::group(['middleware' => ['permission:mantenedor punto de venta']], function () {
-        Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
-    });
 
 
 
