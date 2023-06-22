@@ -26,8 +26,31 @@
                         <h6>Confirma pedido existente</h6>
                     </div>
                     <div class="card-body">
-                        <a>EL A</a>
-                        <button>l button</button>
+                        <div class="table-responsive p-0">
+                            <table id="orders-table" class="table display table-stripped align-items-center">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="text-center">Codigo</th>
+                                        <th class="text-center">Fecha</th>
+                                        <th class="text-center">Nombre cliente</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                        <form action="{{ route('orders.edit', ['id' => $order->id]) }}" method="POST">
+                                            @csrf
+                                            <tr>
+                                                <td><input type="checkbox" name="estado"></td>
+                                                <td>{{$order->id}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </form>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -74,9 +97,8 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
-            table = $('#products-table').DataTable({
+            table = $('#orders-table').DataTable({
                 dom: 'lrtip',
-
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
