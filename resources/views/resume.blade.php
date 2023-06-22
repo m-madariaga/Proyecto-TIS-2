@@ -177,10 +177,7 @@
                 @elseif (strtolower($paymentMethod->name) == 'webpay')
                     <form action="{{ route('checkout_transbank') }}" method="POST" id="webpay-form">
                         @csrf
-                        <input type="hidden" name="cart" value="{{ json_encode($cart) }}">
-
-                        <input type="hidden" name="paymentMethod" id="paymentMethod" value="{{ $paymentMethod->id }}">
-                        <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
                         <button type="submit" id="submit-button"class="btn btn-primary">Confirmar
                             Carrito</button>
                     </form>
@@ -372,14 +369,7 @@
             window.history.back();
         }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.modal');
-            var instances = M.Modal.init(elems, {
-                dismissible: false
-            });
-        });
-    </script>
+  
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {

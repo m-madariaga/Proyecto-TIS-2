@@ -3,15 +3,6 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
     <style>
-        /* Estilos generales */
-        .header {
-            display: none;
-        }
-
-        .footer {
-            display: none;
-        }
-
         .header_resume {
             position: relative;
             background-image: url("assets/images/lienzo.jpg");
