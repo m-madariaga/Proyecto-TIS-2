@@ -24,7 +24,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
 use App\Http\Controllers\WebpayCredentialController;
-
+use App\Http\Controllers\PointOfSaleController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
