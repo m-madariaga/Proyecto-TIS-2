@@ -243,6 +243,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
     });
 
+    Route::group(['middleware' => ['permission:mantenedor punto de venta']], function () {
+        Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
+    });
+
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 });

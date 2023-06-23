@@ -34,14 +34,21 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
-                                    <h5 class="font-weight-bolder mt-1">
-                                        {{ $product->nombre }}
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">{{ $count }}</span>
-                                        veces
-                                    </p>
+                                    @if (is_null($product))
+                                        <div class="pt-2">
+                                            <h6>No hay productos deseados</h6>
+                                        </div>
+                                    @else
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
+                                        <h5 class="font-weight-bolder mt-1">{{ $product }}</h5>
+                                        <p class="mb-0">
+                                            <span class="text-success text-sm font-weight-bolder">
+                                                $count
+                                            </span>
+                                            veces
+                                        </p>
+                                    @endif
+
                                 </div>
                             </div>
                             <div class="col-4 text-end">
