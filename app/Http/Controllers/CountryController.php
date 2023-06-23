@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
+
 class CountryController extends Controller
 {
     /**
@@ -48,6 +51,11 @@ class CountryController extends Controller
             ]);
 
             Country::create($validatedData);
+
+            $action = new Action();
+                $action->name = 'Creación Pais';
+                $action->user_fk = Auth::User()->id;
+            $action->save();
 
 
             return response()->json(['success' => true]);
@@ -102,6 +110,11 @@ class CountryController extends Controller
 
         $country->save();
 
+        $action = new Action();
+            $action->name = 'Edición País';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
 
         return redirect('admin/countries')->with('success', 'Pais actualizado correctamente');
     }
@@ -116,6 +129,12 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         $country->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado País';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+        
         return response()->json(['success' => true]);
 
     }

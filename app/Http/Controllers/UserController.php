@@ -75,6 +75,11 @@ class UserController extends Controller
             $user = User::create($validatedData);
             $user->assignRole($request->input('role'));
 
+            $action = new Action();
+                $action->name = 'Creación Usuario';
+                $action->user_fk = Auth::User()->id;
+            $action->save();
+
             return response()->json(['success' => true]);
         }
         catch (ValidationException $e)
@@ -128,7 +133,12 @@ class UserController extends Controller
         error_log($roles);
         $user->save();
 
-        return redirect('admin/users')->with('success', 'Tipo de envío actualizado exitosamente!');
+        $action = new Action();
+            $action->name = 'Edición Usuario';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
+        return redirect('admin/users')->with('success', 'Usuario actualizado exitosamente!');
     }
 
     /**
@@ -141,6 +151,11 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado Usuario';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
 
         // dejar para futuro sweetalert return response()->json(['success' => true]);
 
