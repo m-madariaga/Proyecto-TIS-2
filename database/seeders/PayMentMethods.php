@@ -28,7 +28,7 @@ class PayMentMethods extends Seeder
         $method = new PaymentMethod();
         $method -> name = 'WebPay';
         $method -> imagen = 'webpay.png';
-        $method -> visible = 0;
+        $method -> visible = 1;
         $method -> save();
 
         $method = new PaymentMethod();

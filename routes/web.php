@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransbankController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
@@ -22,12 +23,15 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileLandingController;
 use App\Http\Controllers\ChangePasswordController;
+use App\Http\Controllers\WebpayCredentialController;
 
 use App\Http\Controllers\BankDataController;
+use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
-use App\Models\Purchase_order_product;
+use App\Http\Controllers\ProductDesiredController;
+use App\Http\Controllers\ActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,10 +70,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile_edit/{id}', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile_edit');
 
-    Route::get('/tables', function () {
-        return view('tables');
-    })->name('tables');
-
     Route::get('/countries/create', [App\Http\Controllers\CountryController::class, 'create'])->name('countries.create');
     Route::post('/countries', [App\Http\Controllers\CountryController::class, 'store'])->name('countries.store');
     Route::get('/countries/{id}/edit', [App\Http\Controllers\CountryController::class, 'edit'])->name('countries.edit');
@@ -99,9 +99,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::delete('/users/{id}', [App\Http\Controllers\UserController::class, 'destroy'])->name('users.destroy');
     Route::get('/users', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-
-
-
     Route::get('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'index'])->name('shipment_types.index');
     Route::get('/shipment_types/create', [App\Http\Controllers\ShipmentTypeController::class, 'create'])->name('shipment_types.create');
     Route::post('/shipment_types', [App\Http\Controllers\ShipmentTypeController::class, 'store'])->name('shipment_types.store');
@@ -121,6 +118,16 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
     Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
     Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
+
+    Route::group(['middleware' => ['permission:mantenedor webpay']], function () {
+        Route::get('/webpay', [WebpayCredentialController::class, 'index'])->name('webpaycredentials.index');
+        Route::get('/webpay/create', [WebpayCredentialController::class, 'create'])->name('webpaycredentials.create');
+        Route::post('/webpay/store', [WebpayCredentialController::class, 'store'])->name('webpaycredentials.store');
+        Route::get('/webpay/{id}/edit', [WebpayCredentialController::class, 'edit'])->name('webpaycredentials.edit');
+        Route::patch('/webpay/{id}/update', [WebpayCredentialController::class, 'update'])->name('webpaycredentials.update');
+        Route::delete('/webpay/{id}', [WebpayCredentialController::class, 'destroy'])->name('webpaycredentials.destroy');
+
+    });
 
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');
@@ -142,6 +149,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
 
+
     Route::group(['middleware' => ['permission:mantenedor productos']], function () {
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
         Route::get('/productos/create', [ProductController::class, 'create'])->name('productos-create');
@@ -161,7 +169,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
         Route::get('/orden-compra/{id}/pdf', [PurcharseOrderController::class, 'generate_pdf'])->name('orden-compra-pdf');
 
-        Route::get('orden-compra-product-add/{id}/edit',[PurcharseOrderProductController::class, 'show'])->name('orden-compra-product-add-edit');
+        Route::get('orden-compra-product-add/{id}/edit', [PurcharseOrderProductController::class, 'show'])->name('orden-compra-product-add-edit');
 
         Route::post('/orden-compra-product/store', [PurcharseOrderProductController::class, 'store'])->name('orden-compra-product-store');
         Route::get('/orden-compra-product/{id}/edit', [PurcharseOrderProductController::class, 'edit'])->name('orden-compra-product-edit');
@@ -207,16 +215,33 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::delete('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'destroy'])->name('permissions.destroy');
     });
 
+
+
+
     Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('shipments.index');
     Route::get('/shipments/{id}/edit', [App\Http\Controllers\ShipmentController::class, 'status_edit'])->name('shipments.status_edit');
     Route::get('/shipments/{id}/{last}/update', [App\Http\Controllers\ShipmentController::class, 'status_update'])->name('shipments.status_update');
     Route::delete('/shipments/{id}', [App\Http\Controllers\ShipmentController::class, 'destroy'])->name('shipments.destroy');
     Route::get('/shipments/{id}/{last}', [App\Http\Controllers\ShipmentController::class, 'status_cancel'])->name('shipment_cancel');
 
-    Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
-    Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
+    Route::group(['middleware' => ['permission:mantenedor reviews']], function () {
+        Route::get('/reviews', [App\Http\Controllers\ReviewsController::class, 'index'])->name('reviews.index');
+        Route::delete('/reviews/{id}', [App\Http\Controllers\ReviewsController::class, 'destroy'])->name('reviews.destroy');
+
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor acciones']], function () {
+        Route::get('/actions', [App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
+        Route::delete('/actions/{id}', [App\Http\Controllers\ActionController::class, 'destroy'])->name('actions.destroy');
+
+    });
 
 
+
+    Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
+        Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
+        Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
+    });
 
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
@@ -234,11 +259,14 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
+//rutas clientes
 
+Route::get('/productos_deseados/{user}',[ProductDesiredController::class,'show'])->name('products-desired');
+Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
-Route::get('/profile_landing/{id}/pdf',[OrderController::class, 'genera_pdf'])->name('profile_landing_order_pdf');
+Route::get('/profile_landing/{id}/pdf', [OrderController::class, 'genera_pdf'])->name('profile_landing_order_pdf');
 
 Route::get('/cart', [App\Http\Controllers\CartController::class, 'showCart'])->name('showcart');
 Route::post('/removeitem/{rowId}', [App\Http\Controllers\CartController::class, 'removeitem'])->name('removeitem');
@@ -246,7 +274,6 @@ Route::get('/increment/{id}', [App\Http\Controllers\CartController::class, 'incr
 Route::get('/decrement/{id}', [App\Http\Controllers\CartController::class, 'decrementitem'])->name('decrementitem');
 Route::post('/destroycart', [App\Http\Controllers\CartController::class, 'destroycart'])->name('destroycart');
 
-Route::post('/confirmcart', [App\Http\Controllers\CartController::class, 'confirmcart'])->name('confirmcart');
 
 Route::get('/paymentmethod', [App\Http\Controllers\PaymentMethodController::class, 'index'])->name('paymentmethod.index');
 Route::post('/paymethods/store_landing', [App\Http\Controllers\PaymentMethodController::class, 'store_landing'])->name('paymethods.store_landing');
@@ -258,6 +285,16 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 
 
 
+
+Route::post('/cart/generateOrder', [CartController::class, 'generateOrder'])->name('cart.generateOrder');
+
+
+Route::POST('/shippingmethod/create', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
+
+
+
+
 Route::Post('/resume_checkout', [ResumeController::class, 'showResume'])->name('resume_checkout');
 
 
@@ -265,10 +302,13 @@ Route::post('/search', [App\Http\Controllers\SearchController::class, 'search'])
 Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])->name('additem');
 
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsController::class, 'store'])->name('reviews.store');
 
-Route::Post('/shippingmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
-Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
-Route::Post('/checkout', [App\Http\Controllers\CheckOutController::class, 'CheckOut'])->name('checkout');
+
+
+Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
+Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');

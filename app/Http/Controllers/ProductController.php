@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -123,6 +127,11 @@ class ProductController extends Controller
             ]);
             $producto->save();
 
+            $action = new Action();
+                $action->name = 'Creación Producto';
+                $action->user_fk = Auth::User()->id;
+            $action->save();
+
             return response()->json(['success' => true]);
         } catch (ValidationException $e) {
             $errors = $e->errors();
@@ -139,8 +148,17 @@ class ProductController extends Controller
     public function show($productId)
     {
         $product = Product::findOrFail($productId);
+        $reviews = Review::where('product_fk', $productId)->get();
+        foreach($reviews as $review){
+            $review->username = User::find($review->user_fk)->name;
+            error_log($review->username);
+        }
+        
 
-        return view('product.show', compact('product'));
+
+        
+
+        return view('product.show', compact('product', 'reviews'));
     }
 
     /**
@@ -196,6 +214,11 @@ class ProductController extends Controller
         } else {
         }
         $product->save();
+
+        $action = new Action();
+            $action->name = 'Edición Producto';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
         return redirect()
             ->route('productos')
             ->with('success', 'Producto actualizado correctamente.');
@@ -212,6 +235,11 @@ class ProductController extends Controller
         $productos = Product::all();
         $producto = $productos->find($id);
         $producto->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado Producto';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
         return response()->json(['success' => true]);
     }
 }
