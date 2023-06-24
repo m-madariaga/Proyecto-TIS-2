@@ -13,7 +13,7 @@
 @endsection
 
 @section('css')
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
@@ -77,7 +77,6 @@
                                                 </form>
                                             </td>
                                         </tr>
-
                                 </tbody>
                             </table>
                             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
@@ -110,21 +109,37 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="bank">Banco:</label>
-                                                    <select id="bank" class="form-select @error('bank') is-invalid @enderror" name="bank" required>
+                                                    <select id="bank"
+                                                        class="form-select @error('bank') is-invalid @enderror"
+                                                        name="bank" required>
                                                         <option value="">Seleccionar banco</option>
-                                                        <option value="Banco de Chile" {{ $databanktransfer->bank == 'Banco de Chile' ? 'selected' : '' }}>Banco de Chile</option>
-                                                        <option value="Banco Santander" {{ $databanktransfer->bank == 'Banco Santander' ? 'selected' : '' }}>Banco Santander</option>
-                                                        <option value="Banco Estado" {{ $databanktransfer->bank == 'Banco Estado' ? 'selected' : '' }}>Banco Estado</option>
-                                       
+                                                        <option value="Banco de Chile"
+                                                            {{ $databanktransfer->bank == 'Banco de Chile' ? 'selected' : '' }}>
+                                                            Banco de Chile</option>
+                                                        <option value="Banco Santander"
+                                                            {{ $databanktransfer->bank == 'Banco Santander' ? 'selected' : '' }}>
+                                                            Banco Santander</option>
+                                                        <option value="Banco Estado"
+                                                            {{ $databanktransfer->bank == 'Banco Estado' ? 'selected' : '' }}>
+                                                            Banco Estado</option>
+
                                                     </select>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="account_type">Tipo Cuenta:</label>
-                                                    <select id="account_type" class="form-select @error('account_type') is-invalid @enderror" name="account_type" required>
+                                                    <select id="account_type"
+                                                        class="form-select @error('account_type') is-invalid @enderror"
+                                                        name="account_type" required>
                                                         <option value="">Seleccionar tipo de cuenta</option>
-                                                        <option value="Cuenta Corriente" {{ $databanktransfer->account_type == 'Cuenta Corriente' ? 'selected' : '' }}>Cuenta Corriente</option>
-                                                        <option value="Cuenta de Ahorro" {{ $databanktransfer->account_type == 'Cuenta de Ahorro' ? 'selected' : '' }}>Cuenta de Ahorro</option>
-                                                        <option value="Cuenta Vista" {{ $databanktransfer->account_type == 'Cuenta Vista' ? 'selected' : '' }}>Cuenta Vista</option>
+                                                        <option value="Cuenta Corriente"
+                                                            {{ $databanktransfer->account_type == 'Cuenta Corriente' ? 'selected' : '' }}>
+                                                            Cuenta Corriente</option>
+                                                        <option value="Cuenta de Ahorro"
+                                                            {{ $databanktransfer->account_type == 'Cuenta de Ahorro' ? 'selected' : '' }}>
+                                                            Cuenta de Ahorro</option>
+                                                        <option value="Cuenta Vista"
+                                                            {{ $databanktransfer->account_type == 'Cuenta Vista' ? 'selected' : '' }}>
+                                                            Cuenta Vista</option>
                                                         <!-- Agrega más opciones de tipos de cuenta aquí -->
                                                     </select>
                                                 </div>
@@ -176,8 +191,7 @@
 @endsection
 
 @section('js')
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {

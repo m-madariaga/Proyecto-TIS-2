@@ -2,6 +2,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
+
     <style>
         .button-container {
             display: flex;
@@ -53,14 +54,48 @@
         .cart-text {
             color: black;
         }
+
+        .selected-method {
+            border: 2px solid black !important;
+        }
+
+        .selected-method .card-title {
+            color: black;
+        }
+
+        .selected-method .form-check-label {
+            color: black !important;
+            font-weight: bold;
+        }
     </style>
 @endsection
 
 @section('content')
     <div class="container py-4 mb-4" style="margin-top: 15rem;">
-        <div class="button-container">
-            <button class="btn btn-secondary" onclick="goBack()">Regresar</button>
+        <div class="breadcrumb mt-4">
+            <div class="col-6">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm text-black active">
+                        <a class="opacity-5 text-black" href="{{ route('showcart') }}">Volver al Carrito</a>
+                    </li>
+                    <li class="breadcrumb-item text-sm text-black active">
+                        <a class="opacity-5 text-black">Método Envío</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-end">
+                    <form action="{{ route('shipments.create') }}" method="POST" id="shipment-form">
+                        @csrf
+                        <input type="hidden" name="shipment_type_id" id="selected-shipment-type" value="">
+                        <input type="hidden" name="shipment_id" id="shipment-id" value="">
+                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+                        <button type="submit" class="btn btn-primary">Continuar</button>
+                    </form>
+                </div>
+            </div>
         </div>
+
         @if (!Auth::check())
             <div class="row justify-content-center mt-4">
                 <div class="col-md-6">
@@ -125,15 +160,14 @@
                                                 ($selectedMethod === 'starken' && stripos($shipment_type->nombre, 'starken') !== false))
                                             <div class="card" data-shipment-type-id="{{ $shipment_type->id }}"
                                                 onclick="selectShipmentType(this)">
+
+
                                                 <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
                                                     style="cursor: pointer;">
                                                     <h4 class="card-title text-truncate text-center"
-                                                        style="font-size: 1.2rem; height: 3rem; overflow: hidden;">
+                                                        style="font-size: 1.5rem; height: 3rem; overflow: hidden;">
                                                         {{ $shipment_type->nombre }}</h4>
                                                     <div class="form-check mt-2">
-                                                        <input class="form-check-input" type="radio" name="shipment_type"
-                                                            id="shipment_type{{ $shipment_type->id }}"
-                                                            value="{{ $shipment_type->id }}">
                                                         <label class="form-check-label"
                                                             for="shipment_type{{ $shipment_type->id }}">Seleccionar</label>
                                                     </div>
@@ -145,25 +179,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-6">
-                            <div class="col-md-12">
-                                <div class="button-container">
-                                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                                    <form action="{{ route('shipments.create') }}" method="POST" id="shipment-form">
-                                        @csrf
-
-                                        <input type="hidden" name="shipment_type_id" id="selected-shipment-type"
-                                            value="">
-                                        <input type="hidden" name="shipment_id" id="shipment-id" value="">
-                                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
-
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         @endif
@@ -171,40 +186,34 @@
 @endsection
 
 @section('js')
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         function selectShipmentType(element) {
-            var cards = document.querySelectorAll('.card');
-            cards.forEach(function(card) {
-                card.classList.remove('selected-shipment-type');
-            });
+            const shipmentTypeId = element.getAttribute('data-shipment-type-id');
+            const selectedShipmentType = document.getElementById('selected-shipment-type');
+            const shipmentForm = document.getElementById('shipment-form');
 
-            element.classList.add('selected-shipment-type');
-
-            var radioInput = element.querySelector('.form-check-input');
-            radioInput.checked = true;
-
-            var shipmentTypeId = element.getAttribute('data-shipment-type-id');
-            var shipmentId = element.getAttribute('data-shipment-id'); // Obtén el ID de envío
-
-            document.getElementById('selected-shipment-type').value = shipmentTypeId;
-            document.getElementById('shipment-id').value = shipmentId; // Asigna el ID de envío al campo oculto
-        }
-
-        // Validación del formulario antes de enviarlo
-        document.getElementById('shipment-form').addEventListener('submit', function(event) {
-            var selectedShipmentType = document.querySelector('.card.selected-shipment-type');
-
-            if (!selectedShipmentType) {
-                event.preventDefault(); // Detiene el envío del formulario
-
-                // Muestra un mensaje de error
-                alert('Por favor, selecciona un método de envío antes de continuar.');
+            if (selectedShipmentType.value === shipmentTypeId) {
+                // Si se hace clic en el mismo card, se deselecciona
+                element.classList.remove('selected', 'selected-method');
+                selectedShipmentType.value = '';
+            } else {
+                // Seleccionar el card y establecer el valor en el campo oculto
+                const selectedCard = document.querySelector('.selectable-shipment-method.selected');
+                if (selectedCard) {
+                    selectedCard.classList.remove('selected', 'selected-method');
+                }
+                element.classList.add('selected', 'selected-method');
+                selectedShipmentType.value = shipmentTypeId;
             }
-        });
+
+            // Mostrar el SweetAlert si no se ha seleccionado un método de envío al enviar el formulario
+            shipmentForm.addEventListener('submit', function(event) {
+                if (!selectedShipmentType.value) {
+                    event.preventDefault();
+                    swal('Error', 'Por favor, selecciona un método de envío.', 'error');
+                }
+            });
+        }
     </script>
 @endsection

@@ -21,6 +21,7 @@ class CreateDataBankTransfersTable extends Migration
             $table->string('bank');
             $table->string('account_type');
             $table->unsignedBigInteger('account_number');
+            $table->boolean('selected');
             $table->unsignedBigInteger('paymentmethod_fk');
             $table->foreign('paymentmethod_fk')->references('id')->on('payment_methods');
             $table->timestamps();

@@ -1,6 +1,6 @@
 <div class="top_nav px-4">
     <div class="row">
-        <div class="col-md-6 text-center">
+        <div class="col-md-12 text-right">
             <div class="top_nav_right">
                 <ul class="top_nav_menu">
                     <li class="language">

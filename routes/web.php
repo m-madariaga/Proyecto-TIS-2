@@ -30,8 +30,7 @@ use App\Http\Controllers\CheckOutController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
-use App\Http\Controllers\ProductDesiredController;
-use App\Http\Controllers\ActionController;
+use App\Models\Purchase_order_product;
 
 /*
 |--------------------------------------------------------------------------
@@ -230,11 +229,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     });
 
-    Route::group(['middleware' => ['permission:mantenedor acciones']], function () {
-        Route::get('/actions', [App\Http\Controllers\ActionController::class, 'index'])->name('actions.index');
-        Route::delete('/actions/{id}', [App\Http\Controllers\ActionController::class, 'destroy'])->name('actions.destroy');
-
-    });
 
 
 
@@ -264,10 +258,7 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 
 Auth::routes();
 
-//rutas clientes
 
-Route::get('/productos_deseados/{user}',[ProductDesiredController::class,'show'])->name('products-desired');
-Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
@@ -294,7 +285,7 @@ Route::post('/change_password_argon', [App\Http\Controllers\ChangePasswordContro
 Route::post('/cart/generateOrder', [CartController::class, 'generateOrder'])->name('cart.generateOrder');
 
 
-Route::POST('/shippingmethod/create', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
+Route::POST('/paymentmethod', [App\Http\Controllers\ShipmentController::class, 'create'])->name('shipments.create');
 Route::get('/shippingmethod', [App\Http\Controllers\ShippingMethodsController::class, 'index'])->name('shippingview.index');
 
 
@@ -314,6 +305,9 @@ Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsControll
 
 
 
-Route::post('/confirm-order/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
-Route::post('/checkout_transbank', [TransbankController::class, 'CheckOutTransBank'])->name('checkout_transbank');
+
+Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
+Route::get('/confirmationcart/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmationcart');
+Route::get('/webpay/error', [TransbankController::class, 'handleWebpayError'])->name('webpay.error');

@@ -3,15 +3,6 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
     <style>
-        /* Estilos generales */
-        .header {
-            display: none;
-        }
-
-        .footer {
-            display: none;
-        }
-
         .header_resume {
             position: relative;
             background-image: url("assets/images/lienzo.jpg");
@@ -108,7 +99,6 @@
     <div class="container-fluid overflow-hidden py-4" id="container-payment">
         <h4 class="pb-1 pt-4">Datos Cliente</h4>
         <div class="row mt-4">
-
             <div class="container">
                 <h1>Checkout con Transferencia Bancaria</h1>
 
@@ -141,7 +131,7 @@
         </div>
         <div class="row mt-4">
             <div class="container">
-                <form action="{{ route('confirmationcart') }}" method="POST" id="shipment-form">
+                <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST" id="shipment-form">
                     @csrf
                     <button type="submit" class="btn btn-primary" id="confirmar-carrito">Confirmar Carrito</button>
                 </form>
