@@ -16,6 +16,7 @@ class DataBankTransfer extends Model
         'bank',
         'account_type',
         'account_number',
+        'selected',
         'paymentmethod_fk',
     ];
 

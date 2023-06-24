@@ -1,9 +1,6 @@
 @extends('layouts-landing.welcome')
 
 @section('content')
-
-
-
 <div class="container-fluid py-4 mb-4">
     <div class="new_arrivals">
         <div class="container">

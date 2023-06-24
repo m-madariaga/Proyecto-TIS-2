@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use App\Models\Action;
-use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
@@ -57,12 +55,6 @@ class BrandController extends Controller
             'logo' => $imagenUser,
         ]);
         $marca->save();
-
-        $action = new Action();
-            $action->name = 'Creación Marca';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-
         return redirect()->route('marcas')->with('success', 'Marca ingresada correctamente.');
     }
 
@@ -115,12 +107,6 @@ class BrandController extends Controller
             unset($marca->logo);
         }
         $marca->save();
-
-        $action = new Action();
-            $action->name = 'Edición Marca';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
-
         return redirect()->route('marcas')->with('success', 'Marca actualizada correctamente.');
     }
 
@@ -135,11 +121,6 @@ class BrandController extends Controller
         $marcas = Brand::all();
         $marca = $marcas->find($id);
         $marca->delete();
-
-        $action = new Action();
-            $action->name = 'Borrado Marca';
-            $action->user_fk = Auth::User()->id;
-        $action->save();
         return response()->json(['success' => true]);
     }
 }

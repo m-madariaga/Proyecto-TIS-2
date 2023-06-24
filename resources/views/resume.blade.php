@@ -45,9 +45,23 @@
 @endsection
 
 @section('content')
+
     <div class="container py-4 mb-4" style="margin-top: 15rem;">
-        <div class="button-container">
-            <button class="btn btn-secondary" onclick="goBack()">Regresar</button>
+
+        <div class="breadcrumb mt-4">
+            <div class="col-6">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm underline-hove"><a class="opacity-5 text-black"
+                            href="{{ route('showcart') }}">Volver al Carrito</a></li>
+                    <li class="breadcrumb-item text-sm underline-hover"><a class="opacity-5 text-black"
+                            style="cursor: pointer;">Método Envío</a></li>
+                    <li class="breadcrumb-item text-sm underline-hove"><a class="opacity-5 text-black">Método Pago</a>
+                    </li>
+                    <li class="breadcrumb-item text-sm text-black active" aria-current="page">Resumen</li>
+
+                </ol>
+            </div>
+
         </div>
         @if (!Auth::check())
             <div class="row justify-content-center mt-4">
@@ -110,7 +124,10 @@
                                     </div>
                                 </div>
                             </div>
+
+                            
                         </div>
+                        
                     </div>
                     <div class="col-md-5 col-12">
                         <div class="card">
@@ -127,7 +144,8 @@
                                     <div class="card-body">
                                         <span class="cart-text">Nombre: {{ Auth::user()->name }}</span>
                                         <hr>
-                                        <span class="cart-text">Número de Celular: {{ Auth::user()->phone_number }}</span>
+                                        <span class="cart-text">Número de Celular:
+                                            {{ Auth::user()->phone_number }}</span>
                                         <hr>
                                         <span class="cart-text">Correo Electrónico: {{ Auth::user()->email }}</span>
                                         <hr>
@@ -144,42 +162,36 @@
                     </div>
 
 
-                    <div class="button-container">
-                        <a href="{{ route('showcart') }}" class="btn btn-secondary">Cancelar</a>
-                        @if (strtolower($paymentMethod->name) == 'transferencia bancaria')
-                            <form action="{{ route('checkout_transfer') }}" method="POST" id="shipment-form">
-                                @csrf
-                                <input type="hidden" name="paymentMethod" id="paymentMethod"
-                                    value="{{ $paymentMethod->id }}">
-                                <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
-                                <button type="submit-button" class="btn btn-primary" id="submit-button">Continuar</button>
-                            </form>
-                        @elseif (strtolower($paymentMethod->name) == 'webpay')
-                            <form action="{{ route('checkout_transbank') }}" method="POST" id="webpay-form">
-                                @csrf
-                                <input type="hidden" name="cart" value="{{ json_encode($cart) }}">
-
-                                <input type="hidden" name="paymentMethod" id="paymentMethod"
-                                    value="{{ $paymentMethod->id }}">
-                                <input type="hidden" name="shipment_type" id="shipment_type"
-                                    value="{{ $shipment_type }}">
-                                <button type="submit" id="submit-button"class="btn btn-primary">Confirmar
-                                    Carrito</button>
-                            </form>
-                        @elseif (strtolower($paymentMethod->name) == 'efectivo')
-                            <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST"
-                                id="shipment-form">
-                                @csrf
-
-                                <button type="submit" class="btn btn-primary" id="submit-button">Confirmar
-                                    Carrito</button>
-                            </form>
-                        @endif
-                    </div>
-
-
                 </div>
             </div>
+            <div class="d-flex justify-content-center">
+                @if (strtolower($paymentMethod->name) == 'transferencia bancaria')
+                    <form action="{{ route('checkout_transfer') }}" method="POST" id="shipment-form">
+                        @csrf
+                        <input type="hidden" name="paymentMethod" id="paymentMethod" value="{{ $paymentMethod->id }}">
+                        <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                        <button type="submit-button" class="btn btn-primary" id="submit-button">Continuar</button>
+                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+
+                    </form>
+                @elseif (strtolower($paymentMethod->name) == 'webpay')
+                    <form action="{{ route('checkout_transbank') }}" method="POST" id="webpay-form">
+                        @csrf
+                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+                        <button type="submit" id="submit-button"class="btn btn-primary">Confirmar
+                            Carrito</button>
+                    </form>
+                @elseif (strtolower($paymentMethod->name) == 'efectivo')
+                    <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST"
+                        id="shipment-form">
+                        @csrf
+
+                        <button type="submit" class="btn btn-primary" id="submit-button">Confirmar
+                            Carrito</button>
+                    </form>
+                @endif
+            </div>
+               </div>
         @endif
 
 
@@ -200,7 +212,8 @@
                     <div
                         class="three-fourths columns medium-down--one-whole offset-by-two is-hidden-offset-mobile-only page">
                         <span class="terms_p">
-                            "La empresa a la que se adhieren los términos correspondientes corresponde a Vestuarios Que Guay
+                            "La empresa a la que se adhieren los términos correspondientes corresponde a Vestuarios Que
+                            Guay
                             SPA,
                             representada por Francisca Arias"
                         </span>
@@ -211,7 +224,8 @@
                                 <strong> GENERAL</strong>
                             </li>
                         </ol>
-                        <P class="terms_p">La experiencia de comprar en www.queguay.azurewebsites.net es fácil y segura. En
+                        <P class="terms_p">La experiencia de comprar en www.queguay.azurewebsites.net es fácil y
+                            segura. En
                             este sentido, la empresa Vestuarios Que Guay
                             trabaja con los más altos estándares de seguridad y toda la información que los usuarios
                             registran en el Sitio se mantiene de
@@ -222,7 +236,8 @@
                                 <strong> DESPACHOS</strong>
                             </li>
                         </ol>
-                        <P class="terms_p">Nuestros productos serán entregados a través de Chilexpress, Starken, BluExpress
+                        <P class="terms_p">Nuestros productos serán entregados a través de Chilexpress, Starken,
+                            BluExpress
                             o 99Minutos dependiendo de la dirección de envío.
                             El plazo de entrega en región metropolitana y en todo el país es de hasta 5 días hábiles.
                             <br>
@@ -234,12 +249,14 @@
                             <br>
 
                             <strong class="terms_p">Para casos excepcionales o de fuerza mayor (Covid)</strong>
-                            ", el plazo estará sujeto a los tiempos de distribución y servicio de las empresas de courier
+                            ", el plazo estará sujeto a los tiempos de distribución y servicio de las empresas de
+                            courier
                             antes mencionadas, así como a las limitaciones
                             declaradas por la autoridad."
                             <br>
                             <br>
-                            Al momento de realizar tu pedido el sistema calculará automáticamente un monto de envío según tu
+                            Al momento de realizar tu pedido el sistema calculará automáticamente un monto de envío
+                            según tu
                             dirección.
                             <br>
                             <br>
@@ -247,7 +264,8 @@
                             courier.
                             <br>
                             <br>
-                            En caso de solicitar la opción de retiro en sucursal Chilexpress o Starken es de responsabilidad
+                            En caso de solicitar la opción de retiro en sucursal Chilexpress o Starken es de
+                            responsabilidad
                             del cliente retirar el pedido antes de cumplidos 14
                             días en sucursal. De lo contrario el envío se devolverá a nuestra bodega y el cliente deberá
                             pagar los costos de envío asociados.
@@ -261,7 +279,8 @@
                         </p>
                         <p>
                             <span class="terms_p">
-                                Toda Promoción de envío es exclusiva para productos marca Que Guay! a no ser que se informe
+                                Toda Promoción de envío es exclusiva para productos marca Que Guay! a no ser que se
+                                informe
                                 lo contrario.
                             </span>
                         </p>
@@ -271,17 +290,21 @@
                                 <strong>MEDIDAD DE SEGURIDAD</strong>
                             </li>
                         </ol>
-                        <P class="terms_p">Para cumplir los objetivos de seguridad Que Guay! cuenta con la tecnología SSL
+                        <P class="terms_p">Para cumplir los objetivos de seguridad Que Guay! cuenta con la tecnología
+                            SSL
                             (Secure Sockets Layer) que asegura, tanto la autenticidad del Sitio,
-                            como el cifrado de toda la información que nos entrega el usuario. Cada vez que el usuario se
+                            como el cifrado de toda la información que nos entrega el usuario. Cada vez que el usuario
+                            se
                             registra en el Sitio y entrega información de carácter
                             personal, sin importar el lugar geográfico en donde se encuentre, a efectos de comprar un
                             producto, el navegador por el cual ejecuta el acto se
                             conecta al Sitio a través del protocolo SSL que acredita que el usuario se encuentra
                             efectivamente en el Sitio y en nuestros servidores
-                            (lo cual se aprecia con la aparición del código HTTPS en la barra de direcciones del navegador).
+                            (lo cual se aprecia con la aparición del código HTTPS en la barra de direcciones del
+                            navegador).
                             De esta forma se establece un método de
-                            cifrado de la información entregada por el usuario y una clave de sesión única. Esta tecnología
+                            cifrado de la información entregada por el usuario y una clave de sesión única. Esta
+                            tecnología
                             permite que la información de carácter personal
                             del usuario, como su nombre, dirección y datos de tarjetas bancarias, sean codificadas antes
                             para que no pueda ser leída cuando viaja a través de
@@ -296,9 +319,11 @@
                                 <strong>DECLARACIÓN DE PRIVACIDAD</strong>
                             </li>
                         </ol>
-                        <p class="terms_p">Vestuarios Que Guay no comunica ni cede a terceros, bajo ninguna circunstancia,
+                        <p class="terms_p">Vestuarios Que Guay no comunica ni cede a terceros, bajo ninguna
+                            circunstancia,
                             los datos de carácter personal registrados por los usuarios
-                            en el Sitio. Sin perjuicio de lo anterior, esta información podrá ser tratada por Vestuarios Que
+                            en el Sitio. Sin perjuicio de lo anterior, esta información podrá ser tratada por Vestuarios
+                            Que
                             Guay y sus asociados, únicamente para fines
                             estadísticos y/o para obtener una mejor comprensión de los perfiles de los usuarios y, así,
                             mejorar los productos ofrecidos en el Sitio.</p>
@@ -311,7 +336,8 @@
                         </ol>
                         <p class="terms_p">Al registrarse en el Sitio se le solicitará al usuario solamente aquella
                             información necesaria para el pago del producto y
-                            su posterior envío. En ningún caso, esta información será comunicada o transmitida a terceros
+                            su posterior envío. En ningún caso, esta información será comunicada o transmitida a
+                            terceros
                             ajenos a Vestuarios Que Guay , Que guay
                             no almacena ni conserva la información de la tarjeta bancaria del usuario.</p>
                         <br>
@@ -320,7 +346,8 @@
                                 <strong>DATOS PERSONALES</strong>
                             </li>
                         </ol>
-                        <p class="terms_p">El usuario registrado podrá ejercer sus derechos de información, modificación,
+                        <p class="terms_p">El usuario registrado podrá ejercer sus derechos de información,
+                            modificación,
                             eliminación, cancelación y/o bloqueo de sus datos personales
                             cuando lo estime pertinente, según lo establecido en la Ley Nº 19.628 sobre Protección de la
                             Vida Privada. Vestuarios Que Guay pone a
@@ -342,14 +369,7 @@
             window.history.back();
         }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.modal');
-            var instances = M.Modal.init(elems, {
-                dismissible: false
-            });
-        });
-    </script>
+  
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
