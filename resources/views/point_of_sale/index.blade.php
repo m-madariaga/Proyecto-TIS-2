@@ -33,7 +33,7 @@
                                         <th class="text-center">#</th>
                                         <th class="text-center">Codigo</th>
                                         <th class="text-center">Fecha</th>
-                                        <th class="text-center">Nombre cliente</th>
+                                        <th class="text-center">Cliente</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -55,14 +55,25 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="card mb-4 ps-3 pe-3 pt-2">
+                <div class="card mb-4 ps-3 pe-3 pt-2 text-center">
                     <div class="card-header">
-                        <h6>Realiza una nueva venta</h6>
+                        <h4>Realiza una nueva venta</h4>
                     </div>
-                    <div class="card-body">
-                        <a>EL A</a>
-                        <button>l button</button>
-                    </div>
+                    <form action="{{ route('point_of_sale-store') }}" method="POST">
+                        <div class="card-body d-flex flex-wrap justify-content-center text-center ">
+                            @foreach ($productos as $producto)
+                                <div class="card m-3" style="width: 9rem;">
+                                    <img src="/assets/images/images-products/{{ $producto->imagen }}" class="card-img-top"
+                                        height="200">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
+                                        <p class="card-text"> {{ $producto->marca->nombre }}<br>${{ $producto->precio }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
+                    </form>
                 </div>
             </div>
         </div>
