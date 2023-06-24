@@ -4,7 +4,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
-    
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/mdb.min.css') }}">
 
     <style>
@@ -32,7 +32,23 @@
 
         .btn_darlike {
             position: absolute;
-            top: 0%;
+            width: 38px;
+            height: 38px;
+            top: 15px;
+            right: 15px;
+            background-color: white;
+            color: black;
+            border: 0;
+            padding: 0;
+            border-radius: 50%;
+            cursor: pointer;
+
+        }
+        .btn_darlike i{
+            font-size: 18px;
+        }
+        .isLike {
+            color: rgb(200, 0, 0);
         }
     </style>
 @endsection
@@ -284,7 +300,8 @@
                     <div class="row justify-content-center">
                         <div class="col justify-content-center">
                             <div class="product-grid d-flex justify-content-center"
-                                data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }' id="productContainer">
+                                data-isotope='{ "itemSelector": ".product-item", "layoutMode": "fitRows" }'
+                                id="productContainer">
                                 @foreach ($productos as $index => $producto)
                                     <div class="product-item {{ $producto->stock === 0 ? 'out-of-stock' : '' }}"
                                         data-category="{{ $producto->categoria->nombre }}"
@@ -303,6 +320,18 @@
                                                     <div class="product_price">${{ $producto->precio }}</div>
                                                 </div>
                                             </div>
+                                            @if (Auth::check())
+                                                <form action="{{ route('like-product') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{ $producto->id }}">
+                                                    <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                    <button
+                                                        class="btn btn_darlike  {{ Auth::user()->product_desired->contains('product_id', $producto->id) === true ? 'isLike' : '' }}"
+                                                        type="submit">
+                                                        <i class="bi bi-heart-fill " aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </a>
                                     </div>
                                 @endforeach

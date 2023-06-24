@@ -27,6 +27,7 @@ use App\Http\Controllers\WebpayCredentialController;
 use App\Http\Controllers\PointOfSaleController;
 use App\Http\Controllers\BankDataController;
 use App\Http\Controllers\CheckOutController;
+use App\Http\Controllers\ProductDesiredController;
 use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
@@ -229,9 +230,6 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     });
 
-
-
-
     Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
         Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
         Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
@@ -257,8 +255,9 @@ Route::group(['middleware' => ['permission:vista analista'], 'prefix' => 'analis
 });
 
 Auth::routes();
-
-
+//rutas cliente
+Route::get('/productos_deseados/{user}', [ProductDesiredController::class, 'show'])->name('products-desired');
+Route::post('/like_producto', [ProductDesiredController::class, 'store_and_delete'])->name('like-product');
 
 Route::get('/profile_landing', [App\Http\Controllers\ProfileLandingController::class, 'index'])->name('profile_landing');
 Route::post('/profile_landing_edit/{id}', [App\Http\Controllers\ProfileLandingController::class, 'update'])->name('profile_landing_edit');
