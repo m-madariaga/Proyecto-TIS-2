@@ -136,7 +136,6 @@
         $(document).on('click', '.delete-product', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-            console.log(' kdñsñskd');
             Swal.fire({
                 title: '¿Estás seguro?',
                 text: "¡No podrás revertir esto!",
@@ -148,7 +147,6 @@
                 cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(' kdñsñskd');
                     $.ajax({
                         type: 'DELETE',
                         url: '/admin/productos/' + id,
@@ -169,7 +167,6 @@
                             }, 1000); // delay for half a second
                         },
                         error: function(xhr, status, error) {
-                            console.log(' kdñsñskd');
                             console.log(xhr.responseText);
                         }
                     });

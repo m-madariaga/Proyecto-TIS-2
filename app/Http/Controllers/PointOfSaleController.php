@@ -18,6 +18,7 @@ class PointOfSaleController extends Controller
     {
         $order = Order::find($id->id);
         $order->pagado = 1;
-        $order->save;
+        $order->save();
+        return redirect()->route('point_of_sale');
     }
 }

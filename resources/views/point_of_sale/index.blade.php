@@ -42,7 +42,10 @@
                                             <td class="text-center align-middle">{{ $order->id }}</td>
                                             <td class="text-center align-middle">{{ $order->created_at }}</td>
                                             <td class="text-center align-middle">{{ $order->user->name }}</td>
-                                            <td class="text-center align-middle"><a type="button" class="btn btn-primary btn-sm" href="{{route('point_of_sale-update',$order->id)}}">Pagar</a></td>
+                                            <td class="text-center align-middle"><a type="button"
+                                                    class="btn btn-primary btn-sm pagar_orden"
+                                                    href="{{ route('point_of_sale-update', $order->id) }}"
+                                                    id='{{ $order->id }}' data-id="{{ $order->id }}">Pagar</a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -120,49 +123,38 @@
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        $(document).on('click', '.delete-product', function(e) {
+        $(document).on('click', '.pagar_orden', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-            Swal.fire({
-                title: '¿Estás seguro?',
+            var btn = document.getElementById(id);
+
+            swal.fire({
+                title: '¿Estas seguro?',
                 text: "¡No podrás revertir esto!",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!',
-                cancelButtonText: 'Cancelar'
+                confirmButtonText: 'Si, adelante',
+                cancelButtonText: 'No, cancela!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    console.log(' kdñsñskd');
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/admin/productos/' + id,
-                        data: {
-                            id: id,
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            console.log('success');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Exito',
-                                text: '¡Producto eliminado correctamente!',
-                                timer: 1000
-                            });
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // delay for half a second
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(' kdñsñskd');
-                            console.log(xhr.responseText);
-                        }
-                    });
+                    swal.fire(
+                        'Pagado!',
+                        'La orden ha sido completada.',
+                        'success'
+                    )
+                    setTimeout(() => {
+                        window.location.href = btn.getAttribute('href');
+                    }, 1000);
+                } else {
+                    swal.fire(
+                        'Cancelado',
+                        'El pago no se ha completado',
+                        'error'
+                    )
                 }
-            });
-
-
+            })
         });
     </script>
 @endsection
