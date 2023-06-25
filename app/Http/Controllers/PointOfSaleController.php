@@ -11,7 +11,7 @@ class PointOfSaleController extends Controller
     public function index()
     {
         $orders = Order::all()->where('pagado', 0);
-        $productos = Product::all();
+        $productos = Product::paginate(2);;
         return view('point_of_sale.index', compact('orders', 'productos'));
     }
     public function update(Order $id)

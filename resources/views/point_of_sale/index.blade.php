@@ -60,6 +60,7 @@
                         <h4>Registrar una nueva venta</h4>
                     </div>
                     <form action="{{ route('point_of_sale-store') }}" method="POST" class="text-center">
+                        @csrf
                         <div class="card-body d-flex flex-wrap justify-content-center text-center ">
                             @foreach ($productos as $producto)
                                 <div class="card m-3" style="width: 9rem;">
@@ -73,6 +74,10 @@
                                 </div>
                             @endforeach
                         </div>
+
+                        {!! $productos->links() !!}
+
+
                         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Continuar</button>
                     </form>
                 </div>
