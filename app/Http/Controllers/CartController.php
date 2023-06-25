@@ -260,7 +260,7 @@ class CartController extends Controller
         if ($request->isMethod('post')) {
             $user = Auth::user();
             $order = Order::findOrFail($orderId);
-           
+
             if ($user && $order->user_id === $user->id && $order->estado === 0) {
                 $order->estado = 1; // Cambiar el estado a pagado
                 $order->save();
