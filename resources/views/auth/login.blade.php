@@ -4,14 +4,15 @@
 
 <main class="main-content mt-0">
     <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-color:hotpink; background-position: top;">
-        <span class="mask bg-gradient-dark opacity-6"></span>
+        <!-- fondo pantalla -->
+        <span class="mask bg-gradient-dark" style="background-image: url('{{ asset('argon/assets/img/portada2.jpg') }}');"></span>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-5 text-center mx-auto">
-                    <a class="navbar-brand m-0" href="{{ route('home-landing') }}" >
-                        <img src="{{ asset('argon/assets/img/logo.png') }}" class="navbar-brand-img logo-img mb-2 mt-6" alt="main_logo" id="imgchange_logo">
+                    <a class="navbar-brand m-0" href="{{ route('home-landing') }}">
+                        <img src="{{ asset('argon/assets/img/logo_dark.png') }}" class="navbar-brand-img logo-img mb-2 mt-6" alt="main_logo" id="imgchange_logo">
                         <span class="ms-1 font-weight-bold"></span>
-                   
+
                     </a>
                 </div>
             </div>
