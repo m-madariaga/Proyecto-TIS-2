@@ -17,11 +17,6 @@
 
     @yield('css')
 
-    <!-- Scripts JS -->
-
-
-
-
     <style>
         html,
         body {

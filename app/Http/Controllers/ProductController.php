@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -25,24 +26,28 @@ class ProductController extends Controller
 
     public function women_product()
     {
+        $sections = Section::all();
         $productos = Product::all();
-        return view('women', compact('productos'));
+        return view('women', compact('productos','sections'));
     }
 
     public function men_product()
     {
+        $sections = Section::all();
         $productos = Product::all();
-        return view('men', compact('productos'));
+        return view('men', compact('productos','sections'));
     }
     public function kids_product()
     {
+        $sections = Section::all();
         $productos = Product::all();
-        return view('kids', compact('productos'));
+        return view('kids', compact('productos','sections'));
     }
     public function accesorie_product()
     {
+        $sections = Section::all();
         $productos = Product::all();
-        return view('accesorie', compact('productos'));
+        return view('accesorie', compact('productos','sections'));
     }
 
 
@@ -66,6 +71,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        
         try {
             $validatedData = $request->validate(
                 [
@@ -140,17 +146,18 @@ class ProductController extends Controller
      */
     public function show($productId)
     {
+        $sections = Section::all();
         $product = Product::findOrFail($productId);
         $reviews = Review::where('product_fk', $productId)->get();
-        foreach($reviews as $review){
+        foreach ($reviews as $review) {
             $review->username = User::find($review->user_fk)->name;
             error_log($review->username);
         }
 
 
-        
 
-        return view('product.show', compact('product', 'reviews'));
+
+        return view('product.show', compact('product', 'reviews','sections'));
     }
 
     /**

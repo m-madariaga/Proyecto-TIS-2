@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Product_desired;
+use App\Models\Section;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -18,6 +19,7 @@ class ProductDesiredController extends Controller
      */
     public function index()
     {
+        $sections = Section::all();
         $users = User::all();
         $producto_mas_deseado = DB::table('product_desireds')
             ->join('users', 'product_desireds.user_id', '=', 'users.id')
@@ -36,7 +38,7 @@ class ProductDesiredController extends Controller
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users', 'product', 'count'));
+        return view('product_desired.index', compact('users', 'product', 'count','sections'));
     }
     public function generate_pdf(User $id)
     {

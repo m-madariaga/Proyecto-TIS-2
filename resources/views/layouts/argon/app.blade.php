@@ -6,9 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('argon/assets/img/favicon.png') }}">
-    <title>
-        @yield('title')
-    </title>
+
     <!-- Fonts and icons -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- CSRF Token -->
@@ -22,11 +20,10 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('argon/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
 
-
     @yield('css')
 </head>
 
-<body class="g-sidenav-show   bg-gray-100">
+<body class="g-sidenav-show   bg-gray-100" data-theme="light">
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
     @include('layouts.argon.sidebar')
     <main class="main-content position-relative border-radius-lg ">
@@ -55,6 +52,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('argon/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
+    
     @yield('js')
 </body>
 

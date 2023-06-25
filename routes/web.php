@@ -45,21 +45,20 @@ use App\Models\Purchase_order_product;
 */
 
 Auth::routes();
-
-Route::get('/', function () {
+Route::get('/',[App\Http\Controllers\HomeLandingController::class, 'index'], function () {
     return view('home-landing');
 });
 
-Route::get('/home-landing', function () {
+Route::get('/home-landing',[App\Http\Controllers\HomeLandingController::class, 'index'], function () {
     return view('/home-landing');
 })->name('home-landing');
 
 
 // rutas categorias
-Route::get('/women', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
-Route::get('/men', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
-Route::get('/kids', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
-Route::get('/accesorie', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
+Route::get('/mujer', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
+Route::get('/hombre', [App\Http\Controllers\ProductController::class, 'men_product'])->name('men');
+Route::get('/niños', [App\Http\Controllers\ProductController::class, 'kids_product'])->name('kids');
+Route::get('/accesorios', [App\Http\Controllers\ProductController::class, 'accesorie_product'])->name('accesorie');
 
 Route::get('regions/{countryId}', [App\Http\Controllers\RegionController::class, 'getRegions']);
 Route::get('cities/{regionId}', [App\Http\Controllers\CityController::class, 'getCities']);
@@ -214,7 +213,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::patch('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'update'])->name('permissions.update');
         Route::delete('/permissions/{id}', [App\Http\Controllers\PermissionsController::class, 'destroy'])->name('permissions.destroy');
     });
-
+    Route::group(['middleware' => ['permission:mantenedor secciones landing']], function () {
+        Route::get('/secciones', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
+        Route::get('/secciones/create', [App\Http\Controllers\SectionController::class, 'create'])->name('section.create');
+        Route::post('/secciones/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
+        Route::get('/secciones/{id}/edit', [App\Http\Controllers\SectionController::class, 'edit'])->name('section.edit');
+        Route::patch('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
+        Route::delete('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'destroy'])->name('section.destroy');
+    });
 
 
 
@@ -230,14 +236,14 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     });
 
-    Route::group(['middleware' => ['permission:mantenedor productos deseados']],function(){
-        Route::get('/productos_deseados',[ProductDesiredController::class,'index'])->name('product_desired');
-        Route::get('/productos_deseados/pdf/{id}',[ProductDesiredController::class,'generate_pdf'])->name('product_desired_pdf');
+    Route::group(['middleware' => ['permission:mantenedor productos deseados']], function () {
+        Route::get('/productos_deseados', [ProductDesiredController::class, 'index'])->name('product_desired');
+        Route::get('/productos_deseados/pdf/{id}', [ProductDesiredController::class, 'generate_pdf'])->name('product_desired_pdf');
     });
 
     Route::group(['middleware' => ['permission:mantenedor punto de venta']], function () {
         Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
-        Route::post('/punto-venta-store',[PointOfSaleController::class,'store'])->name('point_of_sale-store');
+        Route::post('/punto-venta-store', [PointOfSaleController::class, 'store'])->name('point_of_sale-store');
     });
 
 
@@ -299,7 +305,7 @@ Route::post('/additem', [App\Http\Controllers\CartController::class, 'additem'])
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 Route::post('/product/{productId}/{userId}', [App\Http\Controllers\ReviewsController::class, 'store'])->name('reviews.store');
 
-Route::get('/knowmeview', [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
+Route::get('/knowmeview',[App\Http\Controllers\HomeLanding::class, 'index'], [App\Http\Controllers\KnowMeController::class, 'index'])->name('knowmeview.index');
 Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsController::class, 'index'])->name('termsconditionsview.index');
 
 

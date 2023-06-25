@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PaymentMethod;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class PaymentMethodController extends Controller
@@ -14,8 +15,9 @@ class PaymentMethodController extends Controller
 
     public function index()
     {
+        $sections = Section::all();
         $paymentMethods = PaymentMethod::all();
-        return view('paymentmethod_landing', compact('paymentMethods'));
+        return view('paymentmethod_landing', compact('paymentMethods','sections'));
     }
 
     public function index_admin()
