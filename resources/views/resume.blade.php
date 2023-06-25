@@ -172,7 +172,6 @@
                         <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
                         <button type="submit-button" class="btn btn-primary" id="submit-button">Continuar</button>
                         <input type="hidden" name="order" value="{{ json_encode($order) }}">
-
                     </form>
                 @elseif (strtolower($paymentMethod->name) == 'webpay')
                     <form action="{{ route('checkout_transbank') }}" method="POST" id="webpay-form">

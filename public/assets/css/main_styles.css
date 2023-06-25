@@ -1719,7 +1719,7 @@ footer{
 }
 
 .footer_nav li {
-	display: inline-block;
+	display: block;
 	margin-right: 45px;
 }
 
