@@ -246,7 +246,7 @@
                     </a>
                 </li>
             @endcan
-            {{-- @can('mantenedor acciones')
+            @can('mantenedor acciones')
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('page') ? 'active' : '' }}" href="{{ route('actions.index') }}">
                         <div
@@ -256,7 +256,7 @@
                         <span class="nav-link-text ms-1">Acciones Realizadas</span>
                     </a>
                 </li>
-            @endcan --}}
+            @endcan
 
         </ul>
     </div>
