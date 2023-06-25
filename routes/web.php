@@ -238,6 +238,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::group(['middleware' => ['permission:mantenedor punto de venta']], function () {
         Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
         Route::post('/punto-venta-store',[PointOfSaleController::class,'store'])->name('point_of_sale-store');
+        Route::get('/punto-venta-update/{id}', [PointOfSaleController::class, 'update'])->name('point_of_sale-update');
     });
 
 

@@ -16,6 +16,7 @@ class Order extends Model
         'impuesto',
         'total',
         'estado',
+        'pagado',
         'paymentmethod_fk',
         'user_id',
     ];

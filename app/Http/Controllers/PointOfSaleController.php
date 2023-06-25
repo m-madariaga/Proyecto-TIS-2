@@ -10,11 +10,14 @@ class PointOfSaleController extends Controller
 {
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::all()->where('pagado', 0);
         $productos = Product::all();
         return view('point_of_sale.index', compact('orders', 'productos'));
     }
-    public function store(Request $request)
+    public function update(Order $id)
     {
+        $order = Order::find($id->id);
+        $order->pagado = 1;
+        $order->save;
     }
 }

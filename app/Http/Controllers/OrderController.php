@@ -21,6 +21,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
 
         $order->estado = $request->has('estado') ? 1 : 0;
+        $order->pagado = $request->has('pagado') ? 1 : 0;
         $order->save();
         return redirect()->route('orders.index');
     }

@@ -116,6 +116,7 @@ class CartController extends Controller
                 $order->impuesto = 0;
                 $order->total = 0;
                 $order->estado = 0;
+                $order->pagado = 0;
                 $order->user_id = $user->id;
                 $order->paymentmethod_fk = null;
                 $order->save();

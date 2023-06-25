@@ -20,33 +20,30 @@
 @section('content')
     <div class="container-fluid py-4">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                 <div class="card mb-4 ps-3 pe-3 pt-2">
                     <div class="card-header">
-                        <h6>Confirma pedido existente</h6>
+                        <h4>Confirma pedido existente</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive p-0">
                             <table id="orders-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">#</th>
-                                        <th class="text-center">Codigo</th>
-                                        <th class="text-center">Fecha</th>
-                                        <th class="text-center">Cliente</th>
+                                        <th class="text-center align-middle">Id</th>
+                                        <th class="text-center align-middle">Fecha</th>
+                                        <th class="text-center align-middle">Cliente</th>
+                                        <th class="text-center align-middle"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $order)
-                                        <form action="{{ route('orders.edit', ['id' => $order->id]) }}" method="POST">
-                                            @csrf
-                                            <tr>
-                                                <td><input type="checkbox" name="estado"></td>
-                                                <td>{{ $order->id }}</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </form>
+                                        <tr>
+                                            <td class="text-center align-middle">{{ $order->id }}</td>
+                                            <td class="text-center align-middle">{{ $order->created_at }}</td>
+                                            <td class="text-center align-middle">{{ $order->user->name }}</td>
+                                            <td class="text-center align-middle"><a type="button" class="btn btn-primary btn-sm" href="{{route('point_of_sale-update',$order->id)}}">Pagar</a></td>
+                                        </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -54,12 +51,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
-                <div class="card mb-4 ps-3 pe-3 pt-2 text-center">
+            <div class="col-md-7">
+                <div class="card mb-4 ps-3 pe-3 pt-2 ">
                     <div class="card-header">
-                        <h4>Realiza una nueva venta</h4>
+                        <h4>Registrar una nueva venta</h4>
                     </div>
-                    <form action="{{ route('point_of_sale-store') }}" method="POST">
+                    <form action="{{ route('point_of_sale-store') }}" method="POST" class="text-center">
                         <div class="card-body d-flex flex-wrap justify-content-center text-center ">
                             @foreach ($productos as $producto)
                                 <div class="card m-3" style="width: 9rem;">
@@ -67,12 +64,13 @@
                                         height="200">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
-                                        <p class="card-text"> {{ $producto->marca->nombre }}<br>${{ $producto->precio }}</p>
+                                        <p class="card-text"> {{ $producto->marca->nombre }}<br>${{ $producto->precio }}
+                                        </p>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
+                        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Continuar</button>
                     </form>
                 </div>
             </div>
