@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\Detail;
 use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Http\Request;
+use App\Models\Action;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -23,6 +24,12 @@ class OrderController extends Controller
         $order->estado = $request->has('estado') ? 1 : 0;
         $order->pagado = $request->has('pagado') ? 1 : 0;
         $order->save();
+
+        $action = new Action();
+            $action->name = 'Edición Pedido';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+        
         return redirect()->route('orders.index');
     }
 

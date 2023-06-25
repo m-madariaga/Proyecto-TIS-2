@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\statusChangeEmail;
 use App\Mail\statusChangeAdmin;
 use Illuminate\Support\Facades\DB;
+use App\Models\Action;
 
 class ShipmentController extends Controller
 {
@@ -216,6 +217,10 @@ class ShipmentController extends Controller
         Mail::to($user)->queue(new statusChangeEmail($user->name, $status, $id, $traceability));
         Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, $status, $id, $traceability));
 
+        $action = new Action();
+            $action->name = 'Progresado estado de envío';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
 
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
     }
@@ -241,6 +246,11 @@ class ShipmentController extends Controller
 
             Mail::to($user)->queue(new statusChangeEmail($user->name, 'cancelado', $id, $traceability));
             Mail::to('admin@test.cl')->queue(new statusChangeAdmin($user->name, 'cancelado', $id, $traceability));
+
+            $action = new Action();
+                $action->name = 'Cancelación de envío';
+                $action->user_fk = Auth::User()->id;
+            $action->save();
         }
 
 
