@@ -14,7 +14,55 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .ctn-btn-d {
+            background-color: none;
+            width: 5.5rem;
+            height: 1.8rem;
+            display: inline-block;
+            border: 1px solid #8c034e;
+            border-radius: 3px;
+            margin: 0.1rem;
+        }
+
+        .ctn-btn {
+            background-color: none;
+            width: 5.5rem;
+            height: 1.8rem;
+            display: inline-block;
+            border: 1px solid #8c034e;
+            border-radius: 3px;
+            margin: 0.1rem;
+            transition: background-color 0.4s ease;
+            color: black;
+        }
+
+        .ctn-btn:hover {
+            background-color: #8c034e;
+            color: white;
+        }
+
+        .ctn-page {
+            width: 3rem;
+            height: 1.8rem;
+            display: inline-block;
+            border: 1px solid #8c034e;
+            border-radius: 3px;
+            margin: 0.1rem;
+            transition: background-color 0.4s ease;
+            color: black;
+        }
+
+        .ctn-page:hover {
+            background-color: #8c034e;
+            color: white;
+        }
+
+        .pag_active {
+            background-color: #8c034e;
+            color: white;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -58,6 +106,12 @@
                 <div class="card mb-4 ps-3 pe-3 pt-2 ">
                     <div class="card-header">
                         <h4>Registrar una nueva venta</h4>
+                        <li class="">
+                            <a href="">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <span id="" class="">{{ Cart::count() }}</span>
+                            </a>
+                        </li>
                     </div>
                     <form action="{{ route('point_of_sale-store') }}" method="POST" class="text-center">
                         @csrf
@@ -75,9 +129,45 @@
                             @endforeach
                         </div>
 
-                        {!! $productos->links() !!}
+                        <nav>
+                            <ul class="pagination justify-content-center ">
+                                {{-- Botón "Anterior" --}}
+                                @if ($productos->onFirstPage())
+                                    <li class="ctn-btn-d disabled">
+                                        <span>Anterior</span>
+                                    </li>
+                                @else
+                                    <li class="">
+                                        <a class="ctn-btn" href="{{ $productos->previousPageUrl() }}" rel="prev">
+                                            <div>Anterior</div>
+                                        </a>
+                                    </li>
+                                @endif
 
+                                {{-- Números de página --}}
+                                @foreach ($productos->getUrlRange(1, $productos->lastPage()) as $page => $url)
+                                    <li class=" ">
+                                        <a class="ctn-page {{ $page == $productos->currentPage() ? 'pag_active' : '' }}"
+                                            href="{{ $url }}">
+                                            <div class="">{{ $page }}</div>
+                                        </a>
+                                    </li>
+                                @endforeach
 
+                                {{-- Botón "Siguiente" --}}
+                                @if ($productos->hasMorePages())
+                                    <li class="">
+                                        <a class="ctn-btn" href="{{ $productos->nextPageUrl() }}" rel="next">
+                                            <div>Siguiente</div>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li class="ctn-btn-d disabled">
+                                        <span class="">Siguiente</span>
+                                    </li>
+                                @endif
+                            </ul>
+                        </nav>
                         <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Continuar</button>
                     </form>
                 </div>
