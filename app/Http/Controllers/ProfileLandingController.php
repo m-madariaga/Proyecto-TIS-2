@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Region;
@@ -15,6 +16,7 @@ class ProfileLandingController extends Controller
 {
     public function index()
     {
+        $sections = Section::all();
         $user = auth()->user();
         $countries = Country::all();
         $regions = Region::all();
@@ -24,10 +26,10 @@ class ProfileLandingController extends Controller
         if ($orders->isEmpty()) {
             $orders = collect(); // Inicializar como una colección vacía
             $details = collect();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details','sections'));
         } else {
             $details = Detail::all();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details','sections'));
         }
 
 

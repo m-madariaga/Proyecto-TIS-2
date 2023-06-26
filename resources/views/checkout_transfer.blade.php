@@ -3,27 +3,7 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
 <style>
-    .header_resume {
-        position: relative;
-        background-image: url("assets/images/lienzo.jpg");
-        background-size: cover;
-        background-position: center;
-        height: 100px;
-    }
-
-    .header-content {
-        display: flex;
-        align-items: center;
-        height: 100%;
-        padding-left: 15px;
-    }
-
-    .navbar-brand-img {
-        height: 70%;
-        width: 300px;
-        margin-left: 18rem;
-        object-fit: contain;
-    }
+ 
 
     .button-container {
         display: flex;

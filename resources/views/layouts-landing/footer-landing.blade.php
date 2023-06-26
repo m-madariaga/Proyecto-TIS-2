@@ -16,18 +16,21 @@
         <div class="col-lg-2 col-md-6 col-sm-6 mb-3 mt-3 footer_nav">
             <h5><strong>Enlaces</strong></h5>
             <ul>
-                <li class="mb-2">
-                    <a href="{{ route('men') }}">Hombre</a>
-                </li>
-                <li class="mb-2">
-                    <a href="{{ route('women') }}">Mujer</a>
-                </li>
-                <li class="mb-2">
-                    <a href="{{ route('kids') }}">Niños</a>
-                </li>
-                <li class="mb-2">
-                    <a href="{{ route('accesorie') }}">Accesorios</a>
-                </li>
+                @foreach ($sections as $section)
+                    @if ($section->visible === 1)
+                        <li class="nav-item">
+                            @if (strtolower($section->nombre) === 'mujer')
+                                <a class="nav-link" href="{{ route('women') }}">{{ $section->nombre }}</a>
+                            @elseif (strtolower($section->nombre) === 'hombre')
+                                <a class="nav-link" href="{{ route('men') }}">{{ $section->nombre }}</a>
+                            @elseif (strtolower($section->nombre) === 'niños')
+                                <a class="nav-link" href="{{ route('kids') }}">{{ $section->nombre }}</a>
+                            @elseif (strtolower($section->nombre) === 'accesorios')
+                                <a class="nav-link" href="{{ route('accesorie') }}">{{ $section->nombre }}</a>
+                            @endif
+                        </li>
+                    @endif
+                @endforeach
             </ul>
         </div>
 
@@ -73,7 +76,8 @@
         <div class="col-12 d-flex flex-column align-items-center text-center">
             <div class="footer_social d-flex flex-row align-items-center justify-content-center">
                 <ul>
-                    <li><a href="https://www.instagram.com/que.guay_/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+                    <li><a href="https://www.instagram.com/que.guay_/" target="_blank"><i class="fa fa-instagram"
+                                aria-hidden="true"></i> Instagram</a></li>
                 </ul>
             </div>
             <div class="d-flex flex-row align-items-center justify-content-center mt-4">

@@ -37,10 +37,12 @@
             <!-- ------------------------------------------ -->
 
             <div class="d-flex my-3">
-                <h6 class="mb-0">Navbar Fijo</h6>
-                <div class="form-check form-switch ps-0 ms-auto my-auto">
-                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="navbarFixed" onclick="navbarFixed(this)">
-                </div>
+                <h6 class="mb-0">Calendario</h6>
+                <a class="ps-0 ms-auto my-auto" href="{{ route('calendar') }}">
+                    <p class="text-md mb-0">
+                        <i class="ni ni-calendar-grid-58 me-1" aria-hidden="true"></i>
+                    </p>
+                </a>
             </div>
 
             <!-- ------------------------------------------ -->

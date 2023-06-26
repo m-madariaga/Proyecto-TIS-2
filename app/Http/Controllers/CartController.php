@@ -6,6 +6,7 @@ use App\Mail\ProofPayment;
 use App\Models\Detail;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -107,6 +108,7 @@ class CartController extends Controller
 
     public function showCart()
     {
+        $sections = Section::all();
         $this->checkStock();
 
         $user = Auth::user();
@@ -145,7 +147,7 @@ class CartController extends Controller
             return $item->stock > 0;
         });
 
-        return view('cart', compact('items', 'order'));
+        return view('cart', compact('items','sections', 'order'));
     }
 
     public function removeitem(Request $request)
@@ -273,7 +275,7 @@ class CartController extends Controller
     }
 
 
-    // ORDEN CONFIRMADA FINALMENTE
+    // ORDEN CONFIRMADA FINALMENTE 
     public function confirmOrder(Request $request, $orderId)
     {
         if ($request->isMethod('post')) {
