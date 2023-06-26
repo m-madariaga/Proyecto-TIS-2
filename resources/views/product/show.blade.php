@@ -107,9 +107,9 @@
                             <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                                 <div class="row justify-content-center">
                                     @foreach ($chunk as $recommendedProduct)
-                                    <div class="col-4 col-md-3 col-lg-2"> 
+                                    <div class="col-4 col-md-3 col-lg-2">
                                         <div class="d-flex flex-column align-items-center">
-                                            <a href="">
+                                            <a href="{{ route('product.show', $recommendedProduct->id) }}">
                                                 <div class="card">
                                                     <div class="product-image-container">
                                                         <img src="{{ asset('assets/images/images-products/' . $recommendedProduct->imagen) }}" class="img-thumbnail" alt="{{ $recommendedProduct->nombre }}">
@@ -119,7 +119,6 @@
                                                         <p class="text-body-secondary">Precio: ${{ $recommendedProduct->precio }}</p>
                                                     </div>
                                                 </div>
-
                                             </a>
                                         </div>
                                     </div>
@@ -130,11 +129,13 @@
                         </div>
 
                         <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;
+    filter: invert(1);"></span>
                             <span class="sr-only">Anterior</span>
                         </a>
                         <a class="carousel-control-next" href="#recommendedCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="carousel-control-next-icon" aria-hidden="true"  style="background-color: black;
+    filter: invert(1);"></span>
                             <span class="sr-only">Siguiente</span>
                         </a>
                     </div>
