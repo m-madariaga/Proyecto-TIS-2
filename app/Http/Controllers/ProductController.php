@@ -20,8 +20,9 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $sections = Section::all();
         $productos = Product::all();
-        return view('product.index', compact('productos'));
+        return view('product.index', compact('productos','sections'));
     }
 
     public function women_product()

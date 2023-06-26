@@ -218,7 +218,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/secciones/create', [App\Http\Controllers\SectionController::class, 'create'])->name('section.create');
         Route::post('/secciones/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
         Route::get('/secciones/{id}/edit', [App\Http\Controllers\SectionController::class, 'edit'])->name('section.edit');
-        Route::patch('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
+        Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
         Route::delete('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'destroy'])->name('section.destroy');
     });
 
@@ -314,5 +314,5 @@ Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController:
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
-Route::get('/confirmationcart/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmationcart');
+Route::get('/confirmationTransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmationTransbank');
 Route::get('/webpay/error', [TransbankController::class, 'handleWebpayError'])->name('webpay.error');

@@ -24,21 +24,12 @@ class ShippingMethodsController extends Controller
         $order = $request->session()->get('order');
         $user = User::find($userId);
         $address = strtolower($user->address);
-
-        $selectedMethod = ($this->isInChillanOrSanFernando($address)) ? 'retiro' : 'starken';
         $shipment_types = ShipmentType::all();
 
         $cart = Cart::content();
         $product = Product::all();
 
-        return view('shippingmethod', compact('shipment_types','sections', 'cartId', 'cart', 'selectedMethod', 'product', 'order'));
+        return view('shippingmethod', compact('shipment_types','sections', 'cartId', 'cart', 'product', 'order'));
     }
-
-
-    private function isInChillanOrSanFernando($address)
-    {
-        return strpos($address, 'chillan') !== false || strpos($address, 'san fernando') !== false;
-    }
-
 
 }

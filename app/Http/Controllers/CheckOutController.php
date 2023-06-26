@@ -59,4 +59,6 @@ class CheckOutController extends Controller
 
         return view('checkout_transfer', compact('cart','sections', 'shipment_type', 'name', 'run', 'email', 'bank', 'accountType', 'accountNumber', 'order'));
     }
+
+    // Funcion comprobar transferencia bancaria
 }

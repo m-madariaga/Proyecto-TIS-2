@@ -40,7 +40,7 @@
                 <h6 class="mb-0">Calendario</h6>
                 <a class="ps-0 ms-auto my-auto" href="{{ route('calendar') }}">
                     <p class="text-md mb-0">
-                        <i class="ni ni-circle-08 me-1" aria-hidden="true"></i>
+                        <i class="ni ni-calendar-grid-58 me-1" aria-hidden="true"></i>
                     </p>
                 </a>
             </div>

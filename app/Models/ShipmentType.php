@@ -17,4 +17,9 @@ class ShipmentType extends Model
     {
         return $this->hasMany(Shipment::class,'shipment_type_fk');
     }
+
+    public function shipmentStatuses()
+    {
+        return $this->hasMany(ShipmentStatus::class, 'shipment_type_fk');
+    }
 }

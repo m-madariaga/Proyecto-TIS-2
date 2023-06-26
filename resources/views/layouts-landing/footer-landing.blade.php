@@ -20,13 +20,13 @@
                     @if ($section->visible === 1)
                         <li class="nav-item">
                             @if (strtolower($section->nombre) === 'mujer')
-                                <a class="nav-link" href="{{ route('women') }}">- {{ $section->nombre }}</a>
+                                <a class="nav-link" href="{{ route('women') }}">{{ $section->nombre }}</a>
                             @elseif (strtolower($section->nombre) === 'hombre')
-                                <a class="nav-link" href="{{ route('men') }}">- {{ $section->nombre }}</a>
+                                <a class="nav-link" href="{{ route('men') }}">{{ $section->nombre }}</a>
                             @elseif (strtolower($section->nombre) === 'niños')
-                                <a class="nav-link" href="{{ route('kids') }}">- {{ $section->nombre }}</a>
+                                <a class="nav-link" href="{{ route('kids') }}">{{ $section->nombre }}</a>
                             @elseif (strtolower($section->nombre) === 'accesorios')
-                                <a class="nav-link" href="{{ route('accesorie') }}">- {{ $section->nombre }}</a>
+                                <a class="nav-link" href="{{ route('accesorie') }}">{{ $section->nombre }}</a>
                             @endif
                         </li>
                     @endif
@@ -38,10 +38,10 @@
             <h5><strong>Ayuda</strong></h5>
             <ul>
                 <li class="mb-2">
-                    <a href="{{ route('termsconditionsview.index') }}">- Términos y condiciones</a>
+                    <a href="{{ route('termsconditionsview.index') }}">Términos y condiciones</a>
                 </li>
                 <li class="mb-2">
-                    <a href="">- Preguntas frecuentes</a>
+                    <a href="">Preguntas frecuentes</a>
                 </li>
                 <li class="mb-2">
                     <a href=""></a>
@@ -57,7 +57,7 @@
 
             <ul>
                 <li class="mb-2">
-                    <a href="{{ route('knowmeview.index') }}">- Conócenos</a>
+                    <a href="{{ route('knowmeview.index') }}">Conócenos</a>
                 </li>
                 <li class="mb-2">
                     <a href=""></a>

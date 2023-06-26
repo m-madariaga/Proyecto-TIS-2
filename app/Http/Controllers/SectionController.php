@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
@@ -15,8 +16,10 @@ class SectionController extends Controller
     public function index()
     {
         $secciones = Section::all();
-        return view('section.index', compact('secciones'));
+        $redesSociales = SocialNetwork::all();
+        return view('section.index', compact('secciones', 'redesSociales'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -53,7 +56,7 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-   
+
 
 
 
@@ -77,24 +80,28 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $id)
+    public function update(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
-            'visible' => 'required',
+            'visible' => 'required|array',
         ]);
-        $secciones = Section::all();
-        
-        if (!$secciones) {
-            return redirect()->route('section.index')->with('error', 'No se encontró la Sección.');
-        }
-        $seccion = $secciones->find($id);
-        $seccion->nombre = $request->nombre;
-        $seccion->visible = $request->input('visible');
 
-        $seccion->save();
-        return redirect()->route('section.index', 'Sección actualizada correctamente');
+        $visibleValues = $request->input('visible');
+        $secciones = Section::all();
+
+        if (!$secciones->isEmpty()) {
+            foreach ($secciones as $key => $seccion) {
+                $seccion->visible = $visibleValues[$key];
+                $seccion->save();
+            }
+
+            return redirect()->route('section.index')->with('success', 'Secciones actualizadas correctamente');
+        }
+
+        return redirect()->route('section.index')->with('error', 'No se encontraron secciones.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

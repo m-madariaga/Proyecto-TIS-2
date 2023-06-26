@@ -19,53 +19,37 @@
             margin-bottom: 5rem;
         }
 
-        /* Ajusta el ancho de los contenedores */
+        .multiline-text span {
+            display: block;
+            line-height: 1.2;
+        }
+
         .container-fluid {
             padding: 0px 25rem 0px;
-        }
-
-        /* Añade un poco de margen a los elementos dentro del cuadro de productos */
-        .list-group-item .row {
-            margin-bottom: 1rem;
-        }
-
-        /* Estilos para la tabla de productos */
-        .product-table {
-            display: table;
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .product-table .table-row {
-            display: table-row;
-        }
-
-        .product-table .table-cell {
-            display: table-cell;
-            padding: 8px;
-            vertical-align: middle;
-        }
-
-        .product-table .table-cell img {
-            max-width: 70px;
-            max-height: 70px;
         }
 
         .cart-text {
             color: black;
         }
 
-        .selected-method {
-            border: 2px solid black !important;
+        .underline-hover:hover {
+            text-decoration: underline;
         }
 
-        .selected-method .card-title {
-            color: black;
+        .card.selected-shipment-method {
+            border: 2px solid black;
         }
 
-        .selected-method .form-check-label {
-            color: black !important;
-            font-weight: bold;
+        .card.selected-shipment-method::after {
+            content: 'Seleccionado';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: black;
+            color: white;
+            padding: 2px 5px;
+            font-size: 12px;
+            border-radius: 3px;
         }
     </style>
 @endsection
@@ -148,33 +132,32 @@
                             <div class="card-header pb-0 text-center text-md-start" id="profile_card_header">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <h4 class="mb-0 fw-bold">{{ __('Métodos de Envios') }}</h4>
+                                        <h4 class="mb-0 fw-bold">{{ __('Métodos de Envíos') }}</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    @foreach ($shipment_types as $shipment_type)
-                                        @if (
-                                            ($selectedMethod === 'retiro' && stripos($shipment_type->nombre, 'retiro') !== false) ||
-                                                ($selectedMethod === 'starken' && stripos($shipment_type->nombre, 'starken') !== false))
-                                            <div class="card" data-shipment-type-id="{{ $shipment_type->id }}"
-                                                onclick="selectShipmentType(this)">
-
-
-                                                <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
-                                                    style="cursor: pointer;">
-                                                    <h4 class="card-title text-truncate text-center"
-                                                        style="font-size: 1.5rem; height: 3rem; overflow: hidden;">
-                                                        {{ $shipment_type->nombre }}</h4>
-                                                    <div class="form-check mt-2">
-                                                        <label class="form-check-label"
-                                                            for="shipment_type{{ $shipment_type->id }}">Seleccionar</label>
-                                                    </div>
+                                    @forelse ($shipment_types as $shipment_type)
+                                        <div class="card" data-shipment-type-id="{{ $shipment_type->id }}"
+                                            onclick="selectShipmentType(this)">
+                                            <div class="card-body d-flex flex-column align-items-center selectable-shipment-method"
+                                                style="cursor: pointer;">
+                                                <h4 class="card-title text-truncate text-center"
+                                                    style="font-size: 1.5rem; height: 3rem; overflow: hidden;">
+                                                    {{ $shipment_type->nombre }}</h4>
+                                                <div class="form-check mt-2">
+                                                    <input class="form-check-input" type="radio" name="shipment_type"
+                                                        id="shipment_type{{ $shipment_type->id }}"
+                                                        value="{{ $shipment_type->id }}">
+                                                    <label class="form-check-label"
+                                                        for="shipment_type{{ $shipment_type->id }}">Seleccionar</label>
                                                 </div>
                                             </div>
-                                        @endif
-                                    @endforeach
+                                        </div>
+                                    @empty
+                                        <p>No se encontraron métodos de envío disponibles.</p>
+                                    @endforelse
                                 </div>
                             </div>
                         </div>
@@ -188,32 +171,26 @@
 @section('js')
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script>
+        window.onload = function() {
+            if (window.performance && window.performance.navigation.type === 1) {
+                // La página se ha cargado debido a un evento de recarga
+                alert("Advertencia: la página se ha recargado. Verifique los datos antes de continuar.");
+            }
+        };
+
         function selectShipmentType(element) {
             const shipmentTypeId = element.getAttribute('data-shipment-type-id');
-            const selectedShipmentType = document.getElementById('selected-shipment-type');
-            const shipmentForm = document.getElementById('shipment-form');
-
-            if (selectedShipmentType.value === shipmentTypeId) {
-                // Si se hace clic en el mismo card, se deselecciona
-                element.classList.remove('selected', 'selected-method');
-                selectedShipmentType.value = '';
-            } else {
-                // Seleccionar el card y establecer el valor en el campo oculto
-                const selectedCard = document.querySelector('.selectable-shipment-method.selected');
-                if (selectedCard) {
-                    selectedCard.classList.remove('selected', 'selected-method');
-                }
-                element.classList.add('selected', 'selected-method');
-                selectedShipmentType.value = shipmentTypeId;
+            const selectedShipmentTypeElement = document.querySelector('.card.selected-shipment-method');
+            if (selectedShipmentTypeElement) {
+                selectedShipmentTypeElement.classList.remove('selected-shipment-method');
             }
+            element.classList.add('selected-shipment-method');
+            document.getElementById('selected-shipment-type').value = shipmentTypeId;
 
-            // Mostrar el SweetAlert si no se ha seleccionado un método de envío al enviar el formulario
-            shipmentForm.addEventListener('submit', function(event) {
-                if (!selectedShipmentType.value) {
-                    event.preventDefault();
-                    swal('Error', 'Por favor, selecciona un método de envío.', 'error');
-                }
-            });
+            // Marcar el radio input correspondiente como seleccionado
+            var radioInput = element.querySelector('.form-check-input');
+            radioInput.checked = true;
         }
     </script>
 @endsection
+

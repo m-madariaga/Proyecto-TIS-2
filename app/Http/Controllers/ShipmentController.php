@@ -13,6 +13,7 @@ use App\Models\Region;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -54,7 +55,7 @@ class ShipmentController extends Controller
             }
         }
 
-        return response(view('shipments.index', compact('shipments,sections')));
+        return response(view('shipments.index', compact('shipments')));
     }
 
     /**
@@ -95,6 +96,11 @@ class ShipmentController extends Controller
             $cart = Cart::content();
             $shipment_type_id = $request->shipment_type_id;
             $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
+            $shipmentStatus = new shipment_status();
+            $shipmentStatus->nombre_estado = 'pendiente';
+            $shipmentStatus->shipment_type_fk = $request->input('shipment_type_id');
+            $shipmentStatus->save();
+
             return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order'));
       }
     }

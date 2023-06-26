@@ -256,7 +256,7 @@ class CartController extends Controller
     }
 
 
-    // ORDEN CONFIRMADA FINALMENTE
+    // ORDEN CONFIRMADA FINALMENTE 
     public function confirmOrder(Request $request, $orderId)
     {
         if ($request->isMethod('post')) {

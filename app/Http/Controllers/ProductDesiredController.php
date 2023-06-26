@@ -101,8 +101,9 @@ class ProductDesiredController extends Controller
      */
     public function show(User $user)
     {
+        $sections = Section::all();
         $productos_deseados = $user->product_desired;
-        return view('profile_products_desired', compact('productos_deseados'));
+        return view('profile_products_desired', compact('productos_deseados','sections'));
     }
 
     /**

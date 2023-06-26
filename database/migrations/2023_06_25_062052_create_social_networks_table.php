@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShipmentStatusesTable extends Migration
+class CreateSocialNetworksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateShipmentStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shipment_statuses', function (Blueprint $table) {
+        Schema::create('social_networks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shipment_type_fk')->references('id')->on('shipments');
-            $table->string('nombre_estado');
+            $table->string('nombre');
+            $table->string('valor');
+            $table->boolean('visible')->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateShipmentStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipment_statuses');
+        Schema::dropIfExists('social_networks');
     }
 }

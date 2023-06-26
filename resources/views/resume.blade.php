@@ -12,7 +12,12 @@
             padding-left: 15px;
         }
 
-     
+        .navbar-brand-img {
+            height: 70%;
+            width: 300px;
+            object-fit: contain;
+        }
+
         .button-container {
             display: flex;
             justify-content: center;
