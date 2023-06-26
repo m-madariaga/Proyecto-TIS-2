@@ -30,12 +30,13 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">Código</th>
-                                        
+
                                         <th class="text-center">TOTAL</th>
                                         <th class="text-center">Fecha Pedido</th>
                                         <th class="text-center">Nombre Cliente</th>
                                         <th class="text-center">Dirección</th>
                                         <th class="text-center">Estado Entregado</th>
+                                        <th class="text-center">Pagado</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -47,7 +48,7 @@
                                             <td class="text-center">{{ $order->created_at }}</td>
                                             <td class="text-center">{{ $order->user->name }}</td>
                                             <td class="text-center">{{ $order->user->address }}, {{$order->user->city->name}}</td>
-                                            
+
                                             <td class="text-center">
                                                 @if ($order->estado == 0)
                                                     No entregado
@@ -55,11 +56,18 @@
                                                     Entregado
                                                 @endif
                                             </td>
+                                            <td class="text-center">
+                                                @if ($order->pagado == 0)
+                                                    No
+                                                @else
+                                                    Si
+                                                @endif
+                                            </td>
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('orders-store', $order->id) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> Ver
                                                     Pedido</a>
-                                                    
+
                                                 <button class="btn btn-sm btn-outline-primary btnEntregar"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#editDeliver-{{ $order->id }}"><i

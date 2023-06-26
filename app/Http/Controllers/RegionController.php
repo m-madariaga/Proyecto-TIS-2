@@ -6,6 +6,8 @@ use App\Models\Region;
 use Illuminate\Http\Request;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class RegionController extends Controller
 {
@@ -53,7 +55,10 @@ class RegionController extends Controller
 
             $region = Region::create($validatedData);
 
-
+            $action = new Action();
+                $action->name = 'Creación Región';
+                $action->user_fk = Auth::User()->id;
+            $action->save();
 
             return response()->json(['success' => true]);
         }
@@ -108,6 +113,10 @@ class RegionController extends Controller
 
         $region->save();
 
+        $action = new Action();
+            $action->name = 'Edición Región';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
 
         return redirect('admin/regions')->with('success', 'Pais actualizado correctamente');
     }
@@ -122,6 +131,12 @@ class RegionController extends Controller
     {
         $region= Region::find($id);
         $region->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado Región';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+        
         return response()->json(['success' => true]);
     }
 }

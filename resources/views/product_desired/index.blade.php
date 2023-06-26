@@ -40,10 +40,10 @@
                                         </div>
                                     @else
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
-                                        <h5 class="font-weight-bolder mt-1">{{ $product }}</h5>
+                                        <h5 class="font-weight-bolder mt-1">{{ $product->nombre }}</h5>
                                         <p class="mb-0">
                                             <span class="text-success text-sm font-weight-bolder">
-                                                $count
+                                                {{$count}}
                                             </span>
                                             veces
                                         </p>

@@ -19,11 +19,12 @@ class CreateOrdersTable extends Migration
             $table->bigInteger('impuesto');
             $table->bigInteger('total');
             $table->boolean('estado')->default(0);
-            $table->timestamps(); 
+            $table->boolean('pagado')->default(0);
+            $table->timestamps();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            
+
             $table->unsignedBigInteger('paymentmethod_fk')->nullable();
             $table->foreign('paymentmethod_fk')->references('id')->on('payment_methods');
 

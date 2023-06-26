@@ -180,6 +180,7 @@ class PurcharseOrderProductController extends Controller
             $action->name = 'Edición Orden de Compra';
             $action->user_fk = Auth::User()->id;
         $action->save();
+        
         return redirect()->route('orden-compra', compact('ordenes'));
     }
 
