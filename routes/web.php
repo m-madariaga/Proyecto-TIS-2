@@ -154,6 +154,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
         Route::get('/productos/create', [ProductController::class, 'create'])->name('productos-create');
         Route::post('/productos/store', [ProductController::class, 'store'])->name('productos-store');
+        Route::post('/productos/store', [ProductController::class, 'store_static'])->name('productos-store-static');
         Route::get('/productos/{id}/edit', [ProductController::class, 'edit'])->name('productos-edit');
         Route::patch('/productos/{id}/update', [ProductController::class, 'update'])->name('productos-update');
         Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');
@@ -252,6 +253,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
         Route::post('/punto-venta-store',[PointOfSaleController::class,'store'])->name('point_of_sale-store');
         Route::get('/punto-venta-update/{id}', [PointOfSaleController::class, 'update'])->name('point_of_sale-update');
+        Route::get('/punto-venta/addProduct/{id}',[PointOfSaleController::class,'addProduct'])->name('point_of_sale-addProduct');
     });
 
 

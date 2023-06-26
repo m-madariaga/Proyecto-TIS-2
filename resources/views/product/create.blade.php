@@ -24,7 +24,7 @@
                         <h3 class="mb-0">Agregar Producto</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('productos-store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('productos-store-static') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">

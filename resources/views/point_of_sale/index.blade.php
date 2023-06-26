@@ -109,7 +109,7 @@
                         <li class="">
                             <a href="">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                <span id="" class="">{{ Cart::count() }}</span>
+                                <span id="" class="">{{ Cart::instance('admin')->count() }}</span>
                             </a>
                         </li>
                     </div>
@@ -117,15 +117,18 @@
                         @csrf
                         <div class="card-body d-flex flex-wrap justify-content-center text-center ">
                             @foreach ($productos as $producto)
-                                <div class="card m-3" style="width: 9rem;">
-                                    <img src="/assets/images/images-products/{{ $producto->imagen }}" class="card-img-top"
-                                        height="200">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
-                                        <p class="card-text"> {{ $producto->marca->nombre }}<br>${{ $producto->precio }}
-                                        </p>
+                                <a href="{{ route('point_of_sale-addProduct', ['id' => $producto->id]) }}" class="">
+                                    <div class="card m-3" style="width: 9rem;">
+                                        <img src="/assets/images/images-products/{{ $producto->imagen }}"
+                                            class="card-img-top" height="200">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
+                                            <p class="card-text">
+                                                {{ $producto->marca->nombre }}<br>${{ $producto->precio }}
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             @endforeach
                         </div>
 
@@ -174,7 +177,6 @@
             </div>
         </div>
     </div>
-
     @if (session('success'))
         <script>
             Swal.fire({
@@ -186,7 +188,7 @@
         </script>
     @endif
 
-    @if (session('error'))
+    @if (session('error-stock'))
         <script>
             Swal.fire({
                 icon: 'error',
@@ -195,13 +197,12 @@
             });
         </script>
     @endif
-
-    </div>
 @endsection
 
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             table = $('#orders-table').DataTable({
@@ -216,7 +217,6 @@
             table.search($(this).val()).draw();
         })
     </script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).on('click', '.pagar_orden', function(e) {
             e.preventDefault();
