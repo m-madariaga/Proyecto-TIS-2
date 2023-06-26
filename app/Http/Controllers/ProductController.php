@@ -128,8 +128,8 @@ class ProductController extends Controller
             $producto->save();
 
             $action = new Action();
-                $action->name = 'Creación Producto';
-                $action->user_fk = Auth::User()->id;
+            $action->name = 'Creación Producto';
+            $action->user_fk = Auth::User()->id;
             $action->save();
 
             return response()->json(['success' => true]);
@@ -149,15 +149,16 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($productId);
         $reviews = Review::where('product_fk', $productId)->get();
-        foreach($reviews as $review){
+        foreach ($reviews as $review) {
             $review->username = User::find($review->user_fk)->name;
             error_log($review->username);
         }
 
 
-        
 
-        return view('product.show', compact('product', 'reviews'));
+
+        $recommendedProducts = $this->getRecommendedProducts($productId);
+        return view('product.show', compact('product', 'reviews', 'recommendedProducts'));
     }
 
     /**
@@ -215,8 +216,8 @@ class ProductController extends Controller
         $product->save();
 
         $action = new Action();
-            $action->name = 'Edición Producto';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Edición Producto';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         return redirect()
@@ -237,10 +238,23 @@ class ProductController extends Controller
         $producto->delete();
 
         $action = new Action();
-            $action->name = 'Borrado Producto';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Borrado Producto';
+        $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
     }
+    public function getRecommendedProducts($productId)
+{
+    // Obtener el producto actual
+    $product = Product::findOrFail($productId);
+
+    // Obtener todos los productos excepto el actual
+    $recommendedProducts = Product::where('id', '!=', $productId)
+        ->inRandomOrder()
+        ->get();
+
+    return $recommendedProducts;
+}
+
 }

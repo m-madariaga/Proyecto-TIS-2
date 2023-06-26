@@ -19,7 +19,7 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->nombre }}</h3>
                             <h5 class="card-subtitle mb-2 text-body-secondary">Precio: ${{ $product->precio }}</h5>
-             
+
                             <div class="row">
                                 <div class="col">
                                     <div class="container-quantity mb-4">
@@ -53,7 +53,7 @@
                 </div>
             </div>
 
-            <div class="row card">
+            <div class="row card mt-4 mb-4">
                 <div class="card-body">
                     <h3 class="card-title">Reseñas del producto</h3>
                     @auth
@@ -81,7 +81,7 @@
                                 <h4 class="col-4 card-title">{{$review->title}}</h4>
                                 <h5 class="col-sm-4 text-right align-self-center mb-2 text-body-secondary">
                                     @if ($review->type == 1)
-                                        <i class="fa fa-thumbs-up"></i>
+                                    <i class="fa fa-thumbs-up"></i>
                                     @else
                                     <i class="fa fa-thumbs-down"></i>
                                     @endif
@@ -89,27 +89,84 @@
                             </div>
                             <h5 class="card-subtitle mb-2 text-body-secondary">{{$review->username}}</h5>
                             <p>{{$review->description}}</p>
-                            
+
                         </div>
                     </div>
-                        
+
                     @endforeach
-                    
                 </div>
             </div>
+
+            <!-- carrusel -->
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title d-flex flex-column align-items-center">También te podría interesar</h3>
+                    <div id="recommendedCarousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            @foreach ($recommendedProducts->chunk(4) as $chunk)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <div class="row justify-content-center">
+                                    @foreach ($chunk as $recommendedProduct)
+                                    <div class="col-4 col-md-3 col-lg-2"> 
+                                        <div class="d-flex flex-column align-items-center">
+                                            <a href="">
+                                                <div class="card">
+                                                    <div class="product-image-container">
+                                                        <img src="{{ asset('assets/images/images-products/' . $recommendedProduct->imagen) }}" class="img-thumbnail" alt="{{ $recommendedProduct->nombre }}">
+                                                    </div>
+                                                    <div class="card-body d-flex flex-column align-items-center">
+                                                        <h5>{{ $recommendedProduct->nombre }}</h5>
+                                                        <p class="text-body-secondary">Precio: ${{ $recommendedProduct->precio }}</p>
+                                                    </div>
+                                                </div>
+
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+
+                        <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
+                        </a>
+                        <a class="carousel-control-next" href="#recommendedCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Siguiente</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
 @endsection
 
 @section('js')
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#recommendedCarousel').carousel();
+    });
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const decreaseBtn = document.querySelector('.decrease-qty');
         const increaseBtn = document.querySelector('.increase-qty');
         const qtyBtn = document.querySelector('#qty');
         const quantityInput = document.querySelector('#quantity');
-        const stock = {{ $product->stock }}; // Get the stock value from the server-side variable
+        const stock = {
+            {
+                $product - > stock
+            }
+        }; // Get the stock value from the server-side variable
 
         let quantity = 1;
 
