@@ -40,6 +40,7 @@ class UserSeeder extends Seeder
         $permission119 = Permission::create(['name' => 'mantenedor acciones']);
         $permission120 = Permission::create(['name' => 'mantenedor productos deseados']);
         $permission121 = Permission::create(['name' => 'mantenedor punto de venta']);
+        $permission122 = Permission::create(['name' => 'mantenedor secciones landing']);
         $role1->givePermissionTo($permission1);
         $role1->givePermissionTo($permission11);
         $role1->givePermissionTo($permission12);
@@ -62,8 +63,10 @@ class UserSeeder extends Seeder
         $role1->givePermissionTo($permission119);
         $role1->givePermissionTo($permission120);
         $role1->givePermissionTo($permission121);
-        $role11->givePermissionTo($permission1);
+        $role1->givePermissionTo($permission122);
 
+        
+        $role11->givePermissionTo($permission1);
         $role11->givePermissionTo($permission15);
         $role11->givePermissionTo($permission16);
         $role11->givePermissionTo($permission17);

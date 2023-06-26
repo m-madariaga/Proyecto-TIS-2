@@ -1,5 +1,4 @@
 <div class="main_nav_container px-4">
-
     <div class="row">
         <div class="col-md-4 text-center">
             <div class="logo_container">
@@ -12,10 +11,21 @@
         <div class="col-md-4 text-center">
             <div class="navbar">
                 <ul class="navbar_menu">
-                    <li><a href="{{ route('men') }}">Hombre</a></li>
-                    <li><a href="{{ route('women') }}">Mujer</a></li>
-                    <li><a href="{{ route('kids') }}">Niños</a></li>
-                    <li><a href="{{ route('accesorie') }}">Accesorios</a></li>
+                    @foreach ($sections as $section)
+                        @if ($section->visible === 1)
+                            <li class="nav-item">
+                                @if (strtolower($section->nombre) === 'mujer')
+                                    <a class="nav-link" href="{{ route('women') }}">{{ $section->nombre }}</a>
+                                @elseif (strtolower($section->nombre) === 'hombre')
+                                    <a class="nav-link" href="{{ route('men') }}">{{ $section->nombre }}</a>
+                                @elseif (strtolower($section->nombre) === 'niños')
+                                    <a class="nav-link" href="{{ route('kids') }}">{{ $section->nombre }}</a>
+                                @elseif (strtolower($section->nombre) === 'accesorios')
+                                    <a class="nav-link" href="{{ route('accesorie') }}">{{ $section->nombre }}</a>
+                                @endif
+                            </li>
+                        @endif
+                    @endforeach
                     <li>
                         <div class="search-container">
                             <form action="{{ route('search') }}" method="POST" class="search_form">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\ShipmentType;
 use Illuminate\Http\Request;
 use App\Models\Action;
@@ -16,8 +17,9 @@ class ShipmentTypeController extends Controller
      */
     public function index()
     {
+        $sections = Section::all();
         $shipment_types = ShipmentType::all();
-        return response(view('shipment_types.index',compact('shipment_types')));
+        return response(view('shipment_types.index',compact('shipment_types','sections')));
     }
 
     /**

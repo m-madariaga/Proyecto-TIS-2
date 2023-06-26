@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use App\Models\Shipment;
 use App\Models\shipment_status;
 use App\Models\ShipmentType;
@@ -12,6 +13,7 @@ use App\Models\Region;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -31,6 +33,7 @@ class ShipmentController extends Controller
 
     public function index()
     {
+        $sections = Section::all();
         $shipments = Shipment::all();
 
         foreach ($shipments as $shipment) {
@@ -63,9 +66,10 @@ class ShipmentController extends Controller
      */
     public function create(Request $request)
     {
-      
+        $sections = Section::all();
+
         if (Auth::check()) {
-            $order = json_decode($request->input('order')); // Convertir la cadena JSON en un objeto
+            $order = json_decode($request->input('order')); 
             
             $shipment = new Shipment();
             $shipment->user_fk = Auth::user()->id;
@@ -93,7 +97,12 @@ class ShipmentController extends Controller
             $cart = Cart::content();
             $shipment_type_id = $request->shipment_type_id;
             $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
-            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type','order'));
+            $shipmentStatus = new shipment_status();
+            $shipmentStatus->nombre_estado = 'pendiente';
+            $shipmentStatus->shipment_type_fk = $request->input('shipment_type_id');
+            $shipmentStatus->save();
+
+            return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order'));
       }
     }
 

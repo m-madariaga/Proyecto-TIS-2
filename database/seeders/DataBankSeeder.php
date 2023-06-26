@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\DataBankTransfer;
 use Illuminate\Database\Seeder;
 
-class DataBank extends Seeder
+class DataBankSeeder extends Seeder
 {
     /**
      * Run the database seeds.
