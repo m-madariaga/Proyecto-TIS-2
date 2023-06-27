@@ -99,7 +99,8 @@
             padding: 2px 6px;
             border-radius: 40%;
         }
-        .td-cantidad a{
+
+        .td-cantidad a {
             border: 1px solid #8c034e;
             margin: 1rem;
             padding: 0rem 0.6rem 0rem 0.6rem;
@@ -107,7 +108,8 @@
             transition: background-color 0.4s ease;
             color: black;
         }
-        .td-cantidad a:hover{
+
+        .td-cantidad a:hover {
             background-color: #8c034e;
             border: 1px solid white;
             color: white;
@@ -159,70 +161,69 @@
                         <li class="li-cart">
                             <a class="cart-button" type="button" data-bs-toggle="modal" data-bs-target="#modal-showCart">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                <span id="" class="cart-count">{{ Cart::instance('admin')->count() }}</span> Ver Carrito
+                                <span id="" class="cart-count">{{ Cart::instance('admin')->count() }}</span> Ver
+                                Carrito
                             </a>
                         </li>
                     </div>
-                    <form action="{{ route('point_of_sale-store') }}" method="POST" class="text-center">
-                        @csrf
-                        <div class="card-body d-flex flex-wrap justify-content-center text-center ">
-                            @foreach ($productos as $producto)
-                                <a href="{{ route('point_of_sale-addProduct', ['id' => $producto->id]) }}" class="">
-                                    <div class="card m-3" style="width: 9rem;">
-                                        <img src="/assets/images/images-products/{{ $producto->imagen }}"
-                                            class="card-img-top" height="200">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
-                                            <p class="card-text">
-                                                {{ $producto->marca->nombre }}<br>${{ $producto->precio }}
-                                            </p>
-                                        </div>
+                    <div class="card-body d-flex flex-wrap justify-content-center text-center ">
+                        @foreach ($productos as $producto)
+                            <a href="{{ route('point_of_sale-addProduct', ['id' => $producto->id]) }}" class="">
+                                <div class="card m-3" style="width: 9rem;">
+                                    <img src="/assets/images/images-products/{{ $producto->imagen }}" class="card-img-top"
+                                        height="200">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $producto->nombre }} {{ $producto->color }}</h5>
+                                        <p class="card-text">
+                                            {{ $producto->marca->nombre }}<br>${{ $producto->precio }}
+                                        </p>
                                     </div>
-                                </a>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    <nav>
+                        <ul class="pagination justify-content-center ">
+                            {{-- Botón "Anterior" --}}
+                            @if ($productos->onFirstPage())
+                                <li class="ctn-btn-d disabled text-center">
+                                    <span>Anterior</span>
+                                </li>
+                            @else
+                                <li class="text-center">
+                                    <a class="ctn-btn" href="{{ $productos->previousPageUrl() }}" rel="prev">
+                                        <div>Anterior</div>
+                                    </a>
+                                </li>
+                            @endif
+
+                            {{-- Números de página --}}
+                            @foreach ($productos->getUrlRange(1, $productos->lastPage()) as $page => $url)
+                                <li class="text-center">
+                                    <a class="ctn-page {{ $page == $productos->currentPage() ? 'pag_active' : '' }}"
+                                        href="{{ $url }}">
+                                        <div class="">{{ $page }}</div>
+                                    </a>
+                                </li>
                             @endforeach
-                        </div>
 
-                        <nav>
-                            <ul class="pagination justify-content-center ">
-                                {{-- Botón "Anterior" --}}
-                                @if ($productos->onFirstPage())
-                                    <li class="ctn-btn-d disabled">
-                                        <span>Anterior</span>
-                                    </li>
-                                @else
-                                    <li class="">
-                                        <a class="ctn-btn" href="{{ $productos->previousPageUrl() }}" rel="prev">
-                                            <div>Anterior</div>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                {{-- Números de página --}}
-                                @foreach ($productos->getUrlRange(1, $productos->lastPage()) as $page => $url)
-                                    <li class=" ">
-                                        <a class="ctn-page {{ $page == $productos->currentPage() ? 'pag_active' : '' }}"
-                                            href="{{ $url }}">
-                                            <div class="">{{ $page }}</div>
-                                        </a>
-                                    </li>
-                                @endforeach
-
-                                {{-- Botón "Siguiente" --}}
-                                @if ($productos->hasMorePages())
-                                    <li class="">
-                                        <a class="ctn-btn" href="{{ $productos->nextPageUrl() }}" rel="next">
-                                            <div>Siguiente</div>
-                                        </a>
-                                    </li>
-                                @else
-                                    <li class="ctn-btn-d disabled">
-                                        <span class="">Siguiente</span>
-                                    </li>
-                                @endif
-                            </ul>
-                        </nav>
-                        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Continuar</button>
-                    </form>
+                            {{-- Botón "Siguiente" --}}
+                            @if ($productos->hasMorePages())
+                                <li class="text-center">
+                                    <a class="ctn-btn" href="{{ $productos->nextPageUrl() }}" rel="next">
+                                        <div>Siguiente</div>
+                                    </a>
+                                </li>
+                            @else
+                                <li class="ctn-btn-d disabled text-center">
+                                    <span class="">Siguiente</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </nav>
+                    <a href="{{ route('point_of_sale-createOrder') }}" type="button"
+                        class="btn btn-primary btn-lg btn-continuar-order" id="btn-continuar-order"
+                        style="width:100%;">Continuar</a>
                 </div>
             </div>
         </div>
@@ -253,26 +254,28 @@
                                         {{ $cartProduct->name }}
                                     </td>
                                     <td class="align-middle text-center fs-4 td-cantidad">
-                                        <a href="{{route('point_of_sale-disminuyeCantidad',['id' => $cartProduct->id])}}"> - </a>
+                                        <a
+                                            href="{{ route('point_of_sale-disminuyeCantidad', ['id' => $cartProduct->id]) }}">
+                                            - </a>
                                         <span>{{ $cartProduct->qty }}</span>
-                                        <a href="{{route('point_of_sale-aumentaCantidad',['id' => $cartProduct->id])}}"> + </a>
+                                        <a href="{{ route('point_of_sale-addProduct', ['id' => $cartProduct->id]) }}"> +
+                                        </a>
                                     </td>
                                     <td class="align-middle">
                                         ${{ $cartProduct->price }}
                                     </td>
                                     <td class="align-middle">$ {{ $cartProduct->price * $cartProduct->qty }}</td>
                                     <td class="align-middle">
-                                        <form action="" method="post">
-                                            @csrf
-                                            <button class="btn btn-danger bg-transparent" type="submit">
-                                                <i class="far fa-times-circle fa-2x" style="color: #8c034e"></i>
-                                            </button>
-                                        </form>
+                                        <a href="{{ route('point_of_sale-dropProduct', ['id' => $cartProduct->id]) }}"
+                                            class="btn btn-danger bg-transparent" type="button">
+                                            <i class="far fa-times-circle fa-2x" style="color: #8c034e"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -321,7 +324,6 @@
             e.preventDefault();
             var id = $(this).data('id');
             var btn = document.getElementById(id);
-
             swal.fire({
                 title: '¿Estas seguro?',
                 text: "¡No podrás revertir esto!",
@@ -347,6 +349,28 @@
                         'El pago no se ha completado',
                         'error'
                     )
+                }
+            })
+        });
+    </script>
+    <script>
+        $(document).on('click', '.btn-continuar-order', function(e) {
+            e.preventDefault();
+            var btn = document.getElementById('btn-continuar-order');
+            swal.fire({
+                title: '¿Estas seguro?',
+                text: "¡No podrás revertir esto!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, adelante',
+                cancelButtonText: 'No, cancela!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setTimeout(() => {
+                        window.location.href = btn.getAttribute('href');
+                    }, 1000);
                 }
             })
         });
