@@ -13,6 +13,7 @@
 @endsection
 
 @section('css')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <style>
         .ctn-btn-d {
@@ -62,6 +63,55 @@
             background-color: #8c034e;
             color: white;
         }
+
+        .li-cart {
+            list-style: none;
+            text-align: end;
+            padding-right: 4rem;
+        }
+
+        .cart-button {
+            display: inline-block;
+            position: relative;
+            color: #8c034e;
+            background-color: rgb(255, 255, 255);
+            border: 1px solid #8c034e;
+            padding: 10px 10px;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-button:hover {
+            color: white;
+            background-color: #8c034e;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -18px;
+            right: -10px;
+            background-color: white;
+            border: 1px solid #8c034e;
+            color: #8c034e;
+            font-size: 18px;
+            font-weight: bolder;
+            padding: 2px 6px;
+            border-radius: 40%;
+        }
+        .td-cantidad a{
+            border: 1px solid #8c034e;
+            margin: 1rem;
+            padding: 0rem 0.6rem 0rem 0.6rem;
+            border-radius: 8px;
+            transition: background-color 0.4s ease;
+            color: black;
+        }
+        .td-cantidad a:hover{
+            background-color: #8c034e;
+            border: 1px solid white;
+            color: white;
+        }
     </style>
 @endsection
 
@@ -106,10 +156,10 @@
                 <div class="card mb-4 ps-3 pe-3 pt-2 ">
                     <div class="card-header">
                         <h4>Registrar una nueva venta</h4>
-                        <li class="">
-                            <a href="">
+                        <li class="li-cart">
+                            <a class="cart-button" type="button" data-bs-toggle="modal" data-bs-target="#modal-showCart">
                                 <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                <span id="" class="">{{ Cart::instance('admin')->count() }}</span>
+                                <span id="" class="cart-count">{{ Cart::instance('admin')->count() }}</span> Ver Carrito
                             </a>
                         </li>
                     </div>
@@ -177,6 +227,57 @@
             </div>
         </div>
     </div>
+    <!-- Large modal -->
+    <div class="modal fade" id="modal-showCart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content p-3">
+                <div class="header">
+                    <h3>Contenido del carrito</h3>
+                </div>
+                <div class="products">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                                <th>Total</th>
+                                <th>Quitar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Cart::instance('admin')->content() as $cartProduct)
+                                <tr>
+                                    <td class="align-middle">
+                                        {{ $cartProduct->name }}
+                                    </td>
+                                    <td class="align-middle text-center fs-4 td-cantidad">
+                                        <a href="{{route('point_of_sale-disminuyeCantidad',['id' => $cartProduct->id])}}"> - </a>
+                                        <span>{{ $cartProduct->qty }}</span>
+                                        <a href="{{route('point_of_sale-aumentaCantidad',['id' => $cartProduct->id])}}"> + </a>
+                                    </td>
+                                    <td class="align-middle">
+                                        ${{ $cartProduct->price }}
+                                    </td>
+                                    <td class="align-middle">$ {{ $cartProduct->price * $cartProduct->qty }}</td>
+                                    <td class="align-middle">
+                                        <form action="" method="post">
+                                            @csrf
+                                            <button class="btn btn-danger bg-transparent" type="submit">
+                                                <i class="far fa-times-circle fa-2x" style="color: #8c034e"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin large modal-->
     @if (session('success'))
         <script>
             Swal.fire({
@@ -187,13 +288,12 @@
             });
         </script>
     @endif
-
-    @if (session('error-stock'))
+    @if (session('error'))
         <script>
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: '{{ session('error') }}'
+                text: '{{ session('error') }}',
             });
         </script>
     @endif
@@ -202,12 +302,11 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         $(document).ready(function() {
             table = $('#orders-table').DataTable({
                 dom: 'lrtip',
-
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },

@@ -254,6 +254,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::post('/punto-venta-store',[PointOfSaleController::class,'store'])->name('point_of_sale-store');
         Route::get('/punto-venta-update/{id}', [PointOfSaleController::class, 'update'])->name('point_of_sale-update');
         Route::get('/punto-venta/addProduct/{id}',[PointOfSaleController::class,'addProduct'])->name('point_of_sale-addProduct');
+        Route::get('/punto-venta/addProduct-/{id}',[PointOfSaleController::class, 'aumentaCantidad'])->name('point_of_sale-aumentaCantidad');
+        Route::get('/punto-venta/dropProduct-/{id}', [PointOfSaleController::class, 'disminuyeCantidad'])->name('point_of_sale-disminuyeCantidad');
     });
 
 
