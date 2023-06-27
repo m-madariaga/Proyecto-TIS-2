@@ -134,15 +134,13 @@
                             <span class="sr-only">Anterior</span>
                         </a>
                         <a class="carousel-control-next" href="#recommendedCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"  style="background-color: black;
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;
     filter: invert(1);"></span>
                             <span class="sr-only">Siguiente</span>
                         </a>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
