@@ -1,179 +1,219 @@
-@extends('layouts.argon.app')
-
-@section('title')
-    {{ 'Product' }}
-@endsection
-
-@section('breadcrumb')
-    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Productos</li>
-    </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Productos</h6>
-@endsection
+@extends('layouts-landing.welcome')
 
 @section('css')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-4 ps-3 pe-3 pt-2">
-                    <div class="card-header pb-0">
-                        <h6>Tabla de Productos</h6>
+    <div class="container-fluid py-4 mt-4">
+        <div class="product_detalle">
+            <div class="container py-4 mb-4">
+                <div class="row">
+                    <div class="col-12 col-md-6 order-md-first mb-3">
+                        <div class="card d-flex align-items-center">
+                            <img src="{{ asset('assets/images/images-products/' . $product->imagen) }}" class="img-thumbnail"
+                                alt="{{ $product->nombre }}">
+                        </div>
                     </div>
-                    <div class="card-body px-0 pt-0 pb-2">
-                        <a href="{{ route('productos-create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
-                        <div class="table-responsive p-0">
-                            <table id="products-table" class="table display table-stripped align-items-center">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">Id</th>
-                                        <th class="text-center">Nombre</th>
-                                        <th class="text-center">Marca</th>
-                                        <th class="text-center">Categoría</th>
-                                        <th class="text-center">Color</th>
-                                        <th class="text-center">Talla</th>
-                                        <th class="text-center">Stock</th>
-                                        <th class="text-center">Precio</th>
-                                        <th class="text-center">Imagen</th>
+                    <div class="col-12 col-md-6 order-md-last">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3 class="card-title">{{ $product->nombre }}</h3>
 
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="container-price ">
+                                            <div class="product-count">
+                                                <div class="stock">Precio: ${{ $product->precio }}</div>
 
-                                        <th class="text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($productos as $prod)
-                                        <tr>
-                                            <td>{{ $prod->id }}</td>
-                                            <td>{{ $prod->nombre }}</td>
-                                            <td>{{ $prod->marca->nombre }}</td>
-                                            <td>{{ $prod->categoria->nombre }}</td>
-                                            <td>{{ $prod->color }}</td>
-                                            <td>{{ $prod->talla }}</td>
-                                            <td>{{ $prod->stock }}</td>
-                                            <td>{{ $prod->precio }}</td>
-                                            <td>
-                                                <div class="container d-flex justify-content-center">
-                                                    <img src="/imagen/{{ $prod->imagen }}" width="10%">
-                                                </div>
-                                            </td>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="container-price ">
+                                            <div class="product-count">
+                                                <div class="stock">Talla: {{ $product->talla }}</div>
 
-                                            <td class="text-center pt-3">
-                                                <a href="{{ route('productos-edit', ['id' => $prod->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
-                                                    Editar</a>
-                                                <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
-                                                    method="POST" style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-product"
-                                                        data-id="{{ $prod->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Borrar</i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="container-price ">
+                                            <div class="product-count">
+                                                <div class="stock mb-2">Stock:{{ $product->stock }}</div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="container-quantity mb-4">
+                                            <div class="product-count">
+
+                                                <h5 class="card-subtitle mb-2 text-body-secondary">Cantidad: <a
+                                                        href="#" class="button_succes btn decrease-qty">-</a>
+                                                    <button id="qty" type="button"
+                                                        class="btn-quantity btn">1</button>
+                                                    <a href="#" class="button_succes btn increase-qty">+</a>
+                                                </h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <form action="{{ route('additem') }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" name="id[]" value="{{ $product->id }}">
+                                            <input type="hidden" name="quantity" id="quantity" value="1">
+                                            @if ($product->stock === 0)
+                                                <button class="button_carrito_p btn btn-lg btn-block" type="button"
+                                                    disabled>Sin stock</button>
+                                            @else
+                                                <button class="button_carrito_p btn btn-lg btn-block" type="submit">Añadir
+                                                    al carrito</button>
+                                            @endif
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row card mt-4 mb-4">
+                    <div class="card-body">
+                        <h3 class="card-title">Reseñas del producto</h3>
+                        @auth
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">Escribir reseña</h4>
+                                    <form method="POST"
+                                        action="{{ route('reviews.store', ['productId' => $product->id, 'userId' => Auth::user()->id]) }}">
+                                        @csrf
+                                        <input type="text" id="title" name="title" class="form-control mb-1"
+                                            placeholder="Título" required>
+                                        <select class="form-select mb-1" id="type" name="type">
+                                            <option value="1" selected>Positiva</option>
+                                            <option value="0">Negativa</option>
+                                        </select>
+                                        <textarea class="form-control mb-1" id="description" name="description" placeholder="Descripción" rows="4"
+                                            required></textarea>
+                                        <button type="submit" class="btn">Guardar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endauth
+                        @foreach ($reviews as $review)
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row justify-content-between">
+                                        <h4 class="col-4 card-title">{{ $review->title }}</h4>
+                                        <h5 class="col-sm-4 text-right align-self-center mb-2 text-body-secondary">
+                                            @if ($review->type == 1)
+                                                <i class="fa fa-thumbs-up"></i>
+                                            @else
+                                                <i class="fa fa-thumbs-down"></i>
+                                            @endif
+                                        </h5>
+                                    </div>
+                                    <h5 class="card-subtitle mb-2 text-body-secondary">{{ $review->username }}</h5>
+                                    <p>{{ $review->description }}</p>
+
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- carrusel -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title d-flex flex-column align-items-center">También te podría interesar</h3>
+                        <div id="recommendedCarousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($recommendedProducts->chunk(4) as $chunk)
+                                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                        <div class="row justify-content-center">
+                                            @foreach ($chunk as $recommendedProduct)
+                                                <div class="col-4 col-md-3 col-lg-2">
+                                                    <div class="d-flex flex-column align-items-center">
+                                                        <a href="{{ route('product.show', $recommendedProduct->id) }}">
+                                                            <div class="card">
+                                                                <div class="product-image-container">
+                                                                    <img src="{{ asset('assets/images/images-products/' . $recommendedProduct->imagen) }}"
+                                                                        class="img-thumbnail"
+                                                                        alt="{{ $recommendedProduct->nombre }}">
+                                                                </div>
+                                                                <div
+                                                                    class="card-body d-flex flex-column align-items-center">
+                                                                    <h5>{{ $recommendedProduct->nombre }}</h5>
+                                                                    <p class="text-body-secondary">Precio:
+                                                                        ${{ $recommendedProduct->precio }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <a class="carousel-control-prev" href="#recommendedCarousel" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"
+                                    style="background-color: black;
+    filter: invert(1);"></span>
+                                <span class="sr-only">Anterior</span>
+                            </a>
+                            <a class="carousel-control-next" href="#recommendedCarousel" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"
+                                    style="background-color: black;
+    filter: invert(1);"></span>
+                                <span class="sr-only">Siguiente</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        @if (session('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Exito',
-                    text: '{{ session('success') }}',
-                    timer: 3000
+    @endsection
+
+    @section('js')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const decreaseBtn = document.querySelector('.decrease-qty');
+                const increaseBtn = document.querySelector('.increase-qty');
+                const qtyBtn = document.querySelector('#qty');
+                const quantityInput = document.querySelector('#quantity');
+                const stock = {{ $product->stock }}; // Get the stock value from the server-side variable
+
+                let quantity = 1;
+
+                decreaseBtn.addEventListener('click', () => {
+                    if (quantity > 1) {
+                        quantity--;
+                        qtyBtn.textContent = quantity;
+                        quantityInput.value = quantity;
+                    }
                 });
-            </script>
-        @endif
 
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '{{ session('error') }}'
+                increaseBtn.addEventListener('click', () => {
+                    if (quantity < stock) { // Check if quantity is less than stock
+                        quantity++;
+                        qtyBtn.textContent = quantity;
+                        quantityInput.value = quantity;
+                    }
                 });
-            </script>
-        @endif
-
-    </div>
-@endsection
-
-@section('js')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            table = $('#products-table').DataTable({
-                dom: 'lrtip',
-
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-                },
-
-
             });
-        });
-
-        $('#searchBar').keyup(function(){
-            table.search($(this).val()).draw() ;
-        })
-    </script>
-
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        $(document).on('click', '.delete-product', function(e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/admin/productos/' + id,
-                        data: {
-                            id: id,
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            console.log('success');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Exito',
-                                text: '¡Producto eliminado correctamente!',
-                                timer: 1000
-                            });
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // delay for half a second
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(xhr.responseText);
-                        }
-                    });
-                }
-            });
-
-
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Section;
 use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
@@ -16,10 +17,10 @@ class SectionController extends Controller
     public function index()
     {
         $secciones = Section::all();
+        $images = Images::all();
         $redesSociales = SocialNetwork::all();
-        return view('section.index', compact('secciones', 'redesSociales'));
+        return view('section.index', compact('secciones', 'redesSociales','images'));
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -28,7 +29,6 @@ class SectionController extends Controller
      */
     public function create()
     {
-        return view('section.create');
     }
 
     /**
@@ -56,7 +56,6 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-
 
 
 
@@ -100,7 +99,6 @@ class SectionController extends Controller
 
         return redirect()->route('section.index')->with('error', 'No se encontraron secciones.');
     }
-
 
 
     /**

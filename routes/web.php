@@ -216,11 +216,17 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
     Route::group(['middleware' => ['permission:mantenedor secciones landing']], function () {
         Route::get('/secciones', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
-        Route::get('/secciones/create', [App\Http\Controllers\SectionController::class, 'create'])->name('section.create');
-        Route::post('/secciones/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
-        Route::get('/secciones/{id}/edit', [App\Http\Controllers\SectionController::class, 'edit'])->name('section.edit');
+        Route::get('/redes-sociales/create', [App\Http\Controllers\SocialNetworkController::class, 'create'])->name('socialnetwork.create');
+        Route::post('/redes-sociales/store', [App\Http\Controllers\SocialNetworkController::class, 'store'])->name('socialnetwork.store');
+        Route::get('/redes-sociales/{socialnetwork}/edit', [App\Http\Controllers\SocialNetworkController::class, 'edit'])->name('socialnetwork.edit');
+        Route::patch('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'update'])->name('socialnetwork.update');
+        Route::delete('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'destroy'])->name('socialnetwork.destroy');
+        
         Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
-        Route::delete('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'destroy'])->name('section.destroy');
+       
+        Route::post('/images/store', [App\Http\Controllers\ImagesController::class, 'store'])->name('images.store');
+        Route::post('/images/update', [App\Http\Controllers\ImagesController::class, 'update'])->name('images.update');
+
     });
 
 

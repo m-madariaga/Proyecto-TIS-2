@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Images;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
 use App\Models\PaymentMethod;
@@ -28,6 +30,8 @@ class ResumeController extends Controller
     public function showResume(Request $request)
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $cart = $request->input('cart_id');
         $userId = auth()->id();
         $user = User::find($userId);
@@ -43,7 +47,7 @@ class ResumeController extends Controller
         $order->paymentmethod_fk = $paymentMethod->id;
         $order->update(); // Guardar los cambios en la base de datos
     
-        return view('resume', compact('paymentMethod','sections' ,'cart', 'shipment_type','order'));
+        return view('resume', compact('paymentMethod','sections' ,'cart', 'shipment_type','order','socialnetworks','images'));
     }
     
     

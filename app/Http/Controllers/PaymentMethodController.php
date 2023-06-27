@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\PaymentMethod;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 use App\Models\Action;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +21,9 @@ class PaymentMethodController extends Controller
     {
         $sections = Section::all();
         $paymentMethods = PaymentMethod::all();
-        return view('paymentmethod_landing', compact('paymentMethods','sections'));
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
+        return view('paymentmethod_landing', compact('paymentMethods','sections','socialnetworks','images'));
     }
 
     public function index_admin()

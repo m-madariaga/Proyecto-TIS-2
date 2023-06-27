@@ -1,3 +1,30 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Enlace a la biblioteca jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.hamburger_container').click(function() {
+                $(this).toggleClass('open');
+                $('.navbar_menu').toggleClass('show');
+            });
+
+            $('.search_form').submit(function(e) {
+                e.preventDefault(); // Evita que el formulario se envíe de forma predeterminada
+
+                var query = $('#search-input').val()
+                    .trim(); // Obtiene el valor del campo de búsqueda y elimina los espacios en blanco
+
+                if (query !== '') { // Verifica si el campo de búsqueda no está vacío
+                    $(this).unbind('submit').submit(); // Envía el formulario de búsqueda
+                }
+            });
+        });
+    </script>
+    
+</head>
+
 <div class="main_nav_container px-4">
     <div class="row">
         <div class="col-md-4 text-center">
@@ -42,7 +69,7 @@
                         </div>
                     </li>
                 </ul>
-                <div class="hamburger_container">
+                <div class="hamburger_container" id="hamburger_container">
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </div>
             </div>
@@ -70,10 +97,9 @@
             </div>
         </div>
 
-
     </div>
 </div>
 
-</div>
 
 @yield('search_results')
+

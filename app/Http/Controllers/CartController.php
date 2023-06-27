@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Mail\ProofPayment;
 use App\Models\Detail;
+use App\Models\Images;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -109,6 +111,8 @@ class CartController extends Controller
     public function showCart()
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $this->checkStock();
 
         $user = Auth::user();
@@ -147,7 +151,7 @@ class CartController extends Controller
             return $item->stock > 0;
         });
 
-        return view('cart', compact('items','sections', 'order'));
+        return view('cart', compact('items','sections', 'order','socialnetworks','images'));
     }
 
     public function removeitem(Request $request)

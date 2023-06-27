@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Images;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
@@ -22,35 +24,45 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $sections = Section::all();
         $productos = Product::all();
-        return view('product.index', compact('productos', 'sections'));
+        return view('product.index', compact('productos', 'sections', 'socialnetworks', 'images'));
     }
 
     public function women_product()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $sections = Section::all();
         $productos = Product::all();
-        return view('women', compact('productos', 'sections'));
+        return view('women', compact('productos', 'sections', 'socialnetworks', 'images'));
     }
 
     public function men_product()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $sections = Section::all();
         $productos = Product::all();
-        return view('men', compact('productos', 'sections'));
+        return view('men', compact('productos', 'sections', 'socialnetworks', 'images'));
     }
     public function kids_product()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $sections = Section::all();
         $productos = Product::all();
-        return view('kids', compact('productos', 'sections'));
+        return view('kids', compact('productos', 'sections', 'socialnetworks', 'images'));
     }
     public function accesorie_product()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $sections = Section::all();
         $productos = Product::all();
-        return view('accesorie', compact('productos', 'sections'));
+        return view('accesorie', compact('productos', 'sections', 'socialnetworks', 'images'));
     }
 
 
@@ -155,6 +167,8 @@ class ProductController extends Controller
     public function show($productId)
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $product = Product::findOrFail($productId);
         $reviews = Review::where('product_fk', $productId)->get();
         foreach ($reviews as $review) {
@@ -162,11 +176,8 @@ class ProductController extends Controller
             error_log($review->username);
         }
 
-
-
-
         $recommendedProducts = $this->getRecommendedProducts($productId);
-        return view('product.show', compact('product', 'reviews', 'recommendedProducts', 'sections'));
+        return view('product.show', compact('product', 'reviews', 'recommendedProducts', 'sections', 'socialnetworks', 'images'));
     }
 
     /**

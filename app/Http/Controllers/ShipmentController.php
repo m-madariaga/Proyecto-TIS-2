@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Section;
 use App\Models\Shipment;
 use App\Models\shipment_status;
 use App\Models\ShipmentType;
+use App\Models\SocialNetwork;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\City;
@@ -67,6 +69,8 @@ class ShipmentController extends Controller
     public function create(Request $request)
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
 
         if (Auth::check()) {
             $order = json_decode($request->input('order')); 
@@ -102,7 +106,7 @@ class ShipmentController extends Controller
             $shipmentStatus->shipment_type_fk = $request->input('shipment_type_id');
             $shipmentStatus->save();
 
-            return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order'));
+            return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order','socialnetworks','images'));
       }
     }
 
