@@ -1,7 +1,7 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Ordenes de Compra' }}
+    {{ 'Promociones' }}
 @endsection
 
 @section('breadcrumb')

@@ -107,7 +107,7 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script>
         $(document).ready(function() {
-            $('#databank-table').DataTable({
+            table= $('#databank-table').DataTable({
                 dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
@@ -116,7 +116,7 @@
         });
 
         $('#searchBar').keyup(function() {
-            $('#databank-table').search($(this).val()).draw();
+            table.search($(this).val()).draw();
         })
     </script>
 @endsection

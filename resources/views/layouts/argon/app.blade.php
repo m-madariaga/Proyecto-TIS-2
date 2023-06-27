@@ -7,6 +7,9 @@
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('argon/assets/img/favicon.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>
+        @yield('title')
+    </title>
     <!-- Fonts and icons -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- CSRF Token -->
@@ -58,7 +61,7 @@
     <script src="{{ asset('argon/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
 
     @yield('js')
-    <div class="toast-container position-absolute bottom-0 end-0 p-3">
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
 
         <?php use App\Http\Controllers\NotificationController;
             $notifs= NotificationController::print();

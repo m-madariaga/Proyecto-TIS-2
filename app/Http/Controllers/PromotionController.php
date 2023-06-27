@@ -56,7 +56,7 @@ class PromotionController extends Controller
         $action->save();
         return redirect()
             ->route('promotion')
-            ->with('success', 'Promocion agregada correctamente.');
+            ->with('success', 'Promoción agregada correctamente.');
     }
     public function edit(Promotion $id)
     {
@@ -78,7 +78,7 @@ class PromotionController extends Controller
         $promocion = Promotion::find($request->get('prod_id'));
         $promocion->descuento = $request->get('descuento');
         $promocion->save();
-        return redirect()->route('promotion')->with('success','Promocion editada correctamente.');
+        return redirect()->route('promotion')->with('success','Promoción editada correctamente.');
     }
     public function destroy(Promotion $id)
     {
@@ -86,6 +86,6 @@ class PromotionController extends Controller
         $promocion->delete();
         return redirect()
             ->route('promotion')
-            ->with('success', 'Promocion eliminada correctamente.');
+            ->with('success', 'Promoción eliminada correctamente.');
     }
 }
