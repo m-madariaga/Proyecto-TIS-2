@@ -368,7 +368,5 @@ Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController:
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
-Route::get('/confirmationTransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmationTransbank');
+Route::get('/confirmationcart/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmationcart');
 Route::get('/webpay/error', [TransbankController::class, 'handleWebpayError'])->name('webpay.error');
-
-

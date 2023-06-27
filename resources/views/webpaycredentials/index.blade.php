@@ -116,7 +116,7 @@
                     text: '{{ session('success') }}',
                     icon: 'success',
                     timer: 3000, // Tiempo en milisegundos (3 segundos)
-                    showConfirmButton: false
+                    showConfirmButton: true
                 });
             @endif
         });
