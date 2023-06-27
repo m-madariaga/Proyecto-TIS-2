@@ -115,10 +115,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'update'])->name('paymethods.update');
     Route::delete('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
 
-    Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
-    Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
-    Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
-    Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
+  
 
     Route::group(['middleware' => ['permission:mantenedor webpay']], function () {
         Route::get('/webpay', [WebpayCredentialController::class, 'index'])->name('webpaycredentials.index');
@@ -128,6 +125,16 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::patch('/webpay/{id}/update', [WebpayCredentialController::class, 'update'])->name('webpaycredentials.update');
         Route::delete('/webpay/{id}', [WebpayCredentialController::class, 'destroy'])->name('webpaycredentials.destroy');
     });
+
+    Route::group(['middleware' => ['permission:mantenedor datos transferencia']], function () {
+        Route::get('/databanktransfer', [App\Http\Controllers\DataBankTransferController::class, 'index'])->name('databanktransfer.index');
+        Route::get('/databanktransfer/create', [App\Http\Controllers\DataBankTransferController::class, 'create'])->name('databanktransfer.create');
+        Route::post('/databanktransfer/store', [App\Http\Controllers\DataBankTransferController::class, 'store'])->name('databanktransfer.store');
+        Route::get('/databanktransfer/{id}/edit', [App\Http\Controllers\DataBankTransferController::class, 'edit'])->name('databanktransfer.edit');
+        Route::patch('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'update'])->name('databanktransfer.update');
+        Route::delete('/databanktransfer/{id}', [App\Http\Controllers\DataBankTransferController::class, 'destroy'])->name('databanktransfer.destroy');
+    });
+
 
     Route::get('/calendar', [EventController::class, 'index'])->name('calendar');
     Route::post('/events', [EventController::class, 'store'])->name('event.store');

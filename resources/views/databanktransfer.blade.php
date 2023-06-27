@@ -11,6 +11,7 @@
 @endsection
 
 @section('css')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
@@ -26,7 +27,8 @@
                             </div>
                             <div class="col-6">
                                 <div class="card-header pb-0 text-end">
-                                    <a href="{{ route('databanktransfer.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                                    <a href="{{ route('databanktransfer.create') }}"
+                                        class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                                 </div>
                             </div>
                         </div>
@@ -57,16 +59,18 @@
                                             <td class="text-center">{{ $databanktransfer->account_type }}</td>
                                             <td class="text-center">{{ $databanktransfer->account_number }}</td>
                                             <td class="text-center pt-3">
-                                                <button id="editButton" class="btn btn-sm btn-outline-primary edit-modal-btn"
-                                                    data-bs-toggle="modal" data-bs-target="#editModal" data-user-id="">
-                                                    <i class="fa fa-edit"></i> Editar
-                                                </button>
-                                                <form action="{{ route('databanktransfer.destroy', $databanktransfer->id) }}" method="POST" style="display: inline;">
+                                                <a href="{{ route('databanktransfer.edit', ['id' => $databanktransfer->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                    Editar</a>
+                                                <form
+                                                    action="{{ route('databanktransfer.destroy', ['id' => $databanktransfer->id]) }}"
+                                                    method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-user" data-id="{{ $databanktransfer->id }}">
-                                                        <i class="fa fa-trash" aria-hidden="true"></i> Eliminar
-                                                    </button>
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger delete-brand"
+                                                        data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash"
+                                                            aria-hidden="true"> Borrar</i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -78,45 +82,40 @@
                 </div>
             </div>
         </div>
-
-        @if (session('success'))
-            <script>
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Éxito',
-                    text: '{{ session('success') }}',
-                    timer: 3000
-                });
-            </script>
-        @endif
-
-        @if (session('error'))
-            <script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: '{{ session('error') }}'
-                });
-            </script>
-        @endif
     </div>
 @endsection
 
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
-            table= $('#databank-table').DataTable({
+            $('#databank-table').DataTable({
                 dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 }
             });
-        });
 
-        $('#searchBar').keyup(function() {
-            table.search($(this).val()).draw();
-        })
+            $('.delete-user').on('click', function() {
+                var userId = $(this).data('id');
+
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "No podrás revertir esto",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('form[action="/admin/databanktransfer/' + userId + '"]').submit();
+                    }
+                });
+            });
+        });
     </script>
 @endsection
