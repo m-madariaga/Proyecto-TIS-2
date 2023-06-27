@@ -56,8 +56,8 @@
                     </div>
                 </div>
 
-                <div class="row card">
-                    <div class="card-body">
+                <div class="card mt-4">
+                    <div class="card-body mt-4">
                         <h3 class="card-title">Reseñas del producto</h3>
                         @auth
                             <div class="card">
@@ -99,21 +99,12 @@
                             </div>
                         @endforeach
 
-                        <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;
-    filter: invert(1);"></span>
-                            <span class="sr-only">Anterior</span>
-                        </a>
-                        <a class="carousel-control-next" href="#recommendedCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;
-    filter: invert(1);"></span>
-                            <span class="sr-only">Siguiente</span>
-                        </a>
+                       
                     </div>
                 </div>
 
-                <div class="card">
-                    <div class="card-body">
+                <div class="card mt-4">
+                    <div class="card-body mt-4">
                         <h3 class="card-title d-flex flex-column align-items-center">También te podría interesar</h3>
                         <div id="recommendedCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
@@ -146,7 +137,8 @@
                                 @endforeach
                             </div>
 
-                            <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
+                            <a class="carousel-control-prev" href="#recommendedCarousel" role="button"
+                                data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"
                                     style="background-color: black;
 filter: invert(1);"></span>

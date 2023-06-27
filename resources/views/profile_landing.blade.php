@@ -96,7 +96,6 @@
         });
     </script>
     <script src="/js/datatables/es_es.json"></script>
-
 @endsection
 
 @section('content')

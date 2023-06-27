@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Frequent_question;
 use App\Models\Frequent_response;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 
 class QuestionController extends Controller
@@ -16,9 +17,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $questions = Frequent_question::with('response')->get();
-        return view('frequentquestion', compact('sections', 'questions'));
+        return view('frequentquestion', compact('sections', 'questions','socialnetworks'));
     }
 
     /**
