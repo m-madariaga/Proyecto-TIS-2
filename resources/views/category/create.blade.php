@@ -6,10 +6,11 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Agregar Categoria</li>
+    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
+    <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Categorías</a></li>
+    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Agregar Categoría</li>
 </ol>
-<h6 class="font-weight-bolder text-white mb-0">Agregar Categoria</h6>
+<h6 class="font-weight-bolder text-white mb-0">Agregar Categoría</h6>
 @endsection
 
 @section('css')
@@ -22,7 +23,7 @@
     <div class="col">
       <div class="card">
         <div class="card-header">
-          <h3 class="mb-0">Agregar Categoria</h3>
+          <h3 class="mb-0">Agregar Categoría</h3>
         </div>
         <div class="card-body">
           <form action="{{ route('categorias-store')}}" method="POST">
