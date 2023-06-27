@@ -87,15 +87,18 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
-            $('#orderTable').DataTable({
-                "language": {
-                    "url": "/js/datatables/es_es.json" // Ruta al archivo de traducción en español
+      
+         $(document).ready(function() {
+            table = $('#orderTable').DataTable({
+                dom: 'lrtip',
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 }
             });
         });
     </script>
-    <script src="/js/datatables/es_es.json"></script>
+
+    
 @endsection
 
 @section('content')

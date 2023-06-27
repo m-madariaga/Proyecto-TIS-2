@@ -69,7 +69,8 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-user"><i
+                                                        class="btn btn-sm btn-outline-danger delete-user"
+                                                        data-name="{{ $paymentMethod->name }}"><i
                                                             class="fa fa-trash" aria-hidden="true"></i>Eliminar</button>
                                                 </form>
                                             </td>
@@ -88,21 +89,50 @@
 @section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         $(document).ready(function() {
-            table = $('#payment-table').DataTable({
+            var table = $('#payment-table').DataTable({
                 dom: 'lrtip',
-
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-                },
-
-
+                }
             });
-        });
 
-        $('#searchBar').keyup(function() {
-            table.search($(this).val()).draw();
-        })
+            $('#searchBar').keyup(function() {
+                table.search($(this).val()).draw();
+            });
+
+            $('.delete-user').click(function(event) {
+                event.preventDefault();
+                var name = $(this).data('name');
+                var form = $(this).closest('form');
+
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: 'Se eliminará el método de pago "' + name + '"',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+
+            @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: false
+                });
+            @endif
+        });
     </script>
 @endsection
