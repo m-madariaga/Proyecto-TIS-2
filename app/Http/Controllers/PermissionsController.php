@@ -30,6 +30,7 @@ class PermissionsController extends Controller
         ]);
 
         $permission = Permission::create(['name' => $request->name]);
+
         $action = new Action();
             $action->name = 'Creación Permiso';
             $action->user_fk = Auth::User()->id;
@@ -53,7 +54,7 @@ class PermissionsController extends Controller
         ]);
 
         $permission = Permission::find($id);
-            $permission->name = $request->name;
+        $permission->name = $request->name;
         $permission->save();
 
         $action = new Action();
@@ -71,6 +72,7 @@ class PermissionsController extends Controller
     {
         $permission = Permission::find($id);
         $permission->delete();
+
         $action = new Action();
             $action->name = 'Borrado Permiso';
             $action->user_fk = Auth::User()->id;

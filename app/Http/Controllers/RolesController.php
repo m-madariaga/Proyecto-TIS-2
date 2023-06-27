@@ -12,7 +12,6 @@ use Illuminate\Validation\Rule;
 use App\Models\Action;
 use Illuminate\Support\Facades\Auth;
 
-
 class RolesController extends Controller
 {
     public function index()
@@ -32,7 +31,6 @@ class RolesController extends Controller
             $role->role_count= $user_amount->count();
 
         }
-        
 
         return view('roles.index', compact('roles'));
     }
@@ -144,6 +142,7 @@ class RolesController extends Controller
 
         $role->syncPermissions([$newPermissions]);
         error_log("test");
+
         $action = new Action();
             $action->name = 'Edición Rol';
             $action->user_fk = Auth::User()->id;

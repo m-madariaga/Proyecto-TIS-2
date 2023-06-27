@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\PaymentMethod;
+use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 use App\Models\Action;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +19,11 @@ class PaymentMethodController extends Controller
 
     public function index()
     {
+        $sections = Section::all();
         $paymentMethods = PaymentMethod::all();
-        return view('paymentmethod_landing', compact('paymentMethods'));
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
+        return view('paymentmethod_landing', compact('paymentMethods','sections','socialnetworks','images'));
     }
 
     public function index_admin()
@@ -63,7 +69,7 @@ class PaymentMethodController extends Controller
         $paymentMethod = new PaymentMethod;
         $paymentMethod->name = $request->name;
         $paymentMethod->save();
-    
+
         return redirect()->route('paymentmethod.index')->with('success', 'Método de pago creado exitosamente!');
     }
 
@@ -74,16 +80,21 @@ class PaymentMethodController extends Controller
 
     public function edit($id)
     {
-        $paymentMethod = PaymentMethod::find($id);
+        $paymentMethod = PaymentMethod::with([
+            'dataBankTransfers' => function ($query) {
+                $query->orderBy('selected', 'desc');
+            }
+        ])->find($id);
 
         if (!$paymentMethod) {
             return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
         }
 
-        $selectedAccountId = $paymentMethod->selected_account_id;
+        $selectedAccountId = $paymentMethod->dataBankTransfers->first()->id ?? null;
 
         return view('editpaymethod', compact('paymentMethod', 'selectedAccountId'));
     }
+
 
 
     public function update(Request $request, $id)
@@ -91,53 +102,43 @@ class PaymentMethodController extends Controller
         $validatedData = $request->validate([
             'visible' => 'required',
         ]);
-    
-        $paymentMethod = PaymentMethod::find($id);
-    
-        if ($paymentMethod) {
-            $paymentMethod->visible = $request->input('visible');
-            $paymentMethod->save();
-    
-            // Actualizar el archivo .env
-            $envFile = app()->environmentFilePath();
-            $str = file_get_contents($envFile);
-    
-            if ($str !== false) {
-                $str = preg_replace(
-                    "/COMMERCE_CODE=.*/",
-                    "COMMERCE_CODE={$request->input('commerce_code')}",
-                    $str
-                );
-                $str = preg_replace(
-                    "/API_KEY=.*/",
-                    "API_KEY={$request->input('api_key')}",
-                    $str
-                );
-                $str = preg_replace(
-                    "/INTEGRATION_TYPE=.*/",
-                    "INTEGRATION_TYPE={$request->input('integration_type')}",
-                    $str
-                );
-                $str = preg_replace(
-                    "/ENVIRONMENT=.*/",
-                    "ENVIRONMENT={$request->input('environment')}",
-                    $str
-                );
-    
-                file_put_contents($envFile, $str);
 
-                $action = new Action();
+        $paymentMethod = PaymentMethod::find($id);
+
+        if (!$paymentMethod) {
+            return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
+        }
+
+        $paymentMethod->visible = $request->input('visible');
+
+        if (strtolower($paymentMethod->name) === 'transferencia bancaria') {
+            $selectedAccountId = $request->input('selected_account');
+
+            // Actualizar el atributo 'selected' de todas las cuentas bancarias asociadas a este método de pago
+            $paymentMethod->dataBankTransfers()->update(['selected' => 0]);
+
+            if ($selectedAccountId) {
+                // Marcar la cuenta bancaria seleccionada como 'selected'
+                $selectedAccount = $paymentMethod->dataBankTransfers()->find($selectedAccountId);
+                if ($selectedAccount) {
+                    $selectedAccount->selected = 1;
+                    $selectedAccount->save();
+                }
+            }
+        }
+
+        $paymentMethod->save();
+
+        $action = new Action();
                     $action->name = 'Edición Método de Pago';
                     $action->user_fk = Auth::User()->id;
                 $action->save();
-    
-                return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago actualizado exitosamente!');
-            }
-        }
-    
-        return redirect()->route('paymentmethod.index_admin')->with('error', 'No se encontró el método de pago.');
+
+        return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago actualizado exitosamente!');
     }
-    
+
+
+
 
     public function destroy($id)
     {
@@ -157,5 +158,5 @@ class PaymentMethodController extends Controller
         return redirect()->route('paymentmethod.index_admin')->with('success', 'Método de pago eliminado exitosamente!');
     }
 
-    
+
 }

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
+use App\Models\Section;
+use App\Models\SocialNetwork;
 use App\Models\User;
 use App\Models\City;
 use App\Models\Region;
@@ -15,6 +18,9 @@ class ProfileLandingController extends Controller
 {
     public function index()
     {
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
+        $sections = Section::all();
         $user = auth()->user();
         $countries = Country::all();
         $regions = Region::all();
@@ -24,10 +30,10 @@ class ProfileLandingController extends Controller
         if ($orders->isEmpty()) {
             $orders = collect(); // Inicializar como una colección vacía
             $details = collect();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details','sections','socialnetworks','images'));
         } else {
             $details = Detail::all();
-            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details'));
+            return view('profile_landing', compact('countries', 'regions', 'cities', 'user', 'orders', 'details','sections','socialnetworks','images'));
         }
 
 

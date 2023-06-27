@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
@@ -34,6 +35,7 @@ class LoginController extends Controller
     {
 
         if($user->hasPermissionTo('vista admin')){
+            Cart::instance('admin');
             return redirect('/admin/home');
         }elseif($user->hasPermissionTo('vista analista')){
             return redirect('/analista/home');

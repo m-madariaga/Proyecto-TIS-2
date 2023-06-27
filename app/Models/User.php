@@ -42,7 +42,7 @@ class User extends Authenticatable
     }
     public function orders()
     {
-        return $this->belongsTo(Order::class, 'user_id');
+        return $this->hasMany(Order::class);
     }
 
     public function city()
@@ -61,6 +61,10 @@ class User extends Authenticatable
     public function country()
     {
         return $this->belongsTo(Country::class,'country_fk');
+    }
+    public function product_desired(): HasMany
+    {
+        return $this->hasMany(Product_desired::class, 'user_id');
     }
     /**
      * The attributes that should be hidden for serialization.

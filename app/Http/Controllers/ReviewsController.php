@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Review;
@@ -13,6 +14,7 @@ class ReviewsController extends Controller
 {
     public function index()
     {
+        $sections = Section::all();
         $reviews = Review::all();
 
         foreach($reviews as $review){
@@ -24,7 +26,7 @@ class ReviewsController extends Controller
 
         }
 
-        return view('reviews.index', compact('reviews'));
+        return view('reviews.index', compact('reviews','sections'));
     }
 
     public function store(Request $request, $productId, $userId)

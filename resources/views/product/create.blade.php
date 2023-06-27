@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Agregar Producto</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Agregar Producto</h6>
@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mt--6 w-50">
+    <div class="container-fluid mt--6 w-85">
         <div class="row">
             <div class="col">
                 <div class="card">
@@ -24,7 +24,7 @@
                         <h3 class="mb-0">Agregar Producto</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('productos-store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('productos-store-static') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
@@ -79,14 +79,22 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-control-label" for="talla">Talla</label>
-                                <input type="text" class="form-control @error('talla') is-invalid @enderror"
-                                    id="talla" name="talla" value="{{ old('talla') }}">
+                                <select class="form-select @error('talla') is-invalid @enderror" id="talla"
+                                    name="talla">
+                                    <option value="">Selecciona una talla</option>
+                                    <option value="S" {{ old('talla') == 'S' ? 'selected' : '' }}>S</option>
+                                    <option value="M" {{ old('talla') == 'M' ? 'selected' : '' }}>M</option>
+                                    <option value="L" {{ old('talla') == 'L' ? 'selected' : '' }}>L</option>
+                                    <option value="XL" {{ old('talla') == 'XL' ? 'selected' : '' }}>XL</option>
+                                    <option value="XXL" {{ old('talla') == 'XXL' ? 'selected' : '' }}>XXL</option>
+                                </select>
                                 @error('talla')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                             </div>
+
                             <div class="form-group">
                                 <label class="form-control-label" for="stock">Stock</label>
                                 <input type="number" class="form-control @error('stock') is-invalid @enderror"
@@ -108,15 +116,16 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label class="form-control-label" for="visible">Hacer visible?</label>
-                                <select class="form-control @error('visible') is-invalid @enderror" id="visible" name="visible">
+                                <label class="form-select-label" for="visible">Hacer visible?</label>
+                                <select class="form-select @error('visible') is-invalid @enderror" id="visible"
+                                    name="visible">
                                     <option value='0'>No</option>
                                     <option value='1' default>Si</option>
                                 </select>
                                 @error('visible')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                 @enderror
                             </div>
                             <div class="form-group">
@@ -135,6 +144,7 @@
                                         href="{{ route('productos') }}">{{ __('Cancelar') }}</a>
                                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -145,3 +155,4 @@
 
 @section('js')
 @endsection
+

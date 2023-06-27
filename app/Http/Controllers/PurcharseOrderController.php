@@ -121,6 +121,7 @@ class PurcharseOrderController extends Controller
             $action->name = 'Creación Orden de Compra';
             $action->user_fk = Auth::User()->id;
         $action->save();
+
         return redirect()->route('orden-compra');
     }
 
@@ -177,6 +178,7 @@ class PurcharseOrderController extends Controller
             $action->name = 'Borrado orden de compra';
             $action->user_fk = Auth::User()->id;
         $action->save();
+        
         return response()
             ->json(['success' => true]);
     }

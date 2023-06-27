@@ -300,11 +300,11 @@ section {
 	height: 100%;
 }
 
-.super_container {
+/* .super_container {
 	width: 100%;
 	overflow: hidden;
     padding-bottom: 20px;
-}
+} */
 
 /*********************************
 3. Home
@@ -1719,7 +1719,7 @@ footer{
 }
 
 .footer_nav li {
-	display: inline-block;
+	display: block;
 	margin-right: 45px;
 }
 
@@ -1935,3 +1935,28 @@ footer{
 	color: #1e1e27;
 	text-align: justify; /* Justificar el texto */
 }
+
+/* carrusel productos recomendados */
+.carousel-item img {
+    width: 18rem;
+    height: auto; /* Ajusta la altura automáticamente en función del ancho */
+}
+
+.carousel-caption {
+    text-align: center; /* Centra el contenido dentro del carrusel */
+    margin-top: 10px; /* Espacio superior entre la imagen y el texto */
+}
+
+
+.product-image-container {
+	width: 200px;
+	height: 210px; /* Ajusta la altura según tus necesidades */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+  } 
+  .product-image-container img {
+	object-fit: cover;
+	height: 100%;
+	width: 100%;
+  }

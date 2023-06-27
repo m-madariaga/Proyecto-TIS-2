@@ -129,12 +129,12 @@ class CountryController extends Controller
     {
         $country = Country::find($id);
         $country->delete();
-
+        
         $action = new Action();
             $action->name = 'Borrado País';
             $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
 
     }

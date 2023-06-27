@@ -2,7 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('salesData', [App\Http\Controllers\OrderController::class, 'getSalesData']);
+Route::get('/todaysSalesData', [OrderController::class, 'getTodaysSalesData']);
+Route::get('/newClientsData', [OrderController::class, 'getNewClientsData']);
+Route::get('/todayUsersData', [UserController::class, 'getTodayUsersData']);
