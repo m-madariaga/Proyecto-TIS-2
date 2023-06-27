@@ -13,11 +13,12 @@
     <div class="row">
         <div class="col-md-6 text-left">
             <div class="top_nav_left">
+
                 @foreach ($socialnetworks as $socialnetwork)
                     @if ($socialnetwork->visible == '1')
                         <div class="socialnetwork-item">
                             @if (strtolower($socialnetwork->nombre) == strtolower('Número Teléfonico'))
-                            <div class="top_nav_left">
+                                <div class="top_nav_left">
                                     <i class="fa fa-phone" style="color:white"aria-hidden="true"></i>
                                     <span style="color:white">{{ $socialnetwork->valor }}</span>
                                 </div>
@@ -63,7 +64,6 @@
                         <ul class="language_selection">
                             <li><a href="#">Inglés</a></li>
                             <li><a href="#">Español</a></li>
-
                         </ul>
                     </li>
 
@@ -104,11 +104,19 @@
                                         @csrf
                                     </form>
                                 </li>
+                                @if (Auth::check() && Auth::user()->hasRole('admin'))
+                                    <li>
+                                        <a href="{{route('admin_home')}}">
+                                           Vista Administrador
+                                        </a>
+                                    </li>
+                                @endif
                             @endguest
                         </ul>
                     </li>
                 </ul>
             </div>
+
         </div>
     </div>
 </div>
