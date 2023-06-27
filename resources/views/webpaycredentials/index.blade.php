@@ -89,54 +89,41 @@
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 }
             });
+            $('.delete-credential').click(function(event) {
+                event.preventDefault();
+                var name = $(this).data('name');
+                var form = $(this).closest('form');
+
+                Swal.fire({
+                    title: '¿Está seguro?',
+                    text: 'Se eliminará la credencial "' + name + '"',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+
+            @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: false
+                });
+            @endif
         });
+
 
         $('#searchBar').keyup(function() {
             table.search($(this).val()).draw();
-        });
-
-        $(document).on('click', '.delete-credential', function(e) {
-            e.preventDefault();
-            var id = $(this).data('id');
-            console.log(' kdñsñskd');
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "¡No podrás revertir esto!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: '¡Sí, bórralo!',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    console.log(' kdñsñskd');
-                    $.ajax({
-                        type: 'DELETE',
-                        url: '/admin/webpay/' + id,
-                        data: {
-                            id: id,
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        },
-                        success: function(data) {
-                            console.log('success');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Exito',
-                                text: 'Credencial eliminada correctamente!',
-                                timer: 1000
-                            });
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1000); // delay for half a second
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(' kdñsñskd');
-                            console.log(xhr.responseText);
-                        }
-                    });
-                }
-            });
         });
     </script>
 @endsection

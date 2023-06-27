@@ -1,3 +1,11 @@
+<head>
+    <style>
+        .hr{
+            margin-top: -4rem;
+        }
+    </style>
+</head>
+
 <aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4"
     id="sidenav-main" style="overflow-y: auto;">
     <div class="sidenav-header">
@@ -24,10 +32,6 @@
                     </a>
                 </li>
             @endcan
-
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores1" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores1">
@@ -66,9 +70,7 @@
                     </ul>
                 </div>
             </li>
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
+    
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores2" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores2">
@@ -111,9 +113,6 @@
             </li>
 
 
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores3" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores3">
@@ -161,9 +160,6 @@
                 </div>
             </li>
 
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores4" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores4">
@@ -275,10 +271,6 @@
             </li>
 
 
-
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores5" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores5">
@@ -366,9 +358,6 @@
                     </ul>
                 </div>
             </li>
-            {{-- ------------------------------------- --}}
-            <hr class="horizontal dark my-sm-4">
-            {{-- ------------------------------------- --}}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores8" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores8">
