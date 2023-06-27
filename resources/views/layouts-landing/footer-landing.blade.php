@@ -41,7 +41,7 @@
                     <a href="{{ route('termsconditionsview.index') }}">Términos y condiciones</a>
                 </li>
                 <li class="mb-2">
-                    <a href="">Preguntas frecuentes</a>
+                    <a href="{{route('questionview.index')}}">Preguntas frecuentes</a>
                 </li>
                 <li class="mb-2">
                     <a href=""></a>

@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Images;
-use App\Models\Promotion;
+use App\Models\Frequent_question;
+use App\Models\Frequent_response;
 use App\Models\Section;
-use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 
-class HomeLandingController extends Controller
+class QuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +17,8 @@ class HomeLandingController extends Controller
     public function index()
     {
         $sections = Section::all();
-        $socialnetworks = SocialNetwork::all();
-        $images = Images::where('seleccionada', 1)->get();
-        $promociones = Promotion::all();
-        return view('home-landing', compact('sections', 'images', 'socialnetworks','promociones'));
+        $questions = Frequent_question::with('response')->get();
+        return view('frequentquestion', compact('sections', 'questions'));
     }
 
     /**

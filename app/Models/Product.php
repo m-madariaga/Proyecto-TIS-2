@@ -58,4 +58,8 @@ class Product extends Model
     {
         return $this->hasMany(Detail::class, 'producto_id', 'id');
     }
+    public function promotion(): HasMany
+    {
+        return $this->hasMany(Promotion::class, 'product_id');
+    }
 }
