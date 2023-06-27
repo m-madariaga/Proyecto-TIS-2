@@ -35,7 +35,6 @@ class ShipmentController extends Controller
 
     public function index()
     {
-        $sections = Section::all();
         $shipments = Shipment::all();
 
         foreach ($shipments as $shipment) {
@@ -102,8 +101,8 @@ class ShipmentController extends Controller
             $shipment_type_id = $request->shipment_type_id;
             $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
             $shipmentStatus = new shipment_status();
-            $shipmentStatus->nombre_estado = 'pendiente';
-            $shipmentStatus->shipment_type_fk = $request->input('shipment_type_id');
+                $shipmentStatus->nombre_estado = 'pendiente';
+                $shipmentStatus->shipment_fk = $shipment->id;
             $shipmentStatus->save();
 
             return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order','socialnetworks','images'));
@@ -194,8 +193,8 @@ class ShipmentController extends Controller
         switch ($last) {
             case ('pendiente'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pagado';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'pagado';
                 $shipment_status->save();
 
                 $status = 'pagado';
@@ -203,8 +202,8 @@ class ShipmentController extends Controller
                 break;
             case ('pagado'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'enviado';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'enviado';
                 $shipment_status->save();
 
                 $status = 'enviado';
@@ -215,8 +214,8 @@ class ShipmentController extends Controller
                 break;
             default:
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pendiente';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'pendiente';
                 $shipment_status->save();
 
                 $status = 'pendiente';
@@ -250,8 +249,8 @@ class ShipmentController extends Controller
         } else {
             $shipment = Shipment::find($id);
             $shipment_status = new shipment_status();
-            $shipment_status->shipment_fk = $shipment->id;
-            $shipment_status->nombre_estado = 'cancelado';
+                $shipment_status->shipment_fk = $shipment->id;
+                $shipment_status->nombre_estado = 'cancelado';
             $shipment_status->save();
 
             $user = User::find($shipment->user_fk);

@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                <div class="row card mt-4 mb-4">
+                <div class="row card">
                     <div class="card-body">
                         <h3 class="card-title">Reseñas del producto</h3>
                         @auth
@@ -98,10 +98,10 @@
                                 </div>
                             </div>
                         @endforeach
+
                     </div>
                 </div>
 
-                <!-- carrusel -->
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title d-flex flex-column align-items-center">También te podría interesar</h3>
@@ -139,20 +139,19 @@
                             <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"
                                     style="background-color: black;
-    filter: invert(1);"></span>
+filter: invert(1);"></span>
                                 <span class="sr-only">Anterior</span>
                             </a>
                             <a class="carousel-control-next" href="#recommendedCarousel" role="button"
                                 data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"
                                     style="background-color: black;
-    filter: invert(1);"></span>
+filter: invert(1);"></span>
                                 <span class="sr-only">Siguiente</span>
                             </a>
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </div>
@@ -174,7 +173,7 @@
             const increaseBtn = document.querySelector('.increase-qty');
             const qtyBtn = document.querySelector('#qty');
             const quantityInput = document.querySelector('#quantity');
-            const stock = {{ $product->stock }};
+            const stock = {{ $product->stock }}; // Get the stock value from the server-side variable
 
             let quantity = 1;
 
@@ -187,7 +186,7 @@
             });
 
             increaseBtn.addEventListener('click', () => {
-                if (quantity < stock) {
+                if (quantity < stock) { // Check if quantity is less than stock
                     quantity++;
                     qtyBtn.textContent = quantity;
                     quantityInput.value = quantity;
