@@ -49,7 +49,13 @@ class PromotionController extends Controller
                 'descuento' => $descuento,
             ]);
             $promocion->save();
+            //actualizamos el precio en el producto
+            $product = Product::find($promocion->product_id);
+            $product->precio = $product->precio - $promocion->descuento;
+            $product->save();
         }
+
+        //se registra el accion realizada
         $action = new Action();
         $action->name = 'Creación Orden de Compra';
         $action->user_fk = Auth::User()->id;
@@ -75,14 +81,28 @@ class PromotionController extends Controller
                 'descuento.required' => 'El campo descuento es obligatorio.',
             ],
         );
+        //busca el descuento de la promocion
         $promocion = Promotion::find($request->get('prod_id'));
+        //guardamos el descuento anterior
+        $descuento_anterior = $promocion->descuento;
+        //actualizamos el nuevo descuento
         $promocion->descuento = $request->get('descuento');
         $promocion->save();
+        //actualiza el precio del producto
+        $product = Product::find($promocion->product_id);
+        $product->precio = $product->precio + $descuento_anterior - $promocion->descuento;
+        $product->save();
         return redirect()->route('promotion')->with('success','Promoción editada correctamente.');
     }
     public function destroy(Promotion $id)
     {
+        //busca la promocion a eliminar
         $promocion = Promotion::find($id->id);
+        //busca el producto para actualizar su precio (sumar el descuento hecho)
+        $product = Product::find($promocion->product_id);
+        $product->precio = $product->precio + $promocion->descuento;
+        $product->save();
+        //eliminar promocion
         $promocion->delete();
         return redirect()
             ->route('promotion')

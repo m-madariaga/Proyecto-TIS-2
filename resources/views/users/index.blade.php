@@ -419,10 +419,20 @@
                         }
                     });
                 }
+                @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: false
+                });
+            @endif
             });
-
+            
 
         });
+        
 
     </script>
     <script>
