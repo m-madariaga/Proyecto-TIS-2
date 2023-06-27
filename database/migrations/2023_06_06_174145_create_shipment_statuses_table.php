@@ -15,7 +15,7 @@ class CreateShipmentStatusesTable extends Migration
     {
         Schema::create('shipment_statuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('shipment_type_fk')->references('id')->on('shipments');
+            $table->foreignId('shipment_fk')->references('id')->on('shipments');
             $table->string('nombre_estado');
             $table->timestamps();
         });
