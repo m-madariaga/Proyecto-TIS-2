@@ -79,7 +79,7 @@
                     @foreach ($socialnetworks as $socialnetwork)
                         @if ($socialnetwork->visible == '1')
                             <div class="socialnetwork-item">
-                                @if (strtolower($socialnetwork->nombre) == 'número telefónico')
+                                @if (strtolower($socialnetwork->nombre) == strtolower('Número Teléfonico'))
                                     <div class="top_nav_left">
                                         <i class="fa fa-phone" style="color:white"aria-hidden="true"></i>
                                         <span style="color:white">{{ $socialnetwork->valor }}</span>

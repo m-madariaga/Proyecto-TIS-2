@@ -26,7 +26,6 @@
                                         <div class="container-quantity mb-4">
                                             <div class="product-count">
                                                 <div class="stock">Stock:{{ $product->stock }}</div>
-
                                                 <h5 class="card-subtitle mb-2 text-body-secondary">Cantidad:</h5>
                                                 <a href="#" class="button_succes btn decrease-qty">-</a>
                                                 <button id="qty" type="button" class="btn-quantity btn">1</button>
