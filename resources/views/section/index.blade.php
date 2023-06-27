@@ -45,12 +45,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="table-responsive">
-
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered datatable">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">Red Social</th>
                                                 <th class="text-center">Valor</th>
+                                                <th class="text-center">Mostrar</th>
                                                 <th class="text-center">Acciones</th>
                                             </tr>
                                         </thead>
@@ -58,7 +58,14 @@
                                             @foreach ($redesSociales as $redsocial)
                                                 <tr>
                                                     <td class="text-center">{{ $redsocial->nombre }}</td>
-                                                    <td class="text-center mt-3">{{ $redsocial->valor }}</td>
+                                                    <td class="text-center">{{ $redsocial->valor }}</td>
+                                                    <td class="text-center">
+                                                        @if ($redsocial->visible == '1')
+                                                            Mostrar
+                                                        @else
+                                                            No mostrar
+                                                        @endif
+                                                    </td>
                                                     <td class="text-center">
                                                         <a href="{{ route('socialnetwork.edit', $redsocial->id) }}"
                                                             class="btn btn-sm btn-outline-primary"><i
@@ -70,30 +77,25 @@
                                                             <button type="submit"
                                                                 class="btn btn-sm btn-outline-danger delete-role"
                                                                 data-id="{{ $redsocial->id }}"><i class="fa fa-trash"
-                                                                    aria-hidden="true"> Borrar</i></button>
+                                                                    aria-hidden="true"></i> Borrar</button>
                                                         </form>
                                                     </td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    </div>
-
     <div class="row px-4">
         <div class="col-12 px-4 py-4">
             <div class="card mt-1">
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <h6 class="float-start">Secciones Cliente</h6>
@@ -137,17 +139,14 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
-
     </div>
 
-    <div class="row px-4">
+    {{-- <div class="row px-4">
         <div class="col-12 px-4 py-4">
             <div class="card mt-1">
                 <div class="row">
-
                     <div class="col-6 mx-auto">
                         <div class="card">
                             <h6 class="float-start mt-4 px-4">Imagen del Logo</h6>
@@ -173,11 +172,9 @@
                             <hr class="horizontal dark my-sm-4">
                             <!-- ------------------------------------------ -->
                             <div class="imagen mx-auto w-100 text-center">
-
                                 <form action="{{ route('images.update') }}" method="POST">
                                     @csrf
                                     @method('POST')
-
                                     @foreach ($images as $image)
                                         <li>
                                             <input type="checkbox" name="seleccion[]" value="{{ $image->id }}"
@@ -186,17 +183,13 @@
                                                 style="max-width: 400px; height: 60px;">
                                         </li>
                                     @endforeach
-
                                     <div class="mt-4">
                                         <button type="submit" class="btn btn-primary">Guardar selección</button>
                                     </div>
                                 </form>
-
                             </div>
-
                         </div>
                     </div>
-
                     <div class="col-6">
                         <div class="card">
                             <div class="card-header">
@@ -208,29 +201,31 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
+            </div>  
         </div>
-
-    </div>
-
+    </div> --}}
 @endsection
 
 @section('js')
 <script>
-    // Obtener todas las casillas de verificación de imagen
-    const checkboxes = document.querySelectorAll('input[name="seleccion[]"]');
-
-    checkboxes.forEach((checkbox) => {
-        checkbox.addEventListener('change', function () {
-            // Desactivar todas las casillas de verificación
-            checkboxes.forEach((cb) => {
-                if (cb !== checkbox) {
-                    cb.checked = false;
-                }
-            });
-        });
+    $(document).ready(function() {
+        $('.datatable').DataTable();
     });
 </script>
+    <script>
+        // Obtener todas las casillas de verificación de imagen
+        const checkboxes = document.querySelectorAll('input[name="seleccion[]"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', function() {
+                // Desactivar todas las casillas de verificación
+                checkboxes.forEach((cb) => {
+                    if (cb !== checkbox) {
+                        cb.checked = false;
+                    }
+                });
+            });
+        });
+    </script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
 @endsection
