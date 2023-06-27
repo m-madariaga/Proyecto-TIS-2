@@ -34,8 +34,8 @@
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Producto</th>
                                         <th class="text-center">Marca</th>
-                                        <th class="text-center">Precio</th>
                                         <th class="text-center">Descuento</th>
+                                        <th class="text-center">Precio Final</th>
                                         <th class="text-center">Quitar</th>
                                     </tr>
                                 </thead>
@@ -47,8 +47,8 @@
                                                 {{ $promocion->product->nombre }}
                                             </td>
                                             <td class="text-center">{{ $promocion->product->marca->nombre }}</td>
-                                            <td class="text-center">${{ $promocion->product->precio }}</td>
                                             <td class="text-center">${{ $promocion->descuento }}</td>
+                                            <td class="text-center">${{ $promocion->product->precio }}</td>
                                             <td class="text-center">
                                                 <a href="{{ route('promotion-edit', ['id' => $promocion->id]) }}"
                                                     class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>

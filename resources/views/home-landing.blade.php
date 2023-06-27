@@ -270,7 +270,7 @@
                                             <div class="product_info">
                                                 <h6 class="product_name"><a>{{$promocion->product->nombre}}</a>
                                                 </h6>
-                                                <div class="product_price">{{$promocion->product->precio - $promocion->descuento}}</div>
+                                                <div class="product_price">{{$promocion->product->precio}}</div>
                                             </div>
                                         </div>
                                         <div class="red_button add_to_cart_button"><a href="#">Añadir al carrito</a>
@@ -313,7 +313,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="col-lg-4 benefit_col">
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
