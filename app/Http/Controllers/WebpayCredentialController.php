@@ -39,8 +39,8 @@ class WebpayCredentialController extends Controller
         WebpayCredential::create($validatedData);
 
         $action = new Action();
-            $action->name = 'Creación Credenciales Webpay';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Creación Credenciales Webpay';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         return redirect()->route('webpaycredentials.index')->with('success', 'Credencial de WebPay creada exitosamente.');
@@ -60,8 +60,8 @@ class WebpayCredentialController extends Controller
         $webpayCredential->update($validatedData);
 
         $action = new Action();
-            $action->name = 'Edición Credenciales Webpay';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Edición Credenciales Webpay';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         return redirect()->route('webpaycredentials.index')->with('success', 'Credencial de WebPay actualizada exitosamente.');
@@ -80,12 +80,13 @@ class WebpayCredentialController extends Controller
         $webpayCredential->delete();
 
         $action = new Action();
-            $action->name = 'Eliminación Credenciales Webpay';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Eliminación Credenciales Webpay';
+        $action->user_fk = Auth::user()->id;
         $action->save();
 
-        return response()->json(['success' => true]);
+        return redirect()->route('webpaycredentials.index')->with('success', '¡Credencial de Webpay eliminada exitosamente!');
     }
+
 
 
 }

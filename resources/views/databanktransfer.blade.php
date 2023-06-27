@@ -12,7 +12,7 @@
 
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
 @endsection
 
 @section('content')
@@ -27,8 +27,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="card-header pb-0 text-end">
-                                    <a href="{{ route('databanktransfer.create') }}"
-                                        class="btn btn-sm btn-outline-success mb-2">Agregar</a>
+                                    <a href="{{ route('databanktransfer.create') }}" class="btn btn-sm btn-outline-success mb-2">Agregar</a>
                                 </div>
                             </div>
                         </div>
@@ -59,18 +58,11 @@
                                             <td class="text-center">{{ $databanktransfer->account_type }}</td>
                                             <td class="text-center">{{ $databanktransfer->account_number }}</td>
                                             <td class="text-center pt-3">
-                                                <a href="{{ route('databanktransfer.edit', ['id' => $databanktransfer->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
-                                                    Editar</a>
-                                                <form
-                                                    action="{{ route('databanktransfer.destroy', ['id' => $databanktransfer->id]) }}"
-                                                    method="POST" style="display: inline;">
+                                                <a href="{{ route('databanktransfer.edit', ['id' => $databanktransfer->id]) }}" class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> Editar</a>
+                                                <form action="{{ route('databanktransfer.destroy', ['id' => $databanktransfer->id]) }}" method="POST" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-brand"
-                                                        data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash"
-                                                            aria-hidden="true"> Borrar</i></button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger delete-databanktransfer" data-id="{{ $databanktransfer->id }}"><i class="fa fa-trash" aria-hidden="true"></i> Borrar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -98,24 +90,35 @@
                 }
             });
 
-            $('.delete-user').on('click', function() {
-                var userId = $(this).data('id');
+            $('.delete-databanktransfer').click(function(event) {
+                event.preventDefault();
+                var name = $(this).data('name');
+                var form = $(this).closest('form');
 
                 Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "No podrás revertir esto",
+                    title: '¿Está seguro?',
+                    text: 'Se eliminará el método de pago "' + name + '"',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
                     confirmButtonText: 'Sí, eliminar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('form[action="/admin/databanktransfer/' + userId + '"]').submit();
+                        form.submit();
                     }
                 });
             });
+            @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: false
+                });
+            @endif
         });
     </script>
 @endsection
