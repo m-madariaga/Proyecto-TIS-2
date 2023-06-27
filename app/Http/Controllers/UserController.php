@@ -13,6 +13,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use App\Models\Action;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -44,6 +46,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getTodayUsersData()
+    {
+        $today = Carbon::today();
+        $lastWeek = Carbon::today()->subWeek();
+
+        $todayUsers = User::whereDate('last_seen', $today)
+            ->count();
+
+        $lastWeekUsers = User::whereDate('last_seen', $lastWeek)
+            ->count();
+
+        $userDifference = $todayUsers - $lastWeekUsers;
+        $percentageChange = ($lastWeekUsers > 0) ? ($userDifference / $lastWeekUsers) * 100 : 0;
+
+        return response()->json([
+            'todayUsers' => $todayUsers,
+            'percentageChange' => $percentageChange,
+        ]);
+    }
+
     public function create()
     {
         //
@@ -76,8 +99,8 @@ class UserController extends Controller
             $user->assignRole($request->input('role'));
 
             $action = new Action();
-                $action->name = 'Creación Usuario';
-                $action->user_fk = Auth::User()->id;
+            $action->name = 'Creación Usuario';
+            $action->user_fk = Auth::User()->id;
             $action->save();
 
             return response()->json(['success' => true]);
@@ -134,8 +157,8 @@ class UserController extends Controller
         $user->save();
 
         $action = new Action();
-            $action->name = 'Edición Usuario';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Edición Usuario';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         return redirect('admin/users')->with('success', 'Tipo de envío actualizado exitosamente!');
@@ -153,8 +176,8 @@ class UserController extends Controller
         $user->delete();
 
         $action = new Action();
-            $action->name = 'Borrado Usuario';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Borrado Usuario';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         // dejar para futuro sweetalert return response()->json(['success' => true]);
