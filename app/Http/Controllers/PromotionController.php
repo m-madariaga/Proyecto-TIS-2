@@ -81,7 +81,7 @@ class PromotionController extends Controller
                 'descuento.required' => 'El campo descuento es obligatorio.',
             ],
         );
-        //actualiza el descuento de la promocion
+        //busca el descuento de la promocion
         $promocion = Promotion::find($request->get('prod_id'));
         //guardamos el descuento anterior
         $descuento_anterior = $promocion->descuento;
@@ -91,6 +91,7 @@ class PromotionController extends Controller
         //actualiza el precio del producto
         $product = Product::find($promocion->product_id);
         $product->precio = $product->precio + $descuento_anterior - $promocion->descuento;
+        $product->save();
         return redirect()->route('promotion')->with('success','Promoción editada correctamente.');
     }
     public function destroy(Promotion $id)
