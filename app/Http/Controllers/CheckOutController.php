@@ -6,6 +6,7 @@ use App\Models\Section;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use App\Models\PaymentMethod;
+use App\Models\SocialNetwork;
 use App\Models\User;
 
 class CheckOutController extends Controller
@@ -18,6 +19,7 @@ class CheckOutController extends Controller
     public function CheckOutTransfer(Request $request)
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
         $cart = $request->input('cart_id');
         $userId = auth()->id();
         $user = User::find($userId);
@@ -57,7 +59,7 @@ class CheckOutController extends Controller
 
         $order = json_decode($request->input('order'));
 
-        return view('checkout_transfer', compact('cart','sections', 'shipment_type', 'name', 'run', 'email', 'bank', 'accountType', 'accountNumber', 'order'));
+        return view('checkout_transfer', compact('cart','sections', 'shipment_type', 'name', 'run', 'email', 'bank', 'accountType', 'accountNumber', 'order','socialnetworks'));
     }
 
     // Funcion comprobar transferencia bancaria
