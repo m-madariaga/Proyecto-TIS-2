@@ -13,7 +13,8 @@
             <div class="row" id="header">
                 <h5 id="setting_header">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                        <img src="/argon/assets/img/images-profile/{{ Auth::user()->imagen }}" alt="profile_image"
+                            class="w-100 border-radius-lg shadow-sm">
                     </div>
 
                     {{ Auth::user()->name }}
@@ -52,7 +53,8 @@
             <div class="mt-2 mb-5 d-flex">
                 <h6 class="mb-0">Claro / Oscuro</h6>
                 <div class="form-check form-switch ps-0 ms-auto my-auto">
-                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version" onclick="darkMode(this)">
+                    <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version"
+                        onclick="darkMode(this)">
                 </div>
             </div>
 
@@ -63,7 +65,8 @@
             <div class="d-flex my-3">
                 <h6 class="mb-0">Cerrar sesión</h6>
 
-                <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}" onclick="event.preventDefault();
+                <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
                     <p class="text-md mb-0">
                         <i class="ni ni-user-run me-1" aria-hidden="true"></i>
@@ -73,6 +76,19 @@
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
+            </div>
+            <!-- ------------------------------------------ -->
+            <hr class="horizontal dark my-sm-4">
+            <!-- ------------------------------------------ -->
+
+            <div class="d-flex my-3">
+                <h6 class="mb-0">Ver Vista Cliente</h6>
+                <a class="ps-0 ms-auto my-auto" href="{{ route('home-landing') }}">
+                    <p class="text-md mb-0">
+                        <i class="ni ni-calendar-grid-58 me-1" aria-hidden="true"></i>
+                    </p>
+                </a>
+
             </div>
 
             <!-- ------------------------------------------ -->

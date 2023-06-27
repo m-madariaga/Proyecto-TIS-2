@@ -5,11 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class shipment_status extends Model
+class Images extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'nombre_estado', 
-        'shipment_fk'
+        'nombre_imagen',
+        'direccion_imagen',
+        'seleccionada',
     ];
 }

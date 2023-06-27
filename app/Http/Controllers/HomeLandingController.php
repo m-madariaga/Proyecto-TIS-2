@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 
 class HomeLandingController extends Controller
@@ -15,7 +17,9 @@ class HomeLandingController extends Controller
     public function index()
     {
         $sections = Section::all();
-        return view('home-landing',compact('sections'));
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
+        return view('home-landing', compact('sections', 'images', 'socialnetworks'));
     }
 
     /**

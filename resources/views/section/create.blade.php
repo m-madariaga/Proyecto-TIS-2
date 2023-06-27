@@ -7,9 +7,9 @@
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Secciones</li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Redes Sociale</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Agregar Sección</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Agregar Red Social</h6>
 @endsection
 
 @section('css')
@@ -21,10 +21,10 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="mb-0">Agregar Sección</h3>
+                        <h3 class="mb-0">Agregar Red Social</h3>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('section.store')}}" method="POST" enctype="multipart/form-data">
+                        <form action="{{route('socialnetwork.store')}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
                                 <label class="form-control-label" for="nombre">Nombre</label>
@@ -32,6 +32,17 @@
                                     id="nombre" name="nombre" value="{{ old('nombre') }}" required autocomplete='nombre'
                                     autofocus>
                                 @error('nombre')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label class="form-control-label" for="nombre">Valor</label>
+                                <input type="text" class="form-control @error('valor') is-invalid @enderror"
+                                    id="valor" name="valor" value="{{ old('valor') }}" required autocomplete='valor'
+                                    autofocus>
+                                @error('valor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

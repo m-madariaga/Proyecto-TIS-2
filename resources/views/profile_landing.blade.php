@@ -88,9 +88,15 @@
     </script>
     <script>
         $(document).ready(function() {
-            $('#orderTable').DataTable();
+            $('#orderTable').DataTable({
+                "language": {
+                    "url": "/js/datatables/es_es.json" // Ruta al archivo de traducción en español
+                }
+            });
         });
     </script>
+    <script src="/js/datatables/es_es.json"></script>
+
 @endsection
 
 @section('content')
@@ -207,7 +213,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($orders as $order)
-                                        @if ($order->user_id === Auth::user()->id)
+                                        @if ($order->user_id === Auth::user()->id && $order->estado === 1)
                                             <tr>
                                                 <td class="text-center">{{ $order->id }}</td>
                                                 <td class="text-center">{{ $order->created_at }}</td>

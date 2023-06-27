@@ -14,50 +14,25 @@
 
 
 @section('css')
-
 @endsection
 
 @section('content')
     <div class="container-fluid py-4">
+
+
         <div class="row">
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+
+            <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
-                                    <h5 class="font-weight-bolder">
-                                        $53,000
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold" >Usuarios de hoy</p>
+                                    <h5 class="font-weight-bolder" id="usersCount">
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+55%</span>
-                                        since yesterday
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Users</p>
-                                    <h5 class="font-weight-bolder">
-                                        2,300
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+3%</span>
-                                        since last week
+                                        <span class="text-success text-sm font-weight-bolder" id="usersChange"></span>
                                     </p>
                                 </div>
                             </div>
@@ -70,19 +45,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
+            <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">New Clients</p>
-                                    <h5 class="font-weight-bolder">
-                                        +3,462
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Nuevos clientes</p>
+                                    <h5 class="font-weight-bolder" id="clientsCount">
+
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                                        since last quarter
+                                        <span class="text-danger text-sm font-weight-bolder" id="clientsChange"></span>
+
                                     </p>
                                 </div>
                             </div>
@@ -95,19 +70,18 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-3 col-sm-6">
+            <div class="col-xl-4 col-sm-6">
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
-                                    <h5 class="font-weight-bolder">
-                                        $103,430
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Ventas $</p>
+                                    <h5 class="font-weight-bolder" id="salesAmount">
+
                                     </h5>
                                     <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">+5%</span> than last
-                                        month
+                                        <span class="text-success text-sm font-weight-bolder" id="salesChange"></span>
                                     </p>
                                 </div>
                             </div>
@@ -122,62 +96,24 @@
             </div>
         </div>
         <div class="row mt-4">
-            <div class="col-lg-7 mb-lg-0 mb-4">
+            <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card z-index-2 h-100">
                     <div class="card-header pb-0 pt-3 bg-transparent">
-                        <h6 class="text-capitalize">Sales overview</h6>
-                        <p class="text-sm mb-0">
-                            <i class="fa fa-arrow-up text-success"></i>
-                            <span class="font-weight-bold">4% more</span> in 2021
-                        </p>
+                        <h6 class="text-capitalize">Resumen Ventas $</h6>
+                        <label for="timePeriod">Selecciona un periodo de tiempo</label>
+                        <select id="timePeriod" class="form-select w-25">
+                            <option selected value="day">Día actual</option>
+                            <option value="week">Semana actual</option>
+                            <option value="month">Mes actual</option>
+                        </select>
                     </div>
-                    <div class="card-body p-3">
-                        <div class="chart">
-                            <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
-                        </div>
-                    </div>
+
+                    <canvas id="salesChart"></canvas>
+
+
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card card-carousel overflow-hidden h-100 p-0">
-                    <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                        <div class="carousel-inner border-radius-lg h-100">
-                            <div class="carousel-item h-100 active"
-                                style="background-image: url('./argon/assets/img/carousel-1.jpg'); background-size: cover;">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                        <i class="ni ni-camera-compact text-dark opacity-10"></i>
-                                    </div>
-                                    <h5 class="text-white mb-1">Get started with Argon</h5>
-                                    <p>There’s nothing I really wanted to do in life that I wasn’t able to get good
-                                        at.</p>
-                                </div>
-                            </div>
-                            <div class="carousel-item h-100"
-                                style="background-image: url('./argon/assets/img/carousel-2.jpg'); background-size: cover;">
-                                <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                    <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                        <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                                    </div>
-                                    <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                                    <p>That’s my skill. I’m not really specifically talented at anything except for
-                                        the ability to learn.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev w-5 me-3" type="button"
-                            data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next w-5 me-3" type="button"
-                            data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="row mt-4">
             <div class="col-lg-7 mb-lg-0 mb-4">
@@ -487,5 +423,129 @@
             },
         });
     </script>
-@endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <script>
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var salesChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Ventas $',
+                    data: [],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        function updateChart(timePeriod) {
+            $.ajax({
+                url: "/api/salesData",
+                data: {
+                    timePeriod: timePeriod
+                },
+                success: function(response) {
+                    salesChart.data.labels = Object.keys(response);
+                    salesChart.data.datasets[0].data = Object.values(response);
+                    salesChart.update();
+                }
+            });
+        }
+
+
+        updateChart('day');
+
+
+        $('#timePeriod').change(function() {
+            updateChart($(this).val());
+        });
+    </script>
+    <script>
+        function updateSalesCard() {
+            $.ajax({
+                url: "/api/todaysSalesData",
+                success: function(response) {
+                    // update the sales amount
+                    $('#salesAmount').text('$' + parseFloat(response.todaySales).toLocaleString('de'));
+
+                    // determine if the sales increased or decreased
+                    var arrow = response.percentageChange >= 0 ? 'up' : 'down';
+                    var sign = response.percentageChange >= 0 ? '+' : '-';
+
+                    // update the percentage change
+                    $('#salesChange').html(`
+                <span class="text-${arrow} text-sm font-weight-bolder">
+                    ${sign}${Math.abs(response.percentageChange.toFixed(2))}%
+                </span> que ayer
+            `);
+                }
+            });
+        }
+
+
+        // initial load
+        updateSalesCard();
+    </script>
+    <script>
+        function updateClientsCard() {
+            $.ajax({
+                url: "/api/newClientsData",
+                success: function(response) {
+                    // update the client count
+                    $('#clientsCount').text('+' + response.currentQuarterClients);
+
+                    // determine if the client count increased or decreased
+                    var arrow = response.percentageChange >= 0 ? 'up' : 'down';
+                    var sign = response.percentageChange >= 0 ? '+' : '-';
+
+                    // update the percentage change
+                    $('#clientsChange').html(`
+                <span class="text-${arrow} text-sm font-weight-bolder">
+                    ${sign}${Math.abs(response.percentageChange.toFixed(2))}%
+                </span> que el ultimo trimestre
+            `);
+                }
+            });
+        }
+
+
+        // initial load
+        updateClientsCard();
+    </script>
+    <script>
+        function updateUsersCard() {
+            $.ajax({
+                url: "/api/todayUsersData",
+                success: function(response) {
+                    // update the user count
+                    $('#usersCount').text(response.todayUsers);
+
+                    // determine if the user count increased or decreased
+                    var arrow = response.percentageChange >= 0 ? 'up' : 'down';
+                    var sign = response.percentageChange >= 0 ? '+' : '-';
+
+                    // update the percentage change
+                    $('#usersChange').html(`
+                <span class="text-${arrow} text-sm font-weight-bolder">
+                    ${sign}${Math.abs(response.percentageChange.toFixed(2))}%
+                </span> que la ultima semana
+            `);
+                }
+            });
+        }
+
+        // initial load
+        updateUsersCard();
+    </script>
+@endsection

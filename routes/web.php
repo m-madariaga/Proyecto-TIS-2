@@ -47,14 +47,13 @@ use App\Models\Purchase_order_product;
 */
 
 Auth::routes();
-Route::get('/', [App\Http\Controllers\HomeLandingController::class, 'index'], function () {
-    return view('home-landing');
-});
 
-Route::get('/home-landing', [App\Http\Controllers\HomeLandingController::class, 'index'], function () {
-    return view('/home-landing');
-})->name('home-landing');
 
+Route::get('/',[App\Http\Controllers\HomeLandingController::class, 'index']);
+
+Route::get('/home-landing',[App\Http\Controllers\HomeLandingController::class, 'index'])->name('home-landing');
+
+ 
 
 // rutas categorias
 Route::get('/mujer', [App\Http\Controllers\ProductController::class, 'women_product'])->name('women');
@@ -154,6 +153,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
         Route::get('/productos/create', [ProductController::class, 'create'])->name('productos-create');
         Route::post('/productos/store', [ProductController::class, 'store'])->name('productos-store');
+        Route::post('/productos/store', [ProductController::class, 'store_static'])->name('productos-store-static');
         Route::get('/productos/{id}/edit', [ProductController::class, 'edit'])->name('productos-edit');
         Route::patch('/productos/{id}/update', [ProductController::class, 'update'])->name('productos-update');
         Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');
@@ -215,11 +215,17 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     });
     Route::group(['middleware' => ['permission:mantenedor secciones landing']], function () {
         Route::get('/secciones', [App\Http\Controllers\SectionController::class, 'index'])->name('section.index');
-        Route::get('/secciones/create', [App\Http\Controllers\SectionController::class, 'create'])->name('section.create');
-        Route::post('/secciones/store', [App\Http\Controllers\SectionController::class, 'store'])->name('section.store');
-        Route::get('/secciones/{id}/edit', [App\Http\Controllers\SectionController::class, 'edit'])->name('section.edit');
+        Route::get('/redes-sociales/create', [App\Http\Controllers\SocialNetworkController::class, 'create'])->name('socialnetwork.create');
+        Route::post('/redes-sociales/store', [App\Http\Controllers\SocialNetworkController::class, 'store'])->name('socialnetwork.store');
+        Route::get('/redes-sociales/{socialnetwork}/edit', [App\Http\Controllers\SocialNetworkController::class, 'edit'])->name('socialnetwork.edit');
+        Route::patch('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'update'])->name('socialnetwork.update');
+        Route::delete('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'destroy'])->name('socialnetwork.destroy');
+        
         Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
-        Route::delete('/secciones/{id}', [App\Http\Controllers\SectionController::class, 'destroy'])->name('section.destroy');
+       
+        Route::post('/images/store', [App\Http\Controllers\ImagesController::class, 'store'])->name('images.store');
+        Route::post('/images/update', [App\Http\Controllers\ImagesController::class, 'update'])->name('images.update');
+
     });
 
 
@@ -249,6 +255,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/punto-venta', [PointOfSaleController::class, 'index'])->name('point_of_sale');
         Route::post('/punto-venta-store', [PointOfSaleController::class, 'store'])->name('point_of_sale-store');
         Route::get('/punto-venta-update/{id}', [PointOfSaleController::class, 'update'])->name('point_of_sale-update');
+        Route::get('/punto-venta/addProduct/{id}',[PointOfSaleController::class,'addProduct'])->name('point_of_sale-addProduct');
+        Route::get('/punto-venta/dropProduct-/{id}', [PointOfSaleController::class, 'disminuyeCantidad'])->name('point_of_sale-disminuyeCantidad');
+        Route::get('/punto-venta/dropProduct/{id}', [PointOfSaleController::class, 'dropProduct'])->name('point_of_sale-dropProduct');
+        Route::get('/punto-venta/createOrder', [PointOfSaleController::class, 'createOrder'])->name('point_of_sale-createOrder');
     });
 
 

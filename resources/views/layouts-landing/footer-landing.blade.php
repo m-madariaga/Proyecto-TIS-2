@@ -76,8 +76,42 @@
         <div class="col-12 d-flex flex-column align-items-center text-center">
             <div class="footer_social d-flex flex-row align-items-center justify-content-center">
                 <ul>
-                    <li><a href="https://www.instagram.com/que.guay_/" target="_blank"><i class="fa fa-instagram"
-                                aria-hidden="true"></i> Instagram</a></li>
+                    @foreach ($socialnetworks as $socialnetwork)
+                        @if ($socialnetwork->visible == '1')
+                            <div class="socialnetwork-item">
+                                @if (strtolower($socialnetwork->nombre) == 'número telefónico')
+                                    <div class="top_nav_left">
+                                        <i class="fa fa-phone" style="color:white"aria-hidden="true"></i>
+                                        <span style="color:white">{{ $socialnetwork->valor }}</span>
+                                    </div>
+                                @elseif (strtolower($socialnetwork->nombre) == 'facebook')
+                                    <div class="top_nav_left">
+                                        <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                            <i class="fa fa-facebook" style="color:white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                @elseif (strtolower($socialnetwork->nombre) == 'instagram')
+                                    <div class="top_nav_left">
+                                        <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                            <i class="fa fa-instagram" style="color:white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                @elseif (strtolower($socialnetwork->nombre) == 'twitter')
+                                    <div class="top_nav_left">
+                                        <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                            <i class="fa fa-twitter" style="color:white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="top_nav_left">
+                                        <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                            <i class="fa fa-share" style="color:white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
             <div class="d-flex flex-row align-items-center justify-content-center mt-4">

@@ -207,20 +207,22 @@
             }
         };
     </script>
- 
+
     <script>
         function selectPaymentMethod(element) {
+            // Remover la clase 'selected-payment-method' de todas las tarjetas
             var cards = document.querySelectorAll('.card');
             cards.forEach(function(card) {
                 card.classList.remove('selected-payment-method');
             });
 
+            // Agregar la clase 'selected-payment-method' a la tarjeta seleccionada
             element.classList.add('selected-payment-method');
 
-            var radioInput = element.querySelector('.form-check-input');
-            radioInput.checked = true;
-
+            // Obtener el ID del método de pago seleccionado
             var paymentMethodId = element.getAttribute('data-payment-method-id');
+
+            // Establecer el valor del campo de formulario oculto
             document.getElementById('paymentMethod').value = paymentMethodId;
         }
 
@@ -229,18 +231,11 @@
             var selectedPaymentMethod = document.querySelector('.card.selected-payment-method');
 
             if (!selectedPaymentMethod) {
-                event.preventDefault(); // Detiene el envío del formulario
+                event.preventDefault(); // Detener el envío del formulario
 
-                // Muestra un mensaje de error
+                // Mostrar un mensaje de error
                 alert('Por favor, selecciona un método de pago antes de continuar.');
             }
-        });
-
-        // Agrega el siguiente código al final del archivo
-        $(document).ready(function() {
-            $('.card').click(function() {
-                selectPaymentMethod(this);
-            });
         });
     </script>
 @endsection

@@ -14,8 +14,6 @@ class SocialNetworkController extends Controller
      */
     public function index()
     {
-        $redSocial = SocialNetwork::all();
-        return view('section.index',compact('redSocial'));
     }
 
     /**
@@ -25,7 +23,8 @@ class SocialNetworkController extends Controller
      */
     public function create()
     {
-        //
+        return view('section.create');
+
     }
 
     /**
@@ -36,7 +35,15 @@ class SocialNetworkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+        ]);
+        $socialnetwork = new SocialNetwork([
+            'nombre' => $request->get('nombre'),
+            'valor' => $request->get('valor'),
+        ]);
+        $socialnetwork->save();
+        return redirect()->route('section.index')->with('success', 'Sección ingresada correctamente.');
     }
 
     /**
@@ -56,31 +63,47 @@ class SocialNetworkController extends Controller
      * @param  \App\Models\SocialNetwork  $socialNetwork
      * @return \Illuminate\Http\Response
      */
-    public function edit(SocialNetwork $socialNetwork)
+    public function edit($id)
     {
-        //
+        $socialnetwork = SocialNetwork::find($id);
+        return view('section.edit', compact('socialnetwork'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SocialNetwork  $socialNetwork
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SocialNetwork $socialNetwork)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'valor' => 'required',
+            'visible' => 'required|in:0,1', // Solo permite valores 0 o 1
+        ]);
+    
+        $socialnetwork = SocialNetwork::find($id);
+    
+        if ($socialnetwork) {
+            $socialnetwork->nombre = $request->nombre;
+            $socialnetwork->valor = $request->valor;
+            $socialnetwork->visible = $request->visible; // Actualiza el campo visible con el valor seleccionado
+    
+            $socialnetwork->save();
+    
+            return redirect()->route('section.index')->with('success', 'Redes Sociales actualizadas correctamente');
+        }
+    
+        return redirect()->route('section.index')->with('error', 'No se encontraron redes sociales.');
+    }
+    
+
+    public function destroy($id)
+    {
+        $socialnetwork = SocialNetwork::find($id);
+
+        if ($socialnetwork) {
+            $socialnetwork->delete();
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'No se encontró el registro']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\SocialNetwork  $socialNetwork
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SocialNetwork $socialNetwork)
-    {
-        //
-    }
 }
+ 
