@@ -132,10 +132,6 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-
-
-
-
         return response(view('users.edit', compact('users')));
     }
 
@@ -161,7 +157,7 @@ class UserController extends Controller
         $action->user_fk = Auth::User()->id;
         $action->save();
 
-        return redirect('admin/users')->with('success', 'Tipo de envío actualizado exitosamente!');
+        return redirect('admin/users')->with('success', 'Rol actualizado exitosamente!');
     }
 
     /**
