@@ -256,7 +256,7 @@
             <div class="row align-items-center fill_height ">
                 <div class="col-12 d-flex flex-column justify-content-center align-items-center text-center">
                     <div class="sale_content align-items-center flex">
-                        <h1>Sale Section</h1>
+                        <h1>Sección de Promociones</h1>
                         <div class="productos-oferta justify-content-center align-middle flex">
                             @if ($promociones->isNotEmpty())
                                 @foreach ($promociones as $promocion)
@@ -295,7 +295,7 @@
     <div class="benefit mb-4">
         <div class="container">
             <div class="row benefit_row">
-                <div class="col-lg-3 benefit_col">
+                <div class="col-lg-4 benefit_col">
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
                         <div class="benefit_content">
@@ -304,7 +304,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 benefit_col">
+                <div class="col-lg-4 benefit_col">
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
                         <div class="benefit_content">
@@ -313,16 +313,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 benefit_col">
-                    <div class="benefit_item d-flex flex-row align-items-center">
-                        <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
-                        <div class="benefit_content">
-                            <h6>45 DÍAS DE DEVOLUCIÓN</h6>
-                            <p>En caso de imperfección </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 benefit_col">
+               
+                <div class="col-lg-4 benefit_col">
                     <div class="benefit_item d-flex flex-row align-items-center">
                         <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
                         <div class="benefit_content">
