@@ -46,13 +46,9 @@ use App\Models\Purchase_order_product;
 */
 
 Auth::routes();
-Route::get('/',[App\Http\Controllers\HomeLandingController::class, 'index'], function () {
-    return view('home-landing');
-});
+Route::get('/',[App\Http\Controllers\HomeLandingController::class, 'index']);
 
-Route::get('/home-landing',[App\Http\Controllers\HomeLandingController::class, 'index'], function () {
-    return view('/home-landing');
-})->name('home-landing');
+Route::get('/home-landing',[App\Http\Controllers\HomeLandingController::class, 'index'])->name('home-landing');
 
 
 // rutas categorias
