@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Images;
+use App\Models\Promotion;
 use App\Models\Section;
 use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class HomeLandingController extends Controller
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
         $images = Images::where('seleccionada', 1)->get();
-        return view('home-landing', compact('sections', 'images', 'socialnetworks'));
+        $promociones = Promotion::all();
+        return view('home-landing', compact('sections', 'images', 'socialnetworks','promociones'));
     }
 
     /**

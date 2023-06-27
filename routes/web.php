@@ -32,6 +32,7 @@ use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\PromotionController;
 use App\Models\Purchase_order_product;
 
 /*
@@ -218,9 +219,9 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/redes-sociales/{socialnetwork}/edit', [App\Http\Controllers\SocialNetworkController::class, 'edit'])->name('socialnetwork.edit');
         Route::patch('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'update'])->name('socialnetwork.update');
         Route::delete('/redes-sociales/{socialnetwork}', [App\Http\Controllers\SocialNetworkController::class, 'destroy'])->name('socialnetwork.destroy');
-        
+
         Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
-       
+
         Route::post('/images/store', [App\Http\Controllers\ImagesController::class, 'store'])->name('images.store');
         Route::post('/images/update', [App\Http\Controllers\ImagesController::class, 'update'])->name('images.update');
 
@@ -259,6 +260,15 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/punto-venta/dropProduct-/{id}', [PointOfSaleController::class, 'disminuyeCantidad'])->name('point_of_sale-disminuyeCantidad');
         Route::get('/punto-venta/dropProduct/{id}', [PointOfSaleController::class, 'dropProduct'])->name('point_of_sale-dropProduct');
         Route::get('/punto-venta/createOrder', [PointOfSaleController::class, 'createOrder'])->name('point_of_sale-createOrder');
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor promociones']], function () {
+        Route::get('/promociones', [PromotionController::class, 'index'])->name('promotion');
+        Route::get('/promociones/create', [PromotionController::class, 'create'])->name('promotion-create');
+        Route::post('/promociones/store', [PromotionController::class, 'store'])->name('promotion-store');
+        Route::get('/promociones/edit/{id}', [PromotionController::class, 'edit'])->name('promotion-edit');
+        Route::patch('/promociones/update/{id}', [PromotionController::class, 'update'])->name('promotion-update');
+        Route::delete('/promociones/{id}/destroy', [PromotionController::class, 'destroy'])->name('promotion-destroy');
     });
 
 
