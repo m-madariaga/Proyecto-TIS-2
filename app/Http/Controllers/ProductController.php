@@ -24,33 +24,33 @@ class ProductController extends Controller
     {
         $sections = Section::all();
         $productos = Product::all();
-        return view('product.index', compact('productos','sections'));
+        return view('product.index', compact('productos', 'sections'));
     }
 
     public function women_product()
     {
         $sections = Section::all();
         $productos = Product::all();
-        return view('women', compact('productos','sections'));
+        return view('women', compact('productos', 'sections'));
     }
 
     public function men_product()
     {
         $sections = Section::all();
         $productos = Product::all();
-        return view('men', compact('productos','sections'));
+        return view('men', compact('productos', 'sections'));
     }
     public function kids_product()
     {
         $sections = Section::all();
         $productos = Product::all();
-        return view('kids', compact('productos','sections'));
+        return view('kids', compact('productos', 'sections'));
     }
     public function accesorie_product()
     {
         $sections = Section::all();
         $productos = Product::all();
-        return view('accesorie', compact('productos','sections'));
+        return view('accesorie', compact('productos', 'sections'));
     }
 
 
@@ -74,7 +74,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         try {
             $validatedData = $request->validate(
                 [
@@ -135,8 +135,8 @@ class ProductController extends Controller
             $producto->save();
 
             $action = new Action();
-                $action->name = 'Creación Producto';
-                $action->user_fk = Auth::User()->id;
+            $action->name = 'Creación Producto';
+            $action->user_fk = Auth::User()->id;
             $action->save();
 
             return response()->json(['success' => true]);
@@ -165,7 +165,8 @@ class ProductController extends Controller
 
 
 
-        return view('product.show', compact('product', 'reviews','sections'));
+        $recommendedProducts = $this->getRecommendedProducts($productId);
+        return view('product.show', compact('product', 'reviews', 'recommendedProducts', 'sections'));
     }
 
     /**
@@ -223,8 +224,8 @@ class ProductController extends Controller
         $product->save();
 
         $action = new Action();
-            $action->name = 'Edición Producto';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Edición Producto';
+        $action->user_fk = Auth::User()->id;
         $action->save();
 
         return redirect()
@@ -245,10 +246,22 @@ class ProductController extends Controller
         $producto->delete();
 
         $action = new Action();
-            $action->name = 'Borrado Producto';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Borrado Producto';
+        $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
+    }
+    public function getRecommendedProducts($productId)
+    {
+        // Obtener el producto actual
+        $product = Product::findOrFail($productId);
+
+        // Obtener todos los productos excepto el actual
+        $recommendedProducts = Product::where('id', '!=', $productId)
+            ->inRandomOrder()
+            ->get();
+
+        return $recommendedProducts;
     }
 }

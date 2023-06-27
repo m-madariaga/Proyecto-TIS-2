@@ -1,94 +1,91 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\WebpayCredential;
 use Illuminate\Http\Request;
-use Transbank\Webpay\WebpayPlus;
-use Transbank\Webpay\WebpayPlus\Transaction;
-use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Config;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
-class TransbankController extends Controller
+class WebpayCredentialController extends Controller
 {
-    public function __construct()
+    public function index()
     {
-        if (app()->environment('production')) {
-            WebpayPlus::configureForProduction(
-                env('WEBPAY_PLUS_CC'),
-                env('WEBPAY_PLUS_API_KEY')
-            );
-        } else {
-            WebpayPlus::configureForTesting();
-        }
+        $webpayCredentials = WebpayCredential::all();
+        return view('webpaycredentials.index', compact('webpayCredentials'));
     }
 
-    public function CheckOutTransBank(Request $request)
+    public function create()
     {
-        $cart = Cart::content();
+        $user = auth()->user();
+        $userId = $user->id;
+        $userName = $user->name;
 
-        // Realiza el procesamiento necesario con los datos del carrito
-        $amount = round(Cart::subtotal());
-
-        // Validar que el carrito no esté vacío
-        if ($cart->isEmpty()) {
-            return redirect()->back()->with('error', 'El carrito está vacío.');
-        }
-
-        // Validar que el monto sea mayor a cero
-        if ($amount <= 0) {
-            return redirect()->back()->with('error', 'El monto debe ser mayor a cero.');
-        }
-
-        // Genera identificadores de compra y sesión
-        $buyOrder = uniqid();
-        $sessionId = uniqid();
-        $return_url = route('confirmationcart');
-        
-        // Crea la transacción en Webpay Plus
-        try {
-            $transaccion = (new Transaction)->create(
-                $buyOrder,
-                $sessionId,
-                $amount,
-                $return_url
-            );
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Error al crear la transacción en Webpay Plus.');
-        }
-
-        // Obtiene la URL de redirección proporcionada por Transbank
-        $redirectUrl = $transaccion->getUrl() . '?token_ws=' . $transaccion->getToken();
-
-        // Redirige al usuario a la página de pago de Transbank
-        return redirect()->away($redirectUrl);
+        return view('webpaycredentials.create', compact('userId', 'userName'));
     }
 
-    public function confirmCart(Request $request)
+    public function store(Request $request)
     {
-        // Verificar si el token_ws está presente en la solicitud
-        if (!$request->has('token_ws')) {
-            return redirect()->route('error')->with('message', 'No se proporcionó el token de transacción.');
-        }
+        $validatedData = $request->validate([
+            'commerce_code' => 'required',
+            'api_key' => 'required',
+            'integration_type' => 'required',
+            'environment' => 'required',
+            'user_id' => 'required',
+        ]);
 
-        // Obtén los datos de la respuesta de Transbank
-        $token = $request->input('token_ws');
+        $validatedData['user_id'] = auth()->user()->id;
+        WebpayCredential::create($validatedData);
 
-        // Verifica y confirma la transacción en Webpay Plus
-        try {
-            $response = (new Transaction)->commit($token);
-        } catch (\Exception $e) {
-            return redirect()->route('error')->with('message', 'Error al confirmar la transacción en Webpay Plus.');
-        }
+        $action = new Action();
+            $action->name = 'Creación Credenciales Webpay';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
 
-        // Procesa el resultado de la transacción
-        if ($response->isApproved()) {
-            // La transacción fue aprobada
-            // Realiza las acciones necesarias (por ejemplo, actualizar el estado del carrito, generar la orden, etc.)
-
-            return "¡Transacción exitosa! Gracias por tu compra.";
-        } else {
-            // La transacción fue rechazada o hubo un error
-            // Realiza las acciones necesarias (por ejemplo, mostrar un mensaje de error, redirigir a otra página, etc.)
-
-            return "La transacción no pudo ser completada. Por favor, inténtalo nuevamente.";
-        }
+        return redirect()->route('webpaycredentials.index')->with('success', 'Credencial de WebPay creada exitosamente.');
     }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'commerce_code' => 'required',
+            'api_key' => 'required',
+            'integration_type' => 'required',
+            'environment' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $webpayCredential = WebpayCredential::findOrFail($id);
+        $webpayCredential->update($validatedData);
+
+        $action = new Action();
+            $action->name = 'Edición Credenciales Webpay';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
+        return redirect()->route('webpaycredentials.index')->with('success', 'Credencial de WebPay actualizada exitosamente.');
+    }
+
+    public function edit($id)
+    {
+        $webpayCredential = WebpayCredential::findOrFail($id);
+        $users = User::all(); // Obtener todos los usuarios disponibles
+        return view('webpaycredentials.edit', compact('webpayCredential', 'users'));
+    }
+
+    public function destroy($id)
+    {
+        $webpayCredential = WebpayCredential::findOrFail($id);
+        $webpayCredential->delete();
+
+        $action = new Action();
+            $action->name = 'Eliminación Credenciales Webpay';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
+        return response()->json(['success' => true]);
+    }
+
+
 }
