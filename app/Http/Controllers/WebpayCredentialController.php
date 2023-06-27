@@ -83,9 +83,9 @@ class WebpayCredentialController extends Controller
             $action->name = 'Eliminación Credenciales Webpay';
             $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
     }
 
-   
+
 }

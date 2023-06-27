@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Section;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PayMentMethods::class);
         
         $this->call(ShipmentTypesSeeder::class);
-           
+        $this->call(DataBankSeeder::class);
+        $this->call(SectionSeeder::class);   
+        $this->call(SocialNetworksSeeder::class);  
     }
 }

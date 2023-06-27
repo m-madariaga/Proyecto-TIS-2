@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class shipment_status extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nombre_estado', 
+        'shipment_fk'
+    ];
 }

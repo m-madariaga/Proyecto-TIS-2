@@ -15,6 +15,14 @@
 @section('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .disabled-pdf {
+            color: gray;
+            pointer-events: none;
+            text-decoration: none;
+            cursor: not-allowed;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -26,14 +34,21 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
-                                    <h5 class="font-weight-bolder mt-1">
-                                        {{ $product->nombre }}
-                                    </h5>
-                                    <p class="mb-0">
-                                        <span class="text-success text-sm font-weight-bolder">{{ $count }}</span>
-                                        veces
-                                    </p>
+                                    @if (is_null($product))
+                                        <div class="pt-2">
+                                            <h6>No hay productos deseados</h6>
+                                        </div>
+                                    @else
+                                        <p class="text-sm mb-0 text-uppercase font-weight-bold">producto más deseado</p>
+                                        <h5 class="font-weight-bolder mt-1">{{ $product->nombre }}</h5>
+                                        <p class="mb-0">
+                                            <span class="text-success text-sm font-weight-bolder">
+                                                {{$count}}
+                                            </span>
+                                            veces
+                                        </p>
+                                    @endif
+
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -101,7 +116,7 @@
                                             @endif
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('product_desired_pdf', ['id' => $user->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary">
+                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }}">
                                                     Descargar PDF</a>
                                             </td>
                                         </tr>

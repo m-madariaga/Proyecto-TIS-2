@@ -140,6 +140,7 @@ class BrandController extends Controller
             $action->name = 'Borrado Marca';
             $action->user_fk = Auth::User()->id;
         $action->save();
+        
         return response()->json(['success' => true]);
     }
 }

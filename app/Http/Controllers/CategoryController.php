@@ -100,7 +100,7 @@ class CategoryController extends Controller
         $categoria->save();
 
         $action = new Action();
-            $action->name = 'Edición Permiso';
+            $action->name = 'Edición Categoría';
             $action->user_fk = Auth::User()->id;
         $action->save();
 
@@ -123,7 +123,7 @@ class CategoryController extends Controller
             $action->name = 'Borrado Categoría';
             $action->user_fk = Auth::User()->id;
         $action->save();
-
+        
         return response()->json(['success' => true]);
     }
 }

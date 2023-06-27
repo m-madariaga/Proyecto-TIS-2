@@ -30,13 +30,54 @@
         .cart-text {
             color: black;
         }
+
+        .underline-hover:hover {
+            text-decoration: underline;
+        }
+
+        .card.selected-payment-method {
+            border: 2px solid black;
+        }
+
+        .card.selected-payment-method::after {
+            content: 'Seleccionado';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: black;
+            color: white;
+            padding: 2px 5px;
+            font-size: 12px;
+            border-radius: 3px;
+        }
     </style>
 @endsection
 
 @section('content')
-    <div class="container py-4 mb-4" style="margin-top: 15rem;">
-        <div class="button-container">
-            <button class="btn btn-secondary" onclick="goBack()">Regresar</button>
+    <div class="container py-4 mb-1" style="margin-top: 15rem;">
+        <div class="breadcrumb mt-4">
+            <div class="col-6">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm text-black active"><a class="opacity-5 text-black"
+                            href="{{ route('showcart') }}">Volver al Carrito</a></li>
+                    <li class="breadcrumb-item text-sm underline-hover"><a class="opacity-5 text-black"
+                            style="cursor: pointer;">Método Envío</a></li>
+                    <li class="breadcrumb-item text-sm text-black active"><a class="opacity-5 text-black">Método Pago</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-6">
+                <div class="d-flex justify-content-end">
+                    <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
+                        @csrf
+                        <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
+                        <input type="hidden" name="shipment_type" id="shipment_type" value="{{ $shipment_type }}">
+                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+
+                        <button type="submit" class="btn btn-primary">Continuar</button>
+                    </form>
+                </div>
+            </div>
         </div>
         @if (!Auth::check())
             <div class="row justify-content-center mt-4">
@@ -119,55 +160,35 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <div class="card-deck">
-                                        @foreach ($paymentMethods as $paymentMethod)
-                                            @if ($paymentMethod->visible)
-                                                <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
-                                                    onclick="selectPaymentMethod(this)">
-                                                    <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
-                                                        style="cursor: pointer;">
-                                                        <div
-                                                            class="payment-method-image d-flex flex-column align-items-center justify-content-center">
-                                                            <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
-                                                                alt="Imagen del método de pago" class="img-fluid"
-                                                                style="max-height: 100px;">
-                                                        </div>
-                                                        <h6 class="card-title text-truncate text-center multiline-text"
-                                                            style="margin-top:1rem;size: 0.6rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
-                                                            {{ $paymentMethod->name }}
-                                                        </h6>
+                                    @foreach ($paymentMethods as $paymentMethod)
+                                        @if ($paymentMethod->visible)
+                                            <div class="card" data-payment-method-id="{{ $paymentMethod->id }}"
+                                                onclick="selectPaymentMethod(this)">
+                                                <div class="card-body d-flex flex-column align-items-center selectable-payment-method"
+                                                    style="cursor: pointer;">
+                                                    <div
+                                                        class="payment-method-image d-flex flex-column align-items-center justify-content-center">
+                                                        <img src="{{ asset('argon/assets/img/images-paymethods/' . $paymentMethod->imagen) }}"
+                                                            alt="Imagen del método de pago" class="img-fluid"
+                                                            style="max-height: 100px;">
+                                                    </div>
+                                                    <h6 class="card-title text-truncate text-center multiline-text"
+                                                        style="margin-top:1rem;size: 0.6rem; height: auto; overflow: hidden; white-space: normal; word-break: break-all;">
+                                                        {{ $paymentMethod->name }}
+                                                    </h6>
 
-                                                        <div class="form-check mt-2">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="paymentMethod"
-                                                                id="paymentMethod{{ $paymentMethod->id }}"
-                                                                value="{{ $paymentMethod->id }}">
-                                                            <label class="form-check-label"
-                                                                for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
-                                                        </div>
+                                                    <div class="form-check mt-2">
+                                                        <input class="form-check-input" type="radio" name="paymentMethod"
+                                                            id="paymentMethod{{ $paymentMethod->id }}"
+                                                            value="{{ $paymentMethod->id }}">
+                                                        <label class="form-check-label"
+                                                            for="paymentMethod{{ $paymentMethod->id }}">Seleccionar</label>
                                                     </div>
                                                 </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center mt-4">
-                        <div class="col-md-6">
-                            <div class="col-md-12">
-                                <div class="button-container">
-                                    <a href="{{ route('showcart') }}" class="btn btn-secondary">Volver al carrito</a>
-                                    <form action="{{ route('resume_checkout') }}" method="POST" id="shipment-form">
-                                        @csrf
-                                        <input type="hidden" name="paymentMethod" id="paymentMethod" value="">
-                                        <input type="hidden" name="shipment_type" id="shipment_type"
-                                            value="{{ $shipment_type }}">
-                                        <input type="hidden" name="order" value="{{ json_encode($order) }}">
+                                            </div>
+                                        @endif
+                                    @endforeach
 
-                                        <button type="submit" class="btn btn-primary">Continuar</button>
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +198,6 @@
         @endif
     </div>
 @endsection
-
 @section('js')
     <script>
         window.onload = function() {
@@ -187,24 +207,22 @@
             }
         };
     </script>
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+
     <script>
         function selectPaymentMethod(element) {
+            // Remover la clase 'selected-payment-method' de todas las tarjetas
             var cards = document.querySelectorAll('.card');
             cards.forEach(function(card) {
                 card.classList.remove('selected-payment-method');
             });
 
+            // Agregar la clase 'selected-payment-method' a la tarjeta seleccionada
             element.classList.add('selected-payment-method');
 
-            var radioInput = element.querySelector('.form-check-input');
-            radioInput.checked = true;
-
+            // Obtener el ID del método de pago seleccionado
             var paymentMethodId = element.getAttribute('data-payment-method-id');
+
+            // Establecer el valor del campo de formulario oculto
             document.getElementById('paymentMethod').value = paymentMethodId;
         }
 
@@ -213,9 +231,9 @@
             var selectedPaymentMethod = document.querySelector('.card.selected-payment-method');
 
             if (!selectedPaymentMethod) {
-                event.preventDefault(); // Detiene el envío del formulario
+                event.preventDefault(); // Detener el envío del formulario
 
-                // Muestra un mensaje de error
+                // Mostrar un mensaje de error
                 alert('Por favor, selecciona un método de pago antes de continuar.');
             }
         });

@@ -110,8 +110,9 @@ class CityController extends Controller
             'country_fk' => 'required',
             'region_fk' => 'required',
         ]);
+        error_log($request);
 
-        $city = Region::find($id);
+        $city = City::find($id);
 
         $city->name = $request->get('name');
         $city->region_fk = $request->get('region_fk');
@@ -142,7 +143,7 @@ class CityController extends Controller
             $action->name = 'Borrado Ciudad';
             $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
 
     }

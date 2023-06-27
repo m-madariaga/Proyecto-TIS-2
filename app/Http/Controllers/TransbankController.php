@@ -1,10 +1,15 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Transbank\Webpay\WebpayPlus;
 use Transbank\Webpay\WebpayPlus\Transaction;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ProofPayment;
 
 class TransbankController extends Controller
 {
@@ -20,49 +25,68 @@ class TransbankController extends Controller
         }
     }
 
-    public function CheckOutTransBank(Request $request)
+    public function checkOutTransBank(Request $request)
     {
-        $cart = Cart::content();
+        try {
+            $order = json_decode($request->input('order'));
 
-        // Realiza el procesamiento necesario con los datos del carrito
-        $amount = round(Cart::subtotal());
-        // Genera identificadores de compra y sesión
-        $buyOrder = uniqid();
-        $sessionId = uniqid();
-        $return_url = route('confirmationcart');
-        // Crea la transacción en Webpay Plus
-        $transaccion = (new Transaction)->create(
-            $buyOrder,
-            $sessionId,
-            $amount,
-            $return_url
-        );
-        // Obtiene la URL de redirección proporcionada por Transbank
-        $redirectUrl = $transaccion->getUrl() . '?token_ws=' . $transaccion->getToken();
+            // Accede a los campos del pedido según sea necesario
+            $total = $order->total;
+            $orderId = $order->id;
 
-        // Redirige al usuario a la página de pago de Transbank
-        return redirect()->away($redirectUrl);
+            // Realiza el procesamiento necesario con los datos del carrito
+            $amount = round($total);
+            // Genera identificadores de compra y sesión
+            $buyOrder = uniqid();
+            $sessionId = uniqid();
+            $previousUrl = url()->previous();
+            session()->put('previous_url', $previousUrl);
+            $returnUrl = route('confirmationcart', ['orderId' => $orderId]);
+
+            // Crea la transacción en Webpay Plus
+            $transaction = (new Transaction)->create(
+                $buyOrder,
+                $sessionId,
+                $amount,
+                $returnUrl
+            );
+
+            // Obtiene la URL de redirección proporcionada por Transbank
+            $redirectUrl = $transaction->getUrl() . '?token_ws=' . $transaction->getToken();
+
+            // Redirige al usuario a la página de pago de Transbank
+            return redirect()->away($redirectUrl);
+        } catch (\Exception $e) {
+            return redirect()->route('webpay.error')->with('error', 'Error al procesar el pago. Por favor, inténtalo nuevamente')->withInput();
+        }
     }
 
-    public function confirmCart(Request $request)
+    public function confirmOrderTransbank(Request $request, $orderId)
     {
-        // Obtén los datos de la respuesta de Transbank
-        $token = $request->input('token_ws');
+        try {
+            $user = Auth::user();
+            $order = Order::findOrFail($orderId);
 
-        // Verifica y confirma la transacción en Webpay Plus
-        $response = (new Transaction)->commit($token);
-
-        // Procesa el resultado de la transacción
-        if ($response->isApproved()) {
-            // La transacción fue aprobada
-            // Realiza las acciones necesarias (por ejemplo, actualizar el estado del carrito, generar la orden, etc.)
-
-            return "¡Transacción exitosa! Gracias por tu compra.";
-        } else {
-            // La transacción fue rechazada o hubo un error
-            // Realiza las acciones necesarias (por ejemplo, mostrar un mensaje de error, redirigir a otra página, etc.)
-
-            return "La transacción no pudo ser completada. Por favor, inténtalo nuevamente.";
+            if ($user && $order->user_id === $user->id && $order->estado === 0) {
+                $order->estado = 1; // Cambiar el estado a pagado
+                $order->save();
+                Mail::to($user->email)->send(new ProofPayment($order->id));
+                Cart::destroy();
+                return redirect()->route('home-landing')->with('success', 'La compra se realizó correctamente');
+            } else {
+                return redirect()->back()->with('error', 'No se puede confirmar la orden');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error al confirmar la orden. Por favor, inténtalo nuevamente')->withInput();
         }
+    }
+
+    public function handleWebpayError(Request $request)
+    {
+        // Obtener la URL anterior de la sesión
+        $previousUrl = session()->get('previous_url');
+
+        // Redirigir al usuario a la URL anterior
+        return redirect()->to($previousUrl)->with('error', 'Error en el pago. Por favor, inténtalo nuevamente.');
     }
 }

@@ -45,7 +45,7 @@
                                 @if (!is_null($item))
                                     <tr>
                                         <td class="align-middle"><a href="#" class="show-picture-modal"
-                                                data-img-url="/assets/images/images-products/{{ $item->product->imagen }}">{{ $item->product->nombre }}
+                                                data-img-url="/assets/images/images-products/{{ $item->product->imagen }}">{{ $item->product->nombre }}</a>
                                         </td>
                                         <td class="align-middle">{{ $item->product->marca->nombre }}</td>
                                         <td>

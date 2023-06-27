@@ -9,6 +9,8 @@ use App\Models\Purchase_order;
 use App\Models\Purchase_order_product;
 use Illuminate\Http\Request;
 use illuminate\Validation\ValidationException;
+use App\Models\Action;
+use Illuminate\Support\Facades\Auth;
 
 class PurcharseOrderProductController extends Controller
 {
@@ -173,6 +175,12 @@ class PurcharseOrderProductController extends Controller
         $id->total = $total;
         $id->save();
         $ordenes = Purchase_order::all();
+
+        $action = new Action();
+            $action->name = 'Edición Orden de Compra';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+        
         return redirect()->route('orden-compra', compact('ordenes'));
     }
 

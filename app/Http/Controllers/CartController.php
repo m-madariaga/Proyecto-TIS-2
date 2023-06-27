@@ -6,6 +6,9 @@ use App\Mail\ProofPayment;
 use App\Models\Detail;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Section;
+use App\Models\SocialNetwork;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -16,7 +19,6 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CartController extends Controller
 {
-
 
     public function checkStock()
     {
@@ -29,6 +31,7 @@ class CartController extends Controller
             }
         }
     }
+
     private function updateStock($productId)
     {
         $product = Product::find($productId);
@@ -91,9 +94,9 @@ class CartController extends Controller
                     $product->stock -= $qty;
                     $product->stock = max(0, $product->stock); // Convert negative stock to zero
 
-                    if($product->stock < 5){
+                    if ($product->stock < 5) {
                         $admins = User::role('admin')->get();
-                        Notification::send($admins, new lowStockNotif($product->nombre));
+                        Notification::send($admins, new lowStockNotif("blusa"));
                     }
 
                     $product->save();
@@ -109,13 +112,21 @@ class CartController extends Controller
 
     public function showCart()
     {
+        $socialnetworks = SocialNetwork::all();
+        $sections = Section::all();
         $this->checkStock();
 
         $user = Auth::user();
+        $order = session('order'); // Obtener el pedido de la sesión
 
-        if ($user) {
+        if ($user && !$order) {
+            // El usuario está autenticado pero no hay un pedido en la sesión
             $items = Cart::content();
+        } elseif ($order) {
+            // Mostrar los detalles del pedido almacenado en la sesión
+            $items = $order->details;
         } else {
+            // El usuario no está autenticado y no hay un pedido en la sesión
             $cartItems = session('cart_items', []);
             $items = [];
             foreach ($cartItems as $cartItem) {
@@ -129,7 +140,7 @@ class CartController extends Controller
             return $item->stock > 0;
         });
 
-        return view('cart', compact('items'));
+        return view('cart', compact('items', 'socialnetworks', 'sections'));
     }
 
 
@@ -166,9 +177,9 @@ class CartController extends Controller
             $product = Product::find($item->id);
             $product->decrement('stock');
 
-            if($product->stock < 5){
+            if ($product->stock < 5) {
                 $admins = User::role('admin')->get();
-                Notification::send($admins, new lowStockNotif($product->nombre));
+                Notification::send($admins, new lowStockNotif("blusa"));
             }
         }
 
@@ -197,48 +208,65 @@ class CartController extends Controller
     }
 
     public function generateOrder()
-    {
-        $user = Auth::user();
-        if (Cart::count() > 0) {
+{
+    $user = Auth::user();
+    $order = session('order'); // Obtener el pedido de la sesión
 
-            // Crear una nueva orden con estado pendiente (0)
-            $order = new Order();
-            $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
-            $order->impuesto = Cart::tax() * 1000;
-            $order->total = Cart::subtotal() * 1000;
-            $order->estado = 0;
-            $order->user_id = $user->id;
-            $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
-            $order->save();
+    if (!$order) {
+        // Si no hay un pedido en la sesión, crear uno nuevo
+        $order = new Order();
+        $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
+        $order->impuesto = Cart::tax() * 1000;
+        $order->total = Cart::subtotal() * 1000;
+        $order->estado = 0;
+        $order->user_id = $user->id;
+        $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
+        $order->save();
+    } else {
+        // Si hay un pedido en la sesión, actualiza los detalles del pedido existente en lugar de crear uno nuevo
+        $order->details()->delete(); // Elimina los detalles del pedido existentes
 
-            foreach (Cart::content() as $item) {
-                $detail = new Detail();
-                $detail->precio = $item->price;
-                $detail->cantidad = $item->qty;
-                $detail->monto = $detail->cantidad * $detail->precio;
-                $detail->producto_id = $item->id;
-                $detail->pedido_id = $order->id;
-                $detail->save();
-
-                // Disminuir el stock del producto
-                $product = Product::find($item->id);
-                $product->stock -= $item->qty;
-                $product->save();
-
-                if($product->stock < 5){
-                    $admins = User::role('admin')->get();
-                    Notification::send($admins, new lowStockNotif($product->nombre));
-                }
-
-                $this->updateStock($item->id);
-
-            }
-            return redirect()->action([ShippingMethodsController::class, 'index'])->with('order', $order);
-
-        } else {
-            return redirect()->back()->with('error', 'No hay productos en el carrito');
-        }
+        // Actualiza los montos y otros detalles del pedido si es necesario
+        $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
+        $order->impuesto = Cart::tax() * 1000;
+        $order->total = Cart::subtotal() * 1000;
+        $order->estado = 0;
+        $order->user_id = $user->id;
+        $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
+        $order->save();
     }
+
+    foreach (Cart::content() as $item) {
+        $detail = new Detail();
+        $detail->precio = $item->price;
+        $detail->cantidad = $item->qty;
+        $detail->monto = $detail->cantidad * $detail->precio;
+        $detail->producto_id = $item->id;
+        $detail->pedido_id = $order->id;
+        $detail->save();
+
+        // Disminuir el stock del producto
+        $product = Product::find($item->id);
+        $product->stock -= $item->qty;
+        $product->save();
+
+        if ($product->stock < 5) {
+            $admins = User::role('admin')->get();
+            Notification::send($admins, new lowStockNotif("blusa"));
+        }
+
+        $this->updateStock($item->id);
+    }
+
+    // Almacenar el pedido en la sesión
+    session()->put('order', $order);
+
+    return redirect()->action([ShippingMethodsController::class, 'index'])->with('order', $order);
+}
+
+    
+
+
 
     public function confirmOrder($orderId)
     {
@@ -247,6 +275,8 @@ class CartController extends Controller
         $order->estado = 1; // Cambiar el estado a pagado
         $order->save();
         Cart::destroy();
+        session()->forget('order');
+
         Mail::to($user->email)->send(new ProofPayment($order->id));
         return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
     }

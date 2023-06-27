@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
+use App\Models\Section;
 use App\Models\Shipment;
 use App\Models\shipment_status;
 use App\Models\ShipmentType;
+use App\Models\SocialNetwork;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\City;
@@ -12,6 +15,7 @@ use App\Models\Region;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\PaymentMethod;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -63,9 +67,12 @@ class ShipmentController extends Controller
      */
     public function create(Request $request)
     {
-      
+        $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
+
         if (Auth::check()) {
-            $order = json_decode($request->input('order')); // Convertir la cadena JSON en un objeto
+            $order = json_decode($request->input('order')); 
             
             $shipment = new Shipment();
             $shipment->user_fk = Auth::user()->id;
@@ -93,7 +100,12 @@ class ShipmentController extends Controller
             $cart = Cart::content();
             $shipment_type_id = $request->shipment_type_id;
             $shipment_type = ShipmentType::find($shipment_type_id)->nombre;
-            return view('paymentmethod_landing', compact('paymentMethods', 'cart', 'shipment_type','order'));
+            $shipmentStatus = new shipment_status();
+                $shipmentStatus->nombre_estado = 'pendiente';
+                $shipmentStatus->shipment_fk = $shipment->id;
+            $shipmentStatus->save();
+
+            return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order','socialnetworks','images'));
       }
     }
 
@@ -181,8 +193,8 @@ class ShipmentController extends Controller
         switch ($last) {
             case ('pendiente'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pagado';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'pagado';
                 $shipment_status->save();
 
                 $status = 'pagado';
@@ -190,8 +202,8 @@ class ShipmentController extends Controller
                 break;
             case ('pagado'):
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'enviado';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'enviado';
                 $shipment_status->save();
 
                 $status = 'enviado';
@@ -202,8 +214,8 @@ class ShipmentController extends Controller
                 break;
             default:
                 $shipment_status = new shipment_status();
-                $shipment_status->shipment_fk = $id;
-                $shipment_status->nombre_estado = 'pendiente';
+                    $shipment_status->shipment_fk = $id;
+                    $shipment_status->nombre_estado = 'pendiente';
                 $shipment_status->save();
 
                 $status = 'pendiente';
@@ -222,7 +234,6 @@ class ShipmentController extends Controller
             $action->user_fk = Auth::User()->id;
         $action->save();
 
-
         return redirect('/admin/shipments')->with('success', 'Estado del envío actualizado exitosamente!');
     }
 
@@ -238,8 +249,8 @@ class ShipmentController extends Controller
         } else {
             $shipment = Shipment::find($id);
             $shipment_status = new shipment_status();
-            $shipment_status->shipment_fk = $shipment->id;
-            $shipment_status->nombre_estado = 'cancelado';
+                $shipment_status->shipment_fk = $shipment->id;
+                $shipment_status->nombre_estado = 'cancelado';
             $shipment_status->save();
 
             $user = User::find($shipment->user_fk);

@@ -60,8 +60,6 @@ class RegionController extends Controller
                 $action->user_fk = Auth::User()->id;
             $action->save();
 
-
-
             return response()->json(['success' => true]);
         }
         catch (ValidationException $e)
@@ -119,7 +117,6 @@ class RegionController extends Controller
             $action->name = 'Edición Región';
             $action->user_fk = Auth::User()->id;
         $action->save();
-
 
         return redirect('admin/regions')->with('success', 'Pais actualizado correctamente');
     }
