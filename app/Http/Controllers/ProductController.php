@@ -53,7 +53,6 @@ class ProductController extends Controller
         return view('accesorie', compact('productos', 'sections'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -74,7 +73,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
         try {
             $validatedData = $request->validate(
                 [
@@ -145,6 +143,73 @@ class ProductController extends Controller
             return response()->json(['success' => false, 'errors' => $errors]);
         }
     }
+    public function store_static(Request $request)
+    {
+        $validatedData = $request->validate(
+            [
+                'marca_id' => 'required|exists:brands,id',
+                'categoria_id' => 'required|exists:categories,id',
+                'nombre' => 'required|string',
+                'precio' => 'required|numeric|gt:0',
+                'color' => 'required|string',
+                'talla' => 'required|string|max:10',
+                'stock' => 'required|numeric|gte:0',
+                'visible' => 'required|numeric|in:0,1',
+                'imagen' => 'required|image|mimes:jpeg,png,jpg,svg',
+            ],
+            [
+                'nombre.required' => 'El campo nombre es obligatorio.',
+                'nombre.string' => 'El campo nombre debe ser una cadena de texto.',
+                'marca_id.required' => 'El campo marca es obligatorio.',
+                'marca_id.exists' => 'La marca seleccionada no existe.',
+                'categoria_id.required' => 'El campo categoria es obligatorio.',
+                'categoria_id.exists' => 'La categoría seleccionada no existe.',
+                'precio.required' => 'El campo precio es obligatorio.',
+                'precio.numeric' => 'El campo precio debe ser un número.',
+                'precio.gt' => 'El campo precio debe ser mayor a 0.',
+                'color.required' => 'El campo color es obligatorio.',
+                'color.string' => 'El campo color debe ser una cadena de texto.',
+                'talla.required' => 'El campo talla es obligatorio.',
+                'talla.string' => 'El campo talla debe ser una cadena de texto.',
+                'talla.max' => 'El campo talla no debe exceder los 10 caracteres.',
+                'stock.required' => 'El campo stock es obligatorio.',
+                'stock.numeric' => 'El campo stock debe ser un número.',
+                'stock.gte' => 'El campo stock debe ser mayor o igual a 0.',
+                'visible.required' => 'El campo visible es obligatorio.',
+                'visible.numeric' => 'El campo visible debe ser un número.',
+                'visible.in' => 'El campo visible solo puede tener los valores 0 o 1.',
+                'imagen.required' => 'Debe subir una imagen.',
+                'imagen.image' => 'El archivo subido debe ser una imagen.',
+                'imagen.mimes' => 'El archivo debe ser de tipo JPEG, PNG, JPG o SVG.',
+            ],
+        );
+
+        $imagenUser = '';
+        if ($image = $request->file('imagen')) {
+            $rutaGuardarImg = 'imagen/';
+            $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
+            $image->move($rutaGuardarImg, $imagenUser);
+        }
+        $producto = new Product([
+            'marca_id' => $request->get('marca_id'),
+            'categoria_id' => $request->get('categoria_id'),
+            'nombre' => $request->get('nombre'),
+            'precio' => $request->get('precio'),
+            'color' => $request->get('color'),
+            'talla' => $request->get('talla'),
+            'stock' => $request->get('stock'),
+            'visible' => $request->get('visible'),
+            'imagen' => $imagenUser,
+        ]);
+        $producto->save();
+
+        $action = new Action();
+        $action->name = 'Creación Producto';
+        $action->user_fk = Auth::User()->id;
+        $action->save();
+
+        return redirect()->route('productos');
+    }
 
     /**
      * Display the specified resource.
@@ -161,9 +226,6 @@ class ProductController extends Controller
             $review->username = User::find($review->user_fk)->name;
             error_log($review->username);
         }
-
-
-
 
         $recommendedProducts = $this->getRecommendedProducts($productId);
         return view('product.show', compact('product', 'reviews', 'recommendedProducts', 'sections'));
