@@ -188,7 +188,7 @@ filter: invert(1);"></span>
                 {
                     $product - > stock
                 }
-            }; // Get the stock value from the server-side variable
+            }; 
 
             let quantity = 1;
 
@@ -201,7 +201,7 @@ filter: invert(1);"></span>
             });
 
             increaseBtn.addEventListener('click', () => {
-                if (quantity < stock) { // Check if quantity is less than stock
+                if (quantity < stock) { 
                     quantity++;
                     qtyBtn.textContent = quantity;
                     quantityInput.value = quantity;

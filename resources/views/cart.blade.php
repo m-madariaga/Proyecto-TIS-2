@@ -19,7 +19,21 @@
                 $('#pictureModal').modal('show');
             });
         });
-        
+        $(document).ready(function() {
+            $('#cartButton').on('click', function() {
+                var userRole = "{{ Auth::user()->role }}";
+                if (userRole !== 'cliente') {
+                    Swal.fire({
+                        title: 'Acceso denegado',
+                        text: 'Usted no es un cliente y no puede realizar compras',
+                        icon: 'warning',
+                        confirmButtonText: 'Entendido'
+                    });
+                } else {
+                    window.location.href = "{{ route('cart.generateOrder') }}";
+                }
+            });
+        });
     </script>
 @endsection
 
@@ -97,17 +111,18 @@
                     @if (Cart::count() > 0)
                         @if (Auth::check() && Auth::user()->hasRole('admin'))
                             <div class="text-center">
-                                <p class="display-4" style="color: black">Acceso denegado</p>
-                                <p class="lead" style="color: black">Usted no es un cliente y no puede realizar compras.
-                                </p>
+                                <p class="display-4">Acceso denegado</p>
+                                <p class="lead">Usted no es un cliente y no puede realizar compras.</p>
                             </div>
                         @elseif (Auth::check())
-                            <button type="submit" class="btn btn-danger" id="cartButton">Continuar</button>
+                            <form action="{{ route('cart.generateOrder') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Continuar</button>
+                            </form>
                         @else
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#loginModal">Continuar</button>
                         @endif
-
                     @else
                         <div class="text-center">
                             <p class="display-4">No hay productos en el carrito</p>
