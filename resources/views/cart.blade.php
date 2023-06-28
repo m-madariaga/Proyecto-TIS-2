@@ -116,10 +116,7 @@
                                 </p>
                             </div>
                         @elseif (Auth::check())
-                            <form action="{{ route('cart.generateOrder') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Continuar</button>
-                            </form>
+                            <button type="submit" class="btn btn-danger" id="cartButton">Continuar</button>
                         @else
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#loginModal">Continuar</button>

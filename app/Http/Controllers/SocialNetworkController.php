@@ -43,7 +43,7 @@ class SocialNetworkController extends Controller
             'valor' => $request->get('valor'),
         ]);
         $socialnetwork->save();
-        return redirect()->route('section.index')->with('success', 'Sección ingresada correctamente.');
+        return redirect()->route('section.index')->with('success', 'Red Social ingresada correctamente.');
     }
 
     /**
@@ -99,7 +99,7 @@ class SocialNetworkController extends Controller
 
         if ($socialnetwork) {
             $socialnetwork->delete();
-            return response()->json(['success' => true]);
+            return redirect('admin/secciones')->with('success', 'Red Social eliminado exitosamente!');
         }
 
         return response()->json(['success' => false, 'message' => 'No se encontró el registro']);
