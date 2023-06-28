@@ -1,7 +1,7 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Dashboard' }}
+    {{ 'Panel Administración' }}
 @endsection
 
 @section('breadcrumb')

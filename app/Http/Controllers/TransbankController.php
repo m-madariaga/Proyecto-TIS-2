@@ -41,7 +41,7 @@ class TransbankController extends Controller
             $sessionId = uniqid();
             $previousUrl = url()->previous();
             session()->put('previous_url', $previousUrl);
-            $returnUrl = route('confirmationcart', ['orderId' => $orderId]);
+            $returnUrl = route('confirmtransbank', ['orderId' => $orderId]);
 
             // Crea la transacción en Webpay Plus
             $transaction = (new Transaction)->create(

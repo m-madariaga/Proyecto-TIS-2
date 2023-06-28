@@ -111,8 +111,9 @@
                     @if (Cart::count() > 0)
                         @if (Auth::check() && Auth::user()->hasRole('admin'))
                             <div class="text-center">
-                                <p class="display-4">Acceso denegado</p>
-                                <p class="lead">Usted no es un cliente y no puede realizar compras.</p>
+                                <p class="display-4" style="color: black">Acceso denegado</p>
+                                <p class="lead" style="color: black">Usted no es un cliente y no puede realizar compras.
+                                </p>
                             </div>
                         @elseif (Auth::check())
                             <form action="{{ route('cart.generateOrder') }}" method="POST">
