@@ -295,6 +295,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-9">
 
                     <div class="row justify-content-center">

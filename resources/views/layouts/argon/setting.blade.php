@@ -46,7 +46,7 @@
                 </a>
             </div>
 
-            <!-- ------------------------------------------ -->
+            {{-- <!-- ------------------------------------------ -->
             <hr class="horizontal dark my-sm-4">
             <!-- ------------------------------------------ -->
 
@@ -56,8 +56,21 @@
                     <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version"
                         onclick="darkMode(this)">
                 </div>
-            </div>
+            </div> --}}
 
+            <!-- ------------------------------------------ -->
+            <hr class="horizontal dark my-sm-4">
+            <!-- ------------------------------------------ -->
+
+            <div class="d-flex my-3">
+                <h6 class="mb-0">Ver Vista Cliente</h6>
+                <a class="ps-0 ms-auto my-auto" href="{{ route('home-landing') }}">
+                    <p class="text-md mb-0">
+                        <i class="ni ni-shop me-1" aria-hidden="true"></i>
+                    </p>
+                </a>
+
+            </div>
             <!-- ------------------------------------------ -->
             <hr class="horizontal dark my-sm-4">
             <!-- ------------------------------------------ -->
@@ -67,7 +80,7 @@
 
                 <a class="ps-0 ms-auto my-auto" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
+                       document.getElementById('logout-form').submit();">
                     <p class="text-md mb-0">
                         <i class="ni ni-user-run me-1" aria-hidden="true"></i>
                     </p>
@@ -77,20 +90,6 @@
                     @csrf
                 </form>
             </div>
-            <!-- ------------------------------------------ -->
-            <hr class="horizontal dark my-sm-4">
-            <!-- ------------------------------------------ -->
-
-            <div class="d-flex my-3">
-                <h6 class="mb-0">Ver Vista Cliente</h6>
-                <a class="ps-0 ms-auto my-auto" href="{{ route('home-landing') }}">
-                    <p class="text-md mb-0">
-                        <i class="ni ni-calendar-grid-58 me-1" aria-hidden="true"></i>
-                    </p>
-                </a>
-
-            </div>
-
             <!-- ------------------------------------------ -->
             <hr class="horizontal dark my-sm-4">
             <!-- ------------------------------------------ -->

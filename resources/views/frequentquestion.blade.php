@@ -9,18 +9,18 @@
 <div class="container-fluid py-4 mb-4 faq-container">
     <div class="new_arrivals">
         <div class="row">
-            <div class="col text-center">
+            <div class="col text-center mb-4">
                 <div class="section_title new_arrivals_title">
                     <h2>Preguntas frecuentes</h2>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <div class="card-body">
+        <div class="card px-4">
+            <div class="card-body px-4">
 
                 <div class="row justify-content-center">
-                    <div class="col-12 col-md-8">
+                    <div class="col-8 col-md-8">
                         <div class="accordion" id="accordionExample">
                             @foreach($questions as $question)
                             <div class="accordion-item">

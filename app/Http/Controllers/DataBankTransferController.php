@@ -18,25 +18,13 @@ class DataBankTransferController extends Controller
     {
         $databanktransfers = DataBankTransfer::all();
         return view('databanktransfer', compact('databanktransfers'));
-
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('createdatabanktransfer');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -55,66 +43,59 @@ class DataBankTransferController extends Controller
         $databanktransfer->bank = $request->bank;
         $databanktransfer->account_type = $request->account_type;
         $databanktransfer->account_number = $request->account_number;
+        $databanktransfer->selected = 0; // Dejar seleccionado como 0 por defecto
         $databanktransfer->save();
 
         $action = new Action();
-            $action->name = 'Creación Datos Transferencia';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Creación Datos Transferencia';
+        $action->user_fk = Auth::user()->id;
         $action->save();
 
         return redirect('admin/databanktransfer')->with('success', 'Dato Bancario creado exitosamente!');
-
-
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\DataBankTransfer  $dataBankTransfer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(DataBankTransfer $dataBankTransfer)
+    public function edit($id)
     {
-        //
+        $databanktransfer = DataBankTransfer::find($id);
+
+        if (!$databanktransfer) {
+            return redirect()->back()->with('error', 'Datos de transferencia bancaria no encontrados');
+        }
+
+        return view('editdatabanktransfer', compact('databanktransfer'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\DataBankTransfer  $dataBankTransfer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(DataBankTransfer $dataBankTransfer)
+    public function update(Request $request, DataBankTransfer $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'run' => 'required',
+            'email' => 'required',
+            'bank' => 'required',
+            'account_type' => 'required',
+            'account_number' => 'required',
+        ]);
+        $databanktransfers = DataBankTransfer::all();
+        $databanktransfer = $databanktransfers->find($id);
+        $databanktransfer->name = $request->name;
+        $databanktransfer->run = $request->run;
+        $databanktransfer->email = $request->email;
+        $databanktransfer->bank = $request->bank;
+        $databanktransfer->account_type = $request->account_type;
+        $databanktransfer->account_number = $request->account_number;
+        $databanktransfer->save();
+
+        return redirect('admin/databanktransfer')->with('success', 'Dato Bancario actualizado exitosamente!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\DataBankTransfer  $dataBankTransfer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, DataBankTransfer $dataBankTransfer)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\DataBankTransfer  $dataBankTransfer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $databanktransfer = DataBankTransfer::find($id);
         $databanktransfer->delete();
 
         $action = new Action();
-            $action->name = 'Eliminación Datos Transferencia';
-            $action->user_fk = Auth::User()->id;
+        $action->name = 'Eliminación Datos Transferencia';
+        $action->user_fk = Auth::user()->id;
         $action->save();
 
         return redirect('admin/databanktransfer')->with('success', 'Dato Bancario eliminado exitosamente!');

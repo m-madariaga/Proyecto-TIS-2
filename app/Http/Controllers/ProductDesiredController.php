@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Product_desired;
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\PDF;
@@ -20,6 +21,7 @@ class ProductDesiredController extends Controller
     public function index()
     {
         $sections = Section::all();
+        $socialnetworks = SocialNetwork::all();
         $users = User::all();
         $producto_mas_deseado = DB::table('product_desireds')
             ->join('users', 'product_desireds.user_id', '=', 'users.id')
@@ -38,7 +40,7 @@ class ProductDesiredController extends Controller
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users', 'product', 'count','sections'));
+        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks'));
     }
     public function generate_pdf(User $id)
     {
@@ -47,7 +49,7 @@ class ProductDesiredController extends Controller
         // Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
         $pdf = PDF::loadView('receipt.product_desired', compact('usuario', 'productos'));
 
-        return $pdf->stream('ProductosDeseados.pdf');
+        return $pdf->download('ProductosDeseados.pdf');
     }
     /**
      * Show the form for creating a new resource.
@@ -101,9 +103,10 @@ class ProductDesiredController extends Controller
      */
     public function show(User $user)
     {
+        $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $productos_deseados = $user->product_desired;
-        return view('profile_products_desired', compact('productos_deseados','sections'));
+        return view('profile_products_desired', compact('productos_deseados','sections','socialnetworks'));
     }
 
     /**

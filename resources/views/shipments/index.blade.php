@@ -292,14 +292,11 @@
                 // 
                 switch(last){
                     case 'pendiente':
-                        console.log('Cambiar a comprado')
-                        document.getElementById("editButton").innerText = 'Cambiar a comprado';
+                        console.log('Cambiar a pagado')
+                        document.getElementById("editButton").innerText = 'Cambiar a pagado';
                     break;
                     case 'pagado':
                         document.getElementById("editButton").innerText= 'Cambiar a enviado';
-                    break;
-                    case 'enviado':
-                        document.getElementById("editButton").innerText= 'Envío completado';
                     break;
                     case 'enviado':
                         document.getElementById("editButton").innerText= 'Envío completado';

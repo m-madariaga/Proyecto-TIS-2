@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Productos deseados</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Productos deseados</h6>
@@ -116,7 +116,7 @@
                                             @endif
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('product_desired_pdf', ['id' => $user->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }}">
+                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }} descargar-pdf" data-id="{{$user->id}}">
                                                     Descargar PDF</a>
                                             </td>
                                         </tr>
@@ -154,5 +154,23 @@
         $('#searchBar').keyup(function() {
             table.search($(this).val()).draw();
         })
+        //sweetAlert descargar pdf
+            $('.descargar-pdf').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, descargar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/productos_deseados/pdf/'+id;
+                    }
+                });
+            });
     </script>
 @endsection

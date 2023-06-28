@@ -127,7 +127,7 @@ class ProductController extends Controller
 
             $imagenUser = '';
             if ($image = $request->file('imagen')) {
-                $rutaGuardarImg = 'imagen/';
+                $rutaGuardarImg = 'assets/images/images-products';
                 $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
                 $image->move($rutaGuardarImg, $imagenUser);
             }
@@ -198,7 +198,7 @@ class ProductController extends Controller
 
         $imagenUser = '';
         if ($image = $request->file('imagen')) {
-            $rutaGuardarImg = 'imagen/';
+            $rutaGuardarImg = 'assets/images/images-products';
             $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
         }
@@ -277,7 +277,6 @@ class ProductController extends Controller
             'color' => 'required',
             'talla' => 'required',
             'stock' => 'required',
-            'visible' => 'required',
             'imagen' => 'image|mimes:jpeg,png,jpg,svg,bmp',
         ]);
         $productos = Product::all();
@@ -289,9 +288,8 @@ class ProductController extends Controller
         $product->color = $request->color;
         $product->talla = $request->talla;
         $product->stock = $request->stock;
-        $product->visible = $request->visible;
         if ($image = $request->file('imagen')) {
-            $rutaGuardarImg = 'imagen/';
+            $rutaGuardarImg = 'assets/images/images-products';
             $imagenUser = date('YmdHis') . '.' . $image->getClientOriginalExtension();
             $image->move($rutaGuardarImg, $imagenUser);
             $product->imagen = $imagenUser;

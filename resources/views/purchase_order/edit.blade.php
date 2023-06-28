@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Editar Orden</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Editar Orden</h6>
@@ -30,7 +30,8 @@
                             Agregar más productos a la orden
                         </a>
                         <div class="table-responsive p-0 ">
-                            <form action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}" method="POST">
+                            <form id="form-edit" action="{{ route('orden-compra-product-update', ['id' => $orden->id]) }}"
+                                method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <table id="users-table" class="table display table-stripped align-items-center">
@@ -73,15 +74,16 @@
                                                                         class="d-flex form-group text-center aling-items-center justify-content-center">
                                                                         <input type="number" class="form-control w-20"
                                                                             id="cantidad_edit" name="cantidad_edit[]"
-                                                                            value="{{ $prod->cantidad }}">
+                                                                            value="{{ $prod->cantidad }}" min="1">
                                                                     </div>
                                                                 </td>
                                                                 <td class="">
                                                                     <div
                                                                         class="form-group d-flex aling-items-center justify-content-center">
                                                                         <input type="number" class="form-control w-40"
-                                                                            id="valor_edit" name="valor_edit[]"
-                                                                            value="{{ $prod->precio }}">
+                                                                            id="valor_edit{{ $prod->id }}"
+                                                                            name="valor_edit[]" value="{{ $prod->precio }}"
+                                                                            min="1">
                                                                     </div>
                                                                 </td>
                                                                 <td class="text-center aling-items-center">
@@ -122,6 +124,33 @@
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        var form = document.getElementById('form-edit');
+        form.addEventListener('submit', function(event) {
+            var inputs = form.querySelectorAll('input');
+            event.preventDefault();
+            //recorrer los inputs
+            var contador = 0;
+            inputs.forEach(function(input) {
+                //pregunta si el input no es el id del producto
+                if (input.hidden == false) {
+                    // cada valor debe ser mayor a 0
+                    if (parseInt(input.value) > 0) {
+                        input.style.borderColor = '';
+                    }
+                    //se verifica que no se esten comparando valores nulos
+                    elseif(parseInt(input.value) != NaN) {
+                        input.required = true;
+                        input.style.borderColor = 'red';
+                        contador++;
+                    }
+                }
+            });
+            if (contador === 0) {
+                form.submit();
+            }
+        });
+    </script>
     <script>
         $(document).on('click', '.delete-product', function(e) {
             e.preventDefault();

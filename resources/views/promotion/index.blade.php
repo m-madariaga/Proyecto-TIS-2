@@ -1,12 +1,12 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Ordenes de Compra' }}
+    {{ 'Promociones' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Promociones</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Promociones</h6>
@@ -28,14 +28,14 @@
                         <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('promotion-create') }}">Agregar
                             promocion</a>
                         <div class="table-responsive p-0">
-                            <table id="users-table" class="table display table-stripped align-items-center">
+                            <table id="promotion-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Id</th>
                                         <th class="text-center">Producto</th>
                                         <th class="text-center">Marca</th>
-                                        <th class="text-center">Precio</th>
                                         <th class="text-center">Descuento</th>
+                                        <th class="text-center">Precio Final</th>
                                         <th class="text-center">Quitar</th>
                                     </tr>
                                 </thead>
@@ -47,18 +47,19 @@
                                                 {{ $promocion->product->nombre }}
                                             </td>
                                             <td class="text-center">{{ $promocion->product->marca->nombre }}</td>
-                                            <td class="text-center">${{ $promocion->product->precio }}</td>
                                             <td class="text-center">${{ $promocion->descuento }}</td>
+                                            <td class="text-center">${{ $promocion->product->precio }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('promotion-edit', ['id' => $promocion->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                <a id="a-edit-promotion" href="{{ route('promotion-edit', ['id' => $promocion->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary edit-promotion" data-id="{{$promocion->id}}"><i class="fa fa-edit"></i>
                                                     Editar</a><br>
-                                                <form id="form-delete" action="{{ route('promotion-destroy', $promocion->id) }}"
+                                                <form id="form-delete"
+                                                    action="{{ route('promotion-destroy', ['id' => $promocion->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-order"
+                                                        class="btn btn-sm btn-outline-danger delete-promotion"
                                                         data-id="{{ $promocion->id }}"><i class="fa fa-trash"
                                                             aria-hidden="true"></i> Eliminar</button>
                                                 </form>
@@ -104,11 +105,49 @@
     </script>
     <script>
         $(document).ready(function() {
-            table = $('#users-table').DataTable({
+            //datatable promociones
+            table = $('#promotion-table').DataTable({
                 dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+            });
+            //sweetAlert eliminar promocion
+            $('.delete-promotion').click(function(e) {
+                e.preventDefault();
+                var form = document.getElementById('form-delete');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, bórralo!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+            //sweetAlert editar promocion
+            $('.edit-promotion').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, editar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/promociones/edit/' + id;
+                    }
+                });
             });
         });
 

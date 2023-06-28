@@ -4,8 +4,8 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Página</a></li>
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="{{ route('paymentmethod.index') }}">Métodos
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="{{ route('paymentmethod.index') }}">Método
                 de Pago</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Editar Método de Pago</li>
     </ol>
@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <form action="{{ route('paymethods.update', $paymentMethod->id) }}" method="POST"
-                            enctype="multipart/form-data">
+                            enctype="multipart/form-data" id="updateForm">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -52,7 +52,6 @@
                                         @endforeach
                                     </select>
                                 </div>
-
                             @endif
                             <button type="submit" class="btn btn-primary">Guardar cambios</button>
                         </form>
@@ -61,4 +60,30 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita el envío del formulario
+
+            Swal.fire({
+                title: '¿Está seguro?',
+                text: 'Se modificará el método de pago',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, modificar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si se confirma la modificación, se envía el formulario
+                    this.submit(); // Envía el formulario
+                }
+            });
+        });
+    </script>
 @endsection

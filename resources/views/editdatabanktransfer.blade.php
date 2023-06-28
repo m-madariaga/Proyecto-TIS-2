@@ -1,16 +1,17 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Agregar Cuenta Bancaria' }}
+    {{ 'Editar Cuenta Bancaria' }}
 @endsection
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Datos Transferencia Bancaria</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Agregar Datos</li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Datos Transferencia
+                Bancaria</a></li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Editar Datos</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Agregar Datos</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Editar Datos</h6>
 @endsection
 
 @section('css')
@@ -25,16 +26,17 @@
                         <h6>Formulario</h6>
                     </div>
                     <div class="card-body px-5 pb-2">
-                        <form method="POST" action="{{ route('databanktransfer.store') }}">
+                        <form action="{{ route('databanktransfer.update', $databanktransfer->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PATCH')
 
                             <div class="form-group row mb-3">
                                 <label for="name" class="col-md-4 col-form-label text-md-right">Nombre</label>
 
                                 <div class="col-md-6">
                                     <input id="name" type="text"
-                                        class="form-control @error('name') is-invalid @enderror" name="name" required
-                                        autocomplete="name" autofocus>
+                                        class="form-control @error('name') is-invalid @enderror" name="name"
+                                        value="{{ $databanktransfer->name }}" required autocomplete="name" autofocus>
 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -49,8 +51,8 @@
 
                                 <div class="col-md-6">
                                     <input id="run" type="text"
-                                        class="form-control @error('run') is-invalid @enderror" name="run" required
-                                        autocomplete="run">
+                                        class="form-control @error('run') is-invalid @enderror" name="run"
+                                        value="{{ $databanktransfer->run }}" required autocomplete="run">
 
                                     @error('run')
                                         <span class="invalid-feedback" role="alert">
@@ -65,8 +67,8 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="email"
-                                        class="form-control @error('email') is-invalid @enderror" name="email" required
-                                        autocomplete="email">
+                                        class="form-control @error('email') is-invalid @enderror" name="email"
+                                        value="{{ $databanktransfer->email }}" required autocomplete="email">
 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -83,9 +85,12 @@
                                     <select id="bank" class="form-select @error('bank') is-invalid @enderror"
                                         name="bank" required>
                                         <option value="">Seleccionar banco</option>
-                                        <option value="Banco de Chile">Banco de Chile</option>
-                                        <option value="Banco Santander">Banco Santander</option>
-                                        <option value="Banco Estado">Banco Estado</option>
+                                        <option value="Banco de Chile" @if ($databanktransfer->bank == 'Banco de Chile') selected @endif>
+                                            Banco de Chile</option>
+                                        <option value="Banco Santander" @if ($databanktransfer->bank == 'Banco Santander') selected @endif>
+                                            Banco Santander</option>
+                                        <option value="Banco Estado" @if ($databanktransfer->bank == 'Banco Estado') selected @endif>Banco
+                                            Estado</option>
                                         <!-- Agrega más opciones de bancos aquí -->
                                     </select>
 
@@ -106,9 +111,12 @@
                                         class="form-select @error('account_type') is-invalid @enderror" name="account_type"
                                         required>
                                         <option value="">Seleccionar tipo de cuenta</option>
-                                        <option value="Cuenta Corriente">Cuenta Corriente</option>
-                                        <option value="Cuenta de Ahorro">Cuenta de Ahorro</option>
-                                        <option value="Cuenta Vista">Cuenta Vista</option>
+                                        <option value="Cuenta Corriente" @if ($databanktransfer->account_type == 'Cuenta Corriente') selected @endif>
+                                            Cuenta Corriente</option>
+                                        <option value="Cuenta de Ahorro" @if ($databanktransfer->account_type == 'Cuenta de Ahorro') selected @endif>
+                                            Cuenta de Ahorro</option>
+                                        <option value="Cuenta Vista" @if ($databanktransfer->account_type == 'Cuenta Vista') selected @endif>
+                                            Cuenta Vista</option>
                                         <!-- Agrega más opciones de tipos de cuenta aquí -->
                                     </select>
 
@@ -127,7 +135,8 @@
                                 <div class="col-md-6">
                                     <input id="account_number" type="text"
                                         class="form-control @error('account_number') is-invalid @enderror"
-                                        name="account_number" required autocomplete="account_number">
+                                        name="account_number" value="{{ $databanktransfer->account_number }}" required
+                                        autocomplete="account_number">
 
                                     @error('account_number')
                                         <span class="invalid-feedback" role="alert">
@@ -138,11 +147,8 @@
                             </div>
 
                             <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-sm btn-outline-primary">
-                                        Ingresar
-                                    </button>
-                                </div>
+                                <a type="button" class="btn btn-sm btn-outline-danger" href="{{ route('databanktransfer.index')}}">{{ __('Cancelar') }}</a>
+                                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                             </div>
                         </form>
                     </div>
@@ -152,6 +158,5 @@
     </div>
 @endsection
 
-
 @section('js')
-@endsection 
+@endsection

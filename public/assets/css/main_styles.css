@@ -1817,6 +1817,7 @@ footer{
 }
 #profile_card_body{
 	color: #1e1e27;
+	
 }
 
 #profile_title{
@@ -1976,3 +1977,22 @@ footer{
 .accordion-button{
 	background-color: #d936ad;
 }
+
+.footer_redes{
+	color: #F2BBD9;
+}
+.precio_product{
+	color: #d936ad;
+	
+}
+
+.card_product_landing{
+	border: none;
+}
+.product-container {
+    margin-bottom: 1px; /* Ajusta este valor según tus preferencias */
+}
+.sale.container-fluid{
+	background-color: #F2E8F1;
+}
+

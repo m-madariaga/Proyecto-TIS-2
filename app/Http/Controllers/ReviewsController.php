@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Section;
+use App\Models\SocialNetwork;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Review;
@@ -14,6 +15,7 @@ class ReviewsController extends Controller
 {
     public function index()
     {
+        $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $reviews = Review::all();
 
@@ -26,7 +28,7 @@ class ReviewsController extends Controller
 
         }
 
-        return view('reviews.index', compact('reviews','sections'));
+        return view('reviews.index', compact('reviews','sections','socialnetworks'));
     }
 
     public function store(Request $request, $productId, $userId)

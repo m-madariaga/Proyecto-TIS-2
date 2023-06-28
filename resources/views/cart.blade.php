@@ -5,18 +5,33 @@
         integrity="sha512-..." crossorigin="anonymous" />
 @endsection
 
-
 @section('js')
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
         $(document).ready(function() {
             $('.show-picture-modal').on('click', function() {
                 var imgUrl = $(this).data('img-url');
                 $('#pictureModalImage').attr('src', imgUrl);
                 $('#pictureModal').modal('show');
+            });
+        });
+        $(document).ready(function() {
+            $('#cartButton').on('click', function() {
+                var userRole = "{{ Auth::user()->role }}";
+                if (userRole !== 'cliente') {
+                    Swal.fire({
+                        title: 'Acceso denegado',
+                        text: 'Usted no es un cliente y no puede realizar compras',
+                        icon: 'warning',
+                        confirmButtonText: 'Entendido'
+                    });
+                } else {
+                    window.location.href = "{{ route('cart.generateOrder') }}";
+                }
             });
         });
     </script>
@@ -83,7 +98,6 @@
                                     </tr>
                                 @endif
                             @endforeach
-
                         </tbody>
                         <tfoot>
                             <tr>
@@ -95,7 +109,12 @@
                         </tfoot>
                     </table>
                     @if (Cart::count() > 0)
-                        @if (Auth::check())
+                        @if (Auth::check() && Auth::user()->hasRole('admin'))
+                            <div class="text-center">
+                                <p class="display-4">Acceso denegado</p>
+                                <p class="lead">Usted no es un cliente y no puede realizar compras.</p>
+                            </div>
+                        @elseif (Auth::check())
                             <form action="{{ route('cart.generateOrder') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Continuar</button>
@@ -115,13 +134,13 @@
         </div>
     </div>
 
-    <!-- Modal  Imagen-->
+    <!-- Modal Imagen -->
     <div class="modal fade" id="pictureModal" tabindex="-1" aria-labelledby="pictureModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pictureModalLabel">Imagen Referencial</h5>
-                    <button type="submit" class="btn btn-link" data-bs-dismiss="modal" aria-label="Close" style=""><i
+                    <button type="button" class="btn btn-link" data-bs-dismiss="modal" aria-label="Close"><i
                             class="far fa-times-circle"></i></button>
                 </div>
                 <div class="modal-body">
@@ -131,7 +150,7 @@
         </div>
     </div>
 
-    <!-- Modal Debe iniciar sesion -->
+    <!-- Modal Debe iniciar sesión -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
