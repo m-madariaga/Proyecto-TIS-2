@@ -115,7 +115,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
     Route::put('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'update'])->name('paymethods.update');
     Route::delete('/paymethods/{paymentMethod}', [App\Http\Controllers\PaymentMethodController::class, 'destroy'])->name('paymethods.destroy');
 
-  
+
 
     Route::group(['middleware' => ['permission:mantenedor webpay']], function () {
         Route::get('/webpay', [WebpayCredentialController::class, 'index'])->name('webpaycredentials.index');
@@ -161,7 +161,7 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/productos', [ProductController::class, 'index'])->name('productos');
         Route::get('/productos/create', [ProductController::class, 'create'])->name('productos-create');
         Route::post('/productos/store', [ProductController::class, 'store'])->name('productos-store');
-        Route::post('/productos/store', [ProductController::class, 'store_static'])->name('productos-store-static');
+        Route::post('/productos/store-static', [ProductController::class, 'store_static'])->name('productos-store-static');
         Route::get('/productos/{id}/edit', [ProductController::class, 'edit'])->name('productos-edit');
         Route::patch('/productos/{id}/update', [ProductController::class, 'update'])->name('productos-update');
         Route::delete('/productos/{id}', [ProductController::class, 'destroy'])->name('productos-destroy');

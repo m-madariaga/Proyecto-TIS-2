@@ -28,7 +28,7 @@
                         <a class="btn btn-sm btn-outline-success ms-4" href="{{ route('promotion-create') }}">Agregar
                             promocion</a>
                         <div class="table-responsive p-0">
-                            <table id="users-table" class="table display table-stripped align-items-center">
+                            <table id="promotion-table" class="table display table-stripped align-items-center">
                                 <thead>
                                     <tr>
                                         <th class="text-center">Id</th>
@@ -50,15 +50,16 @@
                                             <td class="text-center">${{ $promocion->descuento }}</td>
                                             <td class="text-center">${{ $promocion->product->precio }}</td>
                                             <td class="text-center">
-                                                <a href="{{ route('promotion-edit', ['id' => $promocion->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                <a id="a-edit-promotion" href="{{ route('promotion-edit', ['id' => $promocion->id]) }}"
+                                                    class="btn btn-sm btn-outline-primary edit-promotion" data-id="{{$promocion->id}}"><i class="fa fa-edit"></i>
                                                     Editar</a><br>
-                                                <form id="form-delete" action="{{ route('promotion-destroy', $promocion->id) }}"
+                                                <form id="form-delete"
+                                                    action="{{ route('promotion-destroy', ['id' => $promocion->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                        class="btn btn-sm btn-outline-danger delete-order"
+                                                        class="btn btn-sm btn-outline-danger delete-promotion"
                                                         data-id="{{ $promocion->id }}"><i class="fa fa-trash"
                                                             aria-hidden="true"></i> Eliminar</button>
                                                 </form>
@@ -104,11 +105,49 @@
     </script>
     <script>
         $(document).ready(function() {
-            table = $('#users-table').DataTable({
+            //datatable promociones
+            table = $('#promotion-table').DataTable({
                 dom: 'lrtip',
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+            });
+            //sweetAlert eliminar promocion
+            $('.delete-promotion').click(function(e) {
+                e.preventDefault();
+                var form = document.getElementById('form-delete');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "¡No podrás revertir esto!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, bórralo!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+            //sweetAlert editar promocion
+            $('.edit-promotion').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, editar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/promociones/edit/' + id;
+                    }
+                });
             });
         });
 

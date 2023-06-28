@@ -70,10 +70,10 @@
                                             <td class="text-center">{{ $orden->created_at }}</td>
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('orden-compra-pdf', ['id' => $orden->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary">
+                                                    class="btn btn-sm btn-outline-primary descargar-pdf" data-id="{{$orden->id}}">
                                                     Descargar PDF</a><br>
                                                 <a href="{{ route('orden-compra-edit', ['id' => $orden->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                    class="btn btn-sm btn-outline-primary edit-order" data-id="{{$orden->id}}"><i class="fa fa-edit"></i>
                                                     Editar</a><br>
                                                 <form action="{{ route('orden-compra-destroy', $orden->id) }}"
                                                     method="POST">
@@ -160,6 +160,42 @@
                 language: {
                     url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
                 },
+            });
+            //sweetAlert editar order
+            $('.edit-order').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, editar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/orden-compra/'+ id +'/edit';
+                    }
+                });
+            });
+            //sweetAlert descargar pdf
+            $('.descargar-pdf').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, descargar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/orden-compra/'+ id +'/pdf';
+                    }
+                });
             });
         });
 
