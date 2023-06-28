@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Ciudades</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Ciudades</h6>
@@ -172,7 +172,7 @@
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                                 <button type="submit"
-                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                                    class="btn btn-sm btn-outline-success" id="editboton3">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -434,6 +434,15 @@
             const nameInput = $('#editName');
             nameInput.val(cityName);
             // Reemplazar el valor del nombre en el input el modal
+
+        });
+
+        $('#editboton3').on('click', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '¡El país se ha editado correctamente!'
+            });
 
         });
     </script>

@@ -127,7 +127,7 @@
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                                 <button type="submit"
-                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                                    class="btn btn-sm btn-outline-success" id="editboton4">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -250,7 +250,14 @@
                 // Reemplazar el valor del nombre en el input el modal
                 nombreInput.val(shipmentTypeName);
             });
+            $('#editboton4').on('click', function() {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Éxito',
+                    text: '¡El país se ha editado correctamente!'
+                });
 
+            });
             $('#addForm').submit(function(event) {
                 var nombre = $('#nombre').val();
 

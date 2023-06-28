@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
         <li class="breadcrumb-item text-sm text-white active" aria-current="page">Regiones</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Regiones</h6>
@@ -153,7 +153,7 @@
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                                 <button type="submit"
-                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                                    class="btn btn-sm btn-outline-success" id="editboton2">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -297,7 +297,7 @@
         $('#searchBar').keyup(function(){
             table.search($(this).val()).draw() ;
         })
-        
+
         $('#addRegionModal').on('hide.bs.modal', function() {
 
             $('.error-message').remove();
@@ -324,6 +324,15 @@
             const nameInput = $('#editName');
             nameInput.val(regionName);
             // Reemplazar el valor del nombre en el input el modal
+
+        });
+
+        $('#editboton2').on('click', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '¡El país se ha editado correctamente!'
+            });
 
         });
     </script>
