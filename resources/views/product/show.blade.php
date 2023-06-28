@@ -186,7 +186,7 @@ filter: invert(1);"></span>
             const quantityInput = document.querySelector('#quantity');
             const stock = {
                 {
-                    $product - > stock
+                    $product->stock
                 }
             }; 
 
