@@ -49,7 +49,7 @@ class ProductDesiredController extends Controller
         // Mail::to('fparedesp@ing.ucsc.cl')->send(new ProofPayment($users, $fecha_actual));
         $pdf = PDF::loadView('receipt.product_desired', compact('usuario', 'productos'));
 
-        return $pdf->stream('ProductosDeseados.pdf');
+        return $pdf->download('ProductosDeseados.pdf');
     }
     /**
      * Show the form for creating a new resource.
@@ -102,7 +102,7 @@ class ProductDesiredController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {        
+    {
         $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $productos_deseados = $user->product_desired;

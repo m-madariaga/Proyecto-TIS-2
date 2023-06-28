@@ -116,7 +116,7 @@
                                             @endif
                                             <td class="text-center pt-3">
                                                 <a href="{{ route('product_desired_pdf', ['id' => $user->id]) }}"
-                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }}">
+                                                    class="btn btn-sm btn-outline-primary {{ $user->product_desired->isNotEmpty() === true ? '' : 'disabled-pdf' }} descargar-pdf" data-id="{{$user->id}}">
                                                     Descargar PDF</a>
                                             </td>
                                         </tr>
@@ -154,5 +154,23 @@
         $('#searchBar').keyup(function() {
             table.search($(this).val()).draw();
         })
+        //sweetAlert descargar pdf
+            $('.descargar-pdf').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, descargar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/productos_deseados/pdf/'+id;
+                    }
+                });
+            });
     </script>
 @endsection
