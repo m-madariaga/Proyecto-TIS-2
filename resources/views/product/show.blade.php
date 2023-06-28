@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        @if (Auth::check() && !Auth::user()->hasRole('admin'))
+                                        @if (Auth::check() && Auth::user()->hasRole('admin'))
                                             <div class="text-center">
                                                 <p class="display-4" style="color: black">Acceso denegado</p>
                                                 <p class="lead" style="color: black">Usted no es un cliente y no puede
