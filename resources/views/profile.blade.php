@@ -217,7 +217,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="country" class="form-label">País</label>
-                                <select id="country" class="form-control input-field @error('country_fk') is-invalid @enderror" name="country_fk" required>
+                                <select id="country" class="form-select input-field @error('country_fk') is-invalid @enderror" name="country_fk" required>
                                     @foreach ($countries as $country)
                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
                                     @endforeach
@@ -232,7 +232,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="region" class="form-label">Región</label>
-                                <select id="region" class="form-control input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
+                                <select id="region" class="form-select input-field @error('region_fk') is-invalid @enderror" name="region_fk" required>
                                     @foreach ($regions as $region)
                                     <option value="{{ $region->id }}">{{ $region->name }}</option>
                                     @endforeach
@@ -247,7 +247,7 @@
                         <div class="col-md-6 col-12">
                             <div class="form-group">
                                 <label for="city" class="form-label">Ciudad</label>
-                                <select id="city" class="form-control input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
+                                <select id="city" class="form-select input-field @error('city_fk') is-invalid @enderror" name="city_fk" required>
                                     @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
@@ -359,8 +359,7 @@
         @if(session('success'))
         Swal.fire({
             title: '¡Éxito!',
-            text: '{{ session('
-            success ') }}',
+            text: '{{ session('success') }}',
             icon: 'success',
             timer: 3000, // Tiempo en milisegundos (3 segundos)
             showConfirmButton: false
