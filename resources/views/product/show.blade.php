@@ -184,11 +184,7 @@ filter: invert(1);"></span>
             const increaseBtn = document.querySelector('.increase-qty');
             const qtyBtn = document.querySelector('#qty');
             const quantityInput = document.querySelector('#quantity');
-            const stock = {
-                {
-                    $product->stock
-                }
-            }; // Get the stock value from the server-side variable
+            const stock = {{ $product->stock }}; // Get the stock value from the server-side variable
 
             let quantity = 1;
 
