@@ -4,15 +4,14 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid py-4 mt-4">
-        <div class="product_detalle">
-            <div class="container py-4 mb-4">
-                <div class="row">
-                    <div class="col-12 col-md-6 order-md-first mb-3">
-                        <div class="card d-flex align-items-center">
-                            <img src="{{ asset('assets/images/images-products/' . $product->imagen) }}" class="img-thumbnail"
-                                alt="{{ $product->nombre }}">
-                        </div>
+
+<div class="container-fluid py-4 mt-4">
+    <div class="product_detalle">
+        <div class="container py-4 mb-4">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-first mb-3">
+                    <div class="card d-flex align-items-center">
+                        <img src="{{ asset('assets/images/images-products/' . $product->imagen) }}" class="img-thumbnail" alt="{{ $product->nombre }}">
                     </div>
 
                     <div class="col-12 col-md-6 order-md-last">
@@ -112,34 +111,36 @@
                 </div>
             </div>
 
-            <div class="card mt-4">
-                <div class="card-body mt-4">
-                    <h3 class="card-title d-flex flex-column align-items-center">También te podría interesar</h3>
+            <div class="new_arrivals">
+                <div class="container">
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="section_title new_arrivals_title">
+                                <h2>También te puede interesar</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-4 card_product_landing">
+                <div class="card-body mt-4 mb-2">
                     <div id="recommendedCarousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner">
-                            @foreach ($recommendedProducts->chunk(4) as $chunk)
-                                <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                                    <div class="row justify-content-center">
-                                        @foreach ($chunk as $recommendedProduct)
-                                            <div class="col-4 col-md-3 col-lg-2">
-                                                <div class="d-flex flex-column align-items-center">
-                                                    <a href="{{ route('product.show', $recommendedProduct->id) }}">
-                                                        <div class="card">
-                                                            <div class="product-image-container">
-                                                                <img src="{{ asset('assets/images/images-products/' . $recommendedProduct->imagen) }}"
-                                                                    class="img-thumbnail"
-                                                                    alt="{{ $recommendedProduct->nombre }}">
-                                                            </div>
-                                                            <div class="card-body d-flex flex-column align-items-center">
-                                                                <h5>{{ $recommendedProduct->nombre }}</h5>
-                                                                <p class="text-body-secondary precio_product"><strong>
-                                                                        Precio:
-                                                                        ${{ $recommendedProduct->precio }}
-                                                                    </strong>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                            @foreach ($recommendedProducts->chunk(3) as $chunk)
+                            <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                                <div class="row justify-content-center">
+                                    @foreach ($chunk as $recommendedProduct)
+                                    <div class="col-12 mb-2 col-md-6 col-lg-4 col-xl-3">
+                                        <div class="d-flex flex-column align-items-center">
+                                            <a href="{{ route('product.show', $recommendedProduct->id) }}">
+                                                <div class="card">
+                                                    <div class="product-image-container">
+                                                        <img src="{{ asset('assets/images/images-products/' . $recommendedProduct->imagen) }}" class="img-thumbnail" alt="{{ $recommendedProduct->nombre }}">
+                                                    </div>
+                                                    <div class="card-body d-flex flex-column align-items-center">
+                                                        <h5>{{ $recommendedProduct->nombre }}</h5>
+                                                        <p class="text-body-secondary precio_product"><strong>Precio: ${{ $recommendedProduct->precio }}</strong></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -149,21 +150,16 @@
                         </div>
 
                         <a class="carousel-control-prev" href="#recommendedCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"
-                                style="background-color: black;
-filter: invert(1);"></span>
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black; filter: invert(1);"></span>
                             <span class="sr-only">Anterior</span>
                         </a>
                         <a class="carousel-control-next" href="#recommendedCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"
-                                style="background-color: black;
-filter: invert(1);"></span>
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black; filter: invert(1);"></span>
                             <span class="sr-only">Siguiente</span>
                         </a>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     </div>

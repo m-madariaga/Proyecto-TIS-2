@@ -1989,3 +1989,10 @@ footer{
 .card_product_landing{
 	border: none;
 }
+.product-container {
+    margin-bottom: 1px; /* Ajusta este valor según tus preferencias */
+}
+.sale.container-fluid{
+	background-color: #F2E8F1;
+}
+
