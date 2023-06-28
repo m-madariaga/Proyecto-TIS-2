@@ -74,7 +74,7 @@
                                                             <input type="number"
                                                                 class="form-control @error('cantidad') is-invalid  @enderror"
                                                                 id="cantidad{{ $prod->id }}" name="cantidad[]"
-                                                                value="{{ old('cantidad[]') }}">
+                                                                value="{{ old('cantidad[]') }}" min="0">
                                                             @error('cantidad')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -88,7 +88,7 @@
                                                             <input type="number"
                                                                 class="form-control @error('valor') is-invalid  @enderror"
                                                                 id="valor{{ $prod->id }}" name="valor[]"
-                                                                value="{{ old('valor[]') }}">
+                                                                value="{{ old('valor[]') }}" min="0">
                                                             @error('valor')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>

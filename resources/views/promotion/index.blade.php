@@ -134,7 +134,6 @@
             //sweetAlert editar promocion
             $('.edit-promotion').click(function(e) {
                 e.preventDefault();
-                var a = document.getElementById('a-edit-promotion');
                 var id = $(this).data('id');
                 Swal.fire({
                     title: '¿Estás seguro?',

@@ -1,6 +1,6 @@
 <head>
     <style>
-        .hr{
+        .hr {
             margin-top: -4rem;
         }
     </style>
@@ -70,7 +70,7 @@
                     </ul>
                 </div>
             </li>
-    
+
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#collapseMantenedores2" role="button"
                     aria-expanded="false" aria-controls="collapseMantenedores2">
