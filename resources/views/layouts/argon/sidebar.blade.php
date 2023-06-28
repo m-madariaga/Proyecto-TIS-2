@@ -43,11 +43,11 @@
                 </a>
                 <div class="collapse" id="collapseMantenedores1">
                     <ul class="navbar-nav">
-                        @can('mantenedor usuarios')
+                        @can('mantenedor permisos')
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}"
-                                    href="{{ route('users.index') }}">
-                                    <span class="nav-link-text ms-3">Usuarios</span>
+                                <a class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}"
+                                    href="{{ route('permissions.index') }}">
+                                    <span class="nav-link-text ms-3">Permisos</span>
                                 </a>
                             </li>
                         @endcan
@@ -59,11 +59,11 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('mantenedor permisos')
+                        @can('mantenedor usuarios')
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/permissions') ? 'active' : '' }}"
-                                    href="{{ route('permissions.index') }}">
-                                    <span class="nav-link-text ms-3">Permisos</span>
+                                <a class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}"
+                                    href="{{ route('users.index') }}">
+                                    <span class="nav-link-text ms-3">Usuarios</span>
                                 </a>
                             </li>
                         @endcan
@@ -82,8 +82,14 @@
                 </a>
                 <div class="collapse" id="collapseMantenedores2">
                     <ul class="navbar-nav">
-
-
+                        @can('mantenedor ciudades')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/cities') ? 'active' : '' }}"
+                                    href="{{ route('cities.index') }}">
+                                    <span class="nav-link-text ms-3">Ciudades</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('mantenedor paises')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/countries') ? 'active' : '' }}"
@@ -97,14 +103,6 @@
                                 <a class="nav-link {{ request()->is('admin/regions') ? 'active' : '' }}"
                                     href="{{ route('regions.index') }}">
                                     <span class="nav-link-text ms-3">Regiones</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mantenedor ciudades')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/cities') ? 'active' : '' }}"
-                                    href="{{ route('cities.index') }}">
-                                    <span class="nav-link-text ms-3">Ciudades</span>
                                 </a>
                             </li>
                         @endcan
@@ -124,22 +122,6 @@
                 </a>
                 <div class="collapse" id="collapseMantenedores3">
                     <ul class="navbar-nav">
-                        @can('mantenedor productos')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/productos') ? 'active' : '' }}"
-                                    href="{{ route('productos') }}">
-                                    <span class="nav-link-text ms-3">Productos</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mantenedor productos deseados')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/productos_deseados') ? 'active' : '' }}"
-                                    href="{{ route('product_desired') }}">
-                                    <span class="nav-link-text ms-3">Productos deseados</span>
-                                </a>
-                            </li>
-                        @endcan
                         @can('mantenedor categorias')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/categorias') ? 'active' : '' }}"
@@ -153,6 +135,22 @@
                                 <a class="nav-link {{ request()->is('admin/marcas') ? 'active' : '' }}"
                                     href="{{ route('marcas') }}">
                                     <span class="nav-link-text ms-3">Marcas</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor productos')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/productos') ? 'active' : '' }}"
+                                    href="{{ route('productos') }}">
+                                    <span class="nav-link-text ms-3">Productos</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor productos deseados')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/productos_deseados') ? 'active' : '' }}"
+                                    href="{{ route('product_desired') }}">
+                                    <span class="nav-link-text ms-3">Productos deseados</span>
                                 </a>
                             </li>
                         @endcan
@@ -171,6 +169,22 @@
                 </a>
                 <div class="collapse" id="collapseMantenedores4">
                     <ul class="navbar-nav">
+                        @can('mantenedor webpay')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/webpay') ? 'active' : '' }}"
+                                    href="{{ route('webpaycredentials.index') }}">
+                                    <span class="nav-link-text ms-3 text-truncate">Credenciales Webpay</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor datos transferencia')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
+                                    href="{{ route('databanktransfer.index') }}">
+                                    <span class="nav-link-text ms-3 text-truncate">Datos Transferencia Bancaria</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('mantenedor envio')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/shipments') ? 'active' : '' }}"
@@ -179,27 +193,19 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('mantenedor metodo pago')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
+                                    href="{{ route('paymentmethod.index_admin') }}">
+                                    <span class="nav-link-text ms-3">Métodos de Pago</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('mantenedor ordenes')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('admin/orden-compra') ? 'active' : '' }}"
                                     href="{{ route('orden-compra') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-app text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Ordenes de compra</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('mantenedor tipo envio')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/shipment_types') ? 'active' : '' }}"
-                                    href="{{ route('shipment_types.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Tipos de envío</span>
+                                    <span class="nav-link-text ms-3 text-truncate">Órdenes de compra</span>
                                 </a>
                             </li>
                         @endcan
@@ -207,50 +213,7 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                                     href="{{ route('orders.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Pedidos</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('mantenedor metodo pago')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('paymentmethod.index_admin') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Métodos de Pago</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('mantenedor datos transferencia')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('databanktransfer.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Datos Transferencia Bancaria</span>
-                                </a>
-                            </li>
-                        @endcan
-
-                        @can('mantenedor webpay')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('admin/webpay') ? 'active' : '' }}"
-                                    href="{{ route('webpaycredentials.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Credenciales Webpay</span>
+                                    <span class="nav-link-text ms-3">Pedidos</span>
                                 </a>
                             </li>
                         @endcan
@@ -258,11 +221,15 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                                     href="{{ route('point_of_sale') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Punto de venta</span>
+                                    <span class="nav-link-text ms-3">Punto de venta</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('mantenedor tipo envio')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/shipment_types') ? 'active' : '' }}"
+                                    href="{{ route('shipment_types.index') }}">
+                                    <span class="nav-link-text ms-3">Tipos de envío</span>
                                 </a>
                             </li>
                         @endcan
@@ -282,29 +249,11 @@
                 </a>
                 <div class="collapse" id="collapseMantenedores5">
                     <ul class="navbar-nav">
-                        @can('mantenedor reviews')
+                        @can('mantenedor preguntas')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('reviews.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Reseñas</span>
-                                </a>
-                            </li>
-                        @endcan
-
-
-                        @can('mantenedor secciones landing')
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('section.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Vista Cliente</span>
+                                    href="{{ route('preguntas') }}">
+                                    <span class="nav-link-text ms-3 text-truncate">Preguntas Frecuentes</span>
                                 </a>
                             </li>
                         @endcan
@@ -312,34 +261,15 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                                     href="{{ route('promotion') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Promociones</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('actions.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Acciones Realizadas</span>
+                                    <span class="nav-link-text ms-3 text-truncate">Promociones</span>
                                 </a>
                             </li>
                         @endcan
-
-                        @can('mantenedor preguntas')
+                        @can('mantenedor reviews')
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
-                                    href="{{ route('preguntas') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Preguntas Frecuentes </span>
+                                    href="{{ route('reviews.index') }}">
+                                    <span class="nav-link-text ms-3">Reseñas</span>
                                 </a>
                             </li>
                         @endcan
@@ -347,14 +277,21 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                                     href="{{ route('respuestas') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1 text-truncate">Respuestas</span>
+                                    <span class="nav-link-text ms-3 text-truncate">Respuestas</span>
                                 </a>
                             </li>
                         @endcan
+                        @can('mantenedor secciones landing')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
+                                    href="{{ route('section.index') }}">
+                                    <span class="nav-link-text ms-3 text-truncate">Vista Cliente</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        
+                        
                     </ul>
                 </div>
             </li>
@@ -373,11 +310,7 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('page') ? 'active' : '' }}"
                                     href="{{ route('actions.index') }}">
-                                    <div
-                                        class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="ni ni-bullet-list-67 text-warning text-sm opacity-10"></i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Acciones Realizadas</span>
+                                    <span class="nav-link-text ms-3">Acciones Realizadas</span>
                                 </a>
                             </li>
                         @endcan
