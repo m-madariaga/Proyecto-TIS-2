@@ -19,21 +19,7 @@
                 $('#pictureModal').modal('show');
             });
         });
-        $(document).ready(function() {
-            $('#cartButton').on('click', function() {
-                var userRole = "{{ Auth::user()->role }}";
-                if (userRole !== 'cliente') {
-                    Swal.fire({
-                        title: 'Acceso denegado',
-                        text: 'Usted no es un cliente y no puede realizar compras',
-                        icon: 'warning',
-                        confirmButtonText: 'Entendido'
-                    });
-                } else {
-                    window.location.href = "{{ route('cart.generateOrder') }}";
-                }
-            });
-        });
+        
     </script>
 @endsection
 
@@ -121,6 +107,7 @@
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#loginModal">Continuar</button>
                         @endif
+
                     @else
                         <div class="text-center">
                             <p class="display-4">No hay productos en el carrito</p>

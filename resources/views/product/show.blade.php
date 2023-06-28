@@ -36,7 +36,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col">
-                                        @if (Auth::check() && Auth::user()->hasRole('cliente'))
+                                        @if (Auth::check() && !Auth::user()->hasRole('admin'))
+                                            <div class="text-center">
+                                                <p class="display-4" style="color: black">Acceso denegado</p>
+                                                <p class="lead" style="color: black">Usted no es un cliente y no puede
+                                                    realizar compras.</p>
+                                            </div>
+                                        @else
                                             <form action="{{ route('additem') }}" method="post"
                                                 enctype="multipart/form-data">
                                                 @csrf
@@ -50,11 +56,6 @@
                                                         type="submit">Añadir al carrito</button>
                                                 @endif
                                             </form>
-                                        @else
-                                            <div class="text-center">
-                                                <p class="display-4" style="color: black">Acceso denegado</p>
-                                                <p class="lead" style="color: black">Usted no es un cliente y no puede realizar compras.</p>
-                                            </div>
                                         @endif
                                     </div>
                                 </div>
