@@ -13,7 +13,7 @@ class PointOfSaleController extends Controller
 {
     public function index()
     {
-        $orders = Order::all()->where('pagado', 0);
+        $orders = Order::all()->where('pagado', 0)->where('paymentmethod_fk', 2);
         $productos = Product::paginate(8);
         return view('point_of_sale.index', compact('orders', 'productos'));
     }
@@ -22,6 +22,7 @@ class PointOfSaleController extends Controller
     {
         $order = Order::find($id->id);
         $order->pagado = 1;
+        $order->estado = 1;
         $order->save();
         return redirect()->route('point_of_sale');
     }
