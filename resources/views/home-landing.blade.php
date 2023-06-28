@@ -145,24 +145,23 @@
                         <div class="productos-oferta justify-content-center align-middle flex">
                             @if ($promociones->isNotEmpty())
                                 @foreach ($promociones as $promocion)
-                                    <div class="product-item men flex-inline">
-                                        <div class="product product_filter ">
-                                            <div class="product_image">
-                                                <img src="/assets/images/images-products/{{ $promocion->product->imagen }}"
-                                                    alt="">
-                                            </div>
-                                            <div class="favorite"></div>
-                                            <div class="product_info">
-                                                <h6 class="product_name"><a>{{ $promocion->product->nombre }}</a>
-                                                </h6>
-                                                <div class="product_price">{{ $promocion->product->precio }}</div>
+                                    <a href="{{ route('product.show', $promocion->product_id) }}">
+                                        <div class="product-item men float-left">
+                                            <div class="product product_filter ">
+                                                <div class="product_image">
+                                                    <img src="/assets/images/images-products/{{ $promocion->product->imagen }}"
+                                                        alt="">
+                                                </div>
+                                                <div class="favorite"></div>
+                                                <div class="product_info">
+                                                    <h6 class="product_name"><a>{{ $promocion->product->nombre }}</a>
+                                                    </h6>
+                                                    <div class="product_price">Antes: ${{$promocion->descuento + $promocion->product->precio}}<br>Ahora: ${{ $promocion->product->precio }}</div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="red_button add_to_cart_button"><a href="#">Añadir al carrito</a>
-                                        </div>
-                                    </div>
+                                    </a>
                                 @endforeach
-                                <div class="red_button sale_button"><a href="#">Sale</a></div>
                             @else
                                 <h3>No hay productos en promoción</h3>
                             @endif
