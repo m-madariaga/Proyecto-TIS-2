@@ -197,7 +197,7 @@ filter: invert(1);"></span>
             });
 
             increaseBtn.addEventListener('click', () => {
-                if (quantity < stock) { // Check if quantity is less than stock
+                if (quantity < stock) {
                     quantity++;
                     qtyBtn.textContent = quantity;
                     quantityInput.value = quantity;
