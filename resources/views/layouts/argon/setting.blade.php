@@ -46,7 +46,7 @@
                 </a>
             </div>
 
-            <!-- ------------------------------------------ -->
+            {{-- <!-- ------------------------------------------ -->
             <hr class="horizontal dark my-sm-4">
             <!-- ------------------------------------------ -->
 
@@ -56,7 +56,7 @@
                     <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark_version"
                         onclick="darkMode(this)">
                 </div>
-            </div>
+            </div> --}}
 
             <!-- ------------------------------------------ -->
             <hr class="horizontal dark my-sm-4">
