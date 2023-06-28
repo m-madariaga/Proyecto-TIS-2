@@ -264,7 +264,7 @@ class CartController extends Controller
     return redirect()->action([ShippingMethodsController::class, 'index'])->with('order', $order);
 }
 
-    
+
 
 
 
@@ -272,8 +272,6 @@ class CartController extends Controller
     {
         $user = Auth::user();
         $order = Order::findOrFail($orderId);
-        $order->estado = 1; // Cambiar el estado a pagado
-        $order->save();
         Cart::destroy();
         session()->forget('order');
 
