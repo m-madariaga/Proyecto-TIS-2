@@ -173,10 +173,18 @@
                             <form action="#" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="file" name="pdf_file">
-                                <button type="submit" class="btn btn-primary">Cargar</button>
                             </form>
                         </div>
-
+                      
+                       <div class="mt-4">
+                        <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST"
+                            id="shipment-form">
+                            @csrf
+    
+                            <button type="submit" class="btn btn-primary" id="submit-button">Confirmar
+                                Carrito</button>
+                        </form>
+                       </div>
                     </div>
 
                 </div>
