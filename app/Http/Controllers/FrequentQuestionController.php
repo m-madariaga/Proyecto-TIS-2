@@ -103,6 +103,6 @@ class FrequentQuestionController extends Controller
         $preguntas = Frequent_question::all();
         $pregunta = $preguntas->find($id);
         $pregunta->delete();
-        return response()->json(['success' => true]);
+        return redirect()->route('preguntas')->with('success', 'Pregunta borrada correctamente.');
     }
 }
