@@ -6,10 +6,10 @@
 
 @section('breadcrumb')
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Paginas</a></li>
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Paises</li>
+        <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Páginas</a></li>
+        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Países</li>
     </ol>
-    <h6 class="font-weight-bolder text-white mb-0">Paises</h6>
+    <h6 class="font-weight-bolder text-white mb-0">Países</h6>
 @endsection
 
 @section('css')
@@ -144,8 +144,8 @@
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
-                                                <button type="submit"
-                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                                <button type="submit" class="btn btn-sm btn-outline-success"
+                                                    id="editboton">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -239,7 +239,7 @@
                             setTimeout(function() {
                                 location.reload();
                             }, 1000); // delay for half a second
-                             // se recarga al mismo tiempo que se esconde el modal
+                            // se recarga al mismo tiempo que se esconde el modal
                         } else {
                             // muestra los errores
                             displayErrors(response.errors);
@@ -292,8 +292,8 @@
             });
         });
 
-        $('#searchBar').keyup(function(){
-            table.search($(this).val()).draw() ;
+        $('#searchBar').keyup(function() {
+            table.search($(this).val()).draw();
         });
 
         $('#addCountryModal').on('hide.bs.modal', function() {
@@ -322,6 +322,15 @@
             const nameInput = $('#editName');
             nameInput.val(countryName);
             // Reemplazar el valor del nombre en el input el modal
+
+        });
+
+        $('#editboton').on('click', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '¡El país se ha editado correctamente!'
+            });
 
         });
     </script>

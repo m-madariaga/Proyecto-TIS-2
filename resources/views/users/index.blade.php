@@ -293,7 +293,7 @@
                                                 <button type="button" class="btn btn-sm btn-outline-danger"
                                                     data-bs-dismiss="modal">Cerrar</button>
                                                 <button type="submit"
-                                                    class="btn btn-sm btn-outline-success">Editar</button>
+                                                    class="btn btn-sm btn-outline-success" id="editboton5">Editar</button>
                                             </div>
                                         </form>
                                     </div>
@@ -311,7 +311,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+
     <script>
         // Usar Ajax para manejar el envio del formulario del modal para añadir usuarios
         var addUserForm = document.getElementById('addUserForm');
@@ -429,10 +429,10 @@
                 });
             @endif
             });
-            
+
 
         });
-        
+
 
     </script>
     <script>
@@ -476,6 +476,14 @@
             editForm.attr('action', actionUrl);
 
             // Reemplazar el valor del nombre en el input el modal
+
+        });
+        $('#editboton5').on('click', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '¡El país se ha editado correctamente!'
+            });
 
         });
     </script>
