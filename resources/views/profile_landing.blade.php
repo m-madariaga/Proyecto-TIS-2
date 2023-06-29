@@ -255,7 +255,7 @@
         <div class="col-md-5 col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="mb-0 fw-bold">{{ __('Historial de Pedidos') }}</h4>
+                    <h4 class="mb-0 fw-bold">{{ __('Historial de pedidos realizados') }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
