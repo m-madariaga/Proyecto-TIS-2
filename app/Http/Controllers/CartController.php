@@ -97,7 +97,7 @@ class CartController extends Controller
 
                     if ($product->stock < 5) {
                         $admins = User::role('admin')->get();
-                        Notification::send($admins, new lowStockNotif("blusa"));
+                        Notification::send($admins, new lowStockNotif($product->nombre));
                     }
 
                     $product->save();
@@ -180,7 +180,7 @@ class CartController extends Controller
 
             if ($product->stock < 5) {
                 $admins = User::role('admin')->get();
-                Notification::send($admins, new lowStockNotif("blusa"));
+                Notification::send($admins, new lowStockNotif($product->nombre));
             }
         }
 
@@ -252,7 +252,7 @@ class CartController extends Controller
 
             if ($product->stock < 5) {
                 $admins = User::role('admin')->get();
-                Notification::send($admins, new lowStockNotif("blusa"));
+                Notification::send($admins, new lowStockNotif($product->nombre));
             }
 
             $this->updateStock($item->id);
