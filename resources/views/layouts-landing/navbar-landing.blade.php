@@ -15,40 +15,40 @@
             <div class="top_nav_left">
 
                 @foreach ($socialnetworks as $socialnetwork)
-                @if ($socialnetwork->visible == '1')
-                <div class="socialnetwork-item">
-                    @if (strtolower($socialnetwork->nombre) == strtolower('Número Teléfonico'))
-                    <div class="top_nav_left">
-                        <i class="fa fa-phone" style="color:white" aria-hidden="true"></i>
-                        <span style="color:white">{{ $socialnetwork->valor }}</span>
-                    </div>
-                    @elseif (strtolower($socialnetwork->nombre) == 'facebook')
-                    <div class="top_nav_left">
-                        <a href="{{ $socialnetwork->valor }}" target="_blank">
-                            <i class="fa fa-facebook" style="color:white" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    @elseif (strtolower($socialnetwork->nombre) == 'instagram')
-                    <div class="top_nav_left">
-                        <a href="{{ $socialnetwork->valor }}" target="_blank">
-                            <i class="fa fa-instagram" style="color:white" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    @elseif (strtolower($socialnetwork->nombre) == 'twitter')
-                    <div class="top_nav_left">
-                        <a href="{{ $socialnetwork->valor }}" target="_blank">
-                            <i class="fa fa-twitter" style="color:white" aria-hidden="true"></i>
-                        </a>
-                    </div>
-                    @else
-                    <div class="top_nav_left">
-                        <a href="{{ $socialnetwork->valor }}" target="_blank">
-                            <i class="fa fa-share" style="color:white" aria-hidden="true"></i>
-                        </a>
-                    </div>
+                    @if ($socialnetwork->visible == '1')
+                        <div class="socialnetwork-item">
+                            @if (strtolower($socialnetwork->nombre) == strtolower('Número Teléfonico'))
+                                <div class="top_nav_left">
+                                    <i class="fa fa-phone" style="color:white" aria-hidden="true"></i>
+                                    <span style="color:white">{{ $socialnetwork->valor }}</span>
+                                </div>
+                            @elseif (strtolower($socialnetwork->nombre) == 'facebook')
+                                <div class="top_nav_left">
+                                    <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                        <i class="fa fa-facebook" style="color:white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            @elseif (strtolower($socialnetwork->nombre) == 'instagram')
+                                <div class="top_nav_left">
+                                    <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                        <i class="fa fa-instagram" style="color:white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            @elseif (strtolower($socialnetwork->nombre) == 'twitter')
+                                <div class="top_nav_left">
+                                    <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                        <i class="fa fa-twitter" style="color:white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            @else
+                                <div class="top_nav_left">
+                                    <a href="{{ $socialnetwork->valor }}" target="_blank">
+                                        <i class="fa fa-share" style="color:white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
                     @endif
-                </div>
-                @endif
                 @endforeach
             </div>
 
@@ -66,55 +66,69 @@
                             <li><a href="#">Español</a></li>
                         </ul>
                     </li> -->
-
-                    <li class="account">
-                        <a href="#">
-                            @guest
-                            Cuenta
-                            @else
-                            {{ Auth::user()->name }}
-                            @endguest
-                            <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="account_selection">
-                            @guest
-                            <li>
-                                <a href="{{ route('login') }}">
+                    @guest
+                        <div class="acount">
+                            <div class="top_nav_left">
+                                <a href="{{ route('login') }} " class="mx-4" style="color: white">
                                     Iniciar sesión
                                 </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('register') }}">
+                                <a href="{{ route('register') }}"style="color: white">
                                     Registrarse
                                 </a>
-                            </li>
-                            @else
-                            <li>
-                                <a href="{{ route('profile_landing') }}">
-                                    Perfil
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Cerrar Sesión
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </li>
-                            @if (Auth::check() && Auth::user()->hasRole('admin'))
-                            <li>
-                                <a href="{{route('admin_home')}}">
-                                    Vista Administrador
-                                </a>
-                            </li>
-                            @endif
-                            @endguest
-                        </ul>
-                    </li>
+                            </div>
+                        </div>
+                    @else
+                        <li class="account">
+                            <a href="#">
+                                @guest
+                                    Cuenta
+                                @else
+                                    {{ Auth::user()->name }}
+                                @endguest
+                                <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="account_selection">
+                                @if (Auth::check() && Auth::user()->hasRole('admin'))
+                                    <li>
+                                        <a href="{{ route('admin_home') }}">
+                                            Vista Administrador
+                                        </a>
+                                    </li>
+                                @endif
+                                @if (Auth::check())
+                                    <li>
+                                        <a href="{{ route('profile_landing') }}">
+                                            Perfil
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Cerrar Sesión
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                @else
+                                    <li>
+                                        <span href="{{ route('login') }}">
+                                            Iniciar sesión
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('register') }}">
+                                            Registrarse
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+
+                        </li>
+                    @endguest
                 </ul>
             </div>
-
         </div>
     </div>
 </div>
