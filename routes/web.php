@@ -32,6 +32,7 @@ use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\ComprobanteTransferController;
 use App\Http\Controllers\PromotionController;
 use App\Models\Frequent_question;
 use App\Models\Purchase_order_product;
@@ -366,6 +367,8 @@ Route::get('/questionview', [App\Http\Controllers\QuestionController::class, 'in
 
 Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
+Route::post('/cargar_comprobante', [ComprobanteTransferController::class, 'store'])->name('cargar_comprobante');
+
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
 Route::get('/confirmtransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmtransbank');

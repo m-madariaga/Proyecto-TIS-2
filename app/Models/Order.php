@@ -34,4 +34,8 @@ class Order extends Model
     {
         return $this->belongsTo(PaymentMethod::class, 'paymentmethod_fk');
     }
+    public function comprobantetransfer(): BelongsTo
+    {
+        return $this->belongsTo(ComprobanteTransfer::class, 'id');
+    }
 }
