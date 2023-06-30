@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <header class="invoice-header">
-            <img class="logo img-fluid" src="..\public\assets\images\logo_2.png" alt="Logo de la empresa">
+            <img class="logo img-fluid" src="..\public\assets\images\logo_1.png" alt="Logo de la empresa">
             <h1>Orden de Compra</h1>
 
             <p>N° de orden: {{$orden->id}}</p>

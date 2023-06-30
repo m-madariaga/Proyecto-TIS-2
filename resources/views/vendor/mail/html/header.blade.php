@@ -9,3 +9,4 @@
 </a>
 </td>
 </tr>
+{{-- ..\public\assets\images\logo_1.png --}}

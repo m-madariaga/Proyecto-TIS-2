@@ -30,6 +30,8 @@ class ProofPayment extends Mailable
      */
     public function build()
     {
-        return $this->view('receipt.ticket_correo',['order' => $this->order])->attach(public_path('\assets\images\logo_2.png'),['as' => 'logo_2.png','mime' => 'image/png']);
+        return $this->view('receipt.ticket_correo', ['order' => $this->order])
+            ->subject('Nuevo asunto del correo')
+            ->attach(public_path('/assets/images/logo_1.png'), ['as' => 'logo_1.png', 'mime' => 'image/png']);
     }
 }

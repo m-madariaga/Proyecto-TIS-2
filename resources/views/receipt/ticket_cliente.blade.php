@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <header class="invoice-header">
-            <img class="logo img-fluid" src="..\public\assets\images\logo_2.png" alt="Logo de la empresa">
+            <img class="logo img-fluid" src="..\public\assets\images\logo_1.png" alt="Logo de la empresa">
             <h1>Detalle del Pedido</h1>
             <br><br>
             <text>Cliente: {{ $order->user->name }}<br>Direccion: {{ $order->user->address }},

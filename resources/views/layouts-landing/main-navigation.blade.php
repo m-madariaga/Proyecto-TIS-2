@@ -30,10 +30,10 @@
         <div class="col-md-4 col-6">
             <div class="logo_container">
                 <a href="{{ route('home-landing') }}">
-                    @foreach ($images as $imagen)
-                        <img src="{{ asset("imagen_logo/$imagen->nombre_imagen") }}" class="navbar-brand-img"
-                            style="max-height: 3rem;" alt="logo">
-                    @endforeach
+                    <a href="{{ route('home-landing') }}">
+                        <img src="{{ asset('assets/images/logo_2.png') }}" style="max-height: 3rem;" alt="Logo">
+                    </a>
+                    
                 </a>
             </div>
         </div>
