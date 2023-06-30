@@ -53,7 +53,7 @@ class ImagesController extends Controller
                     $constraint->upsize();
                 });
 
-                
+
 
                 $resizedImage->save();
 
@@ -109,9 +109,9 @@ class ImagesController extends Controller
             // Actualizar el atributo seleccionada a 1 para las imágenes seleccionadas
             Images::whereIn('id', $selectedImages)->update(['seleccionada' => true]);
 
-            return redirect()->route('section.index')->with('success', 'Imágenes seleccionadas actualizadas correctamente.');
+            return redirect()->route('section.index')->with('success', 'La imagen seleccionada ha sido actualizada correctamente.');
         } catch (\Exception $e) {
-            return redirect()->route('section.index')->with('error', 'Error al actualizar las imágenes seleccionadas: ' . $e->getMessage());
+            return redirect()->route('section.index')->with('error', 'Error, la imágen no se pudo actualizar' . $e->getMessage());
         }
     }
 
@@ -126,4 +126,3 @@ class ImagesController extends Controller
         //
     }
 }
-

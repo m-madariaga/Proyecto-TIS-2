@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    {{-- <div class="row px-4">
+    <div class="row px-4">
         <div class="col-12 px-4 py-4">
             <div class="card mt-1">
                 <div class="row">
@@ -201,7 +201,7 @@
                 </div>
             </div>  
         </div>
-    </div> --}}
+    </div>
 @endsection
 
 @section('js')
