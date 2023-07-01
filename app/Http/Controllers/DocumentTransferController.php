@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Document_transfer;
+use App\Models\ComprobanteTransfer;
 use Illuminate\Http\Request;
 
 class DocumentTransferController extends Controller
@@ -14,7 +14,8 @@ class DocumentTransferController extends Controller
      */
     public function index()
     {
-        //
+        $documents = ComprobanteTransfer::all();
+        return view('documenttransfers.index', compact('documents'));
     }
 
     /**
@@ -44,7 +45,7 @@ class DocumentTransferController extends Controller
      * @param  \App\Models\Document_transfer  $document_transfer
      * @return \Illuminate\Http\Response
      */
-    public function show(Document_transfer $document_transfer)
+    public function show(ComprobanteTransfer $document_transfer)
     {
         //
     }
@@ -55,7 +56,7 @@ class DocumentTransferController extends Controller
      * @param  \App\Models\Document_transfer  $document_transfer
      * @return \Illuminate\Http\Response
      */
-    public function edit(Document_transfer $document_transfer)
+    public function edit(ComprobanteTransfer $document_transfer)
     {
         //
     }
@@ -67,7 +68,7 @@ class DocumentTransferController extends Controller
      * @param  \App\Models\Document_transfer  $document_transfer
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Document_transfer $document_transfer)
+    public function update(Request $request, ComprobanteTransfer $document_transfer)
     {
         //
     }
@@ -78,27 +79,8 @@ class DocumentTransferController extends Controller
      * @param  \App\Models\Document_transfer  $document_transfer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Document_transfer $document_transfer)
+    public function destroy(ComprobanteTransfer $document_transfer)
     {
         //
-    }
-    public function cargarArchivo(Request $request)
-    {
-        $validatedData = $request->validate([
-            'pdf_file' => 'required|mimes:pdf|max:2048', // Valida que se seleccione un archivo PDF de hasta 2MB
-            'numero_pedido' => 'required',
-        ]);
-    
-        // Guardar el archivo adjunto
-        if ($request->hasFile('pdf_file')) {
-            $file = $request->file('pdf_file');
-            $path = Storage::disk('public')->putFile('document_transfer', $file);
-    
-            // Guardar la información en la base de datos
-            $document_transfer = new Document_transfer();
-            $document_transfer->numero_pedido = $request->numero_pedido;
-            $document_transfer->ruta_archivo = $path;
-            $document_transfer->save();
-        }
     }
 }
