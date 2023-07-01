@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class ComprobanteTransfer extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'order_id',
         'direccion_comprobante',
     ];
+
     public function order()
     {
-        return $this->belongsTo(Order::class, 'id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

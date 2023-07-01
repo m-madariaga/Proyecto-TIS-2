@@ -237,6 +237,8 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
 
     });
 
+  
+
 
 
     Route::get('/shipments', [App\Http\Controllers\ShipmentController::class, 'index'])->name('shipments.index');
@@ -298,6 +300,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/respuestas/{id}/edit', [App\Http\Controllers\FrequentResponseController::class, 'edit'])->name('respuestas-edit');
         Route::patch('/respuestas/{id}/update', [App\Http\Controllers\FrequentResponseController::class, 'update'])->name('respuestas-update');
         Route::delete('/respuestas/{id}', [App\Http\Controllers\FrequentResponseController::class, 'destroy'])->name('respuestas-destroy');
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor documentos transferencia']], function () {
+        Route::get('/documentos', [App\Http\Controllers\DocumentTransferController::class, 'index'])->name('documents.index');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
@@ -365,9 +371,9 @@ Route::get('/questionview', [App\Http\Controllers\QuestionController::class, 'in
 
 
 
-Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CheckOutController::class, 'confirmOrder'])->name('confirmtransferbank');
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
-Route::post('/cargar_comprobante', [ComprobanteTransferController::class, 'store'])->name('cargar_comprobante');
+Route::post('/validartransfer/{orderId}', [CheckOutController::class, 'update'])->name('validartransfer');
 
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
