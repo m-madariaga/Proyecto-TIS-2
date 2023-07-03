@@ -70,7 +70,7 @@
                 <div class="card-body mt-4">
                     <h3 class="card-title">Reseñas del producto</h3>
                     @auth
-                        <div class="card">
+                        <div class="card border-0">
                             <div class="card-body">
                                 <h4 class="card-title">Escribir reseña</h4>
                                 <form method="POST"
@@ -89,8 +89,9 @@
                             </div>
                         </div>
                     @endauth
+                    <hr>
                     @foreach ($reviews as $review)
-                        <div class="card">
+                        <div class="card border-0">
                             <div class="card-body">
                                 <div class="row justify-content-between">
                                     <h4 class="col-4 card-title">{{ $review->title }}</h4>
