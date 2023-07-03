@@ -13,5 +13,6 @@ class Images extends Model
         'nombre_imagen',
         'direccion_imagen',
         'seleccionada',
+        'tipo_imagen'
     ];
 }

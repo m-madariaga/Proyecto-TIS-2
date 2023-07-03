@@ -19,21 +19,6 @@
                 $('#pictureModal').modal('show');
             });
         });
-        $(document).ready(function() {
-            $('#cartButton').on('click', function() {
-                var userRole = "{{ Auth::user()->role }}";
-                if (userRole !== 'cliente') {
-                    Swal.fire({
-                        title: 'Acceso denegado',
-                        text: 'Usted no es un cliente y no puede realizar compras',
-                        icon: 'warning',
-                        confirmButtonText: 'Entendido'
-                    });
-                } else {
-                    window.location.href = "{{ route('cart.generateOrder') }}";
-                }
-            });
-        });
     </script>
 @endsection
 
@@ -75,12 +60,13 @@
                                                         <a href="{{ route('decrementitem', ['id' => $item->rowId]) }}"
                                                             class="btn bt-succes">-</a>
                                                         <button id="qty" type="button">{{ $item->qty }}</button>
-                                                        @if ($item->qty < $item->options->stock)
+                                                        @if ($item->qty < $item->options->stock )
                                                             <a href="{{ route('incrementitem', ['id' => $item->rowId]) }}"
                                                                 class="btn bt-succes">+</a>
                                                         @else
                                                             <a href="#" class="btn bt-succes" disabled>+</a>
                                                         @endif
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -109,12 +95,7 @@
                         </tfoot>
                     </table>
                     @if (Cart::count() > 0)
-                        @if (Auth::check() && Auth::user()->hasRole('admin'))
-                            <div class="text-center">
-                                <p class="display-4">Acceso denegado</p>
-                                <p class="lead">Usted no es un cliente y no puede realizar compras.</p>
-                            </div>
-                        @elseif (Auth::check())
+                        @if (Auth::check())
                             <form action="{{ route('cart.generateOrder') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Continuar</button>
@@ -160,7 +141,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-grid gap-2">
-                        <a href="{{ route('login') }}" class="btn btn-primary">Continuar</a>
+                        <a href="{{ route('login') }}" class="btn btn-danger">Continuar</a>
+                   
                     </div>
                 </div>
             </div>

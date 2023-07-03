@@ -19,7 +19,9 @@ class CreateFrequentResponsesTable extends Migration
             $table->unsignedBigInteger('frequent_question_id');
             $table->timestamps();
 
-            $table->foreign('frequent_question_id')->references('id')->on('frequent_questions');
+            $table->foreign('frequent_question_id')
+                ->references('id')->on('frequent_questions')
+                ->onDelete('cascade'); 
         });
     }
 

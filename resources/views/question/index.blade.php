@@ -12,7 +12,7 @@
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css">
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
                                         <form action="{{ route('preguntas-destroy', ['id' => $frequent_question->id]) }}" method="POST" style="display: inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger delete-brand" data-id="{{ $frequent_question->id }}"><i class="fa fa-trash" aria-hidden="true"></i> Borrar</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-danger delete-question" data-id="{{ $frequent_question->id }}"><i class="fa fa-trash" aria-hidden="true"></i> Borrar</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -65,7 +65,42 @@
 
 <script>
     $(document).ready(function() {
-        $('#questions-table').DataTable();
+        $('#questions-table').DataTable({
+            dom: 'lrtip',
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                }
+        });
+
+        // Eliminar pregunta con SweetAlert
+        $('.delete-question').click(function(e) {
+            e.preventDefault();
+            var deleteForm = $(this).closest('form');
+
+            Swal.fire({
+                title: '¿Estás seguro?',
+                text: '¡No podrás revertir esto!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Sí, borrarlo',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    deleteForm.submit();
+                }
+            });
+        });
+        @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: true
+                });
+            @endif
     });
 </script>
 @endsection

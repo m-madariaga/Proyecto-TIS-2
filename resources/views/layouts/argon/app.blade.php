@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('argon/assets/img/favicon.png') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>
         @yield('title')
     </title>
@@ -42,7 +43,9 @@
     <script src="{{ asset('argon/assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('argon/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+    </script>
 
 
 
@@ -64,37 +67,34 @@
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
 
         <?php use App\Http\Controllers\NotificationController;
-            $notifs= NotificationController::print();
-
+        $notifs = NotificationController::print();
+        
         ?>
 
         @foreach ($notifs as $notif)
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong class="me-auto"> Advertencia</strong>
-                <button type="button" class="btn-close-black" data-bs-dismiss="toast" aria-label="Close"></button>
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong class="me-auto"> Advertencia</strong>
+                    <button type="button" class="btn-close-black" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{ $notif->data['body'] }}
+                </div>
             </div>
-            <div class="toast-body">
-                {{$notif->data['body']}}
-            </div>
-        </div>
-
         @endforeach
-      <script>
-        console.log("start");
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        var toastList = toastElList.map(function (toastEl) {
-            return new bootstrap.Toast(toastEl)
-        })
-        toastList.forEach(toast => toast.show()); // This show them
+        <script>
+            console.log("start");
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+            var toastList = toastElList.map(function(toastEl) {
+                return new bootstrap.Toast(toastEl)
+            })
+            toastList.forEach(toast => toast.show()); // This show them
 
-        console.log(toastList); // Testing to see if it works
+            console.log(toastList); // Testing to see if it works
 
-        console.log("end");
-
-
-      </script>
+            console.log("end");
+        </script>
 </body>
 
 

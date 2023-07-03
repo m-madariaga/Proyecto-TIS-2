@@ -70,7 +70,7 @@ class TransbankController extends Controller
             if ($user && $order->user_id === $user->id && $order->estado === 0) {
                 $order->estado = 1; // Cambiar el estado a pagado
                 $order->save();
-                Mail::to($user->email)->send(new ProofPayment($order->id));
+                Mail::to($user->email)->send(new ProofPayment($order->id,'Pedido'));
                 Cart::destroy();
                 return redirect()->route('home-landing')->with('success', 'La compra se realizó correctamente');
             } else {

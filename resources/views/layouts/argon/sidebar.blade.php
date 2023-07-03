@@ -233,6 +233,14 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('mantenedor documentos transferencia')
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('admin/documentos') ? 'active' : '' }}"
+                                    href="{{route('documents.index')}}">
+                                    <span class="nav-link-text ms-3 text-truncate">Comprobantes transferencia</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </li>

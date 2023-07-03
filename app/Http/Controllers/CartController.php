@@ -87,6 +87,7 @@ class CartController extends Controller
                         'options' => [
                             'urlfoto' => asset("assets/images/images-products/$product->imagen"),
                             'nombre' => null,
+                            'stock' => $product->stock,
                         ]
                     ]);
 
@@ -96,7 +97,7 @@ class CartController extends Controller
 
                     if ($product->stock < 5) {
                         $admins = User::role('admin')->get();
-                        Notification::send($admins, new lowStockNotif("blusa"));
+                        Notification::send($admins, new lowStockNotif($product->nombre));
                     }
 
                     $product->save();
@@ -116,7 +117,7 @@ class CartController extends Controller
         $sections = Section::all();
         $this->checkStock();
 
-        $user = Auth::user();
+        $user = session('user');
         $order = session('order'); // Obtener el pedido de la sesión
 
         if ($user && !$order) {
@@ -179,7 +180,7 @@ class CartController extends Controller
 
             if ($product->stock < 5) {
                 $admins = User::role('admin')->get();
-                Notification::send($admins, new lowStockNotif("blusa"));
+                Notification::send($admins, new lowStockNotif($product->nombre));
             }
         }
 
@@ -208,61 +209,60 @@ class CartController extends Controller
     }
 
     public function generateOrder()
-{
-    $user = Auth::user();
-    $order = session('order'); // Obtener el pedido de la sesión
+    {
+        $order = session('order'); // Obtener el pedido de la sesión
+        $user = Auth::user();
+        if (!$order) {
+            // Si no hay un pedido en la sesión, crear uno nuevo
+            $order = new Order();
+            $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
+            $order->impuesto = Cart::tax() * 1000;
+            $order->total = Cart::subtotal() * 1000;
+            $order->estado = 0;
+            $order->user_id = $user->id;
+            $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
+            $order->save();
+        } else {
+            // Si hay un pedido en la sesión, actualiza los detalles del pedido existente en lugar de crear uno nuevo
+            $order->details()->delete(); // Elimina los detalles del pedido existentes
 
-    if (!$order) {
-        // Si no hay un pedido en la sesión, crear uno nuevo
-        $order = new Order();
-        $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
-        $order->impuesto = Cart::tax() * 1000;
-        $order->total = Cart::subtotal() * 1000;
-        $order->estado = 0;
-        $order->user_id = $user->id;
-        $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
-        $order->save();
-    } else {
-        // Si hay un pedido en la sesión, actualiza los detalles del pedido existente en lugar de crear uno nuevo
-        $order->details()->delete(); // Elimina los detalles del pedido existentes
-
-        // Actualiza los montos y otros detalles del pedido si es necesario
-        $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
-        $order->impuesto = Cart::tax() * 1000;
-        $order->total = Cart::subtotal() * 1000;
-        $order->estado = 0;
-        $order->user_id = $user->id;
-        $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
-        $order->save();
-    }
-
-    foreach (Cart::content() as $item) {
-        $detail = new Detail();
-        $detail->precio = $item->price;
-        $detail->cantidad = $item->qty;
-        $detail->monto = $detail->cantidad * $detail->precio;
-        $detail->producto_id = $item->id;
-        $detail->pedido_id = $order->id;
-        $detail->save();
-
-        // Disminuir el stock del producto
-        $product = Product::find($item->id);
-        $product->stock -= $item->qty;
-        $product->save();
-
-        if ($product->stock < 5) {
-            $admins = User::role('admin')->get();
-            Notification::send($admins, new lowStockNotif("blusa"));
+            // Actualiza los montos y otros detalles del pedido si es necesario
+            $order->subtotal = Cart::subtotal() * 1000 - Cart::tax() * 1000;
+            $order->impuesto = Cart::tax() * 1000;
+            $order->total = Cart::subtotal() * 1000;
+            $order->estado = 0;
+            $order->user_id = $user->id;
+            $order->paymentmethod_fk = null; // Establecer paymentmethod_fk como nulo
+            $order->save();
         }
 
-        $this->updateStock($item->id);
+        foreach (Cart::content() as $item) {
+            $detail = new Detail();
+            $detail->precio = $item->price;
+            $detail->cantidad = $item->qty;
+            $detail->monto = $detail->cantidad * $detail->precio;
+            $detail->producto_id = $item->id;
+            $detail->pedido_id = $order->id;
+            $detail->save();
+
+            // Disminuir el stock del producto
+            $product = Product::find($item->id);
+            $product->stock -= $item->qty;
+            $product->save();
+
+            if ($product->stock < 5) {
+                $admins = User::role('admin')->get();
+                Notification::send($admins, new lowStockNotif($product->nombre));
+            }
+
+            $this->updateStock($item->id);
+        }
+
+        // Almacenar el pedido en la sesión
+        session()->put('order', $order);
+
+        return redirect()->action([ShippingMethodsController::class, 'index'])->with('order', $order);
     }
-
-    // Almacenar el pedido en la sesión
-    session()->put('order', $order);
-
-    return redirect()->action([ShippingMethodsController::class, 'index'])->with('order', $order);
-}
 
 
 
@@ -274,8 +274,7 @@ class CartController extends Controller
         $order = Order::findOrFail($orderId);
         Cart::destroy();
         session()->forget('order');
-
-        Mail::to($user->email)->send(new ProofPayment($order->id));
+        Mail::to($user->email)->send(new ProofPayment($order->id, 'Pedido'));
         return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
     }
 }

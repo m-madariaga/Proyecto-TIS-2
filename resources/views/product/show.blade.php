@@ -1,6 +1,7 @@
 @extends('layouts-landing.welcome')
 
 @section('css')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 @endsection
 
 @section('content')
@@ -69,7 +70,7 @@
                 <div class="card-body mt-4">
                     <h3 class="card-title">Reseñas del producto</h3>
                     @auth
-                        <div class="card">
+                        <div class="card border-0">
                             <div class="card-body">
                                 <h4 class="card-title">Escribir reseña</h4>
                                 <form method="POST"
@@ -88,8 +89,9 @@
                             </div>
                         </div>
                     @endauth
+                    <hr>
                     @foreach ($reviews as $review)
-                        <div class="card">
+                        <div class="card border-0">
                             <div class="card-body">
                                 <div class="row justify-content-between">
                                     <h4 class="col-4 card-title">{{ $review->title }}</h4>
@@ -170,9 +172,11 @@ filter: invert(1);"></span>
 @endsection
 
 @section('js')
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
     <script>
         $(document).ready(function() {
             $('#recommendedCarousel').carousel();
@@ -203,6 +207,20 @@ filter: invert(1);"></span>
                     quantityInput.value = quantity;
                 }
             });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 4000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: true
+                });
+            @endif
         });
     </script>
 @endsection

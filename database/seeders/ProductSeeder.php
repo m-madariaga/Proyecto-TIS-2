@@ -17,7 +17,7 @@ class ProductSeeder extends Seeder
         $product->nombre = 'Pantalón Seattle';
         $product->precio = '22990';
         $product->color = 'Negro';
-        $product->talla = '34';
+        $product->talla = 'L';
         $product->stock = '4';
         $product->imagen = 'pantalon-seattle.jpeg';
         $product->visible = 1;

@@ -90,7 +90,7 @@
 <body>
     <div class="container">
         <header class="invoice-header">
-            <img class="logo img-fluid" src="{{ $message->embed(public_path('\assets\images\logo_2.png')) }}"
+            <img class="logo img-fluid" src="{{ $message->embed(public_path('\assets\images\logo_1.png')) }}"
                 alt="Logo de la empresa">
             <br><br>
             <h1>Detalles de su Pedido</h1>
