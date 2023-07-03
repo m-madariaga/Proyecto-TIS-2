@@ -233,7 +233,11 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
 
         Route::post('/images/store', [App\Http\Controllers\ImagesController::class, 'store'])->name('images.store');
+        Route::post('/footer/store', [App\Http\Controllers\ImagesController::class, 'storeFooterImage'])->name('footer.store');
+
         Route::post('/images/update', [App\Http\Controllers\ImagesController::class, 'update'])->name('images.update');
+
+
 
     });
 
@@ -369,9 +373,9 @@ Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsControll
 Route::get('/questionview', [App\Http\Controllers\QuestionController::class, 'index'])->name('questionview.index');
 
 
+Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
 
-
-Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CheckOutController::class, 'confirmOrder'])->name('confirmtransferbank');
+Route::post('/confirmtransferbank/{orderId}', [App\Http\Controllers\CheckOutController::class, 'confirmOrder'])->name('confirmtransferbank');
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
 Route::post('/validartransfer/{orderId}', [CheckOutController::class, 'update'])->name('validartransfer');
 

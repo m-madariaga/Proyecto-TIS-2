@@ -68,12 +68,14 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <a href="{{ route('socialnetwork.edit', $redsocial->id) }}"
-                                                            class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i> Editar</a>
+                                                            class="btn btn-sm btn-outline-primary"><i
+                                                                class="fa fa-edit"></i> Editar</a>
                                                         <form action="{{ route('socialnetwork.destroy', $redsocial->id) }}"
                                                             method="POST" style="display: inline;">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-outline-danger delete-role"
+                                                            <button type="submit"
+                                                                class="btn btn-sm btn-outline-danger delete-role"
                                                                 data-id="{{ $redsocial->id }}"><i class="fa fa-trash"
                                                                     aria-hidden="true"></i> Borrar</button>
                                                         </form>
@@ -81,7 +83,7 @@
                                                 </tr>
                                             @endforeach
                                         </tbody>
-                                    </table>                                    
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -140,46 +142,53 @@
             </div>
         </div>
     </div>
-
     <div class="row px-4">
         <div class="col-12 px-4 py-4">
             <div class="card mt-1">
                 <div class="row">
                     <div class="col-6 mx-auto">
                         <div class="card">
-                            <h6 class="float-start mt-4 px-4">Imagen del Logo</h6>
-
+                            <h6 class="float-start mt-4 px-4">Imagen del Logo Principal</h6>
+    
                             <div class="card-body text-center">
                                 <form action="{{ route('images.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
                                         <div class="row mb-3">
-                                            <input name="imagen" id="imagen" type="file" required>
-                                            @error('imagen')
+                                            <label for="tipo_imagen_principal">Tipo de imagen del Logo Principal:</label>
+                                            <select name="tipo_imagen_principal" id="tipo_imagen_principal">
+                                                <option value="logo_principal">Logo Principal</option>
+                                            </select>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <input name="imagen_principal" id="imagen_principal" type="file" required>
+                                            @error('imagen_principal')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Guardar Imagen</button>
+                                    <button type="submit" class="btn btn-primary">Guardar Imagen del Logo Principal</button>
                                 </form>
-                            </div>
-
-                            <!-- ------------------------------------------ -->
-                            <hr class="horizontal dark my-sm-4">
-                            <!-- ------------------------------------------ -->
-                            <div class="imagen mx-auto w-100 text-center">
+    
+                                <!-- ------------------------------------------ -->
+                                <hr class="horizontal dark my-sm-4">
+                                <!-- ------------------------------------------ -->
+    
+                                <h6 class="float-start mt-4 px-4">Imagen del Logo Principal</h6>
                                 <form action="{{ route('images.update') }}" method="POST">
                                     @csrf
                                     @method('POST')
                                     @foreach ($images as $image)
-                                        <li>
-                                            <input type="checkbox" name="seleccion[]" value="{{ $image->id }}"
-                                                @if ($image->seleccionada) checked @endif>
-                                            <img src="{{ asset($image->direccion_imagen) }}" alt="Imagen"
-                                                style="max-width: 400px; height: 60px;">
-                                        </li>
+                                        @if ($image->tipo_imagen === 'logo_principal')
+                                            <li>
+                                                <input type="checkbox" name="seleccion_principal[]"
+                                                    value="{{ $image->id }}" @if ($image->seleccionada) checked @endif>
+                                                <img src="{{ asset($image->direccion_imagen) }}" alt="Imagen"
+                                                    style="max-width: 400px; height: 60px;">
+                                            </li>
+                                        @endif
                                     @endforeach
                                     <div class="mt-4">
                                         <button type="submit" class="btn btn-primary">Guardar selección</button>
@@ -193,15 +202,40 @@
                             <div class="card-header">
                                 <h6 class="float-start">Imagen del Logo Abajo</h6>
                             </div>
-                            <div class="card-body">
-                                <!-- Aquí puedes agregar tu código para cargar la imagen -->
+                            <div class="card-body text-center">
+                                <form action="{{ route('images.update') }}" method="POST">
+                                    @csrf
+                                    @method('POST')
+                                    <h6 class="float-start mt-4 px-4">Imagen del Footer</h6>
+                                    @foreach ($images as $image)
+                                        @if ($image->tipo_imagen === 'logo_footer')
+                                            <li>
+                                                <input type="checkbox" name="seleccion_footer[]" value="{{ $image->id }}"
+                                                    @if ($image->seleccionada) checked @endif>
+                                                <img src="{{ asset($image->direccion_imagen) }}" alt="Imagen"
+                                                    style="max-width: 400px; height: 60px;">
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                    <div class="mt-4">
+                                        <button type="submit" class="btn btn-primary">Guardar selección</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
         </div>
     </div>
+    
+    
+    
+
+
+
+
+
 @endsection
 
 @section('js')

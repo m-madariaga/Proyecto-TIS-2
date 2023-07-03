@@ -31,9 +31,14 @@
             <div class="logo_container">
                 <a href="{{ route('home-landing') }}">
                     <a href="{{ route('home-landing') }}">
-                        <img src="{{ asset('assets/images/logo_2.png') }}" style="max-height: 3rem;" alt="Logo">
+                        @foreach ($images as $imagen)
+                            @if ($imagen->tipo_imagen === 'logo_principal')
+                                <img src="{{ asset("imagen_logo/$imagen->nombre_imagen") }}" class="navbar-brand-img"
+                                    style="max-height: 3rem;" alt="main_logo">
+                            @endif
+                        @endforeach
                     </a>
-                    
+
                 </a>
             </div>
         </div>
