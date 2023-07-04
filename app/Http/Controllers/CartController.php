@@ -43,74 +43,73 @@ class CartController extends Controller
         }
     }
 
-    public function additem(Request $request)
-    {
-        $productIds = $request->input('id');
-        $quantity = $request->input('quantity');
+   public function additem(Request $request)
+{
+    $productIds = $request->input('id');
+    $quantity = $request->input('quantity');
 
+    foreach ($productIds as $index => $productId) {
+        $product = Product::find($productId);
 
-        foreach ($productIds as $index => $productId) {
-            $product = Product::find($productId);
+        $qty = isset($quantity[$index]) ? $quantity[$index] : 1; // Verificar si el índice está definido
 
-            $qty = isset($quantity[$index]) ? $quantity[$index] : 1; // Verificar si el índice está definido
+        if ($product->stock >= $qty && $qty >= 1) {
+            $cartItem = Cart::search(function ($cartItem, $rowId) use ($productId) {
+                return $cartItem->id === $productId;
+            });
 
-            if ($product->stock >= $qty && $qty >= 1) {
-                $cartItem = Cart::search(function ($cartItem, $rowId) use ($productId) {
-                    return $cartItem->id === $productId;
-                });
+            if ($cartItem->isNotEmpty()) {
+                // Si el producto ya existe en el carrito, obtener la cantidad existente y sumarle la nueva cantidad
+                $existingQty = $cartItem->first()->qty;
+                $qty += $existingQty;
 
-                if ($cartItem->isNotEmpty()) {
-                    // Si el producto ya existe en el carrito, incrementar la cantidad
-                    $existingQty = $cartItem->first()->qty;
-                    $qty += $existingQty;
-
-                    // Verificar si hay suficiente stock antes de actualizar la cantidad en el carrito
-                    if ($product->stock >= $qty) {
-                        Cart::update($cartItem->first()->rowId, $qty);
-                    } else {
-                        // Actualizar la cantidad en el carrito al stock disponible
-                        Cart::update($cartItem->first()->rowId, $product->stock);
-
-
-                        $this->updateStock($product->id);
-
-                        // No hay suficiente stock, mostrar un mensaje de advertencia o realizar alguna acción apropiada
-                        return redirect()->back()->with('warning', 'La cantidad del producto se ha ajustado al stock disponible');
-                    }
+                // Verificar si hay suficiente stock antes de actualizar la cantidad en el carrito
+                if ($product->stock >= $qty) {
+                    Cart::update($cartItem->first()->rowId, $qty);
                 } else {
-                    // Si el producto no existe en el carrito, agregarlo
-                    Cart::add([
-                        'id' => $product->id,
-                        'name' => $product->nombre,
-                        'price' => $product->precio,
-                        'qty' => $qty,
-                        'weight' => 1,
-                        'options' => [
-                            'urlfoto' => asset("assets/images/images-products/$product->imagen"),
-                            'nombre' => null,
-                            'stock' => $product->stock,
-                        ]
-                    ]);
+                    // Actualizar la cantidad en el carrito al stock disponible
+                    Cart::update($cartItem->first()->rowId, $product->stock);
 
-                    // Disminuir el stock del producto
-                    $product->stock -= $qty;
-                    $product->stock = max(0, $product->stock); // Convert negative stock to zero
+                    $this->updateStock($product->id);
 
-                    if ($product->stock < 5) {
-                        $admins = User::role('admin')->get();
-                        Notification::send($admins, new lowStockNotif($product->nombre));
-                    }
-
-                    $product->save();
+                    // No hay suficiente stock, mostrar un mensaje de advertencia o realizar alguna acción apropiada
+                    return redirect()->back()->with('warning', 'La cantidad del producto se ha ajustado al stock disponible');
                 }
             } else {
-                // No hay suficiente stock, mostrar un mensaje de error o realizar alguna acción apropiada
-                return redirect()->back()->with('error', 'No hay suficiente stock disponible para este producto');
-            }
-        }
+                // Si el producto no existe en el carrito, agregarlo
+                Cart::add([
+                    'id' => $product->id,
+                    'name' => $product->nombre,
+                    'price' => $product->precio,
+                    'qty' => $qty,
+                    'weight' => 1,
+                    'options' => [
+                        'urlfoto' => asset("assets/images/images-products/$product->imagen"),
+                        'nombre' => null,
+                        'stock' => $product->stock,
+                    ]
+                ]);
 
-        return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
+                // Disminuir el stock del producto
+                $product->stock -= $qty;
+                $product->stock = max(0, $product->stock); // Convert negative stock to zero
+
+                if ($product->stock < 5) {
+                    $admins = User::role('admin')->get();
+                    Notification::send($admins, new lowStockNotif($product->nombre));
+                }
+
+                $product->save();
+            }
+        } else {
+            // No hay suficiente stock, mostrar un mensaje de error o realizar alguna acción apropiada
+            return redirect()->back()->with('error', 'No hay suficiente stock disponible para este producto');
+        }
     }
+
+    return redirect()->back()->with('success', 'Los productos se han agregado al carrito exitosamente');
+}
+
 
     public function showCart()
     {

@@ -1,15 +1,17 @@
 @extends('layouts-landing.welcome')
 
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
+@endsection
 
 @section('js')
-    <script src="assets/js/jquery-3.2.1.min.js"></script>
     <script src="assets/js/popper.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/isotope.pkgd.min.js"></script>
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 @endsection
 
