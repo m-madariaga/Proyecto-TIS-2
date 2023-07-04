@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Product;
 use App\Models\Product_desired;
 use App\Models\Section;
@@ -23,6 +24,7 @@ class ProductDesiredController extends Controller
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
         $users = User::all();
+        $images = Images::where('seleccionada', 1)->get();
         $producto_mas_deseado = DB::table('product_desireds')
             ->join('users', 'product_desireds.user_id', '=', 'users.id')
             ->select('product_desireds.product_id', DB::raw('COUNT(*) as count'))
@@ -40,7 +42,7 @@ class ProductDesiredController extends Controller
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks'));
+        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks','images'));
     }
     public function generate_pdf(User $id)
     {
