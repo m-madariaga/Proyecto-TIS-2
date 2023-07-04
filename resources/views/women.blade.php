@@ -44,11 +44,9 @@
             cursor: pointer;
 
         }
-
-        .btn_darlike i {
+        .btn_darlike i{
             font-size: 18px;
         }
-
         .isLike {
             color: rgb(200, 0, 0);
         }
@@ -63,46 +61,6 @@
 
     <script>
         $(document).ready(function() {
-
-            function showSuccessMessage(message) {
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: 'Se agrego el producto a la lista de deseados.',
-                    icon: 'success',
-                    timer: 4000,
-                    showConfirmButton: true
-                });
-            }
-
-            // Submit the like form and handle the response
-            $(".btn_darlike").on('click', function(e) {
-                e.preventDefault();
-
-                var $form = $(this).closest('form');
-                var formData = $form.serialize();
-
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        // Update the like button's appearance
-                        $(e.target).toggleClass('isLike');
-
-                        // Show the success message
-                        showSuccessMessage(response.message);
-                    },
-                    error: function(xhr, status, error) {
-                        // Show an error message if the request fails
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Something went wrong. Please try again.',
-                            icon: 'error',
-                            showConfirmButton: true
-                        });
-                    }
-                });
-            });
 
             var $grid = $('#productContainer').isotope({
                 itemSelector: '.product-item',

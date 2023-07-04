@@ -7,17 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Estilos CSS -->
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.carousel.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/owl.theme.default.css') }}">
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/main_styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/responsive.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
-    
+
 
     @yield('css')
 
@@ -64,7 +61,7 @@
 
     @yield('js')
 
-    
+
 </body>
 
 </html>
