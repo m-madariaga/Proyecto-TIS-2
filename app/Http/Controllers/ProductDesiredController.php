@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Product;
 use App\Models\Product_desired;
 use App\Models\Section;
@@ -20,6 +21,8 @@ class ProductDesiredController extends Controller
      */
     public function index()
     {
+        $images = Images::where('seleccionada', 1)->get();
+
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
         $users = User::all();
@@ -30,17 +33,14 @@ class ProductDesiredController extends Controller
             ->orderBy('count', 'desc')
             ->first();
 
-        if ($producto_mas_deseado)
-        {
+        if ($producto_mas_deseado) {
             $product = Product::find($producto_mas_deseado->product_id);
             $count = $producto_mas_deseado->count;
-        }
-        else
-        {
+        } else {
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks'));
+        return view('product_desired.index', compact('users', 'product', 'count', 'sections', 'socialnetworks', 'images'));
     }
     public function generate_pdf(User $id)
     {
@@ -76,13 +76,11 @@ class ProductDesiredController extends Controller
         $existe_producto = Product_desired::where('user_id', $request->get('user_id'))
             ->where('product_id', $request->get('product_id'))
             ->exists();
-        if ($existe_producto)
-        {
+        if ($existe_producto) {
             $p = Product_desired::all()
                 ->where('user_id', $request->get('user_id'))
                 ->where('product_id', $request->get('product_id'));
-            foreach ($p as $key => $value)
-            {
+            foreach ($p as $key => $value) {
                 $value->delete();
             }
             return back();
@@ -103,10 +101,12 @@ class ProductDesiredController extends Controller
      */
     public function show(User $user)
     {
+        $images = Images::where('seleccionada', 1)->get();
+
         $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $productos_deseados = $user->product_desired;
-        return view('profile_products_desired', compact('productos_deseados','sections','socialnetworks'));
+        return view('profile_products_desired', compact('productos_deseados', 'sections', 'socialnetworks', 'images'));
     }
 
     /**

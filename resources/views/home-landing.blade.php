@@ -11,19 +11,6 @@
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
 
-    <script>
-        $(document).ready(function() {
-            @if (session('success'))
-                Swal.fire({
-                    title: '¡Éxito!',
-                    text: '{{ session('success') }}',
-                    icon: 'success',
-                    timer: 4000, // Tiempo en milisegundos (3 segundos)
-                    showConfirmButton: true
-                });
-            @endif
-        });
-    </script>
 @endsection
 
 @section('content')

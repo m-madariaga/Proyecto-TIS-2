@@ -19,6 +19,7 @@ use App\Models\PaymentMethod;
 use App\Models\SocialNetwork;
 use App\Models\User;
 use App\Models\ComprobanteTransfer;
+use App\Models\Images;
 
 class CheckOutController extends Controller
 {
@@ -31,6 +32,7 @@ class CheckOutController extends Controller
     {
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
+        $images = Images::where('seleccionada', 1)->get();
         $cart = $request->input('cart_id');
         $userId = auth()->id();
         $user = User::find($userId);
@@ -70,7 +72,7 @@ class CheckOutController extends Controller
 
         $order = json_decode($request->input('order'));
 
-        return view('checkout_transfer', compact('cart', 'sections', 'shipment_type', 'name', 'run', 'email', 'bank', 'accountType', 'accountNumber', 'order', 'socialnetworks'));
+        return view('checkout_transfer', compact('cart', 'sections', 'shipment_type', 'name', 'run', 'email', 'bank', 'accountType', 'accountNumber', 'order', 'socialnetworks','images'));
     }
 
     public function confirmOrder(Request $request, $orderId)

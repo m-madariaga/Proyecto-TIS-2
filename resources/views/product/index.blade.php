@@ -1,7 +1,7 @@
 @extends('layouts.argon.app')
 
 @section('title')
-    {{ 'Product' }}
+    {{ 'Productos' }}
 @endsection
 
 @section('breadcrumb')
@@ -62,7 +62,7 @@
 
                                                 <td class="text-center pt-3">
                                                     <a href="{{ route('productos-edit', ['id' => $prod->id]) }}"
-                                                        class="btn btn-sm btn-outline-primary"><i class="fa fa-edit"></i>
+                                                        class="btn btn-sm btn-outline-primary edit-product" data-id="{{$prod->id}}"><i class="fa fa-edit"></i>
                                                         Editar</a>
                                                     <form action="{{ route('productos-destroy', ['id' => $prod->id]) }}"
                                                         method="POST" style="display: inline;">
@@ -121,6 +121,24 @@
                 },
 
 
+            });
+            //sweetAlert editar producto
+            $('.edit-product').click(function(e) {
+                e.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: '¡Sí, editar!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/admin/productos/'+ id +'/edit';
+                    }
+                });
             });
         });
 
