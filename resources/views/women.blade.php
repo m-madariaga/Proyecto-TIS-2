@@ -42,6 +42,7 @@
             padding: 0;
             border-radius: 50%;
             cursor: pointer;
+            margin-right: 5%;
 
         }
 
