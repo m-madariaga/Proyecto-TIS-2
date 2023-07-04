@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Images;
 use App\Models\Product;
 use App\Models\Product_desired;
 use App\Models\Section;
@@ -19,7 +20,8 @@ class ProductDesiredController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   $images = Images::where('seleccionada', 1)->get();
+
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
         $users = User::all();
@@ -40,7 +42,7 @@ class ProductDesiredController extends Controller
             $product = null;
             $count = null;
         }
-        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks'));
+        return view('product_desired.index', compact('users', 'product', 'count','sections','socialnetworks','images'));
     }
     public function generate_pdf(User $id)
     {
@@ -102,11 +104,12 @@ class ProductDesiredController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
-    {
+    {        $images = Images::where('seleccionada', 1)->get();
+
         $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
         $productos_deseados = $user->product_desired;
-        return view('profile_products_desired', compact('productos_deseados','sections','socialnetworks'));
+        return view('profile_products_desired', compact('productos_deseados','sections','socialnetworks','images'));
     }
 
     /**
