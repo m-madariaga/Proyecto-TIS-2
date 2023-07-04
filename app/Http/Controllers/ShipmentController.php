@@ -162,9 +162,17 @@ class ShipmentController extends Controller
      * @param  \App\Models\shipment  $shipment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(shipment $shipment)
+    public function destroy($id)
     {
-        //
+        $shipment = Shipment::find($id);
+        $shipment->delete();
+
+        $action = new Action();
+            $action->name = 'Borrado envío';
+            $action->user_fk = Auth::User()->id;
+        $action->save();
+
+        return response()->json(['success' => true]);
     }
 
     public function status_edit($id)
