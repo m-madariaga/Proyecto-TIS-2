@@ -2,7 +2,7 @@
 
 @section('css')
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,700&display=swap" rel="stylesheet" />
     <!-- MDB -->
 
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/mdb.min.css') }}">
