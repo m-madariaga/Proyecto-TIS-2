@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ProofPayment;
 use App\Models\Detail;
+use App\Models\Images;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Section;
@@ -115,6 +116,7 @@ class CartController extends Controller
     {
         $socialnetworks = SocialNetwork::all();
         $sections = Section::all();
+        $images = Images::where('seleccionada', 1)->get();
         $this->checkStock();
 
         $user = session('user');
@@ -141,7 +143,7 @@ class CartController extends Controller
             return $item->stock > 0;
         });
 
-        return view('cart', compact('items', 'socialnetworks', 'sections'));
+        return view('cart', compact('items', 'socialnetworks', 'sections','images'));
     }
 
 
