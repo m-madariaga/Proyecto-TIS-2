@@ -25,7 +25,6 @@ class ProductDesiredController extends Controller
         $sections = Section::all();
         $socialnetworks = SocialNetwork::all();
         $users = User::all();
-        $images = Images::where('seleccionada', 1)->get();
         $producto_mas_deseado = DB::table('product_desireds')
             ->join('users', 'product_desireds.user_id', '=', 'users.id')
             ->select('product_desireds.product_id', DB::raw('COUNT(*) as count'))
