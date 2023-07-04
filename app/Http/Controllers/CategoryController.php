@@ -53,7 +53,7 @@ class CategoryController extends Controller
             $action->user_fk = Auth::User()->id;
         $action->save();
 
-        return redirect()->route('categorias')->with('success', 'Categoria ingresada correctamente.');
+        return redirect()->route('categorias')->with('success', 'Categoría ingresada correctamente.');
     }
 
     /**
@@ -104,7 +104,7 @@ class CategoryController extends Controller
             $action->user_fk = Auth::User()->id;
         $action->save();
 
-        return redirect()->route('categorias')->with('success','Categoria actualizada correctamente');
+        return redirect()->route('categorias')->with('success','Categoría actualizada correctamente.');
     }
 
     /**
@@ -123,7 +123,7 @@ class CategoryController extends Controller
             $action->name = 'Borrado Categoría';
             $action->user_fk = Auth::User()->id;
         $action->save();
-        
+
         return response()->json(['success' => true]);
     }
 }

@@ -220,7 +220,7 @@ class ProductController extends Controller
         $action->user_fk = Auth::User()->id;
         $action->save();
 
-        return redirect()->route('productos');
+        return redirect()->route('productos')->with('success','Producto ingresado correctamente.');
     }
 
     /**
