@@ -33,7 +33,7 @@
                     <a href="{{ route('home-landing') }}">
                         @foreach ($images as $imagen)
                             @if ($imagen->tipo_imagen === 'logo_principal')
-                                <img src="{{ asset("imagen_logo/$imagen->nombre_imagen") }}" class="navbar-brand-img"
+                                <img src="{{ asset("$imagen->direccion_imagen") }}" class="navbar-brand-img"
                                     style="max-height: 3rem;" alt="main_logo">
                             @endif
                         @endforeach
