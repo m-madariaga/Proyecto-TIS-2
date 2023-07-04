@@ -304,7 +304,7 @@ class ProductController extends Controller
 
         return redirect()
             ->route('productos')
-            ->with('success', 'Producto actualizado correctamente.');
+            ->with('success', 'Producto editado correctamente.');
     }
 
     /**
