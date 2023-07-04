@@ -1,14 +1,6 @@
 @extends('layouts-landing.welcome')
 
-@section('css')
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-    <link href="assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.default.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/main_styles.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/responsive.css">
-@endsection
+
 
 @section('js')
     <script src="assets/js/jquery-3.2.1.min.js"></script>
@@ -18,6 +10,20 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="assets/js/custom.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 4000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: true
+                });
+            @endif
+        });
+    </script>
 @endsection
 
 @section('content')

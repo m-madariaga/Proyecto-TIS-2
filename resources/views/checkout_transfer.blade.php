@@ -3,8 +3,6 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('assets/css/method_style.css') }}">
 <style>
- 
-
     .button-container {
         display: flex;
         justify-content: center;
@@ -130,12 +128,6 @@
                             @endforeach
                         </div>
                     </div>
-                    <!-- <div class="card-body border border-primary rounded">
-                        <div class="d-flex justify-content-end">
-                            <span class="card-text">Total a Pagar: ${{ Cart::subtotal() }}</span>
-                        </div>
-
-                    </div> -->
 
                 </div>
             </div>
@@ -166,25 +158,22 @@
                         <hr>
                         <span class="cart-text"><strong>Número de cuenta:</strong> {{ $accountNumber }}</span>
                         <hr>
-                        <span class="cart-text"><strong>Total a Pagar:</strong>$ {{Cart::subtotal()}}</span>
+                        <span class="cart-text"><strong>Total a Pagar:</strong>$ {{ Cart::subtotal() }}</span>
                         <hr>
-                        <div class=" mt-4">
+                        <div class="mt-4">
                             <h4>Cargar comprobante de transferencia</h4>
-                            <form action="#" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('confirmtransferbank', ['orderId' => $order->id]) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                <input type="hidden" name="order" value="{{ json_encode($order) }}">
                                 <input type="file" name="pdf_file">
+                                @error('pdf_file')
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                @enderror
+                                <div> <button type="submit" class="btn btn-primary mt-2">Confirmar Carrito</button>
+                                </div>
                             </form>
                         </div>
-                      
-                       <div class="mt-4">
-                        <form action="{{ route('confirmationcart', ['orderId' => $order->id]) }}" method="POST"
-                            id="shipment-form">
-                            @csrf
-    
-                            <button type="submit" class="btn btn-primary" id="submit-button">Confirmar
-                                Carrito</button>
-                        </form>
-                       </div>
+
                     </div>
 
                 </div>

@@ -441,7 +441,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
-                text: '¡El país se ha editado correctamente!'
+                text: '¡La ciudad se ha editado correctamente!'
             });
 
         });

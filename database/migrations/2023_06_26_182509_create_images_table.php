@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('nombre_imagen')->nullable();
             $table->string('direccion_imagen')->nullable();
             $table->boolean('seleccionada')->default(false);
+            $table->string('tipo_imagen');
             $table->timestamps();
         });
     }

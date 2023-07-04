@@ -32,6 +32,7 @@ use App\Http\Controllers\ShippingMethodsController;
 use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\ComprobanteTransferController;
 use App\Http\Controllers\PromotionController;
 use App\Models\Frequent_question;
 use App\Models\Purchase_order_product;
@@ -232,9 +233,15 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::patch('/secciones', [App\Http\Controllers\SectionController::class, 'update'])->name('section.update');
 
         Route::post('/images/store', [App\Http\Controllers\ImagesController::class, 'store'])->name('images.store');
+        Route::post('/footer/store', [App\Http\Controllers\ImagesController::class, 'storeFooterImage'])->name('footer.store');
+
         Route::post('/images/update', [App\Http\Controllers\ImagesController::class, 'update'])->name('images.update');
 
+
+
     });
+
+  
 
 
 
@@ -297,6 +304,10 @@ Route::group(['middleware' => ['permission:vista admin'], 'prefix' => 'admin'], 
         Route::get('/respuestas/{id}/edit', [App\Http\Controllers\FrequentResponseController::class, 'edit'])->name('respuestas-edit');
         Route::patch('/respuestas/{id}/update', [App\Http\Controllers\FrequentResponseController::class, 'update'])->name('respuestas-update');
         Route::delete('/respuestas/{id}', [App\Http\Controllers\FrequentResponseController::class, 'destroy'])->name('respuestas-destroy');
+    });
+
+    Route::group(['middleware' => ['permission:mantenedor documentos transferencia']], function () {
+        Route::get('/documentos', [App\Http\Controllers\DocumentTransferController::class, 'index'])->name('documents.index');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('admin_home');
@@ -362,10 +373,12 @@ Route::get('/termsconditionsview', [App\Http\Controllers\TermsConditionsControll
 Route::get('/questionview', [App\Http\Controllers\QuestionController::class, 'index'])->name('questionview.index');
 
 
-
-
 Route::post('/confirmationcart/{orderId}', [App\Http\Controllers\CartController::class, 'confirmOrder'])->name('confirmationcart');
+
+Route::post('/confirmtransferbank/{orderId}', [App\Http\Controllers\CheckOutController::class, 'confirmOrder'])->name('confirmtransferbank');
 Route::post('/checkout_transfer', [CheckOutController::class, 'CheckOutTransfer'])->name('checkout_transfer');
+Route::post('/validartransfer/{orderId}', [CheckOutController::class, 'update'])->name('validartransfer');
+
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
 Route::get('/confirmtransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmtransbank');

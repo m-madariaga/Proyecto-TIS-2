@@ -35,6 +35,7 @@
                                         <th class="text-center">Fecha Pedido</th>
                                         <th class="text-center">Nombre Cliente</th>
                                         <th class="text-center">Dirección</th>
+                                        <th class="text-center">Método Pago</th>
                                         <th class="text-center">Estado Entregado</th>
                                         <th class="text-center">Pagado</th>
                                         <th class="text-center">Acciones</th>
@@ -48,6 +49,7 @@
                                             <td class="text-center">{{ $order->created_at }}</td>
                                             <td class="text-center">{{ $order->user->name }}</td>
                                             <td class="text-center">{{ $order->user->address }}, {{$order->user->city->name}}</td>
+                                            <td class="text-center">{{ $order->paymentmethod->name }}</td>
 
                                             <td class="text-center">
                                                 @if ($order->estado == 0)

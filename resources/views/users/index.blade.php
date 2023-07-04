@@ -482,7 +482,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
-                text: '¡El país se ha editado correctamente!'
+                text: '¡El usuario se ha editado correctamente!'
             });
 
         });

@@ -200,7 +200,7 @@
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Exito',
-                                text: '¡Región eliminado correctamente!',
+                                text: '¡Región eliminada correctamente!',
                                 timer: 1000
                             });
                             setTimeout(function() {
@@ -331,7 +331,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Éxito',
-                text: '¡El país se ha editado correctamente!'
+                text: '¡La región se ha editado correctamente!'
             });
 
         });
