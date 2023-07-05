@@ -96,7 +96,7 @@ class CheckOutController extends Controller
             $comprobante->save();
         }
 
-        Mail::to($user->email)->send(new ProofPayment($order->id, 'Pedido'));
+        return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
     }
     public function update($orderId)
     {

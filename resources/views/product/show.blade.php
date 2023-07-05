@@ -135,8 +135,7 @@
                                                             <div class="card-body d-flex flex-column align-items-center">
                                                                 <h5>{{ $recommendedProduct->nombre }}</h5>
                                                                 <p class="text-body-secondary precio_product"><strong>
-                                                                        Precio:
-                                                                        ${{ $recommendedProduct->precio }}
+                                                                        Precio: ${{ number_format($recommendedProduct->precio, 0, ',', '.') }}
                                                                     </strong>
                                                                 </p>
                                                             </div>

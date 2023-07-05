@@ -12,6 +12,17 @@
     <script src="assets/js/owl.carousel.js"></script>
     <script src="assets/js/easing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+         @if (session('success'))
+                Swal.fire({
+                    title: '¡Éxito!',
+                    text: '{{ session('success') }}',
+                    icon: 'success',
+                    timer: 3000, // Tiempo en milisegundos (3 segundos)
+                    showConfirmButton: true
+                });
+            @endif
+    </script>
 
 @endsection
 
@@ -98,7 +109,7 @@
                                                         <p class="text-body-secondary precio_product">
                                                             <strong>
                                                                 Precio:
-                                                                ${{ $recommendedProduct->precio }}
+                                                                ${{ number_format($recommendedProduct->precio, 0, ',', '.') }}
                                                             </strong>
                                                         </p>
                                                     </div>

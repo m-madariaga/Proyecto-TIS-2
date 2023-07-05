@@ -234,7 +234,7 @@
                                                 <div class="form-outline">
                                                     <input type="number" id="typeNumber" class="form-control" />
                                                     <label class="form-label"
-                                                        for="typeNumber">${{ $productos->min('precio') }}</label>
+                                                        for="typeNumber">${{ number_format($productos->min('precio'), 0, ',', '.') }}</label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
@@ -244,7 +244,7 @@
                                                 <div class="form-outline">
                                                     <input type="number" id="typeNumber" class="form-control" />
                                                     <label class="form-label"
-                                                        for="typeNumber">${{ $productos->max('precio') }}</label>
+                                                        for="typeNumber">${{number_format($productos->max('precio'), 0, ',', '.')  }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -318,7 +318,7 @@
                                                             href="#">{{ $producto->marca->nombre }}</a></h5>
                                                     <h5 class="product_name"><a
                                                             href="#">{{ $producto->nombre }}</a></h5>
-                                                    <div class="product_price">${{ $producto->precio }}</div>
+                                                    <div class="product_price">${{ number_format($producto->precio, 0, ',', '.') }}</div>
                                                 </div>
                                             </div>
                                             @if (Auth::check())
