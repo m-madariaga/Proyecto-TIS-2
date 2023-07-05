@@ -103,7 +103,8 @@
                                                                     </td>
                                                                     <td>{{ $prod->product->marca->nombre }}</td>
                                                                     <td>{{ $prod->product->stock }}</td>
-                                                                    <td>${{ $prod->product->precio }}</td>
+                                                                    <td>${{ number_format($prod->product->precio, 0, ',', '.') }}</td>
+                                                                    
                                                                 </tr>
                                                             </tbody>
                                                         @endforeach

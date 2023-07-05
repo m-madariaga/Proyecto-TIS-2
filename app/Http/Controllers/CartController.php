@@ -275,7 +275,6 @@ class CartController extends Controller
         $order = Order::findOrFail($orderId);
         Cart::destroy();
         session()->forget('order');
-        Mail::to($user->email)->send(new ProofPayment($order->id, 'Pedido'));
         return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
     }
 }

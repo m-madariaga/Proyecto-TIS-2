@@ -52,7 +52,7 @@
                                                     width="70">
                                             </a>
                                         </td>
-                                        <td>$ {{ $item->price }}</td>
+                                        <td>$ {{ number_format($item->price, 0, ',', '.') }}</td>
                                         <td>
                                             <div class="container-quantity">
                                                 <div>
@@ -71,7 +71,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>$ {{ $item->subtotal }}</td>
+                                        <td>$ {{ number_format($item->subtotal, 0, ',', '.') }}</td>
                                         <td>
                                             <form action="{{ route('removeitem', ['rowId' => $item->rowId]) }}"
                                                 method="POST">
