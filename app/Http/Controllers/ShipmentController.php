@@ -36,6 +36,7 @@ class ShipmentController extends Controller
     public function index()
     {
         $shipments = Shipment::all();
+        $selectedShipmentTypeId = session('selected_shipment_type_id');
 
         foreach ($shipments as $shipment) {
             $user = User::find($shipment->user_fk);
@@ -57,7 +58,7 @@ class ShipmentController extends Controller
             }
         }
 
-        return response(view('shipments.index', compact('shipments')));
+        return response(view('shipments.index', compact('shipments', 'selectedShipmentTypeId')));
     }
 
     /**
@@ -104,6 +105,7 @@ class ShipmentController extends Controller
                 $shipmentStatus->nombre_estado = 'pendiente';
                 $shipmentStatus->shipment_fk = $shipment->id;
             $shipmentStatus->save();
+            session()->put('selected_shipment_type_id', $request->input('shipment_type_id'));
 
             return view('paymentmethod_landing', compact('paymentMethods','sections', 'cart', 'shipment_type','order','socialnetworks','images'));
       }

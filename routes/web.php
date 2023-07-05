@@ -381,5 +381,5 @@ Route::post('/validartransfer/{orderId}', [CheckOutController::class, 'update'])
 
 
 Route::post('/checkout_transbank', [TransbankController::class, 'checkOutTransBank'])->name('checkout_transbank');
-Route::post('/confirmtransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmtransbank');
+Route::get('/confirmtransbank/{orderId}', [TransbankController::class, 'confirmOrderTransbank'])->name('confirmtransbank');
 Route::get('/webpay/error', [TransbankController::class, 'handleWebpayError'])->name('webpay.error');
