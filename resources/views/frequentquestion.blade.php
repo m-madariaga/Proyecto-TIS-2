@@ -16,11 +16,11 @@
             </div>
         </div>
 
-        <div class="card px-4">
-            <div class="card-body px-4">
+        <div class="card px-4" style="border: none;">
+            <div class="card-body px-4 ">
 
                 <div class="row justify-content-center">
-                    <div class="col-8 col-md-8">
+                    <div class="col-12 col-md-8">
                         <div class="accordion" id="accordionExample">
                             @foreach($questions as $question)
                             <div class="accordion-item">

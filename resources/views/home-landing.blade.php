@@ -96,7 +96,7 @@
                         <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
                             <div class="row justify-content-center">
                                 @foreach ($chunk as $recommendedProduct)
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" >
                                         <div class="d-flex flex-column align-items-center">
                                             <a href="{{ route('product.show', $recommendedProduct->id) }}">
                                                 <div class="card">
