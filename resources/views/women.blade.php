@@ -288,7 +288,8 @@
                                             <div class="product_info">
                                                 <h5 class="product_branch"><a href="#">{{ $producto->marca->nombre }}</a></h5>
                                                 <h5 class="product_name"><a href="#">{{ $producto->nombre }}</a></h5>
-                                                <div class="product_price">${{ $producto->precio }}</div>
+                                                <div class="product_price">${{ number_format($producto->precio, 0, ',', '.')  }}</div>
+                                               
                                             </div>
                                         </div>
                                         @if (Auth::check())

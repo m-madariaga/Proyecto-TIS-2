@@ -19,7 +19,9 @@
                     <div class="card">
                         <div class="card-body">
                             <h3 class="card-title">{{ $product->nombre }}</h3>
-                            <h5 class="card-subtitle mb-2 text-body-secondary">Precio: ${{ $product->precio }}</h5>
+                            <h5 class="card-subtitle mb-2 text-body-secondary">Precio: ${{ number_format($product->precio, 0, ',', '.') }}</h5>
+                            
+
 
                             <div class="row">
                                 <div class="col">
