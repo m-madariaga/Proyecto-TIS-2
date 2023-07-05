@@ -275,6 +275,6 @@ class CartController extends Controller
         $order = Order::findOrFail($orderId);
         Cart::destroy();
         session()->forget('order');
-        return redirect()->route('home-landing')->with('success', 'La Compra se realizó correctamente');
+        return redirect()->route('home-landing')->with('success', 'La compra se preparó para realizar la venta presencial');
     }
 }
