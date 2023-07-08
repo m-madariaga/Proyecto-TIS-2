@@ -79,7 +79,7 @@
                         </div>
                     @else
                         <li class="account">
-                            <a href="#">
+                            <a class="account_cl" href="#">
                                 @guest
                                     Cuenta
                                 @else

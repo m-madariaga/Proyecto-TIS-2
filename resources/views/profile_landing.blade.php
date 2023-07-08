@@ -285,7 +285,7 @@
                                             <tr>
                                                 <td class="text-center">{{ $order->id }}</td>
                                                 <td class="text-center">{{ $order->created_at }}</td>
-                                                <td class="text-center">${{ $order->total }}</td>
+                                                <td class="text-center">${{number_format($order->total, 0, ',', '.') }}</td>
                                                 <td class="text-center">
                                                     <button type="button"
                                                         class="view-order button_edit_profile btn btn-sm btn-rounded ms-2 mx-2 me-auto"
@@ -303,9 +303,10 @@
 
                                                                         <td class="text-center">{{ $detail->cantidad }}
                                                                         </td>
-                                                                        <td class="text-center">${{ $detail->precio }}
+                                                                        <td class="text-center">${{ number_format($detail->precio, 0, ',', '.') }}
+                                                                            
                                                                         </td>
-                                                                        <td class="text-center">${{ $detail->monto }}</td>
+                                                                        <td class="text-center">${{ number_format($detail->monto, 0, ',', '.') }}</td>
                                                                         <td class="text-center">
                                                                             {{ $detail->product->color }}
                                                                         </td>

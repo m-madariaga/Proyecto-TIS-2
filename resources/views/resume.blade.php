@@ -101,7 +101,7 @@
                                                 <hr>
                                                 <span class="card-text">Cantidad: {{ $item->qty }}</span>
                                                 <br>
-                                                <span class="card-text">Precio: ${{ $item->price }}</span>
+                                                <span class="card-text">Precio: ${{ number_format($item->price, 0, ',', '.') }}</span>
                                             </div>
                                         </div>
                                         <hr>
