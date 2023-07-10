@@ -174,18 +174,11 @@
 	.grid-item {
 		width: 25%;
 	}
-
-	/* .top_nav {
-		display: none;
-	} */
-
 	.navbar_menu {
 		display: none;
 	}
 
-	.hamburger_container {
-		display: inherit;
-	}
+	
 
 	.main_slider {
 		margin-top: 100px;
@@ -511,11 +504,6 @@
 		height: 70px;
 	}
 
-	.navbar_user li a {
-		width: 30px;
-		height: 30px;
-		font-size: 12px;
-	}
 
 	.checkout_items {
 		width: 15px;
@@ -720,4 +708,9 @@
 14. 400px
 ************/
 
-@media only screen and (max-width: 400px) {}
+@media only screen and (max-width: 400px) {
+
+	.col-xs-6 {
+		width: 50%; /* La columna ocupará el 50% del ancho disponible */
+	  }
+}
